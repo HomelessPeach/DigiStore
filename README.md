@@ -1,2 +1,2 @@
 # PrivateHome
-The repository is a private Homeless Peach's home. There are private Peach's projects
+The repository is a private Homeless Peach's home. There is private Peach's project for study
