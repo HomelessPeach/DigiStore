@@ -1,0 +1,11 @@
+#header {
+    position: fixed;
+    width: 100%;
+    background: var(--main-color-1);
+}
+
+.header-container {
+    min-height: var(--header-height);
+    color: white;
+    transition: 0s;
+}
