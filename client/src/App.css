@@ -2,8 +2,8 @@
     --main-color-1: #000000;
     --main-color-2: #ffffff;
     --main-color-3: #b13a8e;
-    --header-height: 75px;
-    display: flex;
+    --header-height: 90px;
+    --footer-height: 200px;
 }
 
 *{

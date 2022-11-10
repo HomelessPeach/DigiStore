@@ -1,3 +1,4 @@
 #footer {
-
+    height: var(--footer-height);
+    background: var(--main-color-3);
 }

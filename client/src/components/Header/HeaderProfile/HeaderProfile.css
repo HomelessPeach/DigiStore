@@ -1,0 +1,8 @@
+.header-profile {
+    padding: 15px 0 0;
+    width: 50px;
+}
+
+.header-profile > img {
+    width: inherit;
+}
