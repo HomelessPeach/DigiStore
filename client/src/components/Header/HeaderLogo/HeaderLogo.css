@@ -2,6 +2,14 @@
     height: 70px;
 }
 
+.header-logo-disable {
+    cursor: pointer;
+}
+
+.header-logo-active {
+    pointer-events: none;
+}
+
 .header-logo > img {
     height: inherit;
 }

@@ -9,8 +9,7 @@ export const HeaderLogo = () => {
         <NavLink
             to={RouteNames.HOME}
             title="На главную"
-            className={'header-logo'}
-            // className={({isActive}) => (isActive) ? 'HeaderLogo_active' : 'HeaderLogo'}
+            className={({isActive}) => (isActive) ? 'header-logo header-logo-active' : 'header-logo header-logo-disable'}
         >
             <img src={`${attributeFilesUrl}/logo2.svg`}/>
         </NavLink>
