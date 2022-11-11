@@ -1,3 +1,4 @@
+import * as React from "react";
 import {NavLink} from "react-router-dom";
 import {attributeFilesUrl} from "../../../services";
 import {RouteNames} from "../../../Router";
@@ -11,7 +12,7 @@ export const HeaderLogo = () => {
             className={'header-logo'}
             // className={({isActive}) => (isActive) ? 'HeaderLogo_active' : 'HeaderLogo'}
         >
-            <img src={`${attributeFilesUrl}/logo.svg`}/>
+            <img src={`${attributeFilesUrl}/logo2.svg`}/>
         </NavLink>
     )
 }

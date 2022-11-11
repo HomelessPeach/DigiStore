@@ -1,17 +1,19 @@
-import {NavLink} from "react-router-dom";
+import * as React from "react";
 import {attributeFilesUrl} from "../../../services";
-import {RouteNames} from "../../../Router";
+import {ProfileNavbar} from "./ProfileNavbar";
+import {useState} from "react";
 import "./HeaderProfile.css"
 
 export const HeaderProfile = () => {
+
+    const [openProfileNavbar, setOpenProfileNavbar] = useState(false)
+
     return (
-        <NavLink
-            to={RouteNames.HOME}
-            title="На главную"
-            className={'header-profile'}
-            // className={({isActive}) => (isActive) ? 'HeaderLogo_active' : 'HeaderLogo'}
-        >
-            <img src={`${attributeFilesUrl}/profile.svg`}/>
-        </NavLink>
+        <>
+            <div className={'header-profile'} onClick={() => setOpenProfileNavbar(!openProfileNavbar)}>
+                <img src={`${attributeFilesUrl}/profile.svg`}/>
+            </div>
+            <ProfileNavbar isOpen={openProfileNavbar} setIsOpen={setOpenProfileNavbar}/>
+        </>
     )
 }

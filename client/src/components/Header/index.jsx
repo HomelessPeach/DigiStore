@@ -2,23 +2,21 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {HeaderLogo} from "./HeaderLogo";
-import "./Header.css"
 import {HeaderBasket} from "./HeaderBasket";
 import {HeaderProfile} from "./HeaderProfile";
 import {attributeFilesUrl} from "../../services";
+import "./Header.css"
 
 export const Header = () => {
 
-    const [height, setHeight] = useState((800 - window.scrollY > 90)? 800 - window.scrollY : 90)
     const {pathname} = useLocation()
+    const [height, setHeight] = useState((800 - window.scrollY > 90)? 800 - window.scrollY : 90)
 
     useEffect(()=>{
         window.addEventListener("scroll", () => {
             setHeight((800 - window.scrollY > 90)? 800 - window.scrollY : 90)
         });
     }, [])
-
-
 
     return (
         <header id={'header'}>

@@ -1,10 +1,10 @@
 import * as React from "react";
-import {useEffect, useState} from "react";
+import "./Product.css"
 
 export const Product = () => {
     return(
         <div>
-            2
+            Product
         </div>
     )
 }

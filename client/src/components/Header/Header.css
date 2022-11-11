@@ -1,11 +1,11 @@
 #header {
     position: fixed;
     width: 100%;
-    background: var(--main-color-1);
 }
 
 .header-container {
     min-height: var(--header-height);
+    background-color: black;
     transition: 0s;
 }
 
@@ -15,7 +15,7 @@
     justify-content: space-between;
     align-items: center;
     color: white;
-    padding: 0 10vw;
+    padding: 0 7vw;
 }
 
 .header-block-right {
