@@ -14,10 +14,19 @@
     color: var(--main-color-2);
     text-decoration: none;
     padding: 5px 10px;
+    margin: 3px 0;
 }
 
-.header-general-navbar-item:hover {
+.header-general-navbar-item-disable {
+    cursor: pointer;
+}
+
+.header-general-navbar-item-disable:hover {
     background-color: white;
     color: black;
     border-radius: 10px;
+}
+
+.header-general-navbar-item-active {
+    pointer-events: none;
 }

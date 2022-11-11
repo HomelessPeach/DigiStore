@@ -17,12 +17,14 @@ export const Header = () => {
         {name: 'Продукция', pathname: '/product'}
     ]
 
-    const [height, setHeight] = useState((800 - window.scrollY > 90)? 800 - window.scrollY : 90)
+    const maxHeaderHeight = 500
+
+    const [height, setHeight] = useState((maxHeaderHeight - window.scrollY > 90)? maxHeaderHeight - window.scrollY : 90)
 
 
     useEffect(()=>{
         window.addEventListener("scroll", () => {
-            setHeight((800 - window.scrollY > 90)? 800 - window.scrollY : 90)
+            setHeight((maxHeaderHeight - window.scrollY > 90)? maxHeaderHeight - window.scrollY : 90)
         });
     }, [])
 
@@ -30,7 +32,12 @@ export const Header = () => {
         <header id={'header'}>
             {(height !== 90 && pathname === '/')?
                 <div className={'header-container header-main-page-block'} style={{height: height}}>
-                    <img src={`${attributeFilesUrl}/logo.svg`}/>
+
+                    <div style={{width: 800, height: maxHeaderHeight, color: "white", fontSize: 55, position: "fixed", top: height - maxHeaderHeight}}>
+                        Здесь должна находиться информация о сайте, но по каким-то причинам она отсутствует. Разработчик в этом не виноват
+                    </div>
+
+                    {/*<img src={`${attributeFilesUrl}/logo.svg`}/>*/}
                 </div>
                 : <div className={'header-container main-header-block'}>
                     <HeaderLogo/>

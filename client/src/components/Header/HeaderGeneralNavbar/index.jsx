@@ -15,7 +15,7 @@ export const HeaderGeneralNavbar = (props) => {
                     <NavLink
                         to={item.pathname}
                         title={item.name}
-                        className={({isActive}) => (isActive) ? 'header-general-navbar-item' : 'header-general-navbar-item'}
+                        className={({isActive}) => (isActive) ? 'header-general-navbar-item header-general-navbar-item-active' : 'header-general-navbar-item header-general-navbar-item-disable'}
                     >
                         {item.name}
                     </NavLink>

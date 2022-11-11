@@ -21,7 +21,7 @@ export const ProfileNavbar = (props) => {
     }, [])
 
     return (
-        <div id='profile-navbar' style={(isOpen)? {top: headerHeight} : {top: headerHeight - profileNavbarHeight}}>
+        <div id='profile-navbar' style={(isOpen)? {top: headerHeight} : {top: - profileNavbarHeight}}>
             <div className={'profile-navbar-container'}>
                 {(Auth)?
                     <>
