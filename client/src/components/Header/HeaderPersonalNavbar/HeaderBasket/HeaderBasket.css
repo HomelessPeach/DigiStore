@@ -1,0 +1,17 @@
+.header-basket {
+    width: 50px;
+    display: flex;
+    align-items: end;
+}
+
+.header-basket-disable {
+    cursor: pointer;
+}
+
+.header-basket-active {
+    pointer-events: none;
+}
+
+.header-basket > img {
+    width: inherit;
+}

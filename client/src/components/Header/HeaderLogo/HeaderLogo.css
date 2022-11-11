@@ -1,5 +1,6 @@
 .header-logo {
-    height: 70px;
+    height: var(--header-height);
+    padding: 5px 10px;
 }
 
 .header-logo-disable {
@@ -11,5 +12,5 @@
 }
 
 .header-logo > img {
-    height: inherit;
+    height: 100%;
 }

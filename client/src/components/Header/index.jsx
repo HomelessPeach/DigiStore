@@ -2,15 +2,23 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {HeaderLogo} from "./HeaderLogo";
-import {HeaderBasket} from "./HeaderBasket";
-import {HeaderProfile} from "./HeaderProfile";
+import {HeaderPersonalNavbar} from "./HeaderPersonalNavbar";
+import {HeaderGeneralNavbar} from "./HeaderGeneralNavbar";
 import {attributeFilesUrl} from "../../services";
 import "./Header.css"
 
 export const Header = () => {
 
-    const {pathname} = useLocation()
+    const {
+        pathname
+    } = useLocation()
+
+    const links = [
+        {name: 'Продукция', pathname: '/product'}
+    ]
+
     const [height, setHeight] = useState((800 - window.scrollY > 90)? 800 - window.scrollY : 90)
+
 
     useEffect(()=>{
         window.addEventListener("scroll", () => {
@@ -26,10 +34,8 @@ export const Header = () => {
                 </div>
                 : <div className={'header-container main-header-block'}>
                     <HeaderLogo/>
-                    <div className={'header-block-right'}>
-                        <HeaderBasket/>
-                        <HeaderProfile/>
-                    </div>
+                    <HeaderGeneralNavbar items={links}/>
+                    <HeaderPersonalNavbar/>
                 </div>
             }
         </header>

@@ -2,7 +2,7 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 import "./ProfileNavbar.css"
-import {RouteNames} from "../../../../Router";
+import {RouteNames} from "../../../../../Router";
 
 export const ProfileNavbar = (props) => {
 

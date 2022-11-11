@@ -1,5 +1,5 @@
 import * as React from "react";
-import {attributeFilesUrl} from "../../../services";
+import {attributeFilesUrl} from "../../../../services";
 import {ProfileNavbar} from "./ProfileNavbar";
 import {useState} from "react";
 import "./HeaderProfile.css"

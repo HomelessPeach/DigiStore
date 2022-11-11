@@ -13,18 +13,10 @@
 .main-header-block {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     color: white;
     padding: 0 7vw;
-}
-
-.header-block-right {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    min-width: 130px;
-    width: 15vw;
 }
 
 .header-main-page-block {
