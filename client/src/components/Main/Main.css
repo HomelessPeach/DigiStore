@@ -2,3 +2,7 @@
     min-height: calc(100vh - var(--footer-height));
     background-color: var(--main-color-2);
 }
+
+.main-content {
+
+}

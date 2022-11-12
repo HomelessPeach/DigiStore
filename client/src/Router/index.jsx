@@ -9,6 +9,7 @@ import {Basket} from "../components/Basket";
 export const RouteNames = {
     HOME: '/',
     ADMIN: '/admin',
+    ADMIN_PRODUCT: '/admin/product',
     PROFILE: '/profile',
     BASKET: '/basket',
     PRODUCT: '/product'
@@ -20,7 +21,9 @@ export const Router = () => {
         <Routes>
             <Route path={RouteNames.HOME} element={<Layout/>}>
                 <Route index element={<Home/>}/>
-                <Route path={RouteNames.ADMIN} element={<Admin/>}/>
+                <Route path={RouteNames.ADMIN} element={<Admin/>}>
+                    <Route path={RouteNames.ADMIN_PRODUCT} element={<Product/>}/>
+                </Route>
                 <Route path={RouteNames.PROFILE} element={<Profile/>}/>
                 <Route path={RouteNames.BASKET} element={<Basket/>}/>
                 <Route path={RouteNames.PRODUCT} element={<Product/>}/>

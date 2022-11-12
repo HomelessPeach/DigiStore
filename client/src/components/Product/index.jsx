@@ -3,8 +3,26 @@ import "./Product.css"
 
 export const Product = () => {
     return(
-        <div>
-            Product
+        <div style={{fontSize: 60}}>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
+            Product<br/>
         </div>
     )
 }

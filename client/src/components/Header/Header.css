@@ -6,7 +6,7 @@
 
 .header-container {
     min-height: var(--header-height);
-    background-color: black;
+    background-color: var(--main-color-1);
     transition: 0s;
 }
 

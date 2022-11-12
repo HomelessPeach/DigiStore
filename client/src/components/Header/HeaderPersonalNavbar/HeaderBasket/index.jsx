@@ -8,7 +8,7 @@ export const HeaderBasket = () => {
     return (
         <NavLink
             to={RouteNames.BASKET}
-            title="На главную"
+            title="Корзина"
             className={({isActive}) => (isActive) ? 'header-basket header-basket-active' : 'header-basket header-basket-disable'}
         >
             <img src={`${attributeFilesUrl}/basket.svg`}/>
