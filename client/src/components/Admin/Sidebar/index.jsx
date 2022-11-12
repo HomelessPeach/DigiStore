@@ -4,13 +4,16 @@ import "./Sidebar.css"
 
 export const Sidebar = () => {
 
-    const [height, setHeight] = useState(0)
+    const [height, setHeight] = useState((document.body.clientHeight === window.innerHeight)? 289 : 0)
 
+    const footerHeight = () => {
+        console.log(document.body.clientHeight, window.innerHeight, window.scrollY)
+        setHeight((document.body.clientHeight - window.innerHeight - window.scrollY > 200)? 0 : 289 - document.body.clientHeight + window.innerHeight + window.scrollY)
+    }
 
     useEffect(()=>{
-        window.addEventListener("scroll", () => {
-            setHeight((document.body.clientHeight - window.innerHeight - window.scrollY > 200)? 0 : 289 - document.body.clientHeight + window.innerHeight + window.scrollY)
-        });
+        window.addEventListener("scroll", footerHeight);
+        return () => window.removeEventListener("scroll", footerHeight)
     }, [])
 
     return (

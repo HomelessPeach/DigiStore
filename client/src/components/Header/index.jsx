@@ -21,11 +21,13 @@ export const Header = () => {
 
     const [height, setHeight] = useState((maxHeaderHeight - window.scrollY > 90)? maxHeaderHeight - window.scrollY : 90)
 
+    const headerHeight = () => {
+        setHeight((maxHeaderHeight - window.scrollY > 90)? maxHeaderHeight - window.scrollY : 90)
+    }
 
     useEffect(()=>{
-        window.addEventListener("scroll", () => {
-            setHeight((maxHeaderHeight - window.scrollY > 90)? maxHeaderHeight - window.scrollY : 90)
-        });
+        window.addEventListener("scroll", headerHeight);
+        return () => window.removeEventListener("scroll", headerHeight)
     }, [])
 
     return (
