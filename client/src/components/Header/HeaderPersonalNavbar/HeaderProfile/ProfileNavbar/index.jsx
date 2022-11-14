@@ -1,8 +1,9 @@
 import * as React from "react";
+import styled from "styled-components"
 import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
-import "./ProfileNavbar.css"
 import {RouteNames} from "../../../../../Router";
+import {Theme} from "../../../../../styles";
 
 export const ProfileNavbar = (props) => {
 
@@ -12,31 +13,67 @@ export const ProfileNavbar = (props) => {
     } = props
     const Auth = true
 
-    const [headerHeight, setHeaderHeight] = useState(document.getElementById('header')?.offsetHeight || 90)
     const [profileNavbarHeight, setProfileNavbarHeight] = useState(document.getElementById('profile-navbar')?.offsetHeight || 500)
 
     useEffect(() => {
-        setHeaderHeight(document.getElementById('header')?.offsetHeight)
         setProfileNavbarHeight(document.getElementById('profile-navbar')?.offsetHeight)
     }, [])
 
     return (
-        <div id='profile-navbar' style={(isOpen)? {top: headerHeight} : {top: - profileNavbarHeight}}>
-            <div className={'profile-navbar-container'}>
+        <ProfileNavbarBlock id='profile-navbar' isOpen={isOpen} headerHeight={Theme.size.header.height} profileNavbarHeight={profileNavbarHeight}>
+            <ProfileNavbarContainer>
                 {(Auth)?
                     <>
-                        <NavLink to={RouteNames.PROFILE} title="Профиль" className={'profile-navbar-item'} onClick={() => setIsOpen(false)}>Профиль</NavLink>
+                        <NavLinkBlock to={RouteNames.PROFILE} title="Профиль" onClick={() => setIsOpen(false)}>Профиль</NavLinkBlock>
                         {(true)?
-                            <NavLink to={RouteNames.ADMIN} title="Панель администратора" className={'profile-navbar-item'} onClick={() => setIsOpen(false)}>Панель администратора</NavLink>
+                            <NavLinkBlock to={RouteNames.ADMIN} title="Панель администратора" onClick={() => setIsOpen(false)}>Панель администратора</NavLinkBlock>
                             : null
                         }
-                        <div className={"profile-navbar-button"} onClick={() => setIsOpen(false)}>Выйти</div>
+                        <ProfileNavbarButton onClick={() => setIsOpen(false)}>Выйти</ProfileNavbarButton>
                     </>
                     : <>
-                        <div className={"profile-navbar-button"} onClick={() => setIsOpen(false)}>Войти</div>
+                        <ProfileNavbarButton onClick={() => setIsOpen(false)}>Войти</ProfileNavbarButton>
                     </>
                 }
-            </div>
-        </div>
+            </ProfileNavbarContainer>
+        </ProfileNavbarBlock>
     )
 }
+
+const ProfileNavbarBlock = styled.div`
+  position: fixed;
+  top: ${({isOpen, headerHeight, profileNavbarHeight}) => (isOpen)? headerHeight : - profileNavbarHeight}px;
+  right: 10px;
+  width: 300px;
+  border: 1px solid black;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  background-color: ${({theme}) => theme.colors.tertiary};
+  transition: 0.5s;
+  z-index: -1;
+`
+
+const ProfileNavbarContainer = styled.div`
+  padding: 20px 30px 15px;
+  display: flex;
+  flex-direction: column;
+`
+
+const ProfileNavbarButton = styled.div`
+  width: 100%;
+  background-color: ${({theme}) => theme.colors.secondary};
+  border-radius: 10px;
+  padding: 5px 0;
+  color: ${({theme}) => theme.colors.primary};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const NavLinkBlock = styled(NavLink)`
+  padding: 5px 0;
+  margin: 0 0 17px;
+  text-decoration: none;
+  color: ${({theme}) => theme.colors.primary};
+  border-bottom: 1px solid ${({theme}) => theme.colors.primary};
+`

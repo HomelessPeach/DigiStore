@@ -1,17 +1,29 @@
 import * as React from "react";
+import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 import {attributeFilesUrl} from "../../../services";
 import {RouteNames} from "../../../Router";
-import "./HeaderLogo.css"
 
 export const HeaderLogo = () => {
     return (
-        <NavLink
+        <NavLinkBlock
             to={RouteNames.HOME}
             title="На главную"
-            className={({isActive}) => (isActive) ? 'header-logo header-logo-active' : 'header-logo header-logo-disable'}
         >
-            <img src={`${attributeFilesUrl}/logo2.svg`}/>
-        </NavLink>
+            <Logo src={`${attributeFilesUrl}/logo2.svg`}/>
+        </NavLinkBlock>
     )
 }
+
+const NavLinkBlock = styled(NavLink)`
+  height: ${({theme}) => theme.size.header.height}px;
+  padding: 5px 10px;
+  cursor: pointer;
+  &.active {
+    pointer-events: none;
+  }
+`
+
+const Logo = styled.img`
+  height: 100%;
+`

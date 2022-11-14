@@ -1,8 +1,0 @@
-.sidebar-container {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    border-right: 1px solid black;
-    z-index: 0;
-}

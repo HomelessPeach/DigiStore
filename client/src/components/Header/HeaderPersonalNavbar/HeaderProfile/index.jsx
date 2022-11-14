@@ -1,8 +1,9 @@
 import * as React from "react";
+import styled from "styled-components";
+import {useState} from "react";
 import {attributeFilesUrl} from "../../../../services";
 import {ProfileNavbar} from "./ProfileNavbar";
-import {useState} from "react";
-import "./HeaderProfile.css"
+
 
 export const HeaderProfile = () => {
 
@@ -10,10 +11,21 @@ export const HeaderProfile = () => {
 
     return (
         <>
-            <div className={'header-profile'} onClick={() => setOpenProfileNavbar(!openProfileNavbar)}>
-                <img src={`${attributeFilesUrl}/profile.svg`}/>
-            </div>
+            <HeaderProfileBlock onClick={() => setOpenProfileNavbar(!openProfileNavbar)}>
+                <ProfileImage src={`${attributeFilesUrl}/profile.svg`}/>
+            </HeaderProfileBlock>
             <ProfileNavbar isOpen={openProfileNavbar} setIsOpen={setOpenProfileNavbar}/>
         </>
     )
 }
+
+const HeaderProfileBlock = styled.div`
+  width: 50px;
+  display: flex;
+  align-items: end;
+  cursor: pointer;
+`
+
+const ProfileImage = styled.img`
+  width: 100%
+`

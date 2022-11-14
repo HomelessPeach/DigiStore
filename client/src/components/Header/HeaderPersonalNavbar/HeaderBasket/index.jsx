@@ -1,17 +1,30 @@
 import * as React from "react";
+import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 import {attributeFilesUrl} from "../../../../services";
 import {RouteNames} from "../../../../Router";
-import "./HeaderBasket.css"
 
 export const HeaderBasket = () => {
     return (
-        <NavLink
+        <NavLinkBlock
             to={RouteNames.BASKET}
             title="Корзина"
-            className={({isActive}) => (isActive) ? 'header-basket header-basket-active' : 'header-basket header-basket-disable'}
         >
-            <img src={`${attributeFilesUrl}/basket.svg`}/>
-        </NavLink>
+            <BasketImage src={`${attributeFilesUrl}/basket.svg`}/>
+        </NavLinkBlock>
     )
 }
+
+const NavLinkBlock = styled(NavLink)`
+  width: 50px;
+  display: flex;
+  align-items: end;
+  cursor: pointer;
+  &.active {
+    pointer-events: none;
+  }
+`
+
+const BasketImage = styled.img`
+  width: 100%;
+`

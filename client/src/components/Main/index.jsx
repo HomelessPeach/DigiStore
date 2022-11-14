@@ -1,23 +1,36 @@
 import * as React from "react";
+import styled from "styled-components"
 import {useEffect, useState} from "react";
 import {Outlet, useLocation} from "react-router-dom";
-import "./Main.css"
+
 
 export const Main = () => {
 
     const {pathname} = useLocation()
 
-    const [paddingTop, setPadding] = useState(document.querySelectorAll("#header .header-container")[0]?.offsetHeight)
+    const [paddingTop, setPadding] = useState(document.getElementById("header")?.offsetHeight)
 
     useEffect(() => {
-        setPadding(document.querySelectorAll("#header .header-container")[0]?.offsetHeight)
-    }, [pathname === '/'])
+        setTimeout(()=>{
+            setPadding(document.getElementById("header").offsetHeight)
+        }, 1)
+    }, [pathname])
 
     return (
-        <main id={'main'} style={{paddingTop: paddingTop}}>
-            <div className={'main-content'}>
+        <MainBlock id={'main'} paddingTop={paddingTop}>
+            <MainContainer>
                 <Outlet/>
-            </div>
-        </main>
+            </MainContainer>
+        </MainBlock>
     )
 }
+
+const MainBlock = styled.main`
+  padding-top: ${({paddingTop}) => paddingTop}px;
+  min-height: calc(100vh - ${({theme}) => theme.size.footer.height}px);
+  background-color: ${({theme}) => theme.colors.secondary};
+`
+
+const MainContainer = styled.main`
+
+`
