@@ -2,20 +2,26 @@ import * as React from "react";
 import styled from "styled-components";
 import {Outlet} from "react-router-dom";
 import {Sidebar} from "./Sidebar";
-import {AdminRouteNames} from "../../Router";
+import {AdminRouteNames, RouteNames} from "../../Router";
+import {Home, User, Product} from "./Sidebar/Icons";
 
 export const Admin = () => {
 
     const links = [
         {
+            name: 'Общая информация',
+            pathname: RouteNames.ADMIN,
+            icon: <Home/>
+        },
+        {
             name: 'Системное',
             items: [
-                {name: 'Пользователи', pathname: AdminRouteNames.ADMIN_USERS.LIST},
+                {name: 'Пользователи', pathname: AdminRouteNames.ADMIN_USERS.LIST, icon: <User/>},
             ]
         }, {
             name: 'Продукты',
             items: [
-                {name: 'Продукция', pathname: AdminRouteNames.ADMIN_PRODUCT.LIST},
+                {name: 'Продукция', pathname: AdminRouteNames.ADMIN_PRODUCT.LIST, icon: <Product/>},
             ]
         },
     ]

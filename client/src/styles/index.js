@@ -7,7 +7,7 @@ export const Theme = {
         tertiary: '#b13a8e',
     },
     fonts: {
-        mainFont: '"M PLUS Rounded 1c", sans-serif',
+        mainFont: '"Arial", sans-serif',
     },
     size: {
         header: {
