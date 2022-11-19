@@ -5,7 +5,7 @@ import {Product} from "../components/Product";
 import {Admin} from "../components/Admin";
 import {Profile} from "../components/Profile";
 import {Basket} from "../components/Basket";
-import {UsersList} from "../components/Admin/Tables/Users";
+import {UserList, UserShow} from "../components/Admin/Tables/Users";
 
 export const RouteNames = {
     HOME: '/',
@@ -16,12 +16,8 @@ export const RouteNames = {
 }
 
 export const AdminRouteNames = {
-    ADMIN_PRODUCT: {
-        LIST: `${RouteNames.ADMIN}/products`
-    },
-    ADMIN_USERS: {
-        LIST: `${RouteNames.ADMIN}/users`
-    },
+    ADMIN_PRODUCT: `${RouteNames.ADMIN}/products`,
+    ADMIN_USERS:  `${RouteNames.ADMIN}/users`,
 }
 
 export const Router = () => {
@@ -31,8 +27,9 @@ export const Router = () => {
                 <Route index element={<Home/>}/>
                 <Route path={RouteNames.ADMIN} element={<Admin/>}>
                     <Route index element={<Home/>}/>
-                    <Route path={AdminRouteNames.ADMIN_USERS.LIST} element={<UsersList/>}/>
-                    <Route path={AdminRouteNames.ADMIN_PRODUCT.LIST} element={<Product/>}/>
+                    <Route path={AdminRouteNames.ADMIN_USERS} element={<UserList/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_USERS}/:id`} element={<UserShow/>}/>
+                    <Route path={AdminRouteNames.ADMIN_PRODUCT} element={<Product/>}/>
                 </Route>
                 <Route path={RouteNames.PROFILE} element={<Profile/>}/>
                 <Route path={RouteNames.BASKET} element={<Basket/>}/>

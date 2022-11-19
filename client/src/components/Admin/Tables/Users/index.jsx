@@ -1,5 +1,7 @@
-import {UsersList} from "./UsersList";
+import {UserList} from "./UserList";
+import {UserShow} from "./UserShow";
 
 export {
-    UsersList,
+    UserList,
+    UserShow
 }

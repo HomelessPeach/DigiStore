@@ -16,12 +16,12 @@ export const Admin = () => {
         {
             name: 'Системное',
             items: [
-                {name: 'Пользователи', pathname: AdminRouteNames.ADMIN_USERS.LIST, icon: <User/>},
+                {name: 'Пользователи', pathname: AdminRouteNames.ADMIN_USERS, icon: <User/>},
             ]
         }, {
             name: 'Продукты',
             items: [
-                {name: 'Продукция', pathname: AdminRouteNames.ADMIN_PRODUCT.LIST, icon: <Product/>},
+                {name: 'Продукция', pathname: AdminRouteNames.ADMIN_PRODUCT, icon: <Product/>},
             ]
         },
     ]
