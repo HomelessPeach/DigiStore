@@ -6,6 +6,7 @@ import {Admin} from "../components/Admin";
 import {Profile} from "../components/Profile";
 import {Basket} from "../components/Basket";
 import {UserList, UserShow} from "../components/Admin/Tables/Users";
+import {ProductsList, ProductShow} from "../components/Admin/Tables/Products";
 
 export const RouteNames = {
     HOME: '/',
@@ -29,7 +30,8 @@ export const Router = () => {
                     <Route index element={<Home/>}/>
                     <Route path={AdminRouteNames.ADMIN_USERS} element={<UserList/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_USERS}/:id`} element={<UserShow/>}/>
-                    <Route path={AdminRouteNames.ADMIN_PRODUCT} element={<Product/>}/>
+                    <Route path={AdminRouteNames.ADMIN_PRODUCT} element={<ProductsList/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_PRODUCT}/:id`} element={<ProductShow/>}/>
                 </Route>
                 <Route path={RouteNames.PROFILE} element={<Profile/>}/>
                 <Route path={RouteNames.BASKET} element={<Basket/>}/>
