@@ -1,14 +1,8 @@
-import {FC} from 'react';
 import * as React from "react";
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
-import {LinkItem} from '../index';
 
-interface HeaderGeneralNavbarProps {
-    items: LinkItem[]
-}
-
-export const HeaderGeneralNavbar: FC<HeaderGeneralNavbarProps> = (props) => {
+export const HeaderGeneralNavbar = (props) => {
 
     const {
         items

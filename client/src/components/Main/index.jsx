@@ -2,18 +2,17 @@ import * as React from "react";
 import styled from "styled-components"
 import {useEffect, useState} from "react";
 import {Outlet, useLocation} from "react-router-dom";
-import {Theme} from '../../styles';
 
 
 export const Main = () => {
 
     const {pathname} = useLocation()
 
-    const [paddingTop, setPadding] = useState<number>(document.getElementById("header")?.offsetHeight || Theme.size.header.height)
+    const [paddingTop, setPadding] = useState(document.getElementById("header")?.offsetHeight)
 
     useEffect(() => {
         setTimeout(()=>{
-            setPadding(document.getElementById("header")?.offsetHeight || Theme.size.header.height)
+            setPadding(document.getElementById("header").offsetHeight)
         }, 1)
     }, [pathname])
 
@@ -26,11 +25,7 @@ export const Main = () => {
     )
 }
 
-interface MainBlockProps {
-    paddingTop: number
-}
-
-const MainBlock = styled.main<MainBlockProps>`
+const MainBlock = styled.main`
   padding-top: ${({paddingTop}) => paddingTop}px;
   min-height: calc(100vh - ${({theme}) => theme.size.footer.height}px);
   background-color: ${({theme}) => theme.colors.secondary};

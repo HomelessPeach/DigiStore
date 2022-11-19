@@ -1,14 +1,8 @@
-import {FC} from 'react';
 import * as React from "react";
 import styled from "styled-components";
-import {SidebarItem} from '../index';
 import {MenuItems} from "./MenuItems";
 
-export interface SidebarProps {
-    items: SidebarItem[]
-}
-
-export const Sidebar: FC<SidebarProps> = (props) => {
+export const Sidebar = (props) => {
 
     const {
         items

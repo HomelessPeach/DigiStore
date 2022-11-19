@@ -1,16 +1,11 @@
 import * as React from "react";
 import styled from "styled-components"
-import {Dispatch, FC, useEffect, useState} from 'react';
+import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 import {RouteNames} from "../../../../../Router";
 import {Theme} from "../../../../../styles";
 
-export interface ProfileNavbarProps {
-    isOpen: boolean
-    setIsOpen: Dispatch<React.SetStateAction<boolean>>
-}
-
-export const ProfileNavbar: FC<ProfileNavbarProps> = (props) => {
+export const ProfileNavbar = (props) => {
 
     const {
         isOpen = false,
@@ -18,10 +13,10 @@ export const ProfileNavbar: FC<ProfileNavbarProps> = (props) => {
     } = props
     const Auth = true
 
-    const [profileNavbarHeight, setProfileNavbarHeight] = useState<number>(document.getElementById('profile-navbar')?.offsetHeight || 500)
+    const [profileNavbarHeight, setProfileNavbarHeight] = useState(document.getElementById('profile-navbar')?.offsetHeight || 500)
 
     useEffect(() => {
-        setProfileNavbarHeight(document.getElementById('profile-navbar')?.offsetHeight || 500)
+        setProfileNavbarHeight(document.getElementById('profile-navbar')?.offsetHeight)
     }, [])
 
     return (
@@ -45,13 +40,7 @@ export const ProfileNavbar: FC<ProfileNavbarProps> = (props) => {
     )
 }
 
-interface ProfileNavbarBlockProps {
-    isOpen: boolean
-    headerHeight: number
-    profileNavbarHeight: number
-}
-
-const ProfileNavbarBlock = styled.div<ProfileNavbarBlockProps>`
+const ProfileNavbarBlock = styled.div`
   position: fixed;
   top: ${({isOpen, headerHeight, profileNavbarHeight}) => (isOpen)? headerHeight : - profileNavbarHeight}px;
   right: 10px;

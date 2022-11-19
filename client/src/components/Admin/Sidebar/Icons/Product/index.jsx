@@ -1,11 +1,10 @@
 import * as React from "react";
-import {FC} from 'react';
 import styled from "styled-components";
 
-export const User: FC = () => {
+export const Product = () => {
     return (
         <SvgBlock viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-            <path d="M24 8c-4.42 0-8 3.58-8 8 0 4.41 3.58 8 8 8s8-3.59 8-8c0-4.42-3.58-8-8-8zm0 20c-5.33 0-16 2.67-16 8v4h32v-4c0-5.33-10.67-8-16-8z"/>
+            <path d="M42 4h-36c-2.21 0-4 1.79-4 4v24c0 2.21 1.79 4 4 4h14l-4 6v2h16v-2l-4-6h14c2.21 0 4-1.79 4-4v-24c0-2.21-1.79-4-4-4zm0 24h-36v-20h36v20z"/>
         </SvgBlock>
     )
 }

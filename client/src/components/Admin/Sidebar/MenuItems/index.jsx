@@ -1,16 +1,9 @@
-import {FC} from 'react';
 import * as React from "react";
 import styled from "styled-components";
 import {NavLink, useLocation} from "react-router-dom";
-import {SidebarItem} from '../../index';
 import {MenuGroupItem} from "./MenuGroupItem";
 
-export interface MenuItemsProps {
-    items: SidebarItem[]
-    paddingLeft?: number
-}
-
-export const MenuItems: FC<MenuItemsProps> = (props) => {
+export const MenuItems = (props) => {
     const {
         items,
         paddingLeft = 0,
@@ -19,37 +12,28 @@ export const MenuItems: FC<MenuItemsProps> = (props) => {
     const {pathname} = useLocation()
 
     return (
-        <>
-            {
-                items.map((item) =>
-                    (item.pathname) ?
-                        <NavLinkBlock
-                            to={item.pathname}
-                            title={item.name}
-                            pathname={pathname}
-                            paddingLeft={paddingLeft + 10}
-                        >
-                            <IconBlock>
-                                {item.icon}
-                            </IconBlock>
-                            <TextBlock>
-                                {item.name}
-                            </TextBlock>
-                        </NavLinkBlock>
-                        :
-                        <MenuGroupItem item={item} paddingLeft={paddingLeft}/>
-                )
-            }
-        </>
+        items.map((item) =>
+            (item.pathname) ?
+                <NavLinkBlock
+                    to={item.pathname}
+                    title={item.name}
+                    pathname={pathname}
+                    paddingLeft={paddingLeft + 10}
+                >
+                    <IconBlock>
+                        {item.icon}
+                    </IconBlock>
+                    <TextBlock>
+                        {item.name}
+                    </TextBlock>
+                </NavLinkBlock>
+                :
+                <MenuGroupItem item={item} paddingLeft={paddingLeft}/>
+        )
     )
 }
 
-interface NavLinkBlockProps {
-    pathname: string
-    paddingLeft: number
-}
-
-const NavLinkBlock = styled(NavLink)<NavLinkBlockProps>`
+const NavLinkBlock = styled(NavLink)`
   width: var(--sidebar-width);
   display: flex;
   flex-direction: row;

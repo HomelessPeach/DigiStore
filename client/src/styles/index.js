@@ -1,4 +1,4 @@
-import {createGlobalStyle} from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 
 export const Theme = {
     colors: {
@@ -36,6 +36,6 @@ export const Styles = createGlobalStyle`
   }
 
   body {
-    background-color: ${Theme.colors.secondary};
+    background-color: ${({theme}) => theme.colors.secondary};
   }
 `

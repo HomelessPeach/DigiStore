@@ -1,4 +1,3 @@
-import {FC} from 'react';
 import {Routes, Route} from "react-router-dom";
 import {Layout} from "./Layout";
 import {Home} from "../components/Home";
@@ -25,7 +24,7 @@ export const AdminRouteNames = {
     },
 }
 
-export const Router: FC = () => {
+export const Router = () => {
     return (
         <Routes>
             <Route path={RouteNames.HOME} element={<Layout/>}>

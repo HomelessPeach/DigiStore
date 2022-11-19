@@ -8,10 +8,6 @@ import {HeaderGeneralNavbar} from "./HeaderGeneralNavbar";
 import {RouteNames} from "../../Router";
 import {Theme} from "../../styles";
 
-export interface LinkItem {
-    name: string
-    pathname: string
-}
 
 export const Header = () => {
 
@@ -19,7 +15,7 @@ export const Header = () => {
         pathname
     } = useLocation()
 
-    const links: LinkItem[] = [
+    const links = [
         {name: 'Продукция', pathname: RouteNames.PRODUCT}
     ]
 
@@ -49,11 +45,6 @@ export const Header = () => {
     )
 }
 
-interface HeaderContainerProps {
-    theme: any;
-    height: number
-}
-
 const HeaderBlock = styled.header`
   width: 100%;
   position: fixed;
@@ -61,7 +52,7 @@ const HeaderBlock = styled.header`
 `
 
 const HeaderLargeContainer = styled.div`
-  height: ${({height}: HeaderContainerProps) => height}px;
+  height: ${({height}) => height}px;
   min-height: ${({theme}) => theme.size.height}px;
   background-color: ${({theme}) => theme.colors.primary};
   transition: 0s;
@@ -71,7 +62,7 @@ const HeaderLargeContainer = styled.div`
 `
 
 const HeaderContainer = styled.div`
-  height: ${({height}: HeaderContainerProps) => height}px;
+  height: ${({height}) => height}px;
   min-height: ${({theme}) => theme.size.height}px;
   background-color: ${({theme}) => theme.colors.primary};
   transition: 0s;

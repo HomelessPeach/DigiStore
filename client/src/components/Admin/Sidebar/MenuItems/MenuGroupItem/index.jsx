@@ -1,18 +1,10 @@
-import {FC, ReactElement, useState} from 'react';
-import {SidebarItem} from '../../../index';
+import {useState} from "react";
 import {Arrow} from "../../Icons";
 import * as React from "react";
 import {MenuItems} from "../index";
 import styled from "styled-components";
 
-export interface MenuGroupItemProps {
-    item: SidebarItem
-    paddingLeft: number
-}
-
-
-
-export const MenuGroupItem: FC<MenuGroupItemProps> = (props) => {
+export const MenuGroupItem = (props) => {
 
     const {
         item,
@@ -33,7 +25,7 @@ export const MenuGroupItem: FC<MenuGroupItemProps> = (props) => {
                     {item.name}
                 </TextBlock>
             </MenuTitleBlock>
-            {(isOpen && item.items)?
+            {(isOpen)?
                 <SidebarGroupWrapper>
                     <MenuItems items={item.items} paddingLeft={paddingLeft + 10}/>
                 </SidebarGroupWrapper>
@@ -43,16 +35,7 @@ export const MenuGroupItem: FC<MenuGroupItemProps> = (props) => {
     )
 }
 
-interface MenuTitleBlock {
-    isOpen: boolean
-    paddingLeft: number
-}
-
-interface IconTitleGroupBlockProps {
-    isOpen: boolean
-}
-
-const MenuTitleBlock = styled.div<MenuTitleBlock>`
+const MenuTitleBlock = styled.div`
   --padding-top-bootom: 5px;
   width: 100%;
   font-size: var(--sidebar-font-size);
@@ -61,7 +44,7 @@ const MenuTitleBlock = styled.div<MenuTitleBlock>`
   flex-direction: row;
   align-items: center;
   font-family: ${({theme}) => theme.fonts.mainFont};
-  background-color: ${({theme, isOpen}: any) => (isOpen)? 'rgba(177, 58, 142, 0.5)': theme.colors.secondary};
+  background-color: ${({theme, isOpen}) => (isOpen)? 'rgba(177, 58, 142, 0.5)': theme.colors.secondary};
 }
 `
 
@@ -71,7 +54,7 @@ const SidebarGroupWrapper = styled.div`
   width: var(--sidebar-width);
 `
 
-const IconTitleGroupBlock = styled.div<IconTitleGroupBlockProps>`
+const IconTitleGroupBlock = styled.div`
   height: 100%;
   transform: rotate(${({isOpen}) => (isOpen) ? 90: 0}deg);
   transition: transform 0.2s ease-out;
