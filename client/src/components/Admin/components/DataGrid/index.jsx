@@ -66,6 +66,7 @@ const HeaderBlock = styled.div`
 
 const HeaderItemTitleBlock = styled.div`
   width: ${({widthField}) => widthField}%;
+  color: #000000;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -76,6 +77,8 @@ const ItemBlock = styled(NavLink)`
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid ${({theme}) => theme.colors.primary};
+  text-decoration: none;
+  color: #000000;
   &:last-child {
     border-bottom: none;
   }
