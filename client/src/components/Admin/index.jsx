@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {Outlet} from "react-router-dom";
 import {Sidebar} from "./Sidebar";
 import {AdminRouteNames, RouteNames} from "../../Router";
-import {Home, User, Product} from "./Sidebar/Icons";
+import {Chat, Feedback, Home, News, Order, Product, ProductCategory, User} from "./Sidebar/Icons";
 
 export const Admin = () => {
 
@@ -19,9 +19,18 @@ export const Admin = () => {
                 {name: 'Пользователи', pathname: AdminRouteNames.ADMIN_USERS, icon: <User/>},
             ]
         }, {
-            name: 'Продукты',
+            name: 'Продуктовая информация',
             items: [
-                {name: 'Продукция', pathname: AdminRouteNames.ADMIN_PRODUCT, icon: <Product/>},
+                {name: 'Товары', pathname: AdminRouteNames.ADMIN_PRODUCT, icon: <Product/>},
+                {name: 'Категории товаров', pathname: AdminRouteNames.ADMIN_PRODUCT_CATEGORY, icon: <ProductCategory/>},
+                {name: 'Новости', pathname: AdminRouteNames.ADMIN_NEWS, icon: <News/>},
+                {name: 'Заказы', pathname: AdminRouteNames.ADMIN_ORDER, icon: <Order/>},
+            ]
+        }, {
+            name: 'Связь с пользователями',
+            items: [
+                {name: 'Чат поддержки', pathname: AdminRouteNames.ADMIN_CHAT, icon: <Chat/>},
+                {name: 'Обратная связь', pathname: AdminRouteNames.ADMIN_FEEDBACK, icon: <Feedback/>},
             ]
         },
     ]

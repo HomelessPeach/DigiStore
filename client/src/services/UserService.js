@@ -7,7 +7,7 @@ export const userAPI = createApi({
     endpoints: (build) => ({
         userList: build.query({
             query: () => ({
-                url: '/list',
+                url: '/',
             })
         })
     })

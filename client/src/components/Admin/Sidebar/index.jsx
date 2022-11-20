@@ -18,7 +18,7 @@ export const Sidebar = (props) => {
 const SidebarContainer = styled.div`
   --sidebar-width: 250px;
   --sidebar-font-size: 18px;
-  --item-padding-vertical: 7px;
+  --item-padding-vertical: 8px;
   --icon-height: calc(var(--sidebar-font-size) + var(--item-padding-vertical) - 1px);
   background-color: ${({theme}) => theme.colors.secondary};
   width: var(--sidebar-width);

@@ -27,7 +27,7 @@ export const MenuGroupItem = (props) => {
             </MenuTitleBlock>
             {(isOpen)?
                 <SidebarGroupWrapper>
-                    <MenuItems items={item.items} paddingLeft={paddingLeft + 10}/>
+                    <MenuItems items={item.items} paddingLeft={paddingLeft + 20}/>
                 </SidebarGroupWrapper>
                 : null
             }
@@ -36,7 +36,6 @@ export const MenuGroupItem = (props) => {
 }
 
 const MenuTitleBlock = styled.div`
-  --padding-top-bootom: 5px;
   width: 100%;
   font-size: var(--sidebar-font-size);
   padding: var(--item-padding-vertical) 10px var(--item-padding-vertical) ${({paddingLeft}) => paddingLeft}px;
@@ -44,7 +43,8 @@ const MenuTitleBlock = styled.div`
   flex-direction: row;
   align-items: center;
   font-family: ${({theme}) => theme.fonts.mainFont};
-  background-color: ${({theme, isOpen}) => (isOpen)? 'rgba(177, 58, 142, 0.5)': theme.colors.secondary};
+  color: ${({isOpen}) => (isOpen)? '#424242' : '#000000'};
+  fill: ${({isOpen}) => (isOpen)? '#424242' : '#000000'};
 }
 `
 

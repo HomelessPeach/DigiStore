@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components"
 import {userAPI} from "../../../../services/UserService";
-import {DataGrid} from "../../components/DataGrid";
+import {DataGrid} from "../../components/Datagrid";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
 

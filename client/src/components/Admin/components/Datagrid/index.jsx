@@ -6,9 +6,9 @@ import {AdminRouteNames} from "../../../../Router";
 export const DataGrid = (props) => {
 
     const {
-        data,
+        data = [],
         children,
-        idName
+        idName = 'id'
     } = props
 
     const {pathname} = useLocation()

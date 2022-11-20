@@ -42,11 +42,13 @@ const NavLinkBlock = styled(NavLink)`
   text-decoration: none;
   padding: var(--item-padding-vertical) 10px var(--item-padding-vertical) ${({paddingLeft}) => paddingLeft}px;
   color: #000000;
+  fill: #000000;
+
   &.active {
-    border-right: ${({theme, to, pathname}) => (to === pathname)? `3px solid ${theme.colors.tertiary}` : null};
-    background-color: ${({to, pathname}) => (to === pathname)? '#c7c7c7' : null};
-    color: ${({theme, to, pathname}) => (to === pathname)? `${theme.colors.tertiary}` : null};
-    fill: ${({theme, to, pathname}) => (to === pathname)? `${theme.colors.tertiary}` : null};
+    border-right: ${({theme, to, pathname}) => (to === pathname) ? `3px solid ${theme.colors.tertiary}` : null};
+    background-color: ${({to, pathname}) => (to === pathname) ? '#c7c7c7' : null};
+    color: ${({theme, to, pathname}) => (to === pathname) ? `${theme.colors.tertiary}` : null};
+    fill: ${({theme, to, pathname}) => (to === pathname) ? `${theme.colors.tertiary}` : null};
   }
 }`
 
