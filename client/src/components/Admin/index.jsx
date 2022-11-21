@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {Outlet} from "react-router-dom";
 import {Sidebar} from "./Sidebar";
 import {AdminRouteNames, RouteNames} from "../../Router";
-import {Chat, Feedback, Home, News, Order, Product, ProductCategory, User} from "./Sidebar/Icons";
+import {Chat, Feedback, Home, News, Order, Product, ProductCategory, User} from "./Icons";
 
 export const Admin = () => {
 

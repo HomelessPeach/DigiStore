@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Arrow} from "../../Icons";
+import {Arrow} from "../../../Icons";
 import * as React from "react";
 import {MenuItems} from "../index";
 import styled from "styled-components";

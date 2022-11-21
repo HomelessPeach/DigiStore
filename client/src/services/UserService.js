@@ -6,9 +6,14 @@ export const userAPI = createApi({
     baseQuery: fetchBaseQuery({baseUrl: `${apiAdminUrl}/user`}),
     endpoints: (build) => ({
         userList: build.query({
-            query: () => ({
-                url: '/',
-            })
+            query: ({offset = 0, limit = 10, sort = '', order = 'ASC'}) => ({
+                url: `?_offset=${offset}&_limit=${limit}&_sort=${sort}&_order=${order}`,
+                method: 'GET',
+                mode: 'cors'
+            }),
+            transformResponse(apiResponse, meta) {
+                return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
+            }
         })
     })
 })

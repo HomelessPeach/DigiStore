@@ -1,52 +1,109 @@
 import * as React from "react";
 import styled from "styled-components"
+import {useState} from "react";
 import {NavLink, useLocation} from "react-router-dom";
-import {AdminRouteNames} from "../../../../Router";
+import {Back, Next} from "../../Icons";
 
 export const DataGrid = (props) => {
 
     const {
-        data = [],
+        getData,
         children,
-        idName = 'id'
+        idName = 'id',
+        pagination = 10
     } = props
 
+    const [sort, setSort] = useState(idName)
+    const [order, setOrder] = useState('ASC')
+    const [page, setPage] = useState(0)
+
+    const {data: {data, totalCount}, isLoading, ...all} = getData({limit: pagination, offset: pagination * page, sort: sort, order: order})
     const {pathname} = useLocation()
 
-    console.log(props)
+    function changeSort(sortName) {
+        if (sortName === sort) {
+            if (order === 'ASC') {
+                setOrder('DESC')
+            } else {
+                setOrder('ASC')
+            }
+        } else {
+            setSort(sortName)
+            setOrder('ASC')
+        }
+    }
+
+    if (isLoading)
+        return <h1>Loading...</h1>
+
+
+    const maxPageCount = String(10 ** Math.ceil(totalCount/pagination) - 1).split('') || [1]
 
     return (
-        <DataGridBlock data={data}>
-            <HeaderBlock>
-                {
-                    children.map((child) =>
-                        <HeaderItemTitleBlock widthField={100 / children.length}>
-                            {child.props.name}
-                        </HeaderItemTitleBlock>
-                    )
-                }
-            </HeaderBlock>
-            {
-                (data.length)?
-                    data.map((item) =>
-                        <ItemBlock
-                            to={`${pathname}/${item[idName]}`}
-                        >
+        <DataGridBlock>
+            <GridBlock>
+                {(children)?
+                    <>
+                        <HeaderBlock>
                             {
                                 children.map((child) =>
-                                    <ItemValueBlock widthField={100 / children.length}>
-                                        {{...child, props: {...props, value: item[child.props.source]}}}
-                                    </ItemValueBlock>
+                                    <HeaderItemTitleBlock onClick={() => changeSort(child.props.source)} widthField={100 / children.length}>
+                                        {child.props.name}
+                                    </HeaderItemTitleBlock>
                                 )
                             }
-                        </ItemBlock>
-                    )
-                    :
+                        </HeaderBlock>
+                        {
+                            (totalCount)?
+                                data.map((item) =>
+                                    <ItemBlock
+                                        to={`${pathname}/${item[idName]}`}
+                                    >
+                                        {
+                                            children.map((child) =>
+                                                <ItemValueBlock widthField={100 / children.length}>
+                                                    {{...child, props: {...props, value: item[child.props.source]}}}
+                                                </ItemValueBlock>
+                                            )
+                                        }
+                                    </ItemBlock>
+                                )
+                                :
+                                <ItemEmptyBlock>
+                                    Эта таблица пуста
+                                </ItemEmptyBlock>
 
-                    <ItemEmptyBlock>
-                        Эта таблица пуста
+                        }
+                    </>
+                    : <ItemEmptyBlock>
+                        Нет данных для отображения
                     </ItemEmptyBlock>
-
+                }
+            </GridBlock>
+            {
+                (totalCount)?
+                    <PageBlock>
+                        <ButtonBlock onClick={() => (page > 0)? setPage(page - 1) : null} pageNumber={null} activePage={page}>
+                            <ButtonItemBlock>
+                                <Back/>
+                            </ButtonItemBlock>
+                        </ButtonBlock>
+                        {
+                            maxPageCount.map((item, index) =>
+                                <ButtonBlock onClick={() => setPage(index)} pageNumber={index} activePage={page}>
+                                    <ButtonItemBlock>
+                                        {index + 1}
+                                    </ButtonItemBlock>
+                                </ButtonBlock>
+                            )
+                        }
+                    <ButtonBlock onClick={() => (page < maxPageCount.length - 1)? setPage(page + 1) : null} pageNumber={null} activePage={page}>
+                        <ButtonItemBlock>
+                            <Next/>
+                        </ButtonItemBlock>
+                    </ButtonBlock>
+                    </PageBlock>
+                    : null
             }
         </DataGridBlock>
     )
@@ -54,14 +111,43 @@ export const DataGrid = (props) => {
 }
 
 const DataGridBlock = styled.div`
-  border: 1px solid ${({theme}) => theme.colors.primary};
+`
+
+const GridBlock = styled.div`
+  border: 1px solid #9f9e9e;
   border-radius: 10px;
+`
+
+const PageBlock = styled.div`
+  padding: 20px;
+  --font-size: 17px;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+`
+
+const ButtonBlock = styled.div`
+  border-radius: 50px;
+  margin: 0 2px;
+  padding: 3px;
+  background-color: ${({pageNumber, activePage}) => (pageNumber === activePage)? '#cecdcd': null};
+  &:hover {
+    background-color: #cecdcd;
+  }
+`
+
+const ButtonItemBlock = styled.div`
+  height: var(--font-size);
+  width: var(--font-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const HeaderBlock = styled.div`
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid ${({theme}) => theme.colors.primary};
+  border-bottom: 1px solid #9f9e9e;
 `
 
 const HeaderItemTitleBlock = styled.div`
@@ -76,7 +162,7 @@ const HeaderItemTitleBlock = styled.div`
 const ItemBlock = styled(NavLink)`
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid ${({theme}) => theme.colors.primary};
+  border-bottom: 1px solid #9f9e9e;
   text-decoration: none;
   color: #000000;
   &:last-child {
