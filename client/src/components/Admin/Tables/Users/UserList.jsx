@@ -14,10 +14,10 @@ export const UserList = () => {
                 </CreateButton>
             </UserListToolbar>
             <DataGrid getData={userAPI.useUserListQuery} idName={'user_id'}>
-                <TextField source={'user_id'} name={'id'}/>
-                <TextField source={'user_email'} name={'e-mail'}/>
-                <TextField source={'user_name'} name={'Имя'}/>
-                <TextField source={'user_phone_number'} name={'Номер телефона'}/>
+                <TextField source={'user_id'} name={'id'} sortable={true}/>
+                <TextField source={'user_email'} name={'e-mail'} sortable={true}/>
+                <TextField source={'user_name'} name={'Имя'} sortable={true}/>
+                <TextField source={'user_phone_number'} name={'Номер телефона'} sortable={true}/>
             </DataGrid>
         </UserListContainer>
     )

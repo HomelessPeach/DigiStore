@@ -7,19 +7,32 @@ export const TextField = (props) => {
         item,
         source,
         value,
-        name,
+        label
     } = props
 
     return (
         <TextFieldBlock>
-            {(value)? value : item[source]}
+            <LabelBlock>{label}</LabelBlock>
+            <ValueBlock>{(value)? value : item[source]}</ValueBlock>
         </TextFieldBlock>
     )
 }
 
 const TextFieldBlock = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  line-height: 1.5;
+`
+
+const ValueBlock = styled.div`
+  display: flex;
   align-items: center;
   width: 100%;
+`
+
+const LabelBlock = styled.div`
+  font-size: 12px;
+  color: #888888;
+  display: flex;
+  align-items: center;
 `

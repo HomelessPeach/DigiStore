@@ -48,9 +48,14 @@ export const DataGrid = (props) => {
                         <HeaderBlock>
                             {
                                 children.map((child) =>
-                                    <HeaderItemTitleBlock onClick={() => changeSort(child.props.source)} widthField={100 / children.length}>
-                                        {child.props.name}
-                                    </HeaderItemTitleBlock>
+                                    (child.props.sortable)?
+                                        <HeaderItemTitleBlock onClick={() => changeSort(child.props.source)} widthField={100 / children.length}>
+                                            {child.props.name}
+                                        </HeaderItemTitleBlock>
+                                        :
+                                        <HeaderItemTitleBlock widthField={100 / children.length}>
+                                            {child.props.name}
+                                        </HeaderItemTitleBlock>
                                 )
                             }
                         </HeaderBlock>
@@ -126,6 +131,7 @@ const PageBlock = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: end;
+  user-select: none;
 `
 
 const ButtonBlock = styled.div`

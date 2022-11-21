@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import {NavLink, useLocation} from "react-router-dom";
+import {RouteNames} from "../../../../Router";
 import {MenuGroupItem} from "./MenuGroupItem";
 
 export const MenuItems = (props) => {
@@ -45,10 +46,10 @@ const NavLinkBlock = styled(NavLink)`
   fill: #000000;
 
   &.active {
-    border-right: ${({theme, to, pathname}) => (to === pathname) ? `3px solid ${theme.colors.tertiary}` : null};
-    background-color: ${({to, pathname}) => (to === pathname) ? '#c7c7c7' : null};
-    color: ${({theme, to, pathname}) => (to === pathname) ? `${theme.colors.tertiary}` : null};
-    fill: ${({theme, to, pathname}) => (to === pathname) ? `${theme.colors.tertiary}` : null};
+    border-right: ${({theme, to, pathname}) => (to === pathname || to !== RouteNames.ADMIN) ? `3px solid ${theme.colors.tertiary}` : null};
+    background-color: ${({to, pathname}) => (to === pathname || to !== RouteNames.ADMIN) ? '#c7c7c7' : null};
+    color: ${({theme, to, pathname}) => (to === pathname || to !== RouteNames.ADMIN) ? `${theme.colors.tertiary}` : null};
+    fill: ${({theme, to, pathname}) => (to === pathname || to !== RouteNames.ADMIN) ? `${theme.colors.tertiary}` : null};
   }
 }`
 
