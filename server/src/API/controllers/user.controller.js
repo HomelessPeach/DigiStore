@@ -33,7 +33,7 @@ class UserController {
     static async showUser(req, res, next) {
         try {
             const {id} = req.params;
-            const user = await UserBusinessService.showUser()
+            const user = await UserBusinessService.showUser(id)
             res.json(user)
         } catch (err) {
             next(err)

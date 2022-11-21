@@ -8,22 +8,22 @@ class UserBusinessService {
     }
 
     static async listUser(query) {
-        const {userSort} = UserProcessService.UserProcessToList(query)
+        const {userSort} = UserProcessService.userDataList(query)
         const users = await UserDatabaseService.listUsers(userSort)
         const countUsers = await UserDatabaseService.countUsers()
         return {users, countUsers}
     }
 
-    static async showUser() {
-        return 1
+    static async showUser(userId) {
+        return await UserDatabaseService.showUser(userId)
     }
 
     static async updateUser() {
         return 1
     }
 
-    static async deleteUser() {
-        return 1
+    static async deleteUser(userId) {
+        return UserDatabaseService.deleteUser(userId)
     }
 
 }
