@@ -4,6 +4,10 @@ const {UserController} = require("../controllers/user.controller");
 const routerUser = Router()
 
 routerUser
-    .get('/list', UserController.listUser)
+    .post('/', UserController.createUser)
+    .get('/', UserController.listUser)
+    .get('/:id', UserController.showUser)
+    .put('/:id', UserController.updateUser)
+    .delete('/:id', UserController.deleteUser)
 
 module.exports = {routerUser}
