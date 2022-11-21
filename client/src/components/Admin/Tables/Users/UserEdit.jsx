@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components"
 import {userAPI} from "../../../../services/UserService";
 
-export const UserShow = () => {
+export const UserEdit = () => {
 
     const {data, isLoading} = userAPI.useUserListQuery()
 
@@ -12,18 +12,18 @@ export const UserShow = () => {
     const user = data[0]
 
     return (
-        <ShowBlock>
+        <EditBlock>
             <div>{user.user_id}</div>
             <div>{user.user_email}</div>
             <div>{user.user_password}</div>
             <div>{user.user_name}</div>
             <div>{user.user_phone_number}</div>
-        </ShowBlock>
+        </EditBlock>
     )
 
 }
 
-const ShowBlock = styled.div`
+const EditBlock = styled.div`
     display: flex;
   flex-direction: column;
 `

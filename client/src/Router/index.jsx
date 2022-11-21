@@ -6,7 +6,7 @@ import {Admin} from "../components/Admin";
 import {Profile} from "../components/Profile";
 import {Basket} from "../components/Basket";
 import {AdminHomePage} from "../components/Admin/AdminHomePage";
-import {UserList, UserShow} from "../components/Admin/Tables/Users";
+import {UserEdit, UserList, UserShow} from "../components/Admin/Tables/Users";
 import {ProductsList, ProductShow} from "../components/Admin/Tables/Products";
 
 export const RouteNames = {
@@ -37,6 +37,8 @@ export const Router = () => {
 
                     <Route path={AdminRouteNames.ADMIN_USERS} element={<UserList/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_USERS}/:id`} element={<UserShow/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_USERS}/edit/:id`} element={<UserEdit/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_USERS}/new`} element={<UserEdit/>}/>
 
                     <Route path={AdminRouteNames.ADMIN_PRODUCT} element={<ProductsList/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_PRODUCT}/:id`} element={<ProductShow/>}/>

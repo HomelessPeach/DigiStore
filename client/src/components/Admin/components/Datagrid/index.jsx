@@ -17,7 +17,6 @@ export const DataGrid = (props) => {
     const [order, setOrder] = useState('ASC')
     const [page, setPage] = useState(0)
 
-    const {data: {data, totalCount}, isLoading, ...all} = getData({limit: pagination, offset: pagination * page, sort: sort, order: order})
     const {pathname} = useLocation()
 
     function changeSort(sortName) {
@@ -33,11 +32,13 @@ export const DataGrid = (props) => {
         }
     }
 
+    const {data: response, isLoading} = getData({limit: pagination, offset: pagination * page, sort: sort, order: order})
+
     if (isLoading)
         return <h1>Loading...</h1>
 
-
-    const maxPageCount = String(10 ** Math.ceil(totalCount/pagination) - 1).split('') || [1]
+    const {data, totalCount} = response
+    const maxPageCount = String(10 ** Math.ceil(totalCount/pagination) - 1).split('')
 
     return (
         <DataGridBlock>
@@ -111,6 +112,7 @@ export const DataGrid = (props) => {
 }
 
 const DataGridBlock = styled.div`
+  padding: 10px 0;
 `
 
 const GridBlock = styled.div`
@@ -148,6 +150,7 @@ const HeaderBlock = styled.div`
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #9f9e9e;
+  user-select: none;
 `
 
 const HeaderItemTitleBlock = styled.div`
@@ -173,6 +176,9 @@ const ItemBlock = styled(NavLink)`
 const ItemValueBlock = styled.div`
   width: ${({widthField}) => widthField}%;
   padding: 10px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const ItemEmptyBlock = styled.div`
