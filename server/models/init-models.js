@@ -34,10 +34,13 @@ function initModels(sequelize) {
   var reviews = _reviews(sequelize, DataTypes);
   var users = _users(sequelize, DataTypes);
 
-  news.belongsTo(images, { as: "fk_image_image", foreignKey: "fk_image"});
-  images.hasMany(news, { as: "newss", foreignKey: "fk_image"});
-  product_images.belongsTo(images, { as: "fk_image_image", foreignKey: "fk_image"});
-  images.hasMany(product_images, { as: "product_images", foreignKey: "fk_image"});
+  users.belongsTo(images, { as: "image", foreignKey: "fk_image"});
+  images.hasMany(users, { as: "users", foreignKey: "fk_image"});
+  news.belongsTo(images, { as: "image", foreignKey: "fk_image"});
+  images.hasMany(news, { as: "news", foreignKey: "fk_image"});
+  product_images.belongsTo(images, { as: "image", foreignKey: "fk_image"});
+  images.hasMany(product_images, { as: "products", foreignKey: "fk_image"});
+
   products.belongsTo(product_categories, { as: "fk_product_category_product_category", foreignKey: "fk_product_category"});
   product_categories.hasMany(products, { as: "products", foreignKey: "fk_product_category"});
   product_images.belongsTo(products, { as: "fk_product_product", foreignKey: "fk_product"});

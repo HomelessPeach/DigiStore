@@ -1,6 +1,6 @@
 const {SequelizeConnect} = require('../database-connect')
 const initModels = require('../../../models/init-models')
-const {users} = initModels(SequelizeConnect)
+const {users, images} = initModels(SequelizeConnect)
 
 class UserDatabaseService {
 
@@ -25,6 +25,13 @@ class UserDatabaseService {
             where: {
                 user_id: userId
             },
+            include: [{
+                model: images,
+                as: 'image',
+                attributes: [
+                    'image_path',
+                ],
+            }],
             transaction: transaction
         })
     }

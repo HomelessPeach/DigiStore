@@ -9,7 +9,7 @@ class ProductCategoryBusinessService {
 
     static async listProductCategory(query) {
         const {productCategorySort} = ProductCategoryProcessService.productCategoryDataList(query)
-        const productCategories= await ProductCategoryDatabaseService.listProductCategory(productCategorySort)
+        const productCategories = await ProductCategoryDatabaseService.listProductCategory(productCategorySort)
         const countProductCategories = await ProductCategoryDatabaseService.countProductCategory()
         return {productCategories, countProductCategories}
     }
