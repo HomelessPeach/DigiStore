@@ -12,13 +12,9 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    fk_user_id: {
+    fk_user: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'users',
-        key: 'user_id'
-      }
+      allowNull: true
     },
     create_at: {
       type: DataTypes.TEXT,

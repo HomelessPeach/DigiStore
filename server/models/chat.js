@@ -5,16 +5,11 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: true,
-      primaryKey: true,
-      unique: true
+      primaryKey: true
     },
-    fk_user_id: {
+    fk_user: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'users',
-        key: 'user_id'
-      }
+      allowNull: true
     },
     is_answer: {
       type: DataTypes.INTEGER,
@@ -23,15 +18,6 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'chat',
-    timestamps: false,
-    indexes: [
-      {
-        name: "chat_id",
-        unique: true,
-        fields: [
-          { name: "chat_id" },
-        ]
-      },
-    ]
+    timestamps: false
   });
 };

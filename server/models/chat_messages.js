@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: "datetime(now, localtime)"
     },
-    fk_chat_id: {
+    fk_chat: {
       type: DataTypes.INTEGER,
       allowNull: true
     },

@@ -29,6 +29,10 @@ module.exports = function(sequelize, DataTypes) {
     fk_image: {
       type: DataTypes.INTEGER,
       allowNull: true
+    },
+    is_admin: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,

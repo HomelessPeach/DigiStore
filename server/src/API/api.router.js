@@ -5,7 +5,7 @@ const {routerNews} = require("./routers/news.router");
 const {routerOrder} = require("./routers/order.router");
 const {routerProduct} = require("./routers/product.router");
 const {routerProductCategory} = require("./routers/product-category.router");
-const {routerProductFuture} = require("./routers/product-feature.router");
+const {routerProductFeature} = require("./routers/product-feature.router");
 const {routerUser} = require("./routers/user.router");
 
 const routerApi = Router()
@@ -17,7 +17,7 @@ routerApi
     .use('/order', routerOrder)
     .use('/product', routerProduct)
     .use('/product_category', routerProductCategory)
-    .use('/product_future', routerProductFuture)
+    .use('/product_feature', routerProductFeature)
     .use('/user', routerUser)
 
 module.exports = {routerApi}

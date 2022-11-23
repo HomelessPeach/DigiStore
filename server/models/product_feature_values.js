@@ -12,11 +12,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    fk_product_id: {
+    fk_product: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    fk_product_features: {
+    fk_product_feature: {
       type: DataTypes.INTEGER,
       allowNull: false
     }

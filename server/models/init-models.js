@@ -42,10 +42,6 @@ function initModels(sequelize) {
   product_categories.hasMany(products, { as: "products", foreignKey: "fk_product_category"});
   product_images.belongsTo(products, { as: "fk_product_product", foreignKey: "fk_product"});
   products.hasMany(product_images, { as: "product_images", foreignKey: "fk_product"});
-  auth_tokens.belongsTo(users, { as: "fk_user", foreignKey: "fk_user_id"});
-  users.hasMany(auth_tokens, { as: "auth_tokens", foreignKey: "fk_user_id"});
-  chat.belongsTo(users, { as: "fk_user", foreignKey: "fk_user_id"});
-  users.hasMany(chat, { as: "chats", foreignKey: "fk_user_id"});
 
   return {
     auth_tokens,
