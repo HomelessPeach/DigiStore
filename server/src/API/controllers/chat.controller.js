@@ -16,7 +16,7 @@ class ChatMessageController {
         }
     }
 
-    static async listChatMessage(req, res, next) {
+    static async listChat(req, res, next) {
         try {
             const {query} = req
             const {chats, countChats} = await ChatBusinessService.listChatMessage(query)
@@ -29,7 +29,7 @@ class ChatMessageController {
         }
     }
 
-    static async showChatMessage(req, res, next) {
+    static async showChat(req, res, next) {
         try {
             const {id} = req.params;
             const chat = await ChatBusinessService.showChatMessage(id)
@@ -45,7 +45,7 @@ class ChatMessageController {
             const {body: {data}, files} = req;
             await transaction.commit();
             const chat = await ChatBusinessService.updateChatMessage()
-            res.json('')
+            res.json(chat)
         } catch (err) {
             await transaction.rollback();
             next(err)

@@ -19,10 +19,11 @@ class ProductFeatureController {
     static async listProductFeature(req, res, next) {
         try {
             const {query} = req
+            const {productFeatures, countProductFeatures} = await ProductFeatureBusinessService.listProductFeature(query)
             res
                 .set('Access-Control-Expose-Headers', 'X-Total-Count')
-                .set('X-Total-Count', `${1}`)
-                .json('')
+                .set('X-Total-Count', `${countProductFeatures}`)
+                .json(productFeatures)
         } catch (err) {
             next(err)
         }
@@ -31,7 +32,8 @@ class ProductFeatureController {
     static async showProductFeature(req, res, next) {
         try {
             const {id} = req.params;
-            res.json('')
+            const productFeature = await ProductFeatureController.showProductFeature(id)
+            res.json(productFeature)
         } catch (err) {
             next(err)
         }

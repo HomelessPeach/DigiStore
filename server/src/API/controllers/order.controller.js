@@ -1,5 +1,6 @@
 const {SequelizeConnect} = require("../../services/database-connect");
 const {OrderBusinessService} = require("../../services/order-services/order.business.service")
+const {or} = require("sequelize");
 
 class OrderController {
 
@@ -19,10 +20,11 @@ class OrderController {
     static async listOrder(req, res, next) {
         try {
             const {query} = req
+            const {orders, countOrders} = await OrderBusinessService.listOrder(query)
             res
                 .set('Access-Control-Expose-Headers', 'X-Total-Count')
-                .set('X-Total-Count', `${1}`)
-                .json('')
+                .set('X-Total-Count', `${countOrders}`)
+                .json(orders)
         } catch (err) {
             next(err)
         }
@@ -31,7 +33,8 @@ class OrderController {
     static async showOrder(req, res, next) {
         try {
             const {id} = req.params;
-            res.json('')
+            const order = await OrderBusinessService.showOrder(id)
+            res.json(order)
         } catch (err) {
             next(err)
         }

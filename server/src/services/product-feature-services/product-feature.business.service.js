@@ -9,9 +9,9 @@ class ProductFeatureBusinessService {
 
     static async listProductFeature(query) {
         const {productFeatureSort} = ProductFeatureProcessService.productFeatureDataList(query)
-        const products = await ProductFeatureDatabaseService.listProductFeature(productFeatureSort)
-        const countProducts = await ProductFeatureDatabaseService.countProductFeature()
-        return {products, countProducts}
+        const productFeatures = await ProductFeatureDatabaseService.listProductFeature(productFeatureSort)
+        const countProductFeatures = await ProductFeatureDatabaseService.countProductFeature()
+        return {productFeatures, countProductFeatures}
     }
 
     static async showProductFeature(productFeatureId) {

@@ -19,10 +19,11 @@ class NewsController {
     static async listNews(req, res, next) {
         try {
             const {query} = req
+            const {news, countNews} = await NewsBusinessService.listNews(query)
             res
                 .set('Access-Control-Expose-Headers', 'X-Total-Count')
-                .set('X-Total-Count', `${1}`)
-                .json('')
+                .set('X-Total-Count', `${countNews}`)
+                .json(news)
         } catch (err) {
             next(err)
         }
@@ -31,7 +32,8 @@ class NewsController {
     static async showNews(req, res, next) {
         try {
             const {id} = req.params;
-            res.json('')
+            const news = await NewsBusinessService.showNews(id)
+            res.json(news)
         } catch (err) {
             next(err)
         }

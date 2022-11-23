@@ -19,10 +19,11 @@ class ProductCategoryController {
     static async listProductCategory(req, res, next) {
         try {
             const {query} = req
+            const {productCategories, countProductCategories} = await ProductCategoryBusinessService.listProductCategory(query)
             res
                 .set('Access-Control-Expose-Headers', 'X-Total-Count')
-                .set('X-Total-Count', `${1}`)
-                .json('')
+                .set('X-Total-Count', `${countProductCategories}`)
+                .json(productCategories)
         } catch (err) {
             next(err)
         }
@@ -31,7 +32,8 @@ class ProductCategoryController {
     static async showProductCategory(req, res, next) {
         try {
             const {id} = req.params;
-            res.json('')
+            const productCategory = await ProductCategoryBusinessService.showProductCategory(id)
+            res.json(productCategory)
         } catch (err) {
             next(err)
         }
