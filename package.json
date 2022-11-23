@@ -1,0 +1,19 @@
+{
+  "name": "digistore",
+  "version": "1.0.0",
+  "description": "The repository is a private Homeless Peach's home. There is private Peach's project for study with name DigiStore",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HomelessPeach/DigiStore.git"
+  },
+  "author": "HomelessPeach",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HomelessPeach/DigiStore/issues"
+  },
+  "homepage": "https://github.com/HomelessPeach/DigiStore#readme"
+}
