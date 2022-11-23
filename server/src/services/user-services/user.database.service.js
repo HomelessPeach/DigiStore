@@ -11,7 +11,7 @@ class UserDatabaseService {
             })
     }
 
-    static async listUsers(userSort, transaction = null) {
+    static async listUser(userSort, transaction = null) {
         return await users.findAll({
             offset: userSort.offset,
             limit: userSort.limit,
@@ -49,7 +49,7 @@ class UserDatabaseService {
         })
     }
 
-    static async countUsers() {
+    static async countUser() {
         return await users.count()
     }
 

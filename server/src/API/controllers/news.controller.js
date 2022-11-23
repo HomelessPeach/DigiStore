@@ -1,62 +1,60 @@
 const {SequelizeConnect} = require("../../services/database-connect");
-const {UserBusinessService} = require("../../services/user-services/user.business.service");
+const {NewsBusinessService} = require("../../services/news-services/news.business.service")
 
-class UserController {
+class NewsController {
 
-    static async createUser(req, res, next) {
+    static async createNews(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body: {data}, files} = req;
-            const user = await UserBusinessService.createUser()
+
             await transaction.commit();
-            res.json(user)
+            res.json('')
         } catch (err) {
             await transaction.rollback();
             next(err)
         }
     }
 
-    static async listUser(req, res, next) {
+    static async listNews(req, res, next) {
         try {
             const {query} = req
-            const {users, countUsers} = await UserBusinessService.listUser(query)
             res
                 .set('Access-Control-Expose-Headers', 'X-Total-Count')
-                .set('X-Total-Count', `${countUsers}`)
-                .json(users)
+                .set('X-Total-Count', `${1}`)
+                .json('')
         } catch (err) {
             next(err)
         }
     }
 
-    static async showUser(req, res, next) {
+    static async showNews(req, res, next) {
         try {
             const {id} = req.params;
-            const user = await UserBusinessService.showUser(id)
-            res.json(user)
+            res.json('')
         } catch (err) {
             next(err)
         }
     }
 
-    static async updateUser(req, res, next) {
+    static async updateNews(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body: {data}, files} = req;
-            const user = await UserBusinessService.updateUser()
             await transaction.commit();
-            res.json(user)
+
+            res.json('')
         } catch (err) {
             await transaction.rollback();
             next(err)
         }
     }
 
-    static async deleteUser(req, res, next) {
+    static async deleteNews(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {id} = req.params;
-            await UserBusinessService.deleteUser()
+
             await transaction.commit();
             res.json('Данные удалены')
         } catch (err) {
@@ -67,4 +65,4 @@ class UserController {
 
 }
 
-module.exports = {UserController}
+module.exports = {NewsController}

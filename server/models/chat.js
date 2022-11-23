@@ -1,31 +1,35 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('product_categories', {
-    product_categoty_id: {
+  return sequelize.define('chat', {
+    chat_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       primaryKey: true,
       unique: true
     },
-    product_categoty_name: {
-      type: DataTypes.TEXT,
-      allowNull: false
+    fk_user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'users',
+        key: 'user_id'
+      }
     },
-    fk_image: {
+    is_answer: {
       type: DataTypes.INTEGER,
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'product_categories',
+    tableName: 'chat',
     timestamps: false,
     indexes: [
       {
-        name: "product_category_id",
+        name: "chat_id",
         unique: true,
         fields: [
-          { name: "product_categoty_id" },
+          { name: "chat_id" },
         ]
       },
     ]

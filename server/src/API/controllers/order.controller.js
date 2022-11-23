@@ -1,62 +1,60 @@
 const {SequelizeConnect} = require("../../services/database-connect");
-const {UserBusinessService} = require("../../services/user-services/user.business.service");
+const {OrderBusinessService} = require("../../services/order-services/order.business.service")
 
-class UserController {
+class OrderController {
 
-    static async createUser(req, res, next) {
+    static async createOrder(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body: {data}, files} = req;
-            const user = await UserBusinessService.createUser()
+
             await transaction.commit();
-            res.json(user)
+            res.json('')
         } catch (err) {
             await transaction.rollback();
             next(err)
         }
     }
 
-    static async listUser(req, res, next) {
+    static async listOrder(req, res, next) {
         try {
             const {query} = req
-            const {users, countUsers} = await UserBusinessService.listUser(query)
             res
                 .set('Access-Control-Expose-Headers', 'X-Total-Count')
-                .set('X-Total-Count', `${countUsers}`)
-                .json(users)
+                .set('X-Total-Count', `${1}`)
+                .json('')
         } catch (err) {
             next(err)
         }
     }
 
-    static async showUser(req, res, next) {
+    static async showOrder(req, res, next) {
         try {
             const {id} = req.params;
-            const user = await UserBusinessService.showUser(id)
-            res.json(user)
+            res.json('')
         } catch (err) {
             next(err)
         }
     }
 
-    static async updateUser(req, res, next) {
+    static async updateOrder(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body: {data}, files} = req;
-            const user = await UserBusinessService.updateUser()
             await transaction.commit();
-            res.json(user)
+
+            res.json('')
         } catch (err) {
             await transaction.rollback();
             next(err)
         }
     }
 
-    static async deleteUser(req, res, next) {
+    static async deleteOrder(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {id} = req.params;
-            await UserBusinessService.deleteUser()
+
             await transaction.commit();
             res.json('Данные удалены')
         } catch (err) {
@@ -67,4 +65,4 @@ class UserController {
 
 }
 
-module.exports = {UserController}
+module.exports = {OrderController}

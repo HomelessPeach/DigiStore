@@ -1,62 +1,62 @@
 const {SequelizeConnect} = require("../../services/database-connect");
-const {UserBusinessService} = require("../../services/user-services/user.business.service");
+const {ChatBusinessService} = require("../../services/chat-services/chat.business.service")
 
-class UserController {
+class ChatMessageController {
 
-    static async createUser(req, res, next) {
+    static async createChatMessage(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body: {data}, files} = req;
-            const user = await UserBusinessService.createUser()
             await transaction.commit();
-            res.json(user)
+            const chat = await ChatBusinessService.createChatMessage()
+            res.json(chat)
         } catch (err) {
             await transaction.rollback();
             next(err)
         }
     }
 
-    static async listUser(req, res, next) {
+    static async listChatMessage(req, res, next) {
         try {
             const {query} = req
-            const {users, countUsers} = await UserBusinessService.listUser(query)
+            const {chats, countChats} = await ChatBusinessService.listChatMessage(query)
             res
                 .set('Access-Control-Expose-Headers', 'X-Total-Count')
-                .set('X-Total-Count', `${countUsers}`)
-                .json(users)
+                .set('X-Total-Count', `${countChats}`)
+                .json(chats)
         } catch (err) {
             next(err)
         }
     }
 
-    static async showUser(req, res, next) {
+    static async showChatMessage(req, res, next) {
         try {
             const {id} = req.params;
-            const user = await UserBusinessService.showUser(id)
-            res.json(user)
+            const chat = await ChatBusinessService.showChatMessage(id)
+            res.json(chat)
         } catch (err) {
             next(err)
         }
     }
 
-    static async updateUser(req, res, next) {
+    static async updateChatMessage(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body: {data}, files} = req;
-            const user = await UserBusinessService.updateUser()
             await transaction.commit();
-            res.json(user)
+            const chat = await ChatBusinessService.updateChatMessage()
+            res.json('')
         } catch (err) {
             await transaction.rollback();
             next(err)
         }
     }
 
-    static async deleteUser(req, res, next) {
+    static async deleteChatMessage(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {id} = req.params;
-            await UserBusinessService.deleteUser()
+            await ChatBusinessService.deleteChatMessage()
             await transaction.commit();
             res.json('Данные удалены')
         } catch (err) {
@@ -67,4 +67,4 @@ class UserController {
 
 }
 
-module.exports = {UserController}
+module.exports = {ChatMessageController}
