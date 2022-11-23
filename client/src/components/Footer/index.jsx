@@ -5,7 +5,6 @@ export const Footer = () => {
     return (
         <FooterBlock id={'footer'}>
             <FooterContainer>
-                footer
             </FooterContainer>
         </FooterBlock>
     )

@@ -6,8 +6,14 @@ import {Admin} from "../components/Admin";
 import {Profile} from "../components/Profile";
 import {Basket} from "../components/Basket";
 import {AdminHomePage} from "../components/Admin/AdminHomePage";
-import {UserEdit, UserList, UserShow} from "../components/Admin/Tables/Users";
+import {ChatList, ChatShow} from "../components/Admin/Tables/Chats";
+import {FeedbackList, FeedbackShow} from "../components/Admin/Tables/Feedbacks";
+import {NewsList, NewsShow} from "../components/Admin/Tables/News";
+import {OrderList, OrderShow} from "../components/Admin/Tables/Orders";
+import {ProductCategoryList, ProductCategoryShow} from "../components/Admin/Tables/ProductCategories";
+import {ProductFeatureShow, ProductFeatureList} from "../components/Admin/Tables/ProductFeatures";
 import {ProductsList, ProductShow} from "../components/Admin/Tables/Products";
+import {UserEdit, UserList, UserShow, UserCreate} from "../components/Admin/Tables/Users";
 
 export const RouteNames = {
     HOME: '/',
@@ -24,6 +30,7 @@ export const AdminRouteNames = {
     ADMIN_ORDER: `${RouteNames.ADMIN}/order`,
     ADMIN_PRODUCT: `${RouteNames.ADMIN}/product`,
     ADMIN_PRODUCT_CATEGORY: `${RouteNames.ADMIN}/product_category`,
+    ADMIN_PRODUCT_FEATURE: `${RouteNames.ADMIN}/product_feature`,
     ADMIN_USERS: `${RouteNames.ADMIN}/user`,
 }
 
@@ -38,25 +45,28 @@ export const Router = () => {
                     <Route path={AdminRouteNames.ADMIN_USERS} element={<UserList/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_USERS}/:id`} element={<UserShow/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_USERS}/edit/:id`} element={<UserEdit/>}/>
-                    <Route path={`${AdminRouteNames.ADMIN_USERS}/new`} element={<UserEdit/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_USERS}/new`} element={<UserCreate/>}/>
 
                     <Route path={AdminRouteNames.ADMIN_PRODUCT} element={<ProductsList/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_PRODUCT}/:id`} element={<ProductShow/>}/>
 
-                    <Route path={AdminRouteNames.ADMIN_PRODUCT_CATEGORY} element={<ProductsList/>}/>
-                    <Route path={`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/:id`} element={<ProductShow/>}/>
+                    <Route path={AdminRouteNames.ADMIN_PRODUCT_CATEGORY} element={<ProductCategoryList/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/:id`} element={<ProductCategoryShow/>}/>
 
-                    <Route path={AdminRouteNames.ADMIN_NEWS} element={<ProductsList/>}/>
-                    <Route path={`${AdminRouteNames.ADMIN_NEWS}/:id`} element={<ProductShow/>}/>
+                    <Route path={AdminRouteNames.ADMIN_PRODUCT_FEATURE} element={<ProductFeatureList/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/:id`} element={<ProductFeatureShow/>}/>
 
-                    <Route path={AdminRouteNames.ADMIN_ORDER} element={<ProductsList/>}/>
-                    <Route path={`${AdminRouteNames.ADMIN_ORDER}/:id`} element={<ProductShow/>}/>
+                    <Route path={AdminRouteNames.ADMIN_NEWS} element={<NewsList/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_NEWS}/:id`} element={<NewsShow/>}/>
 
-                    <Route path={AdminRouteNames.ADMIN_CHAT} element={<ProductsList/>}/>
-                    <Route path={`${AdminRouteNames.ADMIN_CHAT}/:id`} element={<ProductShow/>}/>
+                    <Route path={AdminRouteNames.ADMIN_ORDER} element={<OrderList/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_ORDER}/:id`} element={<OrderShow/>}/>
 
-                    <Route path={AdminRouteNames.ADMIN_FEEDBACK} element={<ProductsList/>}/>
-                    <Route path={`${AdminRouteNames.ADMIN_FEEDBACK}/:id`} element={<ProductShow/>}/>
+                    <Route path={AdminRouteNames.ADMIN_CHAT} element={<ChatList/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_CHAT}/:id`} element={<ChatShow/>}/>
+
+                    <Route path={AdminRouteNames.ADMIN_FEEDBACK} element={<FeedbackList/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_FEEDBACK}/:id`} element={<FeedbackShow/>}/>
                 </Route>
                 <Route path={RouteNames.PROFILE} element={<Profile/>}/>
                 <Route path={RouteNames.BASKET} element={<Basket/>}/>

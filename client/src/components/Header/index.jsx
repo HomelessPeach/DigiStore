@@ -7,6 +7,7 @@ import {HeaderPersonalNavbar} from "./HeaderPersonalNavbar";
 import {HeaderGeneralNavbar} from "./HeaderGeneralNavbar";
 import {RouteNames} from "../../Router";
 import {Theme} from "../../styles";
+import {attributeFilesUrl} from "../../services";
 
 
 export const Header = () => {
@@ -32,7 +33,7 @@ export const Header = () => {
             {(height !== Theme.size.header.height && pathname === '/')?
                 <HeaderLargeContainer id={'header1'} height={height}>
                     <div style={{width: 800, height: Theme.size.header.maxHeight, color: "white", fontSize: 55, position: "fixed", top: height - Theme.size.header.maxHeight}}>
-                        Здесь должна находиться информация о сайте, но по каким-то причинам она отсутствует. Разработчик в этом не виноват
+                        <Img src={`${attributeFilesUrl}/logo2.svg`}/>
                     </div>
                 </HeaderLargeContainer>
                 : <HeaderContainer id={'header1'} height={Theme.size.header.height}>
@@ -76,3 +77,7 @@ const HeaderContainer = styled.div`
 
 
 
+const Img = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+`

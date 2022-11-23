@@ -1,52 +1,48 @@
 import * as React from "react";
 import styled from "styled-components"
 import {userAPI} from "../../../../services/UserService";
-import {TextInput} from "../../components/TextInput";
 import {NavLink, useLocation} from "react-router-dom";
 import {AdminRouteNames} from "../../../../Router";
+import {TextField} from "../../components/TextField";
 
-export const UserEdit = () => {
+export const FeedbackShow = () => {
 
     const {pathname} = useLocation()
-    const userId = pathname.replace(`${AdminRouteNames.ADMIN_USERS}/edit/`, '')
-    const {data, isLoading} = userAPI.useUserShowQuery(userId)
+    const userId = pathname.replace(`${AdminRouteNames.ADMIN_USERS}/`, '')
+    const {data, isLoading} = userAPI.useUserShowQuery(1)
 
     if (isLoading)
         return <h1>LOADING...</h1>
 
     return (
         <>
-            <UserEditToolbar>
+            <ProductShowToolbar>
                 <LinkButton
                     to={`${AdminRouteNames.ADMIN_USERS}`}
                 >
                     Список пользователей
                 </LinkButton>
+                <LinkButton
+                    to={`${AdminRouteNames.ADMIN_USERS}/edit/${userId}`}
+                >
+                    Изменить данные
+                </LinkButton>
                 <DeleteButton>
                     Удалить пользователя
                 </DeleteButton>
-            </UserEditToolbar>
-            <EditBlock>
-                <TextInput value={data.user_id} label={'id'}/>
-                <TextInput value={data.user_email} label={'e-mail'}/>
-                <TextInput value={data.user_password} label={'Пароль'}/>
-                <TextInput value={data.user_name} label={'Имя'}/>
-                <TextInput value={data.user_phone_number} label={'Номер телефона'}/>
-            </EditBlock>
+            </ProductShowToolbar>
+            <ShowBlock>
+                <TextField value={data.user_id} label={'id'}/>
+                <TextField value={data.user_email} label={'e-mail'}/>
+                <TextField value={data.user_password} label={'Пароль'}/>
+                <TextField value={data.user_name} label={'Имя'}/>
+                <TextField value={data.user_phone_number} label={'Номер телефона'}/>
+            </ShowBlock>
         </>
     )
 
 }
-
-const EditBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  border: 1px solid #9f9e9e;
-  border-radius: 10px;
-`
-
-const UserEditToolbar = styled.div`
+const ProductShowToolbar = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: end;
@@ -82,7 +78,16 @@ const DeleteButton = styled.div`
   color: white;
   text-decoration: none;
   box-shadow: 0 0 10px 0 #5e5e5e;
+
   &:active {
     box-shadow: none;
   }
+`
+
+const ShowBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid #9f9e9e;
+  border-radius: 10px;
 `

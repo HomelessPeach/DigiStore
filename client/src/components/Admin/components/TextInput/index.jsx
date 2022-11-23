@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components"
 
-export const TextField = (props) => {
+export const TextInput = (props) => {
 
     const {
         item,
@@ -11,24 +11,28 @@ export const TextField = (props) => {
     } = props
 
     return (
-        <TextFieldBlock>
+        <TextInputBlock>
             <LabelBlock>{label}</LabelBlock>
-            <ValueBlock>{(value)? value : item[source]}</ValueBlock>
-        </TextFieldBlock>
+            <InputBlock value={(value)? value : (item && source)? item[source] : ''}/>
+        </TextInputBlock>
     )
 }
 
-const TextFieldBlock = styled.div`
+const TextInputBlock = styled.div`
   display: flex;
   flex-direction: column;
   line-height: 1.5;
   padding: 5px;
 `
 
-const ValueBlock = styled.div`
+const InputBlock = styled.input`
   display: flex;
   align-items: center;
-  width: 100%;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  font-size: 16px;
+  width: 400px;
+  padding: 10px;
 `
 
 const LabelBlock = styled.div`

@@ -3,15 +3,19 @@ import styled from "styled-components"
 import {userAPI} from "../../../../services/UserService";
 import {DataGrid} from "../../components/Datagrid";
 import {TextField} from "../../components/TextField";
+import {NavLink} from "react-router-dom";
+import {AdminRouteNames} from "../../../../Router";
 
 export const UserList = () => {
 
     return (
         <UserListContainer>
             <UserListToolbar>
-                <CreateButton>
+                <LinkButton
+                    to={`${AdminRouteNames.ADMIN_USERS}/new`}
+                >
                     Создать пользователя
-                </CreateButton>
+                </LinkButton>
             </UserListToolbar>
             <DataGrid getData={userAPI.useUserListQuery} idName={'user_id'}>
                 <TextField source={'user_id'} name={'id'} sortable={true}/>
@@ -31,7 +35,7 @@ const UserListToolbar = styled.div`
   user-select: none;
 `
 
-const CreateButton = styled.div`
+const LinkButton = styled(NavLink)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,7 +44,9 @@ const CreateButton = styled.div`
   background-color: ${({theme}) => theme.colors.tertiary};
   border-radius: 10px;
   color: white;
+  text-decoration: none;
   box-shadow: 0 0 10px 0 #5e5e5e;
+  margin: 0 10px;
   &:active {
     box-shadow: none;
   }

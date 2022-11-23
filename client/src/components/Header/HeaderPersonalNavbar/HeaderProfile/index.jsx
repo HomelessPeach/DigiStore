@@ -29,6 +29,7 @@ const HeaderProfileBlock = styled.div`
 `
 
 const ProfileImage = styled.svg`
+  width: 100%;
   fill: ${({theme}) => theme.colors.secondary};
   border-radius: 50px;
   background-color: ${({theme}) => theme.colors.tertiary};

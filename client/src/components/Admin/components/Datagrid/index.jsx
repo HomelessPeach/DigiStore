@@ -49,8 +49,10 @@ export const DataGrid = (props) => {
                             {
                                 children.map((child) =>
                                     (child.props.sortable)?
-                                        <HeaderItemTitleBlock onClick={() => changeSort(child.props.source)} widthField={100 / children.length}>
-                                            {child.props.name}
+                                        <HeaderItemTitleBlock widthField={100 / children.length}>
+                                            <TextBlock onClick={() => changeSort(child.props.source)} >
+                                              {child.props.name}
+                                            </TextBlock>
                                         </HeaderItemTitleBlock>
                                         :
                                         <HeaderItemTitleBlock widthField={100 / children.length}>
@@ -60,7 +62,7 @@ export const DataGrid = (props) => {
                             }
                         </HeaderBlock>
                         {
-                            (totalCount)?
+                            (totalCount > 0)?
                                 data.map((item) =>
                                     <ItemBlock
                                         to={`${pathname}/${item[idName]}`}
@@ -87,7 +89,7 @@ export const DataGrid = (props) => {
                 }
             </GridBlock>
             {
-                (totalCount)?
+                (totalCount > 0)?
                     <PageBlock>
                         <ButtonBlock onClick={() => (page > 0)? setPage(page - 1) : null} pageNumber={null} activePage={page}>
                             <ButtonItemBlock>
@@ -168,6 +170,10 @@ const HeaderItemTitleBlock = styled.div`
   padding: 10px 5px;
 `
 
+const TextBlock = styled.div`
+  cursor: pointer;
+`
+
 const ItemBlock = styled(NavLink)`
   display: flex;
   justify-content: space-between;
@@ -181,7 +187,7 @@ const ItemBlock = styled(NavLink)`
 
 const ItemValueBlock = styled.div`
   width: ${({widthField}) => widthField}%;
-  padding: 10px 5px;
+  padding: 5px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -38,5 +38,6 @@ const NavLinkBlock = styled(NavLink)`
 `
 
 const BasketImage = styled.svg`
+  width: 100%;
   fill: ${({theme}) => theme.colors.secondary};
 `

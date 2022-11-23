@@ -31,6 +31,6 @@ const MainBlock = styled.main`
   background-color: ${({theme}) => theme.colors.secondary};
 `
 
-const MainContainer = styled.main`
-
+const MainContainer = styled.div`
+  padding: 20px 0;
 `

@@ -8,6 +8,7 @@ import {Next} from "./Next";
 import {Order} from "./Order";
 import {Product} from "./Product";
 import {ProductCategory} from "./ProductCategory";
+import {ProductFeature} from "./ProductFeature";
 import {User} from "./User";
 
 export {
@@ -21,5 +22,6 @@ export {
     Order,
     Product,
     ProductCategory,
+    ProductFeature,
     User
 }

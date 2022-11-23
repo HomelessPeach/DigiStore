@@ -1,11 +1,11 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {apiUrl} from "./index";
 
-export const userAPI = createApi({
-    reducerPath: 'userAPI',
-    baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/user`}),
+export const newsAPI = createApi({
+    reducerPath: 'newsAPI',
+    baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/news`}),
     endpoints: (build) => ({
-        userList: build.query({
+        newsList: build.query({
             query: ({offset = 0, limit = 10, sort = '', order = 'ASC'}) => ({
                 url: `/list?_offset=${offset}&_limit=${limit}&_sort=${sort}&_order=${order}`,
                 method: 'GET',
@@ -14,7 +14,7 @@ export const userAPI = createApi({
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
             }
         }),
-        userShow: build.query({
+        newsShow: build.query({
             query: (id) => ({
                 url: `/show/${id}`,
                 method: 'GET',

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {Outlet} from "react-router-dom";
 import {Sidebar} from "./Sidebar";
 import {AdminRouteNames, RouteNames} from "../../Router";
-import {Chat, Feedback, Home, News, Order, Product, ProductCategory, User} from "./Icons";
+import {Chat, Feedback, Home, News, Order, Product, ProductCategory, ProductFeature, User} from "./Icons";
 
 export const Admin = () => {
 
@@ -23,6 +23,7 @@ export const Admin = () => {
             items: [
                 {name: 'Товары', pathname: AdminRouteNames.ADMIN_PRODUCT, icon: <Product/>},
                 {name: 'Категории товаров', pathname: AdminRouteNames.ADMIN_PRODUCT_CATEGORY, icon: <ProductCategory/>},
+                {name: 'Характеристики товаров', pathname: AdminRouteNames.ADMIN_PRODUCT_FEATURE, icon: <ProductFeature/>},
                 {name: 'Новости', pathname: AdminRouteNames.ADMIN_NEWS, icon: <News/>},
                 {name: 'Заказы', pathname: AdminRouteNames.ADMIN_ORDER, icon: <Order/>},
             ]
@@ -53,6 +54,6 @@ const AdminContainer = styled.div`
 
 const AdminContentBlock = styled.div`
   padding: 20px;
-  margin-left: 250px;
+  margin-left: 350px;
   width: 100%;
 `
