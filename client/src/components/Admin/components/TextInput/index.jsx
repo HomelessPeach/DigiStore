@@ -4,8 +4,6 @@ import styled from "styled-components"
 export const TextInput = (props) => {
 
     const {
-        item,
-        source,
         value,
         label
     } = props
@@ -13,7 +11,7 @@ export const TextInput = (props) => {
     return (
         <TextInputBlock>
             <LabelBlock>{label}</LabelBlock>
-            <InputBlock value={(value)? value : (item && source)? item[source] : ''}/>
+            <InputBlock value={(value)? value : ''}/>
         </TextInputBlock>
     )
 }

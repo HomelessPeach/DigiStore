@@ -4,12 +4,12 @@ import {userAPI} from "../../../../services/UserService";
 import {TextInput} from "../../components/TextInput";
 import {useLocation} from "react-router-dom";
 import {AdminRouteNames} from "../../../../Router";
-import {ToolbarBlock, LinkButton, DeleteButton, EditContainer} from "../../TableStyledBlock";
+import {DeleteButton, EditContainer, LinkButton, ToolbarBlock} from "../../TableStyledBlock";
 
-export const UserEdit = () => {
+export const ProductFeatureEdit = () => {
 
     const {pathname} = useLocation()
-    const userId = pathname.replace(`${AdminRouteNames.ADMIN_USERS}/edit/`, '')
+    const userId = pathname.replace(`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/edit/`, '')
     const {data, isLoading} = userAPI.useUserShowQuery(userId)
 
     if (isLoading)

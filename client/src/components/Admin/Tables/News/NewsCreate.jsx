@@ -4,7 +4,7 @@ import {TextInput} from "../../components/TextInput";
 import {AdminRouteNames} from "../../../../Router";
 import {ToolbarBlock, LinkButton, EditContainer} from "../../TableStyledBlock";
 
-export const UserCreate = () => {
+export const NewsCreate = () => {
 
     return (
         <EditContainer>
@@ -15,19 +15,19 @@ export const UserCreate = () => {
                     Список пользователей
                 </LinkButton>
             </ToolbarBlock>
-            <CreateBlock>
+            <EditBlock>
                 <TextInput label={'id'}/>
                 <TextInput label={'e-mail'}/>
                 <TextInput label={'Пароль'}/>
                 <TextInput label={'Имя'}/>
                 <TextInput label={'Номер телефона'}/>
-            </CreateBlock>
+            </EditBlock>
         </EditContainer>
     )
 
 }
 
-const CreateBlock = styled.div`
+const EditBlock = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px;

@@ -1,9 +1,11 @@
 import * as React from "react";
 import styled from "styled-components"
-import {NavLink, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {userAPI} from "../../../../services/UserService";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
+import {ImageField} from "../../components/ImageField";
+import {ToolbarBlock, LinkButton, ShowContainer, DeleteButton} from "../../TableStyledBlock";
 
 export const UserShow = () => {
 
@@ -15,8 +17,8 @@ export const UserShow = () => {
         return <h1>LOADING...</h1>
 
     return (
-        <>
-            <UserShowToolbar>
+        <ShowContainer>
+            <ToolbarBlock>
                 <LinkButton
                     to={`${AdminRouteNames.ADMIN_USERS}`}
                 >
@@ -30,65 +32,36 @@ export const UserShow = () => {
                 <DeleteButton>
                     Удалить пользователя
                 </DeleteButton>
-            </UserShowToolbar>
+            </ToolbarBlock>
             <ShowBlock>
-                <TextField value={data.user_id} label={'id'}/>
-                <TextField value={data.user_email} label={'e-mail'}/>
-                <TextField value={data.user_password} label={'Пароль'}/>
-                <TextField value={data.user_name} label={'Имя'}/>
-                <TextField value={data.user_phone_number} label={'Номер телефона'}/>
+                <LeftBlock>
+                    <ImageField value={data?.image?.image_path} size={{h: "300px", w: "300px"}}/>
+                </LeftBlock>
+                <RightBlock>
+                    <TextField value={data.user_id} label={'id'}/>
+                    <TextField value={data.user_email} label={'e-mail'}/>
+                    <TextField value={data.user_password} label={'Пароль'}/>
+                    <TextField value={data.user_name} label={'Имя'}/>
+                    <TextField value={data.user_phone_number} label={'Номер телефона'}/>
+                </RightBlock>
             </ShowBlock>
-        </>
+        </ShowContainer>
     )
 
 }
 
 const ShowBlock = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   padding: 10px;
   border: 1px solid #9f9e9e;
   border-radius: 10px;
 `
 
-const UserShowToolbar = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
-  padding: 10px 0;
-  user-select: none;
+const LeftBlock = styled.div`
+  padding: 10px;
 `
 
-const LinkButton = styled(NavLink)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 200px;
-  height: 45px;
-  background-color: ${({theme}) => theme.colors.tertiary};
-  border-radius: 10px;
-  color: white;
-  text-decoration: none;
-  box-shadow: 0 0 10px 0 #5e5e5e;
-  margin: 0 10px;
-  &:active {
-    box-shadow: none;
-  }
-`
-
-const DeleteButton = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 200px;
-  height: 45px;
-  background-color: #ff4646;
-  border-radius: 10px;
-  color: white;
-  text-decoration: none;
-  box-shadow: 0 0 10px 0 #5e5e5e;
-
-  &:active {
-    box-shadow: none;
-  }
+const RightBlock = styled.div`
+    padding: 30px 50px;
 `

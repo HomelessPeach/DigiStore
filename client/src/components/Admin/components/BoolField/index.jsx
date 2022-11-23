@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components"
 
-export const TextField = (props) => {
+export const BoolField = (props) => {
 
     const {
         value,
@@ -9,14 +9,14 @@ export const TextField = (props) => {
     } = props
 
     return (
-        <TextFieldBlock>
+        <BoolFieldBlock>
             <LabelBlock>{label}</LabelBlock>
-            <ValueBlock>{(value)? value :  ''}</ValueBlock>
-        </TextFieldBlock>
+            <ValueBlock>{(value)? 'Да' : 'Нет'}</ValueBlock>
+        </BoolFieldBlock>
     )
 }
 
-const TextFieldBlock = styled.div`
+const BoolFieldBlock = styled.div`
   display: flex;
   flex-direction: column;
   line-height: 1.5;

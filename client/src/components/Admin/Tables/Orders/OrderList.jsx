@@ -1,24 +1,19 @@
 import * as React from "react";
-import styled from "styled-components"
 import {orderAPI} from "../../../../services/OrderService";
 import {DataGrid} from "../../components/Datagrid";
-import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
+import {ListContainer} from "../../TableStyledBlock";
 
 export const OrderList = () => {
 
     return (
-        <ProductListContainer>
+        <ListContainer>
             <DataGrid getData={orderAPI.useOrderListQuery} idName={'order_id'}>
                 <TextField source={'order_id'} name={'id'} sortable={true}/>
                 <TextField source={'order_number'} name={'Номер'} sortable={true}/>
                 <TextField source={'fk_user'} name={'Пользователь'} sortable={true}/>
                 <TextField source={'is_complete'} name={'Выполнен'} sortable={true}/>
             </DataGrid>
-        </ProductListContainer>
+        </ListContainer>
     )
 }
-
-const ProductListContainer = styled.div`
-
-`

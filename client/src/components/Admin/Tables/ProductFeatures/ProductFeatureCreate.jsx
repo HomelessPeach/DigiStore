@@ -4,7 +4,8 @@ import {TextInput} from "../../components/TextInput";
 import {AdminRouteNames} from "../../../../Router";
 import {ToolbarBlock, LinkButton, EditContainer} from "../../TableStyledBlock";
 
-export const UserCreate = () => {
+
+export const ProductFeatureCreate = () => {
 
     return (
         <EditContainer>

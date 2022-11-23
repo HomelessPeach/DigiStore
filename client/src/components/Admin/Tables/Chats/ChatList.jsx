@@ -1,23 +1,19 @@
 import * as React from "react";
-import styled from "styled-components"
 import {chatAPI} from "../../../../services/ChatService";
 import {DataGrid} from "../../components/Datagrid";
-import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
+import {BoolField} from "../../components/BoolField";
+import {ListContainer} from "../../TableStyledBlock";
 
 export const ChatList = () => {
 
     return (
-        <ProductListContainer>
+        <ListContainer>
             <DataGrid getData={chatAPI.useChatListQuery} idName={'chat_id'}>
                 <TextField source={'chat_id'} name={'id'} sortable={true}/>
-                <TextField source={'fk_user_id'} name={'Пользователь'} sortable={true}/>
-                <TextField source={'is_answer'} name={'Отвечено'} sortable={true}/>
+                <TextField source={'fk_user'} name={'Пользователь'} sortable={true}/>
+                <BoolField source={'is_answer'} name={'Отвечено'} sortable={true}/>
             </DataGrid>
-        </ProductListContainer>
+        </ListContainer>
     )
 }
-
-const ProductListContainer = styled.div`
-
-`

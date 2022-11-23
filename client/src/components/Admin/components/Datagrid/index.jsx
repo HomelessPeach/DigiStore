@@ -172,6 +172,7 @@ const HeaderItemTitleBlock = styled.div`
 
 const TextBlock = styled.div`
   cursor: pointer;
+  line-height: 1.5;
 `
 
 const ItemBlock = styled(NavLink)`

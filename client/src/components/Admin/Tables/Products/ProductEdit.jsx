@@ -4,19 +4,19 @@ import {userAPI} from "../../../../services/UserService";
 import {TextInput} from "../../components/TextInput";
 import {useLocation} from "react-router-dom";
 import {AdminRouteNames} from "../../../../Router";
-import {ToolbarBlock, LinkButton, DeleteButton, EditContainer} from "../../TableStyledBlock";
+import {ToolbarBlock, LinkButton, DeleteButton, ListContainer} from "../../TableStyledBlock";
 
-export const UserEdit = () => {
+export const ProductEdit = () => {
 
     const {pathname} = useLocation()
-    const userId = pathname.replace(`${AdminRouteNames.ADMIN_USERS}/edit/`, '')
+    const userId = pathname.replace(`${AdminRouteNames.ADMIN_PRODUCT}/edit/`, '')
     const {data, isLoading} = userAPI.useUserShowQuery(userId)
 
     if (isLoading)
         return <h1>LOADING...</h1>
 
     return (
-        <EditContainer>
+        <ListContainer>
             <ToolbarBlock>
                 <LinkButton
                     to={`${AdminRouteNames.ADMIN_USERS}`}
@@ -34,7 +34,7 @@ export const UserEdit = () => {
                 <TextInput value={data.user_name} label={'Имя'}/>
                 <TextInput value={data.user_phone_number} label={'Номер телефона'}/>
             </EditBlock>
-        </EditContainer>
+        </ListContainer>
     )
 
 }
