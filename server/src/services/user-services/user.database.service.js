@@ -16,6 +16,13 @@ class UserDatabaseService {
             offset: userSort.offset,
             limit: userSort.limit,
             order: userSort.order,
+            include: [{
+                model: images,
+                as: 'image',
+                attributes: [
+                    'image_path',
+                ],
+            }],
             transaction: transaction
         })
     }
