@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components"
 import {ContainerBlock, LabelBlock} from "../ComponentsStyledBlocks";
 
-export const BoolField = (props) => {
+export const BoolInput = (props) => {
 
     const {
         value,

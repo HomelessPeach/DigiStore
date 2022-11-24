@@ -3,7 +3,7 @@ import {chatAPI} from "../../../../services/ChatService";
 import {DataGrid} from "../../components/Datagrid";
 import {TextField} from "../../components/TextField";
 import {BoolField} from "../../components/BoolField";
-import {ListContainer} from "../../TableStyledBlock";
+import {ListContainer} from "../TablesStyledBlocks";
 
 export const ChatList = () => {
 

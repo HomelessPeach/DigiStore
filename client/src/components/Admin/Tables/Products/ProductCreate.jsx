@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components"
 import {TextInput} from "../../components/TextInput";
 import {AdminRouteNames} from "../../../../Router";
-import {ToolbarBlock, LinkButton, EditContainer} from "../../TableStyledBlock";
+import {ToolbarBlock, LinkButton, EditContainer} from "../TablesStyledBlocks";
 
 export const ProductCreate = () => {
 

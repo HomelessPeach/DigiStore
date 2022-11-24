@@ -4,7 +4,7 @@ import {userAPI} from "../../../../services/UserService";
 import {TextInput} from "../../components/TextInput";
 import {useLocation} from "react-router-dom";
 import {AdminRouteNames} from "../../../../Router";
-import {ToolbarBlock, LinkButton, DeleteButton, EditContainer} from "../../TableStyledBlock";
+import {ToolbarBlock, LinkButton, DeleteButton, EditContainer} from "../TablesStyledBlocks";
 
 export const NewsEdit = () => {
 

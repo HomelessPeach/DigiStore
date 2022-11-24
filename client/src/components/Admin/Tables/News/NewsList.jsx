@@ -3,7 +3,7 @@ import {newsAPI} from "../../../../services/NewsService";
 import {DataGrid} from "../../components/Datagrid";
 import {TextField} from "../../components/TextField";
 import {AdminRouteNames} from "../../../../Router";
-import {ToolbarBlock, LinkButton, ListContainer} from "../../TableStyledBlock";
+import {ToolbarBlock, LinkButton, ListContainer} from "../TablesStyledBlocks";
 
 export const NewsList = () => {
 

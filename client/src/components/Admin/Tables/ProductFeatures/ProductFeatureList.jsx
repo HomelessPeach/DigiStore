@@ -3,7 +3,7 @@ import {productFeatureAPI} from "../../../../services/ProductFeatureService";
 import {DataGrid} from "../../components/Datagrid";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
-import {ToolbarBlock, LinkButton, ListContainer} from "../../TableStyledBlock";
+import {ToolbarBlock, LinkButton, ListContainer} from "../TablesStyledBlocks";
 
 
 export const ProductFeatureList = () => {

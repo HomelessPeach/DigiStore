@@ -4,7 +4,7 @@ import {userAPI} from "../../../../services/UserService";
 import {useLocation} from "react-router-dom";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
-import {ToolbarBlock, LinkButton, ShowContainer, DeleteButton} from "../../TableStyledBlock";
+import {ToolbarBlock, LinkButton, ShowContainer, DeleteButton} from "../TablesStyledBlocks";
 
 
 export const ProductCategoryShow = () => {

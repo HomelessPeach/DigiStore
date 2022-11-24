@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "styled-components"
+import {ContainerBlock, LabelBlock} from "../ComponentsStyledBlocks";
 
 export const TextInput = (props) => {
 
@@ -9,33 +10,16 @@ export const TextInput = (props) => {
     } = props
 
     return (
-        <TextInputBlock>
+        <ContainerBlock>
             <LabelBlock>{label}</LabelBlock>
             <InputBlock value={(value)? value : ''}/>
-        </TextInputBlock>
+        </ContainerBlock>
     )
 }
 
-const TextInputBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  line-height: 1.5;
-  padding: 5px;
-`
-
 const InputBlock = styled.input`
-  display: flex;
-  align-items: center;
   border: 1px solid #000000;
   border-radius: 10px;
   font-size: 16px;
-  width: 400px;
   padding: 10px;
-`
-
-const LabelBlock = styled.div`
-  font-size: 12px;
-  color: #888888;
-  display: flex;
-  align-items: center;
 `

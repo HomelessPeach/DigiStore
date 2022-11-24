@@ -4,7 +4,7 @@ import {userAPI} from "../../../../services/UserService";
 import {useLocation} from "react-router-dom";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
-import {DeleteButton, LinkButton, ShowContainer, ToolbarBlock} from "../../TableStyledBlock";
+import {DeleteButton, LinkButton, ShowContainer, ToolbarBlock} from "../TablesStyledBlocks";
 import {ImageField} from "../../components/ImageField";
 
 export const ProductFeatureShow = () => {

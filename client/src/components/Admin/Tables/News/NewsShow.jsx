@@ -4,7 +4,7 @@ import {userAPI} from "../../../../services/UserService";
 import {NavLink, useLocation} from "react-router-dom";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
-import {ToolbarBlock, LinkButton, DeleteButton, ShowContainer} from "../../TableStyledBlock";
+import {ToolbarBlock, LinkButton, DeleteButton, ShowContainer} from "../TablesStyledBlocks";
 
 export const NewsShow = () => {
 

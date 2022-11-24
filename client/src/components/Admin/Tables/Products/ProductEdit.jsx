@@ -4,7 +4,7 @@ import {userAPI} from "../../../../services/UserService";
 import {TextInput} from "../../components/TextInput";
 import {useLocation} from "react-router-dom";
 import {AdminRouteNames} from "../../../../Router";
-import {ToolbarBlock, LinkButton, DeleteButton, ListContainer} from "../../TableStyledBlock";
+import {ToolbarBlock, LinkButton, DeleteButton, ListContainer} from "../TablesStyledBlocks";
 
 export const ProductEdit = () => {
 

@@ -11,7 +11,9 @@ export const userAPI = createApi({
                 method: 'GET',
             }),
             transformResponse(apiResponse, meta) {
-                return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
+                return {data: apiResponse.map((item) => {
+                        return {...item, image: item.image?.image_path}
+                    }), totalCount: meta.response.headers.get('X-Total-Count')}
             }
         }),
         userShow: build.query({

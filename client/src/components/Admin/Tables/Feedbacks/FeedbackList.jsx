@@ -2,7 +2,7 @@ import * as React from "react";
 import {feedbackAPI} from "../../../../services/FeedbackService";
 import {DataGrid} from "../../components/Datagrid";
 import {TextField} from "../../components/TextField";
-import {ListContainer} from "../../TableStyledBlock";
+import {ListContainer} from "../TablesStyledBlocks";
 
 export const FeedbackList = () => {
 

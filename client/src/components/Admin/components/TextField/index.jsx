@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "styled-components"
+import {ContainerBlock, LabelBlock} from "../ComponentsStyledBlocks";
 
 export const TextField = (props) => {
 
@@ -9,29 +10,20 @@ export const TextField = (props) => {
     } = props
 
     return (
-        <TextFieldBlock>
-            <LabelBlock>{label}</LabelBlock>
+        <ContainerBlock>
+            {
+                (label)?
+                    <LabelBlock>{label}</LabelBlock>
+                    :null
+            }
             <ValueBlock>{(value)? value :  ''}</ValueBlock>
-        </TextFieldBlock>
+        </ContainerBlock>
     )
 }
 
-const TextFieldBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  line-height: 1.5;
-  padding: 5px;
-`
 
 const ValueBlock = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-`
-
-const LabelBlock = styled.div`
-  font-size: 12px;
-  color: #888888;
-  display: flex;
-  align-items: center;
 `

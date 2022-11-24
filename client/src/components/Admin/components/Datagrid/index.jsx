@@ -70,7 +70,7 @@ export const DataGrid = (props) => {
                                         {
                                             children.map((child) =>
                                                 <ItemValueBlock widthField={100 / children.length}>
-                                                    {{...child, props: {...props, value: item[child.props.source]}}}
+                                                    {{...child, props: {...child.props, value: item[child.props.source]}}}
                                                 </ItemValueBlock>
                                             )
                                         }
