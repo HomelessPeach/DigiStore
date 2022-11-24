@@ -40,11 +40,15 @@ function initModels(sequelize) {
   images.hasMany(news, { as: "news", foreignKey: "fk_image"});
   product_images.belongsTo(images, { as: "image", foreignKey: "fk_image"});
   images.hasMany(product_images, { as: "products", foreignKey: "fk_image"});
-
-  products.belongsTo(product_categories, { as: "fk_product_category_product_category", foreignKey: "fk_product_category"});
+  products.belongsTo(product_categories, { as: "product_category", foreignKey: "fk_product_category"});
   product_categories.hasMany(products, { as: "products", foreignKey: "fk_product_category"});
-  product_images.belongsTo(products, { as: "fk_product_product", foreignKey: "fk_product"});
+  product_images.belongsTo(products, { as: "product_image", foreignKey: "fk_product"});
   products.hasMany(product_images, { as: "product_images", foreignKey: "fk_product"});
+  product_feature_values.belongsTo(products, { as: "products", foreignKey: "fk_product"});
+  products.hasMany(product_feature_values, { as: "product_feature_values", foreignKey: "fk_product"});
+  product_feature_values.belongsTo(product_features, { as: "product_feature", foreignKey: "fk_product_feature"});
+  product_features.hasMany(product_feature_values, { as: "product_feature_value", foreignKey: "fk_product_feature"});
+
 
   return {
     auth_tokens,

@@ -14,11 +14,19 @@ module.exports = function(sequelize, DataTypes) {
     },
     fk_product: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'products',
+        key: 'product_id'
+      }
     },
     fk_product_feature: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'product_features',
+        key: 'product_feature_id'
+      }
     }
   }, {
     sequelize,
