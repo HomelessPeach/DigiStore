@@ -1,11 +1,20 @@
 import * as React from "react";
 import styled from "styled-components"
+import {useState} from "react";
+import {userAPI} from "../../../../services/UserService";
 import {TextInput} from "../../components/TextInput";
 import {AdminRouteNames} from "../../../../Router";
 import {ToolbarBlock, LinkButton, EditContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
 import {ImageInput} from "../../components/ImageInput";
 
 export const UserCreate = () => {
+
+    const [createUser] = userAPI.useUserCreateMutation()
+    const [userData, setUserData] = useState({})
+
+    function createUserHandler() {
+        createUser(userData).unwrap()
+    }
 
     return (
         <EditContainer>
@@ -19,24 +28,24 @@ export const UserCreate = () => {
             <EditBlock>
                 <EditContent>
                     <LeftBlock>
-                        <ImageInput value={''} size={{h: "300px", w: "300px", br: '250px'}} label={'Аватар'}/>
+                        <ImageInput value={userData.image?.new_image || ''} size={{h: "300px", w: "300px", br: '250px'}} label={'Аватар'} onChange={(value) => (value) ? setUserData({...userData, image: {...userData.image, new_image: value}}) : null}/>
                     </LeftBlock>
                     <RightBlock>
                         <EditDataBlock>
                             <EditDataChildBlock>
-                                <TextInput label={'e-mail'}/>
-                                <TextInput label={'Пароль'}/>
-                                <TextInput label={'Администратор'}/>
+                                <TextInput label={'e-mail'} onChange={(value) => setUserData({...userData, user_email: value})}/>
+                                <TextInput label={'Пароль'} onChange={(value) => setUserData({...userData, user_password: value})}/>
+                                <TextInput label={'Администратор'} onChange={(value) => setUserData({...userData, is_admin: value})}/>
                             </EditDataChildBlock>
                             <EditDataChildBlock>
-                                <TextInput label={'Имя'}/>
-                                <TextInput label={'Номер телефона'}/>
+                                <TextInput label={'Имя'} onChange={(value) => setUserData({...userData, user_name: value})}/>
+                                <TextInput label={'Номер телефона'} onChange={(value) => setUserData({...userData, user_phone_number: value})}/>
                             </EditDataChildBlock>
                         </EditDataBlock>
                     </RightBlock>
                 </EditContent>
                 <EditToolbarBlock>
-                    <Button>
+                    <Button onClick={createUserHandler}>
                         Сохранить
                     </Button>
                 </EditToolbarBlock>

@@ -12,7 +12,12 @@ export const UserShow = () => {
 
     const {pathname} = useLocation()
     const userId = pathname.replace(`${AdminRouteNames.ADMIN_USERS}/`, '')
+    const [deleteUser] = userAPI.useUserDeleteMutation()
     const {data, isLoading} = userAPI.useUserShowQuery(userId)
+
+    function deleteUserHandler() {
+        deleteUser(userId)
+    }
 
     if (isLoading)
         return <h1>LOADING...</h1>
@@ -30,7 +35,7 @@ export const UserShow = () => {
                 >
                     Изменить данные
                 </LinkButton>
-                <DeleteButton>
+                <DeleteButton onClick={deleteUserHandler}>
                     Удалить пользователя
                 </DeleteButton>
             </ToolbarBlock>

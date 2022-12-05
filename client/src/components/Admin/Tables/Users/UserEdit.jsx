@@ -7,12 +7,24 @@ import {AdminRouteNames} from "../../../../Router";
 import {ToolbarBlock, LinkButton, DeleteButton, EditContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
 import {ImageInput} from "../../components/ImageInput";
 import {TextField} from "../../components/TextField";
+import {useState} from "react";
 
 export const UserEdit = () => {
 
     const {pathname} = useLocation()
     const userId = pathname.replace(`${AdminRouteNames.ADMIN_USERS}/edit/`, '')
+    const [deleteUser] = userAPI.useUserDeleteMutation()
+    const [updateUser] = userAPI.useUserUpdateMutation()
     const {data, isLoading} = userAPI.useUserShowQuery(userId)
+    const [userData, setUserData] = useState(data || {})
+
+    function updateUserHandler() {
+        updateUser(userData).unwrap()
+    }
+
+    function deleteUserHandler() {
+        deleteUser(userId)
+    }
 
     if (isLoading)
         return <h1>LOADING...</h1>
@@ -25,14 +37,14 @@ export const UserEdit = () => {
                 >
                     Список пользователей
                 </LinkButton>
-                <DeleteButton>
+                <DeleteButton onClick={deleteUserHandler}>
                     Удалить пользователя
                 </DeleteButton>
             </ToolbarBlock>
             <EditBlock>
                 <EditContent>
                     <LeftBlock>
-                        <ImageInput value={data?.image?.image_path} size={{h: "300px", w: "300px", br: '250px'}} label={'Аватар'}/>
+                        <ImageInput value={userData.image?.new_image || userData.image?.image_path || ''} size={{h: "300px", w: "300px", br: '250px'}} label={'Аватар'} onChange={(value) => (value) ? setUserData({...userData, image: {...userData.image, new_image: value}}) : null}/>
                     </LeftBlock>
                     <RightBlock>
                         <IdBlock>
@@ -40,19 +52,19 @@ export const UserEdit = () => {
                         </IdBlock>
                         <EditDataBlock>
                             <EditDataChildBlock>
-                                <TextInput value={data.user_email} label={'e-mail'}/>
-                                <TextInput value={data.is_admin} label={'Администратор'}/>
+                                <TextInput value={userData.user_email} label={'e-mail'} onChange={(value) => setUserData({...userData, user_email: value})}/>
+                                <TextInput value={userData.is_admin} label={'Администратор'} onChange={(value) => setUserData({...userData, is_admin: value})}/>
                                 <ButtonChangePassword>Изменить пароль</ButtonChangePassword>
                             </EditDataChildBlock>
                             <EditDataChildBlock>
-                                <TextInput value={data.user_name} label={'Имя'}/>
-                                <TextInput value={data.user_phone_number} label={'Номер телефона'}/>
+                                <TextInput value={userData.user_name} label={'Имя'} onChange={(value) => setUserData({...userData, user_name: value})}/>
+                                <TextInput value={userData.user_phone_number} label={'Номер телефона'} onChange={(value) => setUserData({...userData, user_phone_number: value})}/>
                             </EditDataChildBlock>
                         </EditDataBlock>
                     </RightBlock>
                 </EditContent>
                 <EditToolbarBlock>
-                    <Button>
+                    <Button onClick={updateUserHandler}>
                         Сохранить
                     </Button>
                 </EditToolbarBlock>
