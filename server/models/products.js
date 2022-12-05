@@ -27,6 +27,10 @@ module.exports = function(sequelize, DataTypes) {
         model: 'product_categories',
         key: 'product_categoty_id'
       }
+    },
+    product_price: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,

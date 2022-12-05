@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require("path")
 
 module.exports = {
     application: {
@@ -13,6 +14,14 @@ module.exports = {
     },
     database: {
         dialect: 'sqlite',
-        storage: '../DigiStore.sqlite'
+        storage: path.join('../', 'DigiStore.sqlite'),
+    },
+    paths: {
+        readPath: path.join('/', 'files'),
+        writePath: path.join('./', 'src', 'public', 'files'),
+    },
+    folderPath: {
+        user: path.join('/', 'user'),
+        product: path.join('/', 'product'),
     }
 }
