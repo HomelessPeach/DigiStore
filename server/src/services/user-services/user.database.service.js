@@ -16,6 +16,13 @@ class UserDatabaseService {
             offset: userSort.offset,
             limit: userSort.limit,
             order: userSort.order,
+            attributes: [
+                'user_id',
+                'user_email',
+                'user_name',
+                'user_phone_number',
+                'is_admin',
+            ],
             include: [{
                 model: images,
                 as: 'image',

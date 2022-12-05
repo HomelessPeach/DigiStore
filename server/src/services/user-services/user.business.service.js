@@ -1,10 +1,17 @@
 const {UserDatabaseService} = require("./user.database.service");
 const {UserProcessService} = require("./user.process.service");
+const {FileService} = require("../file-services/file.service");
+const {folderPath} = require("../../../config/config")
 
 class UserBusinessService {
 
-    static async createUser() {
-        return 1
+    static async createUser(body, files, transaction) {
+        const {userData} = UserProcessService.userDataWrite(body)
+        if (files.sourceImage?.length) {
+            const image = await FileService.createImage(files.sourceImage[0], folderPath.user, transaction)
+            userData.fk_image = image.image_id
+        }
+        return await UserDatabaseService.createUser(userData, transaction);
     }
 
     static async listUser(query) {
@@ -18,12 +25,29 @@ class UserBusinessService {
         return await UserDatabaseService.showUser(userId)
     }
 
-    static async updateUser() {
-        return 1
+    static async updateUser(body, files, transaction) {
+        const {userData, userId} = UserProcessService.userDataWrite(body)
+        if (files.sourceImage?.length) {
+            const image = await FileService.createImage(files.sourceImage[0], folderPath.user, transaction)
+            userData.fk_image = image.image_id
+        }
+        const user = await UserDatabaseService.updateUser(userData, userId, transaction);
+        if (userData.fk_image && body.image?.image_path) {
+            await FileService.deleteImage(body.image.image_path, folderPath.user, transaction)
+                .catch((err) => console.error(err));
+        }
+        return user
     }
 
-    static async deleteUser(userId) {
-        return await UserDatabaseService.deleteUser(userId)
+    static async deleteUser(userId, transaction) {
+        const userData = await UserDatabaseService.showUser(userId)
+        const user = userData.get({plain: true})
+        const deleteUser = await UserDatabaseService.deleteUser(userId, transaction)
+        if (user.image?.image_path) {
+            await FileService.deleteImage(user.image.image_path, folderPath.user, transaction)
+                .catch((err) => console.error(err));
+        }
+        return deleteUser
     }
 
 }

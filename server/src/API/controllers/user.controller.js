@@ -7,7 +7,9 @@ class UserController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body: {data}, files} = req;
-            const user = await UserBusinessService.createUser()
+            const body = JSON.parse(data);
+            console.log(body)
+            const user = await UserBusinessService.createUser(body, files, transaction)
             await transaction.commit();
             res.json(user)
         } catch (err) {
@@ -43,7 +45,8 @@ class UserController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body: {data}, files} = req;
-            const user = await UserBusinessService.updateUser()
+            const body = JSON.parse(data);
+            const user = await UserBusinessService.updateUser(body, files, transaction)
             await transaction.commit();
             res.json(user)
         } catch (err) {
@@ -56,7 +59,7 @@ class UserController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {id} = req.params;
-            await UserBusinessService.deleteUser()
+            await UserBusinessService.deleteUser(id, transaction)
             await transaction.commit();
             res.json('Данные удалены')
         } catch (err) {

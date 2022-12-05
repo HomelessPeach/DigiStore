@@ -1,16 +1,33 @@
+const {ValidationService} = require("../validation.service");
+
 class UserProcessService {
 
-    static userDataWrite() {
+    static userDataWrite(query) {
 
+        const userData = {
+            user_email: query.user_email,
+            user_name: query.user_name,
+            user_phone_number: query.user_phone_number,
+            is_admin: query.is_admin,
+        }
+
+        if (query.user_password) {
+            userData.user_password = query.user_password
+        }
+
+        const userId = query.user_id;
+
+        return  {userData, userId}
     }
 
     static userDataList(query) {
 
-        const userData = {
+        const data = {
             user_id: query.user_id,
             user_email: query.user_email,
             user_name: query.user_name,
-            user_phone: query.user_phone_number
+            user_phone_number: query.user_phone_number,
+            is_admin: query.is_admin,
         }
 
         const userSort = {
@@ -20,7 +37,9 @@ class UserProcessService {
                 [(query._sort) ? `${query._sort}` : 'user_id', (query._order) ? `${query._order}` : 'ASC'],
             ],
         }
-        return {userSort}
+
+        const userData = ValidationService.clearData(data)
+        return  {userData, userSort}
     }
 
 }
