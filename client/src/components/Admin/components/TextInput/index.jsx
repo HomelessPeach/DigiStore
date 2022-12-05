@@ -6,13 +6,19 @@ export const TextInput = (props) => {
 
     const {
         value,
-        label
+        label,
+        onChange
     } = props
+
+    function clickHandler(event) {
+        const item = event.target.value;
+        onChange(item)
+    }
 
     return (
         <ContainerBlock>
             <LabelBlock>{label}</LabelBlock>
-            <InputBlock value={(value)? value : ''}/>
+            <InputBlock defaultValue={(value)? value : ''} onChange={clickHandler}/>
         </ContainerBlock>
     )
 }

@@ -3,13 +3,25 @@ import * as React from "react";
 import {baseUrl, attributeFilesUrl} from "../../../../services";
 import {ContainerBlock, LabelBlock} from "../ComponentsStyledBlocks";
 
+const mimeTypes = 'image/jpeg, image/png';
+
 export const ImageInput = (props) => {
 
     const {
         value,
         label,
-        size: {h = '100%', w = '100%', br = '20px'} = {h: '100%', w: '100%', br: '20px'}
+        size: {h = '100%', w = '100%', br = '20px'} = {h: '100%', w: '100%', br: '20px'},
+        onChange
     } = props
+
+    function clickHandler(item) {
+        const files = item.target.files;
+        let reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onloadend = () => {
+            onChange(reader.result)
+        };
+    }
 
     return (
         <ContainerBlock>
@@ -22,9 +34,14 @@ export const ImageInput = (props) => {
                 <Block h={h} w={w} br={br}>Нажмите чтобы загрузить изображение</Block>
                 {
                     (value !== '' && value)?
-                        <Img src={`${baseUrl}${value}`}/>
+                        <Img src={(/^\//.test(value))? `${baseUrl}${value}` : value}/>
                         : <NoImg src={`${attributeFilesUrl}/no-image.png`}/>
                 }
+                <Input
+                    type={'file'}
+                    accept={mimeTypes}
+                    onChange={clickHandler}
+                />
             </ImgBlock>
         </ContainerBlock>
     )
@@ -67,4 +84,12 @@ const Img = styled.img`
 const NoImg = styled.img`
   max-width: 50%;
   max-height: 50%;
+`
+
+const Input = styled.input`
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  position: absolute;
+  opacity: 0;
 `
