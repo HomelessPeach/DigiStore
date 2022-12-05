@@ -4,10 +4,10 @@ const {ProductController} = require("../controllers/product.controller");
 const routerProduct = Router()
 
 routerProduct
-    .post('/create', ProductController.createProduct)
-    .get('/list', ProductController.listProduct)
-    .get('/show/:id', ProductController.showProduct)
-    .put('/update/:id', ProductController.updateProduct)
-    .delete('/delete/:id', ProductController.deleteProduct)
+    .post('/admin', ProductController.createProduct)
+    .get('/admin', ProductController.listProduct)
+    .get('/admin/:id', ProductController.showProduct)
+    .put('/admin/:id', ProductController.updateProduct)
+    .delete('/admin/:id', ProductController.deleteProduct)
 
 module.exports = {routerProduct}

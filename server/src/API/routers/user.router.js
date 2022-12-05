@@ -6,10 +6,10 @@ const routerUser = Router()
 const middlewareMulter = multer();
 
 routerUser
-    .post('/create', middlewareMulter.fields([{name: 'sourceImage'}]), UserController.createUser)
-    .get('/list', UserController.listUser)
-    .get('/show/:id', UserController.showUser)
-    .put('/update/:id', middlewareMulter.fields([{name: 'sourceImage'}]), UserController.updateUser)
-    .delete('/delete/:id', UserController.deleteUser)
+    .post('/admin', middlewareMulter.fields([{name: 'sourceImage'}]), UserController.createUser)
+    .get('/admin', UserController.listUser)
+    .get('/admin/:id', UserController.showUser)
+    .put('/admin/:id', middlewareMulter.fields([{name: 'sourceImage'}]), UserController.updateUser)
+    .delete('/admin/:id', UserController.deleteUser)
 
 module.exports = {routerUser}

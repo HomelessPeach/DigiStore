@@ -4,6 +4,6 @@ const {ChatMessageController} = require("../controllers/chat.controller");
 const routerChat = Router()
 
 routerChat
-    .get('/list', ChatMessageController.listChat)
-    .get('/show/:id', ChatMessageController.showChat)
+    .get('/admin', ChatMessageController.listChat)
+    .get('/admin/:id', ChatMessageController.showChat)
 module.exports = {routerChat}

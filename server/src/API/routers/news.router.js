@@ -4,10 +4,10 @@ const {NewsController} = require("../controllers/news.controller");
 const routerNews = Router()
 
 routerNews
-    .post('/create', NewsController.createNews)
-    .get('/list', NewsController.listNews)
-    .get('/show/:id', NewsController.showNews)
-    .put('/update/:id', NewsController.updateNews)
-    .delete('/delete/:id', NewsController.deleteNews)
+    .post('/admin', NewsController.createNews)
+    .get('/admin', NewsController.listNews)
+    .get('/admin/:id', NewsController.showNews)
+    .put('/admin/:id', NewsController.updateNews)
+    .delete('/admin/:id', NewsController.deleteNews)
 
 module.exports = {routerNews}

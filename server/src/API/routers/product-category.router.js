@@ -4,10 +4,10 @@ const {ProductCategoryController} = require("../controllers/product-category.con
 const routerProductCategory = Router()
 
 routerProductCategory
-    .post('/create', ProductCategoryController.createProductCategory)
-    .get('/list', ProductCategoryController.listProductCategory)
-    .get('/show/:id', ProductCategoryController.showProductCategory)
-    .put('/update/:id', ProductCategoryController.updateProductCategory)
-    .delete('/delete/:id', ProductCategoryController.deleteProductCategory)
+    .post('/admin', ProductCategoryController.createProductCategory)
+    .get('/admin', ProductCategoryController.listProductCategory)
+    .get('/admin/:id', ProductCategoryController.showProductCategory)
+    .put('/admin/:id', ProductCategoryController.updateProductCategory)
+    .delete('/admin/:id', ProductCategoryController.deleteProductCategory)
 
 module.exports = {routerProductCategory}

@@ -4,10 +4,10 @@ const {ProductFeatureController} = require("../controllers/product-feature.contr
 const routerProductFeature = Router()
 
 routerProductFeature
-    .post('/create', ProductFeatureController.createProductFeature)
-    .get('/list', ProductFeatureController.listProductFeature)
-    .get('/show/:id', ProductFeatureController.showProductFeature)
-    .put('/update/:id', ProductFeatureController.updateProductFeature)
-    .delete('/delete/:id', ProductFeatureController.deleteProductFeature)
+    .post('/admin', ProductFeatureController.createProductFeature)
+    .get('/admin', ProductFeatureController.listProductFeature)
+    .get('/admin/:id', ProductFeatureController.showProductFeature)
+    .put('/admin/:id', ProductFeatureController.updateProductFeature)
+    .delete('/admin/:id', ProductFeatureController.deleteProductFeature)
 
 module.exports = {routerProductFeature}
