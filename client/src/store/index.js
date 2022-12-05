@@ -1,4 +1,5 @@
 import {configureStore, combineReducers} from "@reduxjs/toolkit";
+// import {authAPI} from "../services/AuthService";
 import {chatAPI} from "../services/ChatService";
 import {feedbackAPI} from "../services/FeedbackService";
 import {newsAPI} from "../services/NewsService";
@@ -9,6 +10,7 @@ import {productAPI} from "../services/ProductService";
 import {userAPI} from "../services/UserService";
 
 const rootReducer = combineReducers({
+    // [authAPI.reducerPath]: authAPI.reducer,
     [chatAPI.reducerPath]: chatAPI.reducer,
     [feedbackAPI.reducerPath]: feedbackAPI.reducer,
     [newsAPI.reducerPath]: newsAPI.reducer,
@@ -25,6 +27,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
             .concat(
+                // authAPI.middleware,
                 chatAPI.middleware,
                 feedbackAPI.middleware,
                 newsAPI.middleware,

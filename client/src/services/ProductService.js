@@ -7,8 +7,14 @@ export const productAPI = createApi({
     endpoints: (build) => ({
         productrList: build.query({
             query: ({offset = 0, limit = 10, sort = '', order = 'ASC'}) => ({
-                url: `/list?_offset=${offset}&_limit=${limit}&_sort=${sort}&_order=${order}`,
+                url: `/admin`,
                 method: 'GET',
+                params: {
+                    _offset: offset,
+                    _limit: limit,
+                    _sort: sort,
+                    _order: order
+                }
             }),
             transformResponse(apiResponse, meta) {
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
@@ -16,7 +22,7 @@ export const productAPI = createApi({
         }),
         productShow: build.query({
             query: (id) => ({
-                url: `/show/${id}`,
+                url: `/admin/${id}`,
                 method: 'GET',
             })
         })
