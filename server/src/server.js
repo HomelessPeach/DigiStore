@@ -1,7 +1,9 @@
 const express = require("express")
 const path = require("path")
-const cors = require('cors');
-
+const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
+const cors = require("cors");
+const {ErrorMiddleware} = require("./middlewares/error-middleware");
 const {routerApi} = require("./API/api.router")
 const {appRouter} = require("./API/routers/app.router")
 const {application} = require("../config/config")
@@ -24,10 +26,13 @@ const run = async () => {
 
     app
         .use(cors(corsOptions))
+        .use(bodyParser.json())
+        .use(cookieParser())
         .use('/api', routerApi)
         .use(express.static(path.join(__dirname, 'public')))
         .use(express.static(path.join(__dirname, 'public/app')))
         .use('/', appRouter)
+        .use(ErrorMiddleware)
         .listen(application.port, () => {
             console.info(`App start: http://${application.domain}:${application.port}`);
         });
