@@ -5,12 +5,18 @@ import {baseUrl} from "../../services";
 export const Product = () => {
     return(
         <ProductContainer>
+            <div style={{fontSize: 50, color: '#989797'}}>
+                Ноутбуки
+            </div>
             <ProductCard>
                 <ImageBlock>
-                    <Img src={`${baseUrl}/files/products/macbook162021.png`}/>
+                    <Img src={`${baseUrl}/files/product/macbook162021.png`}/>
                 </ImageBlock>
                 <TextBlock>
-                    <div>MacBook 16, 2021</div>
+                    <div style={{fontSize: 30}}>MacBook 16, 2021</div>
+                    <div style={{fontSize: 30, color: '#989797'}}>
+                        300.000р
+                    </div>
                 </TextBlock>
             </ProductCard>
         </ProductContainer>
@@ -49,4 +55,7 @@ const TextBlock = styled.div`
   width: 70%;
   height: 100%;
   padding: 0 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `

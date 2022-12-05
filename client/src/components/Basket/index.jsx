@@ -6,15 +6,27 @@ import {baseUrl} from "../../services";
 export const Basket = () => {
     return (
         <BasketContainer>
+            <div style={{fontSize: 50, color: '#989797'}}>
+                Корзина
+            </div>
             <BasketCard>
                 <ImageBlock>
-                    <Img src={`${baseUrl}/files/products/macbook162021.png`}/>
+                    <Img src={`${baseUrl}/files/product/macbook162021.png`}/>
                 </ImageBlock>
                 <TextBlock>
-                    <div>MacBook 16, 2021</div>
-                    <div>В корзине</div>
+                    <div style={{fontSize: 30}}>MacBook 16, 2021</div>
+                    <div style={{fontSize: 30, display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+                        <div style={{fontSize: 30, color: '#989797'}}>300.000р</div>
+                        <div style={{display: "flex", justifyContent: "space-between", width: 200}}>
+                            <div style={{fontSize: 30, padding: '20px 30px', boxShadow: '0 0 5px 0', backgroundColor: '#989797', borderRadius: 30}}>+</div>
+                            <div style={{fontSize: 30, padding: '20px 30px', boxShadow: '0 0 5px 0', backgroundColor: '#989797', borderRadius: 30}}>-</div>
+                        </div>
+                    </div>
                 </TextBlock>
             </BasketCard>
+            <div style={{fontSize: 30, width: '50%', margin:"auto", boxShadow: '0 0 5px 0', backgroundColor: 'pink', padding: '10px 20px', textAlign: "center", borderRadius: 50}}>
+                Оформить заказ
+            </div>
         </BasketContainer>
     )
 }
@@ -51,4 +63,7 @@ const TextBlock = styled.div`
   width: 70%;
   height: 100%;
   padding: 0 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `

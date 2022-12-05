@@ -8,7 +8,7 @@ export const Home = () => {
         <Container>
             <Card>
                 <ImageBlock>
-                    <Img src={`${baseUrl}/files/products/macbook162021.png`}/>
+                    <Img src={`${baseUrl}/files/product/macbook162021.png`}/>
                 </ImageBlock>
                 <TextBlock>
                     <div>MacBook 16, 2021</div>
@@ -17,7 +17,7 @@ export const Home = () => {
             </Card>
             <Card>
                 <ImageBlock>
-                    <Img src={`${baseUrl}/files/products/macbook162021.png`}/>
+                    <Img src={`${baseUrl}/files/product/macbook162021.png`}/>
                 </ImageBlock>
                 <TextBlock>
                     <div>MacBook 16, 2021</div>
@@ -26,7 +26,7 @@ export const Home = () => {
             </Card>
             <Card>
                 <ImageBlock>
-                    <Img src={`${baseUrl}/files/products/macbook162021.png`}/>
+                    <Img src={`${baseUrl}/files/product/macbook162021.png`}/>
                 </ImageBlock>
                 <TextBlock>
                     <div>MacBook 16, 2021</div>
@@ -35,7 +35,7 @@ export const Home = () => {
             </Card>
             <Card>
                 <ImageBlock>
-                    <Img src={`${baseUrl}/files/products/macbook162021.png`}/>
+                    <Img src={`${baseUrl}/files/product/macbook162021.png`}/>
                 </ImageBlock>
                 <TextBlock>
                     <div>MacBook 16, 2021</div>
