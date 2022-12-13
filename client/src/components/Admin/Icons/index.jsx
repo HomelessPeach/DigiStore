@@ -1,6 +1,8 @@
 import {Arrow} from "./Arrow";
 import {Back} from "./Back";
 import {Chat} from "./Chat";
+import {CheckMark} from "./CheckMark";
+import {Cross} from "./Cross";
 import {Feedback} from "./Feedback";
 import {Home} from "./Home";
 import {News} from "./News";
@@ -15,6 +17,8 @@ export {
     Arrow,
     Back,
     Chat,
+    CheckMark,
+    Cross,
     Feedback,
     Home,
     News,
