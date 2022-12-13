@@ -1,22 +1,29 @@
 import * as React from "react";
 import styled from "styled-components"
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {userAPI} from "../../../../services/UserService";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
 import {ImageField} from "../../components/ImageField";
+import {BoolField} from "../../components/BoolField";
+import {PhoneNumberField} from "../../components/PhoneNumberField";
 import {ToolbarBlock, LinkButton, ShowContainer, DeleteButton} from "../TablesStyledBlocks";
-import {TextInput} from "../../components/TextInput";
 
 export const UserShow = () => {
 
+    const navigate = useNavigate();
     const {pathname} = useLocation()
     const userId = pathname.replace(`${AdminRouteNames.ADMIN_USERS}/`, '')
     const [deleteUser] = userAPI.useUserDeleteMutation()
     const {data, isLoading} = userAPI.useUserShowQuery(userId)
 
-    function deleteUserHandler() {
-        deleteUser(userId)
+    async function deleteUserHandler() {
+        const res = await deleteUser(userId)
+            .unwrap()
+            .catch((err) => {console.log(err)})
+        if (res) {
+            navigate(`/admin/user`)
+        }
     }
 
     if (isLoading)
@@ -50,11 +57,11 @@ export const UserShow = () => {
                     <EditDataBlock>
                         <EditDataChildBlock>
                             <TextField value={data.user_email} label={'e-mail'}/>
-                            <TextField value={data.is_admin} label={'Администратор'}/>
+                            <PhoneNumberField value={data.user_phone_number} label={'Номер телефона'}/>
                         </EditDataChildBlock>
                         <EditDataChildBlock>
                             <TextField value={data.user_name} label={'Имя'}/>
-                            <TextField value={data.user_phone_number} label={'Номер телефона'}/>
+                            <BoolField value={data.is_admin} label={'Права администратора'}/>
                         </EditDataChildBlock>
                     </EditDataBlock>
                 </RightBlock>

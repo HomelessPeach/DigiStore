@@ -1,19 +1,50 @@
 import * as React from "react";
 import styled from "styled-components"
+import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {userAPI} from "../../../../services/UserService";
 import {TextInput} from "../../components/TextInput";
+import {ImageInput} from "../../components/ImageInput";
+import {BoolInput} from "../../components/BoolInput";
 import {AdminRouteNames} from "../../../../Router";
 import {ToolbarBlock, LinkButton, EditContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
-import {ImageInput} from "../../components/ImageInput";
+import {PhoneNumberInput} from "../../components/PhoneNumberInput";
+import {emailValidate, passwordHook, passwordValidate, userNameValidate} from "../../../../utils";
 
 export const UserCreate = () => {
 
+    const navigate = useNavigate();
     const [createUser] = userAPI.useUserCreateMutation()
     const [userData, setUserData] = useState({})
+    const [isNotValid, setIsNotValid] = useState(false)
 
-    function createUserHandler() {
-        createUser(userData).unwrap()
+    const validation = {
+        user_email: (email) => emailValidate(email),
+        user_password: (password) => passwordValidate(password),
+        user_phone_number: (phoneNumber) => {
+            return phoneNumber?.length === 10
+        },
+        user_name: (name) => userNameValidate(name),
+        checkValidate: () =>
+            validation.user_email(userData.user_email) &&
+            validation.user_password(userData.user_password) &&
+            validation.user_phone_number(userData.user_phone_number) &&
+            validation.user_name(userData.user_name)
+    }
+
+    async function createUserHandler() {
+        if (validation.checkValidate()) {
+            const res = await createUser({...userData, user_password: await passwordHook(userData.user_password)})
+                .unwrap()
+                .catch((err) => {
+                    console.log(err)
+                })
+            if (res) {
+                navigate(`/admin/user/${res.user_id}`)
+            }
+        } else {
+            setIsNotValid(true)
+        }
     }
 
     return (
@@ -28,18 +59,57 @@ export const UserCreate = () => {
             <EditBlock>
                 <EditContent>
                     <LeftBlock>
-                        <ImageInput value={userData.image?.new_image || ''} size={{h: "300px", w: "300px", br: '250px'}} label={'Аватар'} onChange={(value) => (value) ? setUserData({...userData, image: {...userData.image, new_image: value}}) : null}/>
+                        <ImageInput
+                            value={userData.image?.new_image || ''}
+                            size={{h: "300px", w: "300px", br: '250px'}}
+                            onChange={(value) => (value)?
+                                setUserData({...userData, image: {...userData.image, new_image: value}})
+                                :null}
+                            label={'Аватар'}
+                        />
                     </LeftBlock>
                     <RightBlock>
                         <EditDataBlock>
                             <EditDataChildBlock>
-                                <TextInput label={'e-mail'} onChange={(value) => setUserData({...userData, user_email: value})}/>
-                                <TextInput label={'Пароль'} onChange={(value) => setUserData({...userData, user_password: value})}/>
-                                <TextInput label={'Администратор'} onChange={(value) => setUserData({...userData, is_admin: value})}/>
+                                <TextInput
+                                    onChange={(value) => setUserData({...userData, user_email: value})}
+                                    validation={{
+                                        validate: validation.user_email,
+                                        validationError: isNotValid
+                                    }}
+                                    label={'e-mail'}
+                                />
+                                <TextInput
+                                    onChange={(value) => setUserData({...userData, user_password: value})}
+                                    validation={{
+                                        validate: validation.user_password,
+                                        validationError: isNotValid
+                                    }}
+                                    label={'Пароль'}
+                                />
                             </EditDataChildBlock>
                             <EditDataChildBlock>
-                                <TextInput label={'Имя'} onChange={(value) => setUserData({...userData, user_name: value})}/>
-                                <TextInput label={'Номер телефона'} onChange={(value) => setUserData({...userData, user_phone_number: value})}/>
+                                <TextInput
+                                    onChange={(value) => setUserData({...userData, user_name: value})}
+                                    validation={{
+                                        validate: validation.user_name,
+                                        validationError: isNotValid
+                                    }}
+                                    label={'Имя'}
+                                />
+                                <PhoneNumberInput
+                                    onChange={(value) => setUserData({...userData, user_phone_number: value})}
+                                    validation={{
+                                        validate: validation.user_phone_number,
+                                        validationError: isNotValid,
+                                        validationMessage: 'Номер телефона введён не корректно. Заполнены не все поля.'
+                                    }}
+                                    label={'Номер телефона'}
+                                />
+                                <BoolInput
+                                    onChange={(value) => setUserData({...userData, is_admin: value})}
+                                    label={'Права администратора'}
+                                />
                             </EditDataChildBlock>
                         </EditDataBlock>
                     </RightBlock>

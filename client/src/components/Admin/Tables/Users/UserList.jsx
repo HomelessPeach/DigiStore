@@ -6,6 +6,7 @@ import {AdminRouteNames} from "../../../../Router";
 import {ToolbarBlock, LinkButton, ListContainer} from "../TablesStyledBlocks";
 import {BoolField} from "../../components/BoolField";
 import {ImageField} from "../../components/ImageField";
+import {PhoneNumberField} from "../../components/PhoneNumberField";
 
 
 export const UserList = () => {
@@ -24,8 +25,8 @@ export const UserList = () => {
                 <ImageField source={'image'} name={'Аватар'} size={{w: '60px', h: '60px', br: '30px'}}/>
                 <TextField source={'user_email'} name={'e-mail'} sortable={true}/>
                 <TextField source={'user_name'} name={'Имя'} sortable={true}/>
-                <TextField source={'user_phone_number'} name={'Номер телефона'} sortable={true}/>
-                <BoolField source={'is_admin'} name={'Администратор'} sortable={true}/>
+                <PhoneNumberField source={'user_phone_number'} name={'Номер телефона'} sortable={true}/>
+                <BoolField source={'is_admin'} name={'Права администратора'} sortable={true}/>
             </DataGrid>
         </ListContainer>
     )
