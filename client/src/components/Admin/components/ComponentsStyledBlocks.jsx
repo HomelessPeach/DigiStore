@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const LabelBlock = styled.div`
   font-size: 14px;
   padding: 7px 0;
-  color: #888888;
+  color: ${({isNotValid}) => (!isNotValid)? '#888888' : '#ee0000'};
   display: flex;
   align-items: center;
 `

@@ -32,7 +32,7 @@ export const DataGrid = (props) => {
         }
     }
 
-    const {data: response, isLoading} = getData({limit: pagination, offset: pagination * page, sort: sort, order: order})
+    const {data: response, isLoading} = getData({limit: pagination, offset: pagination * page, sort: sort, order: order}, {refetchOnFocus: true})
 
     if (isLoading)
         return <h1>Loading...</h1>

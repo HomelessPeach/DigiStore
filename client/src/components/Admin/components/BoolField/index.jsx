@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components"
 import {ContainerBlock, LabelBlock} from "../ComponentsStyledBlocks";
+import {CheckMark, Cross} from "../../Icons";
 
 export const BoolField = (props) => {
 
@@ -16,7 +17,7 @@ export const BoolField = (props) => {
                     <LabelBlock>{label}</LabelBlock>
                     :null
             }
-            <ValueBlock>{(value)? 'Да' : 'Нет'}</ValueBlock>
+            <ValueBlock value={value}>{(value)? <CheckMark/> : <Cross/>}</ValueBlock>
         </ContainerBlock>
     )
 }
@@ -24,5 +25,6 @@ export const BoolField = (props) => {
 const ValueBlock = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
+  height: 25px;
+  fill: ${({value}) => (value)? '#0ebb00' : '#ee0000'};
 `
