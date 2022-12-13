@@ -27,12 +27,12 @@ export const UserEdit = () => {
     const [isNotValid, setIsNotValid] = useState(false)
 
     const validation = {
-        user_email: (email) => emailValidate(email),
-        user_password: (password) => passwordValidate(password),
+        user_email: (email) => email && emailValidate(email),
+        user_password: (password) => password && passwordValidate(password),
         user_phone_number: (phoneNumber) => {
             return phoneNumber?.length === 10
         },
-        user_name: (name) => userNameValidate(name),
+        user_name: (name) => name && userNameValidate(name),
         checkValidate: () =>
             validation.user_email(userData.user_email) &&
             (!password || validation.user_password(password)) &&
@@ -109,13 +109,13 @@ export const UserEdit = () => {
                             <EditDataChildBlock>
                                 <TextInput
                                     value={userData.user_email}
+                                    onChange={(value) => setUserData({...userData, user_email: value})}
                                     validation={{
                                         validate: validation.user_email,
-                                        validationError: isNotValid
+                                        validationError: isNotValid,
+                                        validationMessage: 'Некорректный e-mail'
                                     }}
-                                    onChange={(value) => setUserData({...userData, user_email: value})}
                                     label={'e-mail'}
-                                    disabled
                                 />
                                 <ButtonChangePassword
                                     onClick={() => setIsOpen(true)}
@@ -126,11 +126,13 @@ export const UserEdit = () => {
                             <EditDataChildBlock>
                                 <TextInput
                                     value={userData.user_name}
+                                    onChange={(value) => setUserData({...userData, user_name: value})}
                                     validation={{
                                         validate: validation.user_name,
-                                        validationError: isNotValid
+                                        validationError: isNotValid,
+                                        validationMessage: 'Некорректное имя пользователя. Имя пользователя должно состоять из букв латинского или русского алфавита (минимум 2 буквы), допускается наличие арабских цифр, а так же специальных символов: ' +
+                                            '"#", "*", "(", ")", ":", "_", "-". Запрещается использование подряд идущих пробелов. Максимальная длина – 30 символов.'
                                     }}
-                                    onChange={(value) => setUserData({...userData, user_name: value})}
                                     label={'Имя'}
                                 />
                                 <PhoneNumberInput
@@ -164,7 +166,9 @@ export const UserEdit = () => {
                             setPassword={setPassword}
                             validation={{
                                 validate: validation.user_password,
-                                validationMessage: 'Пароль должен состоять из 6 или более символов'
+                                validationError: isNotValid,
+                                validationMessage: 'Некорректный пароль. Пароль должен состоять из букв латинского алфавит (минимум 1), арабских цифр (минимум 1), длиной от 5 до 25 символов. Допускается содержание специальных символов: ' +
+                                    '"!", "@", "#", "$", "%", "^", "&", "*", ":", "(", ")", ".", ";", "<", ">", "\'", """, "{", "}", "[", "]", "?", "\\", "/", "|", "-", "_", "~".'
                             }}
                         />
                         : null

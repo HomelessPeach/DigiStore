@@ -3,6 +3,7 @@ import styled from "styled-components"
 import {TextInput} from "../../components/TextInput";
 import {Button} from "../TablesStyledBlocks";
 import {createRef, useState} from "react";
+import {PasswordInput} from "../../components/PasswordInput";
 
 export const UserChangePasswordForm = (props) => {
 
@@ -13,6 +14,13 @@ export const UserChangePasswordForm = (props) => {
     } = props
 
     const [newPassword, setNewPassword] = useState('')
+    const [isNotValid, setIsNotValid] = useState(false)
+
+    function checkValidation(password) {
+        const isValid = validation.validate(password)
+        setIsNotValid(!isValid)
+        return isValid
+    }
 
     function changePassword() {
         if (validation.validate(newPassword)) {
@@ -23,11 +31,14 @@ export const UserChangePasswordForm = (props) => {
 
     return(
         <UserChangePasswordBlock onClick={() => setIsOpen(false)}>
-            <ChangePasswordBlock onClick={(event) => event.stopPropagation()}>
+            <ChangePasswordBlock
+                isNotValid={isNotValid}
+                onClick={(event) => event.stopPropagation()}
+            >
                 <ChangeBlock>
-                    <TextInput
+                    <PasswordInput
                         onChange={(value) => setNewPassword(value)}
-                        validation={validation}
+                        validation={{...validation, validate: checkValidation}}
                         label={'Пароль'}
                     />
                 </ChangeBlock>
@@ -57,7 +68,7 @@ const ChangePasswordBlock = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 30%;
-  height: 40%;
+  height: ${({isNotValid}) => (isNotValid)? 60 : 40}%;
   background-color: #ffffff;
   border-radius: inherit;
   position: relative;

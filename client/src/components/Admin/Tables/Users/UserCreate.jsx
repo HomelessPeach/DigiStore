@@ -10,6 +10,7 @@ import {AdminRouteNames} from "../../../../Router";
 import {ToolbarBlock, LinkButton, EditContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
 import {PhoneNumberInput} from "../../components/PhoneNumberInput";
 import {emailValidate, passwordHook, passwordValidate, userNameValidate} from "../../../../utils";
+import {PasswordInput} from "../../components/PasswordInput";
 
 export const UserCreate = () => {
 
@@ -19,12 +20,12 @@ export const UserCreate = () => {
     const [isNotValid, setIsNotValid] = useState(false)
 
     const validation = {
-        user_email: (email) => emailValidate(email),
-        user_password: (password) => passwordValidate(password),
+        user_email: (email) => email && emailValidate(email),
+        user_password: (password) => password && passwordValidate(password),
         user_phone_number: (phoneNumber) => {
             return phoneNumber?.length === 10
         },
-        user_name: (name) => userNameValidate(name),
+        user_name: (name) => name && userNameValidate(name),
         checkValidate: () =>
             validation.user_email(userData.user_email) &&
             validation.user_password(userData.user_password) &&
@@ -75,15 +76,18 @@ export const UserCreate = () => {
                                     onChange={(value) => setUserData({...userData, user_email: value})}
                                     validation={{
                                         validate: validation.user_email,
-                                        validationError: isNotValid
+                                        validationError: isNotValid,
+                                        validationMessage: 'Некорректный e-mail'
                                     }}
                                     label={'e-mail'}
                                 />
-                                <TextInput
+                                <PasswordInput
                                     onChange={(value) => setUserData({...userData, user_password: value})}
                                     validation={{
                                         validate: validation.user_password,
-                                        validationError: isNotValid
+                                        validationError: isNotValid,
+                                        validationMessage: 'Некорректный пароль. Пароль должен состоять из букв латинского алфавит (минимум 1), арабских цифр (минимум 1), длиной от 5 до 25 символов. Допускается содержание специальных символов: ' +
+                                            '"!", "@", "#", "$", "%", "^", "&", "*", ":", "(", ")", ".", ";", "<", ">", "\'", """, "{", "}", "[", "]", "?", "\\", "/", "|", "-", "_", "~".'
                                     }}
                                     label={'Пароль'}
                                 />
@@ -93,7 +97,9 @@ export const UserCreate = () => {
                                     onChange={(value) => setUserData({...userData, user_name: value})}
                                     validation={{
                                         validate: validation.user_name,
-                                        validationError: isNotValid
+                                        validationError: isNotValid,
+                                        validationMessage: 'Некорректное имя пользователя. Имя пользователя должно состоять из букв латинского или русского алфавита (минимум 2 буквы), допускается наличие арабских цифр, а так же специальных символов: ' +
+                                            '"#", "*", "(", ")", ":", "_", "-". Запрещается использование подряд идущих пробелов. Максимальная длина – 30 символов.'
                                     }}
                                     label={'Имя'}
                                 />
