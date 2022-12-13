@@ -1,4 +1,5 @@
 import {configureStore, combineReducers} from "@reduxjs/toolkit";
+import {setupListeners} from "@reduxjs/toolkit/query";
 // import {authAPI} from "../services/AuthService";
 import {chatAPI} from "../services/ChatService";
 import {feedbackAPI} from "../services/FeedbackService";
@@ -38,3 +39,5 @@ export const store = configureStore({
                 userAPI.middleware,
             )
 })
+
+setupListeners(store.dispatch)
