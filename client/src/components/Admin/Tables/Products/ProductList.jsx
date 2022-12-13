@@ -16,7 +16,7 @@ export const ProductsList = () => {
                     Добавить товар
                 </LinkButton>
             </ToolbarBlock>
-            <DataGrid getData={productAPI.useProductrListQuery} idName={'product_id'}>
+            <DataGrid getData={productAPI.useProductListQuery} idName={'product_id'}>
                 <TextField source={'product_id'} name={'id'} sortable={true}/>
                 <TextField source={'product_name'} name={'Название'} sortable={true}/>
                 <TextField source={'product_rating'} name={'Рейтинг'} sortable={true}/>
