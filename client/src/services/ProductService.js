@@ -5,7 +5,7 @@ export const productAPI = createApi({
     reducerPath: 'productAPI',
     baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/product`}),
     endpoints: (build) => ({
-        productrList: build.query({
+        productList: build.query({
             query: ({offset = 0, limit = 10, sort = '', order = 'ASC'}) => ({
                 url: `/admin`,
                 method: 'GET',
