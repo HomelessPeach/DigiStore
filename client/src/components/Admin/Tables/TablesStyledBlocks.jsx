@@ -26,7 +26,7 @@ export const EditToolbarBlock = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: end;
-  padding: 10px 30px;
+  padding: 20px 30px;
   user-select: none;
 `
 
@@ -87,6 +87,10 @@ export const Button = styled.div`
   cursor: pointer;
   &:active {
     box-shadow: none;
+  }
+  &:disabled {
+    box-shadow: none;
+    pointer-events: none;
   }
 `
 export const LabelBlock = styled.div`
