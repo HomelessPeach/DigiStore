@@ -32,7 +32,8 @@ export async function passwordHook(password) {
 }
 
 export function passwordValidate(password) {
-    return (password?.length > 5)
+    const PASSWORD_REGEXP = /(?=.*[0-9])(?=.*[a-z])^[0-9a-z!@#$%^&*:().;<>'"{}[\]?/|\-_\\~`]{5,25}$/ig
+    return PASSWORD_REGEXP.test(password)
 }
 
 export function emailValidate(email) {
@@ -41,5 +42,6 @@ export function emailValidate(email) {
 }
 
 export function userNameValidate(userName) {
-    return true
+    const USERNAME_REGEXP = /(?=(?:.*?[a-zа-я]){2})(?=(?!.*?\s{2}))^[0-9a-zа-я\s#*.():_\-]{2,30}$/ig
+    return USERNAME_REGEXP.test(userName);
 }
