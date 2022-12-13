@@ -9,9 +9,9 @@ export const TextInput = (props) => {
         value,
         label,
         validation: {
-            validate,
-            validationError,
-            validationMessage,
+            validate = () => true,
+            validationError = false,
+            validationMessage = 'Некорректно введённые данные',
         } = {
             validate: () => true,
             validationError: false,

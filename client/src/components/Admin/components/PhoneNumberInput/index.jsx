@@ -9,13 +9,13 @@ export const PhoneNumberInput = (props) => {
         value = '',
         label,
         validation: {
-            validate,
-            validationError,
-            validationMessage,
+            validate = () => true,
+            validationError = false,
+            validationMessage = 'Некорректно введён номер телефона',
         } = {
             validate: () => true,
             validationError: false,
-            validationMessage: 'Некорректно введённые данные',
+            validationMessage: 'Некорректно введён номер телефона',
         },
         onChange,
     } = props
@@ -66,7 +66,6 @@ export const PhoneNumberInput = (props) => {
         const index = Number(event.target.dataset.index);
         const key = event.key
         let stringNumber = number.join('')
-        let countNumbers = index
         if (key === "Backspace") {
             if (inputRefs[index].value) {
                 inputRefs[index].value = ''
@@ -77,8 +76,6 @@ export const PhoneNumberInput = (props) => {
                     number[index - 1] = ''
                     inputRefs[index - 1].focus();
                     inputRefs[index - 1].select();
-                } else {
-                    inputRefs[index].blur();
                 }
             }
             stringNumber = number.join('')
