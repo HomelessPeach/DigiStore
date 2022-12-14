@@ -39,6 +39,13 @@ class UserDatabaseService {
             where: {
                 user_id: userId
             },
+            attributes: [
+                'user_id',
+                'user_email',
+                'user_name',
+                'user_phone_number',
+                'is_admin',
+            ],
             include: [{
                 model: images,
                 as: 'image',
