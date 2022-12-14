@@ -36,10 +36,10 @@ function initModels(sequelize) {
 
   chats.hasMany(chat_messages, { as: "chat_messages", foreignKey: "fk_chat"});
   chat_messages.belongsTo(chats, { as: "chat", foreignKey: "fk_chat"});
-
+  images.hasMany(news, { as: "news", foreignKey: "fk_image"});
+  news.belongsTo(images, { as: "image", foreignKey: "fk_image"});
   images.hasMany(users, { as: "users", foreignKey: "fk_image"});
   users.belongsTo(images, { as: "image", foreignKey: "fk_image"});
-  images.hasMany(news, { as: "news", foreignKey: "fk_image"});
   product_images.belongsTo(images, { as: "image", foreignKey: "fk_image"});
   images.hasMany(product_images, { as: "products", foreignKey: "fk_image"});
   products.belongsTo(product_categories, { as: "product_category", foreignKey: "fk_product_category"});

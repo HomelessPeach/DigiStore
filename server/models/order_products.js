@@ -14,7 +14,16 @@ module.exports = function(sequelize, DataTypes) {
     },
     fk_product: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
+    },
+    order_product_count: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1
+    },
+    order_product_total: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,

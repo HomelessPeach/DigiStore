@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     fk_product: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     },
     fk_user: {
       type: DataTypes.INTEGER,

@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     fk_user: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     },
     is_complete: {
       type: DataTypes.INTEGER,
