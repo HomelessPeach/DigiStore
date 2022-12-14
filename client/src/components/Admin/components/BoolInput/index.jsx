@@ -86,5 +86,3 @@ const Cursor = styled.div`
   right: ${({value}) => (value)? 23 : 0}px;
   transition: 0.4s;
 `
-
-// (value)? 'Да' : 'Нет'

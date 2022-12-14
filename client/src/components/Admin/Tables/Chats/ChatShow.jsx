@@ -19,8 +19,6 @@ export const ChatShow = () => {
     if (isLoading)
         return <h1>LOADING...</h1>
 
-    console.log(data)
-
     return (
         <ShowContainer>
             <ToolbarBlock>
