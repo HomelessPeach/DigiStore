@@ -87,5 +87,11 @@ export const userAPI = createApi({
             }),
             invalidatesTags: [{type: 'Users', id: 'LIST'}]
         }),
+        getUserData: build.mutation({
+            query: (id) => ({
+                url: `/admin/${id}`,
+                method: 'GET',
+            }),
+        }),
     })
 })
