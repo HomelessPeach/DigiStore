@@ -242,7 +242,6 @@ const ButtonChangePassword = styled.div`
   padding: 3px;
   user-select: none;
   cursor: pointer;
-
   &:active {
     box-shadow: none;
   }
