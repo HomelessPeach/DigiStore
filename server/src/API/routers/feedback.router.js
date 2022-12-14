@@ -7,5 +7,6 @@ routerFeedback
     .post('/admin', FeedbackController.createFeedback)
     .get('/admin', FeedbackController.listFeedback)
     .get('/admin/:id', FeedbackController.showFeedback)
+    .put('/answered/:id', FeedbackController.markAsAnsweredFeedback)
 
 module.exports = {routerFeedback}
