@@ -19,7 +19,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     fk_chat: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      references: {
+        model: 'chats',
+        key: 'chat_id'
+      }
     },
     is_user: {
       type: DataTypes.INTEGER,
