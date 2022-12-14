@@ -18,6 +18,10 @@ class FeedbackBusinessService {
         return await FeedbackDatabaseService.showFeedback(feedbackId)
     }
 
+    static async markAsAnsweredFeedback(feedbackId, transaction) {
+        return (await FeedbackDatabaseService.markAsAnsweredFeedback(feedbackId, transaction))[0][1]
+    }
+
 }
 
 module.exports = {FeedbackBusinessService}

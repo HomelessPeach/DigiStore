@@ -16,6 +16,11 @@ class FeedbackDatabaseService {
             offset: feedbackSort.offset,
             limit: feedbackSort.limit,
             order: feedbackSort.order,
+            attributes: [
+                'feedback_id',
+                'feedback_email',
+                'is_answer',
+            ],
             transaction: transaction
         })
     }
@@ -25,8 +30,26 @@ class FeedbackDatabaseService {
             where: {
                 feedback_id: feedbackId
             },
+            attributes: [
+                'feedback_id',
+                'feedback_email',
+                'feedback_message',
+                'is_answer',
+            ],
             transaction: transaction
         })
+    }
+
+    static async markAsAnsweredFeedback(feedbackId, transaction) {
+        return await feedbacks.update(
+            {
+                is_answer: true
+            }, {
+                where: {
+                    feedback_id: feedbackId
+                },
+                transaction: transaction
+            })
     }
 
 
