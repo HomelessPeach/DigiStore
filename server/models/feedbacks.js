@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: true
     },
-    feedback_massege: {
+    feedback_message: {
       type: DataTypes.TEXT,
       allowNull: false
     },
