@@ -1,9 +1,8 @@
 import * as React from "react";
 import styled from "styled-components"
-import {TextInput} from "../../components/TextInput";
-import {Button} from "../TablesStyledBlocks";
-import {createRef, useState} from "react";
+import {useState} from "react";
 import {PasswordInput} from "../../components/PasswordInput";
+import {Button} from "../TablesStyledBlocks";
 
 export const UserChangePasswordForm = (props) => {
 

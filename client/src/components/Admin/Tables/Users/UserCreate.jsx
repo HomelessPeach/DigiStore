@@ -3,14 +3,14 @@ import styled from "styled-components"
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {userAPI} from "../../../../services/UserService";
+import {AdminRouteNames} from "../../../../Router";
 import {TextInput} from "../../components/TextInput";
 import {ImageInput} from "../../components/ImageInput";
 import {BoolInput} from "../../components/BoolInput";
-import {AdminRouteNames} from "../../../../Router";
-import {ToolbarBlock, LinkButton, EditContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
 import {PhoneNumberInput} from "../../components/PhoneNumberInput";
-import {emailValidate, passwordHook, passwordValidate, userNameValidate} from "../../../../utils";
 import {PasswordInput} from "../../components/PasswordInput";
+import {emailValidate, passwordHook, passwordValidate, userNameValidate} from "../../../../utils";
+import {ToolbarBlock, LinkButton, EditContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
 
 export const UserCreate = () => {
 

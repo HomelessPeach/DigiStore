@@ -1,12 +1,12 @@
 import * as React from "react";
 import styled from "styled-components"
-import {feedbackAPI} from "../../../../services/FeedbackService";
 import {useLocation} from "react-router-dom";
+import {feedbackAPI} from "../../../../services/FeedbackService";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
-import {ToolbarBlock, LinkButton, ShowContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
 import {BoolField} from "../../components/BoolField";
-import {passwordHook} from "../../../../utils";
+import {EmailField} from "../../components/EmailField";
+import {ToolbarBlock, LinkButton, ShowContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
 
 export const FeedbackShow = () => {
 
@@ -36,11 +36,11 @@ export const FeedbackShow = () => {
                 </LinkButton>
             </ToolbarBlock>
             <ShowBlock>
-                <ShowContent>
+                <ShowContent isToolbar={data.is_answer == false}>
                     <TextField value={data.feedback_id} label={'id'}/>
                     <DoubleFieldBlock>
                         <FieldBlock>
-                            <TextField value={data.feedback_email} label={'e-mail'}/>
+                            <EmailField value={data.feedback_email} label={'e-mail'}/>
                         </FieldBlock>
                         <FieldBlock>
                             <BoolField value={data.is_answer} label={'Отвечено'}/>
@@ -48,15 +48,18 @@ export const FeedbackShow = () => {
                     </DoubleFieldBlock>
                     <TextField value={data.feedback_message} label={'Обращение'}/>
                 </ShowContent>
-                <EditToolbarBlock>
-                    <Button
-                        onClick={markAsAnswered}
-                        width={150}
-                        height={50}
-                    >
-                        Пометить как отвеченное
-                    </Button>
-                </EditToolbarBlock>
+                {(data.is_answer == false)?
+                    <EditToolbarBlock>
+                        <Button
+                            onClick={markAsAnswered}
+                            width={150}
+                            height={50}
+                        >
+                            Пометить как отвеченное
+                        </Button>
+                    </EditToolbarBlock>
+                    : null
+                }
             </ShowBlock>
         </ShowContainer>
     )
@@ -74,7 +77,7 @@ const ShowContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding: 40px 50px 10px;
+  padding: 40px 50px ${({isToolbar}) => (isToolbar)? 10 : 40}px;
 `
 
 const DoubleFieldBlock = styled.div`

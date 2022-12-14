@@ -7,6 +7,7 @@ import {TextField} from "../../components/TextField";
 import {ImageField} from "../../components/ImageField";
 import {BoolField} from "../../components/BoolField";
 import {PhoneNumberField} from "../../components/PhoneNumberField";
+import {EmailField} from "../../components/EmailField";
 import {ToolbarBlock, LinkButton, ShowContainer, DeleteButton} from "../TablesStyledBlocks";
 
 export const UserShow = () => {
@@ -56,7 +57,7 @@ export const UserShow = () => {
                     </IdBlock>
                     <EditDataBlock>
                         <EditDataChildBlock>
-                            <TextField value={data.user_email} label={'e-mail'}/>
+                            <EmailField value={data.user_email} label={'e-mail'}/>
                             <PhoneNumberField value={data.user_phone_number} label={'Номер телефона'}/>
                         </EditDataChildBlock>
                         <EditDataChildBlock>

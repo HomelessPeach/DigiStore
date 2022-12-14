@@ -1,17 +1,17 @@
 import * as React from "react";
 import styled from "styled-components"
-import {userAPI} from "../../../../services/UserService";
-import {TextInput} from "../../components/TextInput";
 import {useLocation, useNavigate} from "react-router-dom";
+import {userAPI} from "../../../../services/UserService";
 import {AdminRouteNames} from "../../../../Router";
-import {ToolbarBlock, LinkButton, DeleteButton, EditContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
+import {TextInput} from "../../components/TextInput";
 import {ImageInput} from "../../components/ImageInput";
 import {BoolInput} from "../../components/BoolInput";
+import {PhoneNumberInput} from "../../components/PhoneNumberInput";
 import {TextField} from "../../components/TextField";
 import {useEffect, useState} from "react";
 import {UserChangePasswordForm} from "./UserChangePasswordForm";
 import {emailValidate, passwordHook, passwordValidate, userNameValidate} from "../../../../utils";
-import {PhoneNumberInput} from "../../components/PhoneNumberInput";
+import {ToolbarBlock, LinkButton, DeleteButton, EditContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
 
 export const UserEdit = () => {
 

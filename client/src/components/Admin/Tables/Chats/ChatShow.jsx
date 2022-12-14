@@ -1,8 +1,8 @@
 import * as React from "react";
 import styled from "styled-components"
+import {useLocation} from "react-router-dom";
 import {userAPI} from "../../../../services/UserService";
 import {chatAPI} from "../../../../services/ChatService";
-import {useLocation} from "react-router-dom";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
 import {BoolField} from "../../components/BoolField";
