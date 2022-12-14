@@ -48,6 +48,7 @@ class FeedbackDatabaseService {
                 where: {
                     feedback_id: feedbackId
                 },
+                returning: true,
                 transaction: transaction
             })
     }

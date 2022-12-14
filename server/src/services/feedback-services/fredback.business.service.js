@@ -19,7 +19,7 @@ class FeedbackBusinessService {
     }
 
     static async markAsAnsweredFeedback(feedbackId, transaction) {
-        return (await FeedbackDatabaseService.markAsAnsweredFeedback(feedbackId, transaction))[0][1]
+        return await FeedbackDatabaseService.markAsAnsweredFeedback(feedbackId, transaction)
     }
 
 }

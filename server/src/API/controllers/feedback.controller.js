@@ -43,9 +43,9 @@ class FeedbackController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {id} = req.params;
-            const feedback = await FeedbackBusinessService.markAsAnsweredFeedback(id, transaction)
+            await FeedbackBusinessService.markAsAnsweredFeedback(id, transaction)
             await transaction.commit();
-            res.json(`Помечено как отвечено #${feedback.feedback_id}`)
+            res.json(`Помечено как отвечено`)
         } catch (err) {
             await transaction.rollback();
             next(err)
