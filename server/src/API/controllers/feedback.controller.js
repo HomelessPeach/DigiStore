@@ -39,6 +39,19 @@ class FeedbackController {
         }
     }
 
+    static async markAsAnsweredFeedback(req, res, next) {
+        const transaction = await SequelizeConnect.transaction()
+        try {
+            const {id} = req.params;
+            const feedback = await FeedbackBusinessService.markAsAnsweredFeedback(id, transaction)
+            await transaction.commit();
+            res.json(`Помечено как отвечено #${feedback.feedback_id}`)
+        } catch (err) {
+            await transaction.rollback();
+            next(err)
+        }
+    }
+
 }
 
 module.exports = {FeedbackController}

@@ -8,7 +8,6 @@ class UserController {
         try {
             const {body: {data}, files} = req;
             const body = JSON.parse(data);
-            console.log(body)
             const user = await UserBusinessService.createUser(body, files, transaction)
             await transaction.commit();
             res.json(user)
