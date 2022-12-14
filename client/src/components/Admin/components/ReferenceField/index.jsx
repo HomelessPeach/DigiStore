@@ -18,14 +18,16 @@ export const ReferenceField = (props) => {
     const [value, setValue] = useState()
 
     useEffect(() => {
-        (async () => {
-            const res = await func(id)
-                .unwrap()
-                .catch((err) => {
-                    console.log(err)
-                })
-            setValue(res[searchFieldName])
-        })()
+        if (id) {
+            (async () => {
+                const res = await func(id)
+                    .unwrap()
+                    .catch((err) => {
+                        console.log(err)
+                    })
+                setValue(res[searchFieldName])
+            })()
+        }
     }, [id])
 
     return (
@@ -36,13 +38,16 @@ export const ReferenceField = (props) => {
                     :null
             }
             <ValueBlock>
-                {(value)?
-                    <Link
-                        to={`${link}/${id}`}
-                    >
-                        {value}
-                    </Link>
-                    : ''}
+                {(id)?
+                    (value)?
+                        <Link
+                            to={`${link}/${id}`}
+                        >
+                            {value}
+                        </Link>
+                        : ''
+                    : 'Объект удалён'
+                }
             </ValueBlock>
         </ContainerBlock>
     )
