@@ -34,8 +34,9 @@ function initModels(sequelize) {
   var reviews = _reviews(sequelize, DataTypes);
   var users = _users(sequelize, DataTypes);
 
-  chat_messages.hasMany(chats, { as: "chat", foreignKey: "fk_chat"});
-  chats.belongsTo(chat_messages, { as: "chat_messages", foreignKey: "fk_chat"});
+  chats.hasMany(chat_messages, { as: "chat_messages", foreignKey: "fk_chat"});
+  chat_messages.belongsTo(chats, { as: "chat", foreignKey: "fk_chat"});
+
   images.hasMany(users, { as: "users", foreignKey: "fk_image"});
   users.belongsTo(images, { as: "image", foreignKey: "fk_image"});
   images.hasMany(news, { as: "news", foreignKey: "fk_image"});
