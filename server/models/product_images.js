@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     fk_image: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'images',
         key: 'image_id'
