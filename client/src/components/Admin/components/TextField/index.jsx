@@ -5,9 +5,19 @@ import {ContainerBlock, LabelBlock} from "../ComponentsStyledBlocks";
 export const TextField = (props) => {
 
     const {
-        value,
+        value = '',
         label
     } = props
+
+    const formattedText = (text) => {
+        const lines = String(text).split('\\n')
+        const lastLineIndex = lines.length - 1
+        return lines.map((item, index) =>
+            (lastLineIndex !== index)?
+                <>{item}<br/></>
+                : item
+        )
+    }
 
     return (
         <ContainerBlock>
@@ -16,7 +26,9 @@ export const TextField = (props) => {
                     <LabelBlock>{label}</LabelBlock>
                     :null
             }
-            <ValueBlock>{(value)? value :  ''}</ValueBlock>
+            <ValueBlock>
+                {(value)? formattedText(value) :  ''}
+            </ValueBlock>
         </ContainerBlock>
     )
 }
@@ -24,6 +36,6 @@ export const TextField = (props) => {
 
 const ValueBlock = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
   width: 100%;
 `
