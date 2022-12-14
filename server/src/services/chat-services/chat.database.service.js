@@ -1,36 +1,55 @@
 const {SequelizeConnect} = require('../database-connect')
 const initModels = require('../../../models/init-models')
-const {chat} = initModels(SequelizeConnect)
+const {chats, chat_messages} = initModels(SequelizeConnect)
 
 class ChatDatabaseService {
 
     static async createChat(chatData, transaction) {
-        return chat.create(
+        return chats.create(
             chatData, {
                 transaction: transaction
             })
     }
 
     static async listChat(chatSort, transaction = null) {
-        return await chat.findAll({
+        return await chats.findAll({
             offset: chatSort.offset,
             limit: chatSort.limit,
             order: chatSort.order,
+            attributes: [
+                'chat_id',
+                'fk_user',
+                'is_answer'
+            ],
             transaction: transaction
         })
     }
 
     static async showChat(chatId, transaction = null) {
-        return await chat.findOne({
+        return await chats.findOne({
             where: {
                 chat_id: chatId
             },
+            attributes: [
+                'chat_id',
+                'fk_user',
+                'is_answer'
+            ],
+            include: [{
+                model: chat_messages,
+                as: 'chat_messages',
+                // attributes: [
+                //     'chat_message_content',
+                //     'create_at',
+                //     'is_user'
+                // ]
+            }],
             transaction: transaction
         })
     }
 
     static async updateChat(chatData, chatId, transaction) {
-        return await chat.update(
+        return await chats.update(
             chatData, {
                 where: {
                     chat_id: chatId
@@ -41,7 +60,7 @@ class ChatDatabaseService {
     }
 
     static async deleteChat(chatId, transaction) {
-        return await chat.destroy({
+        return await chats.destroy({
             where: {
                 chat_id: chatId
             },
@@ -50,7 +69,7 @@ class ChatDatabaseService {
     }
 
     static async countChat() {
-        return await chat.count()
+        return await chats.count()
     }
 
 }
