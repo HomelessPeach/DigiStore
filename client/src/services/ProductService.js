@@ -1,8 +1,10 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {apiUrl} from "./index";
+import {base64StringToFile} from "../utils";
 
 export const productAPI = createApi({
     reducerPath: 'productAPI',
+    tagTypes: ['Product'],
     baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/product`}),
     endpoints: (build) => ({
         productList: build.query({
@@ -18,13 +20,70 @@ export const productAPI = createApi({
             }),
             transformResponse(apiResponse, meta) {
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
+            },
+            providesTags: ({data}) => {
+                return (data)?
+                    [
+                        ...data.map(({product_id}) => ({type: 'Product', id: product_id})),
+                        {type: 'Product', id: 'LIST'}
+                    ]
+                    :
+                    [{type: 'Product', id: 'LIST'}]
             }
         }),
         productShow: build.query({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'GET',
-            })
-        })
+            }),
+            providesTags: (data) => {
+                return (data)?
+                    [
+                        {type: 'Product', id: data.product_id},
+                        {type: 'Product', id: 'SHOW'}
+                    ]
+                    :
+                    [{type: 'Product', id: 'SHOW'}]
+            }
+        }),
+        productCreate: build.mutation({
+            query: (data) => ({
+                url: `/admin`,
+                method: 'POST',
+                body: ((data) => {
+                    const formData = new FormData();
+                    if (data?.image?.new_image) {
+                        formData.append('sourceImage', base64StringToFile(data.image.new_image, `image`));
+                        delete data.image.new_image
+                    }
+                    formData.append('data', JSON.stringify(data));
+                    return formData
+                })(data),
+            }),
+            invalidatesTags: [{type: 'Product', id: 'LIST'}]
+        }),
+        productUpdate: build.mutation({
+            query: (data) => ({
+                url: `/admin/${data.product_id}`,
+                method: 'PUT',
+                body: ((data) => {
+                    const formData = new FormData();
+                    if (data?.image?.new_image) {
+                        formData.append('sourceImage', base64StringToFile(data.image.new_image, `image`));
+                        delete data.image.new_image
+                    }
+                    formData.append('data', JSON.stringify(data));
+                    return formData
+                })(data),
+            }),
+            invalidatesTags: [{type: 'Product', id: 'LIST'}, {type: 'Product', id: 'SHOW'}]
+        }),
+        productDelete: build.mutation({
+            query: (id) => ({
+                url: `/admin/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: [{type: 'Product', id: 'LIST'}]
+        }),
     })
 })
