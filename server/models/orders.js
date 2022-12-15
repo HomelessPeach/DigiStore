@@ -21,6 +21,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: 0
+    },
+    client_phone_number: {
+      type: DataTypes.TEXT,
+      allowNull: false
     }
   }, {
     sequelize,
