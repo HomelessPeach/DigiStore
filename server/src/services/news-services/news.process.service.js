@@ -1,7 +1,16 @@
 class NewsProcessService {
 
-    static newsDataWrite() {
+    static newsDataWrite(query) {
 
+        const newsData = {
+            news_name: query.news_name,
+            news_short_description: query.news_short_description || null,
+            news_description: query.news_short_description || null
+        }
+
+        const newsId = query.news_id;
+
+        return  {newsData, newsId}
     }
 
     static newsDataList(query) {

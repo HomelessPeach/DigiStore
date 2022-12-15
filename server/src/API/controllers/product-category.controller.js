@@ -7,9 +7,10 @@ class ProductCategoryController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body: {data}, files} = req;
-
+            const body = JSON.parse(data);
+            const productCategory = await ProductCategoryBusinessService.createProductCategory(body, files, transaction)
             await transaction.commit();
-            res.json('')
+            res.json(productCategory)
         } catch (err) {
             await transaction.rollback();
             next(err)
@@ -43,9 +44,10 @@ class ProductCategoryController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body: {data}, files} = req;
+            const body = JSON.parse(data);
+            const productCategory = await ProductCategoryBusinessService.updateProductCategory(body, files, transaction)
             await transaction.commit();
-
-            res.json('')
+            res.json(productCategory)
         } catch (err) {
             await transaction.rollback();
             next(err)
@@ -56,7 +58,7 @@ class ProductCategoryController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {id} = req.params;
-
+            await ProductCategoryBusinessService.deleteProductCategory(id, transaction)
             await transaction.commit();
             res.json('Данные удалены')
         } catch (err) {

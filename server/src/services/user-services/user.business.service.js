@@ -40,7 +40,7 @@ class UserBusinessService {
     }
 
     static async deleteUser(userId, transaction) {
-        const userData = await UserDatabaseService.showUser(userId)
+        const userData = await UserDatabaseService.showUser(userId, transaction)
         const user = userData.get({plain: true})
         await UserDatabaseService.deleteUserFromChat(userId, transaction)
         await UserDatabaseService.deleteUserFromFavoriteProducts(userId, transaction)

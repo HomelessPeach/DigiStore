@@ -6,10 +6,10 @@ class ProductFeatureController {
     static async createProductFeature(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
-            const {body: {data}, files} = req;
-
+            const {body} = req;
+            const productFeature = await ProductFeatureBusinessService.createProductFeature(body, transaction)
             await transaction.commit();
-            res.json('')
+            res.json(productFeature)
         } catch (err) {
             await transaction.rollback();
             next(err)
@@ -42,10 +42,10 @@ class ProductFeatureController {
     static async updateProductFeature(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
-            const {body: {data}, files} = req;
+            const {body} = req;
+            const productFeature = await ProductFeatureBusinessService.updateProductFeature(body, transaction)
             await transaction.commit();
-
-            res.json('')
+            res.json(productFeature)
         } catch (err) {
             await transaction.rollback();
             next(err)
@@ -56,7 +56,7 @@ class ProductFeatureController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {id} = req.params;
-
+            await ProductFeatureBusinessService.deleteProductFeature(id, transaction)
             await transaction.commit();
             res.json('Данные удалены')
         } catch (err) {

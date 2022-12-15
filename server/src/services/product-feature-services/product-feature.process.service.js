@@ -1,7 +1,14 @@
 class ProductFeatureProcessService {
 
-    static productFeatureDataWrite() {
+    static productFeatureDataWrite(query) {
 
+        const productFeatureData = {
+            product_feature_name: query.product_feature_name,
+        }
+
+        const productFeatureId = query.product_feature_id;
+
+        return  {productFeatureData, productFeatureId}
     }
 
     static productFeatureDataList(query) {

@@ -3,8 +3,9 @@ const {ProductFeatureProcessService} = require("./product-feature.process.servic
 
 class ProductFeatureBusinessService {
 
-    static async createProductFeature() {
-        return 1
+    static async createProductFeature(body, transaction) {
+        const {productFeatureData} = ProductFeatureProcessService.productFeatureDataWrite(body)
+        return await ProductFeatureBusinessService.createProductFeature(productFeatureData, transaction)
     }
 
     static async listProductFeature(query) {
@@ -18,12 +19,13 @@ class ProductFeatureBusinessService {
         return await ProductFeatureDatabaseService.showProductFeature(productFeatureId)
     }
 
-    static async updateProductFeature() {
-        return 1
+    static async updateProductFeature(body, transaction) {
+        const {productFeatureData, productFeatureId} = ProductFeatureProcessService.productFeatureDataWrite(body)
+        return await ProductFeatureBusinessService.updateProductFeature(productFeatureData, productFeatureId, transaction)
     }
 
-    static async deleteProductFeature(productFeatureId) {
-        return await ProductFeatureDatabaseService.showProductFeature(productFeatureId)
+    static async deleteProductFeature(productFeatureId, transaction) {
+        return await ProductFeatureDatabaseService.showProductFeature(productFeatureId, transaction)
     }
 
 }

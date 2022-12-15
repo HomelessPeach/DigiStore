@@ -7,9 +7,10 @@ class NewsController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body: {data}, files} = req;
-
+            const body = JSON.parse(data);
+            const news = await NewsBusinessService.createNews(body, files, transaction)
             await transaction.commit();
-            res.json('')
+            res.json(news)
         } catch (err) {
             await transaction.rollback();
             next(err)
@@ -43,9 +44,10 @@ class NewsController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body: {data}, files} = req;
+            const body = JSON.parse(data);
+            const news = await NewsBusinessService.updateNews(body, files, transaction)
             await transaction.commit();
-
-            res.json('')
+            res.json(news)
         } catch (err) {
             await transaction.rollback();
             next(err)
@@ -56,7 +58,7 @@ class NewsController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {id} = req.params;
-
+            await NewsBusinessService.deleteNews(id, transaction)
             await transaction.commit();
             res.json('Данные удалены')
         } catch (err) {

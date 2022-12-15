@@ -1,7 +1,14 @@
 class ProductCategoryProcessService {
 
-    static productCategoryDataWrite() {
+    static productCategoryDataWrite(query) {
 
+        const productCategoryData = {
+            product_category_name: query.product_category_name,
+        }
+
+        const productCategoryId = query.product_category_id;
+
+        return  {productCategoryData, productCategoryId}
     }
 
     static productCategoryDataList(query) {
