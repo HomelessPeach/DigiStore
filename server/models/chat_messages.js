@@ -14,8 +14,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     create_at: {
       type: DataTypes.TEXT,
-      allowNull: false,
-      defaultValue: "datetime(now, localtime)"
+      allowNull: true,
     },
     fk_chat: {
       type: DataTypes.INTEGER,

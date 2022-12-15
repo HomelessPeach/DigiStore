@@ -1,6 +1,6 @@
 class ChatProcessService {
 
-    static chatDataWrite() {
+    static chatDataWrite(query) {
 
     }
 
@@ -20,6 +20,16 @@ class ChatProcessService {
         return {chatSort}
     }
 
+    static chatMessageDataWrite(query) {
+
+        const chatMessageData = {
+            chat_message_content: query.chat_message_content,
+            fk_chat: query.fk_chat,
+            is_user: query.is_user,
+        }
+
+        return {chatMessageData}
+    }
 }
 
 module.exports = {ChatProcessService}

@@ -1,9 +1,11 @@
 const {Router} = require("express");
-const {ChatMessageController} = require("../controllers/chat.controller");
+const {ChatController} = require("../controllers/chat.controller");
 
 const routerChat = Router()
 
 routerChat
-    .get('/admin', ChatMessageController.listChat)
-    .get('/admin/:id', ChatMessageController.showChat)
+    .get('/admin', ChatController.listChat)
+    .get('/admin/:id', ChatController.showChat)
+    .post('/message', ChatController.createMessage)
+
 module.exports = {routerChat}

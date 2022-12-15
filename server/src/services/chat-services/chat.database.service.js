@@ -73,6 +73,13 @@ class ChatDatabaseService {
         return await chats.count()
     }
 
+    static async createMessage(chatMessageData, transaction) {
+        return chat_messages.create(
+            chatMessageData, {
+                transaction: transaction
+            })
+    }
+
 }
 
 module.exports = {ChatDatabaseService}
