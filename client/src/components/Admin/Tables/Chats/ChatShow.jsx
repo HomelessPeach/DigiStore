@@ -44,7 +44,7 @@ export const ChatShow = () => {
                             <BoolField value={data.is_answer} label={'Отвечено'}/>
                         </FieldBlock>
                     </DoubleFieldBlock>
-                    <ChatComponent chatId={data.chat_id} data={data.chat_messages}/>
+                    <ChatComponent chatId={data.chat_id} data={data.chat_messages} userId={data.fk_user}/>
                 </ShowContent>
             </ShowBlock>
         </ShowContainer>

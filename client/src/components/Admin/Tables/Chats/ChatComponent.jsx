@@ -10,6 +10,7 @@ export const ChatComponent = (props) => {
     const {
         chatId,
         data,
+        userId
     } = props
 
     const [createMessage] = chatAPI.useMessageCreateMutation()
@@ -57,22 +58,25 @@ export const ChatComponent = (props) => {
                     }
                 </MessageContainer>
             </MessageWrap>
-            <MessageInputContainer>
-                <MessageInputBlock>
-                    <MessageInput
-                        value={message}
-                        rows={4}
-                        onChange={(event) => setMessage(event.target.value)}
-                    />
-                </MessageInputBlock>
-                <ButtonBlock>
-                    <Button
-                        onClick={sendMessage}
-                    >
-                        Отправить
-                    </Button>
-                </ButtonBlock>
-            </MessageInputContainer>
+            {(userId)?
+                <MessageInputContainer>
+                    <MessageInputBlock>
+                        <MessageInput
+                            value={message}
+                            rows={4}
+                            onChange={(event) => setMessage(event.target.value)}
+                        />
+                    </MessageInputBlock>
+                    <ButtonBlock>
+                        <Button
+                            onClick={sendMessage}
+                        >
+                            Отправить
+                        </Button>
+                    </ButtonBlock>
+                </MessageInputContainer>
+                : null
+            }
         </ChatContainer>
     )
 

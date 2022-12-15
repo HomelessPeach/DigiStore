@@ -4,6 +4,7 @@ import {DataGrid} from "../../components/Datagrid";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
 import {ToolbarBlock, LinkButton, ListContainer} from "../TablesStyledBlocks";
+import {BoolField} from "../../components/BoolField";
 
 export const ProductsList = () => {
 
@@ -20,6 +21,7 @@ export const ProductsList = () => {
                 <TextField source={'product_id'} name={'id'} sortable={true}/>
                 <TextField source={'product_name'} name={'Название'} sortable={true}/>
                 <TextField source={'product_rating'} name={'Рейтинг'} sortable={true}/>
+                <BoolField source={'is_publish'} name={'Опубликован'} sortable={true}/>
             </DataGrid>
         </ListContainer>
     )
