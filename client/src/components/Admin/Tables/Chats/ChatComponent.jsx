@@ -10,15 +10,15 @@ export const ChatComponent = (props) => {
     const {
         chatId,
         data,
-        newMessageFunc
     } = props
 
+    const [createMessage] = chatAPI.useMessageCreateMutation()
     const [message, setMessage] = useState('')
 
     async function sendMessage() {
         const sendMessage = message.replace(/^\s*|\s*$/g, '');
         if (sendMessage.length > 0) {
-            await newMessageFunc({
+            await createMessage({
                 fk_chat: chatId,
                 is_user: false,
                 chat_message_content: sendMessage
