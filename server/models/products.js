@@ -31,6 +31,11 @@ module.exports = function(sequelize, DataTypes) {
     product_price: {
       type: DataTypes.INTEGER,
       allowNull: true
+    },
+    is_publish: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
     }
   }, {
     sequelize,
