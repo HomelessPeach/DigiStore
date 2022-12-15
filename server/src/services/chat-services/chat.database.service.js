@@ -30,6 +30,7 @@ class ChatDatabaseService {
             where: {
                 chat_id: chatId
             },
+            order: [[{model: chat_messages, as: 'chat_messages'}, 'create_at', 'ASC']],
             attributes: [
                 'chat_id',
                 'fk_user',
@@ -38,11 +39,11 @@ class ChatDatabaseService {
             include: [{
                 model: chat_messages,
                 as: 'chat_messages',
-                // attributes: [
-                //     'chat_message_content',
-                //     'create_at',
-                //     'is_user'
-                // ]
+                attributes: [
+                    'chat_message_content',
+                    'create_at',
+                    'is_user'
+                ]
             }],
             transaction: transaction
         })
