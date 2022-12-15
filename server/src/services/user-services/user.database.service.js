@@ -1,6 +1,6 @@
 const {SequelizeConnect} = require('../database-connect')
 const initModels = require('../../../models/init-models')
-const {users, images} = initModels(SequelizeConnect)
+const {users, images, chats, favorite_products, orders, reviews} = initModels(SequelizeConnect)
 
 class UserDatabaseService {
 
@@ -79,6 +79,54 @@ class UserDatabaseService {
 
     static async countUser() {
         return await users.count()
+    }
+
+    static async deleteUserFromChat(userId, transaction) {
+        return await chats.update(
+            {
+                fk_user: null,
+            }, {
+                where: {
+                    fk_user: userId
+                },
+                transaction: transaction
+            })
+    }
+
+    static async deleteUserFromFavoriteProducts(userId, transaction) {
+        return await favorite_products.update(
+            {
+                fk_user: null,
+            }, {
+                where: {
+                    fk_user: userId
+                },
+                transaction: transaction
+            })
+    }
+
+    static async deleteUserFromOrder(userId, transaction) {
+        return await orders.update(
+            {
+                fk_user: null,
+            }, {
+                where: {
+                    fk_user: userId
+                },
+                transaction: transaction
+            })
+    }
+
+    static async deleteUserFromReview(userId, transaction) {
+        return await reviews.update(
+            {
+                fk_user: null,
+            }, {
+                where: {
+                    fk_user: userId
+                },
+                transaction: transaction
+            })
     }
 
 }

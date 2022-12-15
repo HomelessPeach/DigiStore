@@ -42,6 +42,10 @@ class UserBusinessService {
     static async deleteUser(userId, transaction) {
         const userData = await UserDatabaseService.showUser(userId)
         const user = userData.get({plain: true})
+        await UserDatabaseService.deleteUserFromChat(userId, transaction)
+        await UserDatabaseService.deleteUserFromFavoriteProducts(userId, transaction)
+        await UserDatabaseService.deleteUserFromOrder(userId, transaction)
+        await UserDatabaseService.deleteUserFromReview(userId, transaction)
         const deleteUser = await UserDatabaseService.deleteUser(userId, transaction)
         if (user.image?.image_path) {
             await FileService.deleteImage(user.image.image_path, folderPath.user, transaction)
