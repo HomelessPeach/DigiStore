@@ -20,6 +20,7 @@ class ChatBusinessService {
 
     static async createMessage(body, transaction) {
         const {chatMessageData} = ChatProcessService.chatMessageDataWrite(body)
+        await ChatDatabaseService.updateChatStatus(!chatMessageData.is_user, chatMessageData.fk_chat, transaction)
         return await ChatDatabaseService.createMessage(chatMessageData, transaction)
     }
 }

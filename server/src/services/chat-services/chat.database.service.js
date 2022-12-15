@@ -73,6 +73,16 @@ class ChatDatabaseService {
         return await chats.count()
     }
 
+    static async updateChatStatus(isAnswer, chatId, transaction) {
+        return chats.update(
+            {is_answer: isAnswer}, {
+                where: {
+                    chat_id: chatId
+                },
+                transaction: transaction
+            })
+    }
+
     static async createMessage(chatMessageData, transaction) {
         return chat_messages.create(
             chatMessageData, {
