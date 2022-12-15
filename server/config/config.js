@@ -23,5 +23,7 @@ module.exports = {
     folderPath: {
         user: path.join('/', 'user'),
         product: path.join('/', 'product'),
+        productCategory: path.join('/', 'product-category'),
+        news: path.join('/', 'news'),
     }
 }
