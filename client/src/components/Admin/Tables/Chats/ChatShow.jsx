@@ -7,6 +7,7 @@ import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
 import {BoolField} from "../../components/BoolField";
 import {ReferenceField} from "../../components/ReferenceField";
+import {ChatComponent} from "./ChatComponent";
 import {ToolbarBlock, LinkButton, ShowContainer} from "../TablesStyledBlocks";
 
 
@@ -43,7 +44,7 @@ export const ChatShow = () => {
                             <BoolField value={data.is_answer} label={'Отвечено'}/>
                         </FieldBlock>
                     </DoubleFieldBlock>
-
+                    <ChatComponent data={data.chat_messages}/>
                 </ShowContent>
             </ShowBlock>
         </ShowContainer>

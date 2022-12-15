@@ -38,4 +38,5 @@ const ValueBlock = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  line-height: 1.5;
 `
