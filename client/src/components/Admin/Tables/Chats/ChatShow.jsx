@@ -15,7 +15,8 @@ export const ChatShow = () => {
 
     const {pathname} = useLocation()
     const chatId = pathname.replace(`${AdminRouteNames.ADMIN_CHAT}/`, '')
-    const {data, isLoading} = chatAPI.useChatShowQuery(chatId)
+    const {data, isLoading} = chatAPI.useChatShowQuery(chatId, {refetchOnFocus: true})
+    const [createMessage] = chatAPI.useMessageCreateMutation()
 
     if (isLoading)
         return <h1>LOADING...</h1>
@@ -44,7 +45,7 @@ export const ChatShow = () => {
                             <BoolField value={data.is_answer} label={'Отвечено'}/>
                         </FieldBlock>
                     </DoubleFieldBlock>
-                    <ChatComponent data={data.chat_messages}/>
+                    <ChatComponent chatId={data.chat_id} data={data.chat_messages} newMessageFunc={createMessage}/>
                 </ShowContent>
             </ShowBlock>
         </ShowContainer>

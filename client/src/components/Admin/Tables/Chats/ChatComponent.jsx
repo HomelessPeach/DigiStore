@@ -1,13 +1,16 @@
 import * as React from "react";
 import styled from "styled-components"
-import {Button} from "../TablesStyledBlocks";
-import {TextField} from "../../components/TextField";
 import {useState} from "react";
+import {chatAPI} from "../../../../services/ChatService";
+import {TextField} from "../../components/TextField";
+import {Button} from "../TablesStyledBlocks";
 
 export const ChatComponent = (props) => {
 
     const {
-        data
+        chatId,
+        data,
+        newMessageFunc
     } = props
 
     const [message, setMessage] = useState('')
@@ -15,7 +18,15 @@ export const ChatComponent = (props) => {
     async function sendMessage() {
         const sendMessage = message.replace(/^\s*|\s*$/g, '');
         if (sendMessage.length > 0) {
-
+            await newMessageFunc({
+                fk_chat: chatId,
+                is_user: false,
+                chat_message_content: sendMessage
+            })
+                .unwrap()
+                .catch((err) => {
+                    console.log(err)
+                })
         }
         setMessage('');
     }
@@ -32,15 +43,9 @@ export const ChatComponent = (props) => {
                                         value={item.chat_message_content}
                                     />
                                 </MessageBlock>
-                                <TimeBlock isUser={true}>
-                                    {item.create_at}
-                                </TimeBlock>
                             </UserMessageBlock>
                             :
                             <AdminMessageBlock>
-                                <TimeBlock isUser={false}>
-                                    {item.create_at}
-                                </TimeBlock>
                                 <MessageBlock isUser={false}>
                                     <TextField
                                         value={item.chat_message_content}
@@ -120,20 +125,6 @@ const MessageBlock = styled.div`
   border-radius: ${({isUser}) => (isUser)? '15px 15px 15px 0' : '15px 15px 0 15px'};;
   max-width: 70%;
   padding: 5px 10px;
-`
-
-const TimeBlock = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid ${({theme}) => theme.colors.tertiary};
-  background-color: ${({theme, isUser}) => (isUser)? '#ffffff' : theme.colors.tertiary};
-  color: ${({isUser}) => (isUser)? '#000000' : '#ffffff'};
-  border-radius: 10px;
-  font-size: 13px;
-  margin: 0 10px;
-  height: 23px;
-  width: 130px;
 `
 
 const MessageInputContainer = styled.div`

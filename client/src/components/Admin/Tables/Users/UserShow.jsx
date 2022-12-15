@@ -16,7 +16,7 @@ export const UserShow = () => {
     const {pathname} = useLocation()
     const userId = pathname.replace(`${AdminRouteNames.ADMIN_USERS}/`, '')
     const [deleteUser] = userAPI.useUserDeleteMutation()
-    const {data, isLoading} = userAPI.useUserShowQuery(userId)
+    const {data, isLoading} = userAPI.useUserShowQuery(userId, {refetchOnFocus: true})
 
     async function deleteUserHandler() {
         const res = await deleteUser(userId)

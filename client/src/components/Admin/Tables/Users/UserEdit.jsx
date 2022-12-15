@@ -20,7 +20,7 @@ export const UserEdit = () => {
     const userId = pathname.replace(`${AdminRouteNames.ADMIN_USERS}/edit/`, '')
     const [deleteUser] = userAPI.useUserDeleteMutation()
     const [updateUser] = userAPI.useUserUpdateMutation()
-    const {data, isLoading} = userAPI.useUserShowQuery(userId)
+    const {data, isLoading} = userAPI.useUserShowQuery(userId, {refetchOnFocus: true})
     const [userData, setUserData] = useState(data || {})
     const [password, setPassword] = useState('')
     const [isOpen, setIsOpen] = useState(false)

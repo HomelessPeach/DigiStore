@@ -13,7 +13,7 @@ export const FeedbackShow = () => {
     const {pathname} = useLocation()
     const feedbackId = pathname.replace(`${AdminRouteNames.ADMIN_FEEDBACK}/`, '')
     const [feedbackMarkAsAnswered] = feedbackAPI.useFeedbackMarkAsAnsweredMutation()
-    const {data, isLoading} = feedbackAPI.useFeedbackShowQuery(feedbackId)
+    const {data, isLoading} = feedbackAPI.useFeedbackShowQuery(feedbackId, {refetchOnFocus: true})
 
     async function markAsAnswered() {
         await feedbackMarkAsAnswered(feedbackId)
