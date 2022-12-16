@@ -27,6 +27,10 @@ module.exports = function(sequelize, DataTypes) {
         model: 'images',
         key: 'image_id'
       }
+    },
+    is_publish: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     }
   }, {
     sequelize,
