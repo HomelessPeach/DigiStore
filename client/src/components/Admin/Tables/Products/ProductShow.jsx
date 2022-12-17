@@ -5,39 +5,38 @@ import {useLocation} from "react-router-dom";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
 import {ToolbarBlock, LinkButton, DeleteButton, ShowContainer} from "../TablesStyledBlocks";
+import {CarouselImageInput} from "../../components/CarouselImageInput";
 
 export const ProductShow = () => {
 
-    const {pathname} = useLocation()
-    const userId = pathname.replace(`${AdminRouteNames.ADMIN_PRODUCT}/`, '')
-    const {data, isLoading} = userAPI.useUserShowQuery(1)
-
-    if (isLoading)
-        return <h1>LOADING...</h1>
+    // const {pathname} = useLocation()
+    // const userId = pathname.replace(`${AdminRouteNames.ADMIN_PRODUCT}/`, '')
+    // const {data, isLoading} = userAPI.useUserShowQuery(1)
+    //
+    // if (isLoading)
+    //     return <h1>LOADING...</h1>
 
     return (
         <ShowContainer>
             <ToolbarBlock>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_USERS}`}
+                    to={AdminRouteNames.ADMIN_PRODUCT}
                 >
                     Список пользователей
                 </LinkButton>
-                <LinkButton
-                    to={`${AdminRouteNames.ADMIN_USERS}/edit/${userId}`}
-                >
-                    Изменить данные
-                </LinkButton>
+                {/*<LinkButton*/}
+                {/*    to={`${AdminRouteNames.ADMIN_USERS}/edit/${userId}`}*/}
+                {/*>*/}
+                {/*    Изменить данные*/}
+                {/*</LinkButton>*/}
                 <DeleteButton>
                     Удалить пользователя
                 </DeleteButton>
             </ToolbarBlock>
             <ShowBlock>
-                <TextField value={data.user_id} label={'id'}/>
-                <TextField value={data.user_email} label={'e-mail'}/>
-                <TextField value={data.user_password} label={'Пароль'}/>
-                <TextField value={data.user_name} label={'Имя'}/>
-                <TextField value={data.user_phone_number} label={'Номер телефона'}/>
+                <CarouselImageInput
+                    label={'Изображения'}
+                />
             </ShowBlock>
         </ShowContainer>
     )

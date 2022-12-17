@@ -1,29 +1,29 @@
 import {Routes, Route} from "react-router-dom";
 import {Layout} from "./Layout";
-import {Home} from "../components/Home";
-import {Product} from "../components/Product";
-import {Admin} from "../components/Admin";
-import {Profile} from "../components/Profile";
-import {Basket} from "../components/Basket";
-import {AdminHomePage} from "../components/Admin/AdminHomePage";
-import {ChatList, ChatShow} from "../components/Admin/Tables/Chats";
-import {FeedbackList, FeedbackShow} from "../components/Admin/Tables/Feedbacks";
-import {NewsCreate, NewsEdit, NewsList, NewsShow} from "../components/Admin/Tables/News";
-import {OrderList, OrderShow} from "../components/Admin/Tables/Orders";
+import {AdminLayout} from "./AdminLayout";
+import {Home} from "../pages/Home";
+import {Product} from "../pages/Product";
+import {Profile} from "../pages/Profile";
+import {Basket} from "../pages/Basket";
+import {AdminHome} from "../pages/Admin/AdminHome";
+import {ChatList, ChatShow} from "../pages/Admin/ChatPages";
+import {FeedbackList, FeedbackShow} from "../pages/Admin/FeedbackPages";
+import {NewsCreate, NewsEdit, NewsList, NewsShow} from "../pages/Admin/NewsPages";
+import {OrderList, OrderShow} from "../pages/Admin/OrderPages";
 import {
     ProductCategoryCreate,
     ProductCategoryEdit,
     ProductCategoryList,
     ProductCategoryShow
-} from "../components/Admin/Tables/ProductCategories";
+} from "../pages/Admin/ProductCategoryPages";
 import {
     ProductFeatureShow,
     ProductFeatureList,
     ProductFeatureEdit,
     ProductFeatureCreate
-} from "../components/Admin/Tables/ProductFeatures";
-import {ProductsList, ProductShow, ProductEdit, ProductCreate} from "../components/Admin/Tables/Products";
-import {UserEdit, UserList, UserShow, UserCreate} from "../components/Admin/Tables/Users";
+} from "../pages/Admin/ProductFeaturePages";
+import {ProductsList, ProductShow, ProductEdit, ProductCreate} from "../pages/Admin/ProductPages";
+import {UserEdit, UserList, UserShow, UserCreate} from "../pages/Admin/UserPages";
 
 export const RouteNames = {
     HOME: '/',
@@ -49,8 +49,8 @@ export const Router = () => {
         <Routes>
             <Route path={RouteNames.HOME} element={<Layout/>}>
                 <Route index element={<Home/>}/>
-                <Route path={RouteNames.ADMIN} element={<Admin/>}>
-                    <Route index element={<AdminHomePage/>}/>
+                <Route path={RouteNames.ADMIN} element={<AdminLayout/>}>
+                    <Route index element={<AdminHome/>}/>
                     <Route path={AdminRouteNames.ADMIN_USERS} element={<UserList/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_USERS}/:id`} element={<UserShow/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_USERS}/edit/:id`} element={<UserEdit/>}/>

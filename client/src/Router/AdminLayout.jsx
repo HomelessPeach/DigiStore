@@ -1,11 +1,11 @@
 import * as React from "react";
 import styled from "styled-components";
 import {Outlet} from "react-router-dom";
-import {Sidebar} from "./Sidebar";
-import {AdminRouteNames, RouteNames} from "../../Router";
-import {Chat, Feedback, Home, News, Order, Product, ProductCategory, ProductFeature, User} from "./Icons";
+import {Sidebar} from "../components/Admin/Sidebar";
+import {AdminRouteNames, RouteNames} from "./index";
+import {Chat, Feedback, Home, News, Order, Product, ProductCategory, ProductFeature, User} from "../components/Icons";
 
-export const Admin = () => {
+export const AdminLayout = () => {
 
     const links = [
         {

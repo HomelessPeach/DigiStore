@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components"
 import {useState} from "react";
 import {NavLink, useLocation} from "react-router-dom";
-import {Back, Next} from "../../Icons";
+import {Back, Next} from "../../../Icons";
 
 export const DataGrid = (props) => {
 

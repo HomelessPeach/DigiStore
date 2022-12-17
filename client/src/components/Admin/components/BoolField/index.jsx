@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components"
 import {ContainerBlock, LabelBlock} from "../ComponentsStyledBlocks";
-import {CheckMark, Cross} from "../../Icons";
+import {CheckMark, Cross} from "../../../Icons";
 
 export const BoolField = (props) => {
 

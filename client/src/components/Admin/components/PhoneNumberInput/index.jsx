@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components"
-import {ContainerBlock, LabelBlock} from "../ComponentsStyledBlocks";
 import {useEffect, useState} from "react";
+import {ContainerBlock, LabelBlock} from "../ComponentsStyledBlocks";
 
 export const PhoneNumberInput = (props) => {
 

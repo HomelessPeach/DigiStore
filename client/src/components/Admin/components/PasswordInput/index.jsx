@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components"
 import {useEffect, useState} from "react";
 import {ContainerBlock, LabelBlock} from "../ComponentsStyledBlocks";
-import {Invisible, Visible} from "../../Icons";
+import {Invisible, Visible} from "../../../Icons";
 
 export const PasswordInput = (props) => {
 
