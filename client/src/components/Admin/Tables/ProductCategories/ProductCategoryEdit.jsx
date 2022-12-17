@@ -1,16 +1,60 @@
 import * as React from "react";
 import styled from "styled-components"
-import {userAPI} from "../../../../services/UserService";
-import {TextInput} from "../../components/TextInput";
-import {useLocation} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import {productCategoryAPI} from "../../../../services/ProductCategoryService";
 import {AdminRouteNames} from "../../../../Router";
-import {ToolbarBlock, LinkButton, DeleteButton, EditContainer} from "../TablesStyledBlocks";
+import {TextInput} from "../../components/TextInput";
+import {ImageInput} from "../../components/ImageInput";
+import {ToolbarBlock, LinkButton, DeleteButton, EditContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
 
 export const ProductCategoryEdit = () => {
 
+    const navigate = useNavigate();
     const {pathname} = useLocation()
-    const userId = pathname.replace(`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/edit/`, '')
-    const {data, isLoading} = userAPI.useUserShowQuery(userId)
+    const productCategoryId = pathname.replace(`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/edit/`, '')
+    const [deleteProductCategory] = productCategoryAPI.useProductCategoryDeleteMutation()
+    const [updateProductCategory] = productCategoryAPI.useProductCategoryUpdateMutation()
+    const {data, isLoading} = productCategoryAPI.useProductCategoryShowQuery(productCategoryId, {refetchOnFocus: true})
+    const [productCategoryData, setProductCategoryData] = useState({})
+    const [isNotValid, setIsNotValid] = useState(false)
+
+    const validation = {
+        product_category_name: (name) => name?.length > 0,
+        checkValidate: () =>
+            validation.product_category_name(productCategoryData.product_category_name)
+    }
+
+    useEffect(() => {
+        if (data)
+            setProductCategoryData(data)
+    }, [data])
+
+    async function updateProductFeatureHandler() {
+        if (validation.checkValidate()) {
+            const res = await updateProductCategory(productCategoryData)
+                .unwrap()
+                .catch((err) => {
+                    console.log(err)
+                })
+            if (res) {
+                navigate(`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/${productCategoryId}`)
+            }
+        } else {
+            setIsNotValid(true)
+        }
+    }
+
+    async function deleteProductCategoryHandler() {
+        const res = await deleteProductCategory(productCategoryId)
+            .unwrap()
+            .catch((err) => {
+                console.log(err)
+            })
+        if (res) {
+            navigate(AdminRouteNames.ADMIN_PRODUCT_CATEGORY)
+        }
+    }
 
     if (isLoading)
         return <h1>LOADING...</h1>
@@ -19,20 +63,42 @@ export const ProductCategoryEdit = () => {
         <EditContainer>
             <ToolbarBlock>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_USERS}`}
+                    to={`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}`}
                 >
-                    Список пользователей
+                    Список категорий
                 </LinkButton>
-                <DeleteButton>
-                    Удалить пользователя
+                <DeleteButton onClick={deleteProductCategoryHandler}>
+                    Удалить категорию
                 </DeleteButton>
             </ToolbarBlock>
             <EditBlock>
-                <TextInput value={data.user_id} label={'id'}/>
-                <TextInput value={data.user_email} label={'e-mail'}/>
-                <TextInput value={data.user_password} label={'Пароль'}/>
-                <TextInput value={data.user_name} label={'Имя'}/>
-                <TextInput value={data.user_phone_number} label={'Номер телефона'}/>
+                <EditContent>
+                    <ImageInput
+                        value={productCategoryData.image?.new_image || productCategoryData.image?.image_path || ''}
+                        size={{h: "400px", w: "300px", br: '10px'}}
+                        onChange={(value) => (value)?
+                            setProductCategoryData({...productCategoryData, image: {...productCategoryData.image, new_image: value}})
+                            :null}
+                        label={'Изображение'}
+                    />
+                    <TextInputBlock>
+                        <TextInput
+                            value={productCategoryData.product_category_name}
+                            onChange={(value) => setProductCategoryData({...productCategoryData, product_category_name: value})}
+                            validation={{
+                                validate: validation.product_category_name,
+                                validationError: isNotValid,
+                                validationMessage: 'Категория продукта обязательно должна иметь название.'
+                            }}
+                            label={'Название'}
+                        />
+                    </TextInputBlock>
+                </EditContent>
+                <EditToolbarBlock>
+                    <Button onClick={updateProductFeatureHandler}>
+                        Сохранить
+                    </Button>
+                </EditToolbarBlock>
             </EditBlock>
         </EditContainer>
     )
@@ -45,4 +111,16 @@ const EditBlock = styled.div`
   padding: 10px;
   border: 1px solid #9f9e9e;
   border-radius: 10px;
+`
+
+const EditContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 10px 40px
+`
+
+const TextInputBlock = styled.div`
+  width: 40%;
+  min-width: 300px;
 `

@@ -24,7 +24,7 @@ export const ChatShow = () => {
         <ShowContainer>
             <ToolbarBlock>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_CHAT}`}
+                    to={AdminRouteNames.ADMIN_CHAT}
                 >
                     Список чатов
                 </LinkButton>

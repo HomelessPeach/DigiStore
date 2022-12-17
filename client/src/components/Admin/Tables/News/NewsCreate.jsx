@@ -35,7 +35,7 @@ export const NewsCreate = () => {
                     console.log(err)
                 })
             if (res) {
-                navigate(`/admin/user/${res.news_id}`)
+                navigate(`${AdminRouteNames.ADMIN_NEWS}/${res.news_id}`)
             }
         } else {
             setIsNotValid(true)
@@ -46,7 +46,7 @@ export const NewsCreate = () => {
         <EditContainer>
             <ToolbarBlock>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_NEWS}`}
+                    to={AdminRouteNames.ADMIN_NEWS}
                 >
                     Список новостей
                 </LinkButton>

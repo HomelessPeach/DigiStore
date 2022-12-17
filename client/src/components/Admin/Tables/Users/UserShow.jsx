@@ -23,7 +23,7 @@ export const UserShow = () => {
             .unwrap()
             .catch((err) => {console.log(err)})
         if (res) {
-            navigate(`/admin/user`)
+            navigate(AdminRouteNames.ADMIN_USERS)
         }
     }
 
@@ -34,7 +34,7 @@ export const UserShow = () => {
         <ShowContainer>
             <ToolbarBlock>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_USERS}`}
+                    to={AdminRouteNames.ADMIN_USERS}
                 >
                     Список пользователей
                 </LinkButton>
@@ -55,16 +55,16 @@ export const UserShow = () => {
                     <IdBlock>
                         <TextField value={data.user_id} label={'id'}/>
                     </IdBlock>
-                    <EditDataBlock>
-                        <EditDataChildBlock>
+                    <DataBlock>
+                        <DataChildBlock>
                             <EmailField value={data.user_email} label={'e-mail'}/>
                             <PhoneNumberField value={data.user_phone_number} label={'Номер телефона'}/>
-                        </EditDataChildBlock>
-                        <EditDataChildBlock>
+                        </DataChildBlock>
+                        <DataChildBlock>
                             <TextField value={data.user_name} label={'Имя'}/>
                             <BoolField value={data.is_admin} label={'Права администратора'}/>
-                        </EditDataChildBlock>
-                    </EditDataBlock>
+                        </DataChildBlock>
+                    </DataBlock>
                 </RightBlock>
             </ShowBlock>
         </ShowContainer>
@@ -99,13 +99,13 @@ const IdBlock = styled.div`
   padding: 0 0 10px ;
 `
 
-const EditDataBlock = styled.div`
+const DataBlock = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `
 
-const EditDataChildBlock = styled.div`
+const DataChildBlock = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;

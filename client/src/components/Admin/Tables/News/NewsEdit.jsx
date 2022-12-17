@@ -45,7 +45,7 @@ export const NewsEdit = () => {
                     console.log(err)
                 })
             if (res) {
-                navigate(`/admin/news/${newsId}`)
+                navigate(`${AdminRouteNames.ADMIN_NEWS}/${newsId}`)
             }
         } else {
             setIsNotValid(true)
@@ -59,7 +59,7 @@ export const NewsEdit = () => {
                 console.log(err)
             })
         if (res) {
-            navigate(`/admin/news`)
+            navigate(AdminRouteNames.ADMIN_NEWS)
         }
     }
 
@@ -70,7 +70,7 @@ export const NewsEdit = () => {
         <EditContainer>
             <ToolbarBlock>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_NEWS}`}
+                    to={AdminRouteNames.ADMIN_NEWS}
                 >
                     Список новостей
                 </LinkButton>

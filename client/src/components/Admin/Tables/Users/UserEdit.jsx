@@ -53,7 +53,7 @@ export const UserEdit = () => {
                     console.log(err)
                 })
             if (res) {
-                navigate(`/admin/user/${userId}`)
+                navigate(`${AdminRouteNames.ADMIN_USERS}/${userId}`)
             }
         } else {
             setIsNotValid(true)
@@ -67,7 +67,7 @@ export const UserEdit = () => {
                 console.log(err)
             })
         if (res) {
-            navigate(`/admin/user`)
+            navigate(AdminRouteNames.ADMIN_USERS)
         }
     }
 
@@ -78,7 +78,7 @@ export const UserEdit = () => {
         <EditContainer>
             <ToolbarBlock>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_USERS}`}
+                    to={AdminRouteNames.ADMIN_USERS}
                 >
                     Список пользователей
                 </LinkButton>

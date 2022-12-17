@@ -30,7 +30,7 @@ export const FeedbackShow = () => {
         <ShowContainer>
             <ToolbarBlock>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_FEEDBACK}`}
+                    to={AdminRouteNames.ADMIN_FEEDBACK}
                 >
                     Список обращений
                 </LinkButton>

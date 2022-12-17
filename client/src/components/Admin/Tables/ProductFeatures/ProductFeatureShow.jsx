@@ -1,17 +1,29 @@
 import * as React from "react";
 import styled from "styled-components"
-import {userAPI} from "../../../../services/UserService";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import {productFeatureAPI} from "../../../../services/ProductFeatureService";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
 import {DeleteButton, LinkButton, ShowContainer, ToolbarBlock} from "../TablesStyledBlocks";
-import {ImageField} from "../../components/ImageField";
 
 export const ProductFeatureShow = () => {
 
+    const navigate = useNavigate();
     const {pathname} = useLocation()
-    const userId = pathname.replace(`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/`, '')
-    const {data, isLoading} = userAPI.useUserShowQuery(1)
+    const productFeatureId = pathname.replace(`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/`, '')
+    const [deleteProductFeature] = productFeatureAPI.useProductFeatureDeleteMutation()
+    const {data, isLoading} = productFeatureAPI.useProductFeatureShowQuery(productFeatureId, {refetchOnFocus: true})
+
+    async function deleteProductFeatureHandler() {
+        const res = await deleteProductFeature(productFeatureId)
+            .unwrap()
+            .catch((err) => {
+                console.log(err)
+            })
+        if (res) {
+            navigate(AdminRouteNames.ADMIN_PRODUCT_FEATURE)
+        }
+    }
 
     if (isLoading)
         return <h1>LOADING...</h1>
@@ -20,30 +32,22 @@ export const ProductFeatureShow = () => {
         <ShowContainer>
             <ToolbarBlock>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_USERS}`}
+                    to={AdminRouteNames.ADMIN_PRODUCT_FEATURE}
                 >
-                    Список пользователей
+                    Список характеристик
                 </LinkButton>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_USERS}/edit/${userId}`}
+                    to={`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/edit/${productFeatureId}`}
                 >
                     Изменить данные
                 </LinkButton>
-                <DeleteButton>
-                    Удалить пользователя
+                <DeleteButton onClick={deleteProductFeatureHandler}>
+                    Удалить характеристику
                 </DeleteButton>
             </ToolbarBlock>
             <ShowBlock>
-                <LeftBlock>
-                    <ImageField value={data?.image?.image_path} size={{h: "300px", w: "300px"}}/>
-                </LeftBlock>
-                <RightBlock>
-                    <TextField value={data.user_id} label={'id'}/>
-                    <TextField value={data.user_email} label={'e-mail'}/>
-                    <TextField value={data.user_password} label={'Пароль'}/>
-                    <TextField value={data.user_name} label={'Имя'}/>
-                    <TextField value={data.user_phone_number} label={'Номер телефона'}/>
-                </RightBlock>
+                <TextField value={data.product_feature_id} label={'id'}/>
+                <TextField value={data.product_feature_name} label={'Название'}/>
             </ShowBlock>
         </ShowContainer>
     )
@@ -52,16 +56,9 @@ export const ProductFeatureShow = () => {
 
 const ShowBlock = styled.div`
   display: flex;
-  flex-direction: row;
-  padding: 10px;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 40px 60px;
   border: 1px solid #9f9e9e;
   border-radius: 10px;
-`
-
-const LeftBlock = styled.div`
-  padding: 10px;
-`
-
-const RightBlock = styled.div`
-  padding: 30px 50px;
 `
