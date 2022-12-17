@@ -5,7 +5,8 @@ class NewsProcessService {
         const newsData = {
             news_name: query.news_name,
             news_short_description: query.news_short_description || null,
-            news_description: query.news_short_description || null
+            news_description: query.news_description || null,
+            is_publish: query.is_publish || false
         }
 
         const newsId = query.news_id;

@@ -1,6 +1,6 @@
 const {SequelizeConnect} = require('../database-connect')
 const initModels = require('../../../models/init-models')
-const {news} = initModels(SequelizeConnect)
+const {news, images} = initModels(SequelizeConnect)
 
 class NewsDatabaseService {
 
@@ -16,7 +16,12 @@ class NewsDatabaseService {
             offset: newsSort.offset,
             limit: newsSort.limit,
             order: newsSort.order,
-            transaction: transaction
+            transaction: transaction,
+            attributes: [
+                'news_id',
+                'news_name',
+                'is_publish',
+            ],
         })
     }
 
@@ -25,6 +30,20 @@ class NewsDatabaseService {
             where: {
                 news_id: newsId
             },
+            attributes: [
+                'news_id',
+                'news_name',
+                'is_publish',
+                'news_short_description',
+                'news_description'
+            ],
+            include: [{
+                model: images,
+                as: 'image',
+                attributes: [
+                    'image_path',
+                ],
+            }],
             transaction: transaction
         })
     }

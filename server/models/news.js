@@ -14,11 +14,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     news_short_description: {
       type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: false
     },
     news_description: {
-      type: DataTypes.INTEGER,
-      allowNull: true
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     fk_image: {
       type: DataTypes.INTEGER,
