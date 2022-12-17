@@ -33,16 +33,16 @@ export const ChatShow = () => {
                 <ShowContent>
                     <TextField value={data.chat_id} label={'id'}/>
                     <DoubleFieldBlock>
-                        <FieldBlock>
+                        <LeftFieldBlock>
                             <ReferenceField value={data.fk_user} label={'Пользователь'}
                                             searchFunc={userAPI.useGetUserDataMutation}
                                             searchFieldName={'user_name'}
                                             link={AdminRouteNames.ADMIN_USERS}
                             />
-                        </FieldBlock>
-                        <FieldBlock>
+                        </LeftFieldBlock>
+                        <RightFieldBlock>
                             <BoolField value={data.is_answer} label={'Отвечено'}/>
-                        </FieldBlock>
+                        </RightFieldBlock>
                     </DoubleFieldBlock>
                     <ChatComponent chatId={data.chat_id} data={data.chat_messages} userId={data.fk_user}/>
                 </ShowContent>
@@ -72,6 +72,12 @@ const DoubleFieldBlock = styled.div`
   width: 100%;
 `
 
-const FieldBlock = styled.div`
+const LeftFieldBlock = styled.div`
   width: 50%;
+  padding-right: 100px;
+`
+
+const RightFieldBlock = styled.div`
+  width: 50%;
+  padding-left: 100px;
 `

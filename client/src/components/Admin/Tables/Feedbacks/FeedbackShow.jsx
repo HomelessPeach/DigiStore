@@ -39,12 +39,12 @@ export const FeedbackShow = () => {
                 <ShowContent isToolbar={data.is_answer == false}>
                     <TextField value={data.feedback_id} label={'id'}/>
                     <DoubleFieldBlock>
-                        <FieldBlock>
+                        <LeftFieldBlock>
                             <EmailField value={data.feedback_email} label={'e-mail'}/>
-                        </FieldBlock>
-                        <FieldBlock>
+                        </LeftFieldBlock>
+                        <RightFieldBlock>
                             <BoolField value={data.is_answer} label={'Отвечено'}/>
-                        </FieldBlock>
+                        </RightFieldBlock>
                     </DoubleFieldBlock>
                     <TextField value={data.feedback_message} label={'Обращение'}/>
                 </ShowContent>
@@ -86,6 +86,12 @@ const DoubleFieldBlock = styled.div`
   width: 100%;
 `
 
-const FieldBlock = styled.div`
+const LeftFieldBlock = styled.div`
   width: 50%;
+  padding-right: 100px;
+`
+
+const RightFieldBlock = styled.div`
+  width: 50%;
+  padding-left: 100px;
 `

@@ -4,6 +4,7 @@ import {DataGrid} from "../../components/Datagrid";
 import {TextField} from "../../components/TextField";
 import {AdminRouteNames} from "../../../../Router";
 import {ToolbarBlock, LinkButton, ListContainer} from "../TablesStyledBlocks";
+import {BoolField} from "../../components/BoolField";
 
 export const NewsList = () => {
 
@@ -19,6 +20,7 @@ export const NewsList = () => {
             <DataGrid getData={newsAPI.useNewsListQuery} idName={'news_id'}>
                 <TextField source={'news_id'} name={'id'} sortable={true}/>
                 <TextField source={'news_name'} name={'Название'} sortable={true}/>
+                <BoolField source={'is_publish'} name={'Опубликовано'} sortable={true}/>
             </DataGrid>
         </ListContainer>
     )
