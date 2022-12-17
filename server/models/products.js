@@ -17,8 +17,9 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     product_rating: {
-      type: DataTypes.INTEGER,
-      allowNull: true
+      type: DataTypes.REAL,
+      allowNull: true,
+      defaultValue: 0
     },
     fk_product_category: {
       type: DataTypes.INTEGER,
@@ -33,10 +34,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     is_publish: {
-      type: DataTypes.REAL,
+      type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
-    }
+    },
   }, {
     sequelize,
     tableName: 'products',
