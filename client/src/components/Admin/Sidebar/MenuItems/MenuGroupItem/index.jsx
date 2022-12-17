@@ -11,7 +11,7 @@ export const MenuGroupItem = (props) => {
         paddingLeft
     } = props
 
-    const [isOpen, setOpen] = useState(false)
+    const [isOpen, setOpen] = useState(true)
 
     return (
         <>
