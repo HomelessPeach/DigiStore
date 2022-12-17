@@ -16,6 +16,10 @@ class ProductFeatureDatabaseService {
             offset: productFeatureSort.offset,
             limit: productFeatureSort.limit,
             order: productFeatureSort.order,
+            attributes: [
+                'product_feature_id',
+                'product_feature_name'
+            ],
             transaction: transaction
         })
     }
@@ -25,6 +29,10 @@ class ProductFeatureDatabaseService {
             where: {
                 product_feature_id: productFeatureId
             },
+            attributes: [
+                'product_feature_id',
+                'product_feature_name'
+            ],
             transaction: transaction
         })
     }

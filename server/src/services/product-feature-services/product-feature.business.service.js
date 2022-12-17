@@ -5,7 +5,7 @@ class ProductFeatureBusinessService {
 
     static async createProductFeature(body, transaction) {
         const {productFeatureData} = ProductFeatureProcessService.productFeatureDataWrite(body)
-        return await ProductFeatureBusinessService.createProductFeature(productFeatureData, transaction)
+        return await ProductFeatureDatabaseService.createProductFeature(productFeatureData, transaction)
     }
 
     static async listProductFeature(query) {
@@ -21,7 +21,7 @@ class ProductFeatureBusinessService {
 
     static async updateProductFeature(body, transaction) {
         const {productFeatureData, productFeatureId} = ProductFeatureProcessService.productFeatureDataWrite(body)
-        return await ProductFeatureBusinessService.updateProductFeature(productFeatureData, productFeatureId, transaction)
+        return await ProductFeatureDatabaseService.updateProductFeature(productFeatureData, productFeatureId, transaction)
     }
 
     static async deleteProductFeature(productFeatureId, transaction) {

@@ -1,6 +1,6 @@
 const {SequelizeConnect} = require('../database-connect')
 const initModels = require('../../../models/init-models')
-const {product_categories} = initModels(SequelizeConnect)
+const {product_categories, images} = initModels(SequelizeConnect)
 
 class ProductCategoryDatabaseService {
 
@@ -16,6 +16,10 @@ class ProductCategoryDatabaseService {
             offset: productCategorySort.offset,
             limit: productCategorySort.limit,
             order: productCategorySort.order,
+            attributes: [
+                'product_category_id',
+                'product_category_name'
+            ],
             transaction: transaction
         })
     }
@@ -25,6 +29,17 @@ class ProductCategoryDatabaseService {
             where: {
                 product_category_id: productCategoryId
             },
+            attributes: [
+                'product_category_id',
+                'product_category_name'
+            ],
+            include: [{
+                model: images,
+                as: 'image',
+                attributes: [
+                    'image_path',
+                ],
+            }],
             transaction: transaction
         })
     }

@@ -32,7 +32,7 @@ class ProductFeatureController {
     static async showProductFeature(req, res, next) {
         try {
             const {id} = req.params;
-            const productFeature = await ProductFeatureController.showProductFeature(id)
+            const productFeature = await ProductFeatureBusinessService.showProductFeature(id)
             res.json(productFeature)
         } catch (err) {
             next(err)
