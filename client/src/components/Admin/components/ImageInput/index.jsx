@@ -31,7 +31,11 @@ export const ImageInput = (props) => {
                     :null
             }
             <ImgBlock h={h} w={w} br={br}>
-                <Block h={h} w={w} br={br}>Нажмите чтобы загрузить изображение</Block>
+                <Block h={h} w={w} br={br}>
+                    <TextBlock>
+                        Нажмите для загрузки изображения
+                    </TextBlock>
+                </Block>
                 {
                     (value !== '' && value)?
                         <Img src={(/^\//.test(value))? `${baseUrl}${value}` : value}/>
@@ -49,19 +53,24 @@ export const ImageInput = (props) => {
 }
 
 const Block = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   padding: 10px;
   height: ${({h}) => h};
   width: ${({w}) => w};
   border-radius: ${({br}) => br};
-  display: flex;
-  align-items: center;
-  text-align: center;
   color: #ffffff;
   background-color: rgba(112, 112, 112, 0.6);
   &:hover {
     background-color: rgb(77, 77, 77, 0.6);
   }
+`
+
+const TextBlock = styled.div`
+  text-align: center;
 `
 
 const ImgBlock = styled.div`
