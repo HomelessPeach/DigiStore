@@ -23,9 +23,15 @@ export const Header = () => {
     const [height, setHeight] = useState((Theme.size.header.maxHeight - window.scrollY > Theme.size.header.height)? Theme.size.header.maxHeight - window.scrollY : Theme.size.header.height)
 
     useEffect(() => {
-        window.addEventListener("scroll", () => {
+
+
+        function scrollHandler() {
             setHeight((Theme.size.header.maxHeight - window.scrollY > Theme.size.header.height)? Theme.size.header.maxHeight - window.scrollY : Theme.size.header.height)
-        });
+        }
+
+        window.addEventListener("scroll", scrollHandler);
+
+        return () => window.removeEventListener("scroll", scrollHandler)
     }, [pathname])
 
     return (
