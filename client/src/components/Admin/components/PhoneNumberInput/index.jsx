@@ -70,13 +70,11 @@ export const PhoneNumberInput = (props) => {
             if (inputRefs[index].value) {
                 inputRefs[index].value = ''
                 number[index] = ''
-            } else {
-                if (index > 0) {
-                    inputRefs[index - 1].value = ''
-                    number[index - 1] = ''
-                    inputRefs[index - 1].focus();
-                    inputRefs[index - 1].select();
-                }
+            } else if (index > 0) {
+                inputRefs[index - 1].value = ''
+                number[index - 1] = ''
+                inputRefs[index - 1].focus();
+                inputRefs[index - 1].select();
             }
             stringNumber = number.join('')
         } else if (key <= 9) {

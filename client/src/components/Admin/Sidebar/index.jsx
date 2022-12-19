@@ -29,6 +29,6 @@ const SidebarContainer = styled.div`
   flex-direction: column;
   padding: 20px 0 20px 0;
   border-right: 1px solid black;
-  z-index: 1;
+  z-index: 2;
   user-select: none;
 `
