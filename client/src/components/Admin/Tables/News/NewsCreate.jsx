@@ -64,6 +64,7 @@ export const NewsCreate = () => {
                     <DoubleFieldBlock>
                         <LeftFieldBlock>
                             <TextInput
+                                value={newsData.news_name}
                                 onChange={(value) => setNewsData({...newsData, news_name: value})}
                                 validation={{
                                     validate: validation.news_name,
@@ -75,12 +76,14 @@ export const NewsCreate = () => {
                         </LeftFieldBlock>
                         <RightFieldBlock>
                             <BoolInput
+                                value={newsData.is_publish}
                                 onChange={(value) => setNewsData({...newsData, is_publish: value})}
                                 label={'Опубликовано'}
                             />
                         </RightFieldBlock>
                     </DoubleFieldBlock>
                     <TextInput
+                        value={newsData.news_short_description}
                         onChange={(value) => setNewsData({...newsData, news_short_description: value})}
                         validation={{
                             validate: validation.news_short_description,
@@ -90,6 +93,7 @@ export const NewsCreate = () => {
                         label={'Краткое описание'}
                     />
                     <ReachTextInput
+                        value={newsData.news_description}
                         onChange={(value) => setNewsData({...newsData, news_description: value})}
                         validation={{
                             validate: validation.news_description,

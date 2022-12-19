@@ -14,7 +14,7 @@ export const NewsList = () => {
                 <LinkButton
                     to={`${AdminRouteNames.ADMIN_NEWS}/new`}
                 >
-                    Создать объявление
+                    Создать новость
                 </LinkButton>
             </ToolbarBlock>
             <DataGrid getData={newsAPI.useNewsListQuery} idName={'news_id'}>

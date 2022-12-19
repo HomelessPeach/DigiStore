@@ -57,6 +57,7 @@ export const ProductCategoryCreate = () => {
                     />
                     <TextInputBlock>
                         <TextInput
+                            value={productCategoryData.product_category_name}
                             onChange={(value) => setProductCategoryData({...productCategoryData, product_category_name: value})}
                             validation={{
                                 validate: validation.product_category_name,

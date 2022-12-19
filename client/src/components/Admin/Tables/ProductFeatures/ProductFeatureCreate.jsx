@@ -47,6 +47,7 @@ export const ProductFeatureCreate = () => {
                 <EditContent>
                     <TextInputBlock>
                         <TextInput
+                            value={productFeatureData.product_feature_name}
                             onChange={(value) => setProductFeatureData({...productFeatureData, product_feature_name: value})}
                             validation={{
                                 validate: validation.product_feature_name,

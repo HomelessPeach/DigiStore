@@ -34,18 +34,19 @@ export const UserCreate = () => {
     }
 
     async function createUserHandler() {
-        if (validation.checkValidate()) {
-            const res = await createUser({...userData, user_password: await passwordHook(userData.user_password)})
-                .unwrap()
-                .catch((err) => {
-                    console.log(err)
-                })
-            if (res) {
-                navigate(`${AdminRouteNames.ADMIN_USERS}/${res.user_id}`)
-            }
-        } else {
-            setIsNotValid(true)
-        }
+        console.log(userData)
+        // if (validation.checkValidate()) {
+        //     const res = await createUser({...userData, user_password: await passwordHook(userData.user_password)})
+        //         .unwrap()
+        //         .catch((err) => {
+        //             console.log(err)
+        //         })
+        //     if (res) {
+        //         navigate(`${AdminRouteNames.ADMIN_USERS}/${res.user_id}`)
+        //     }
+        // } else {
+        //     setIsNotValid(true)
+        // }
     }
 
     return (
@@ -73,6 +74,7 @@ export const UserCreate = () => {
                         <EditDataBlock>
                             <EditDataChildBlock>
                                 <TextInput
+                                    value={userData.user_email}
                                     onChange={(value) => setUserData({...userData, user_email: value})}
                                     validation={{
                                         validate: validation.user_email,
@@ -82,6 +84,7 @@ export const UserCreate = () => {
                                     label={'e-mail'}
                                 />
                                 <PasswordInput
+                                    value={userData.user_password}
                                     onChange={(value) => setUserData({...userData, user_password: value})}
                                     validation={{
                                         validate: validation.user_password,
@@ -94,6 +97,7 @@ export const UserCreate = () => {
                             </EditDataChildBlock>
                             <EditDataChildBlock>
                                 <TextInput
+                                    value={userData.user_name}
                                     onChange={(value) => setUserData({...userData, user_name: value})}
                                     validation={{
                                         validate: validation.user_name,
@@ -104,6 +108,7 @@ export const UserCreate = () => {
                                     label={'Имя'}
                                 />
                                 <PhoneNumberInput
+                                    value={userData.user_phone_number}
                                     onChange={(value) => setUserData({...userData, user_phone_number: value})}
                                     validation={{
                                         validate: validation.user_phone_number,
@@ -113,6 +118,7 @@ export const UserCreate = () => {
                                     label={'Номер телефона'}
                                 />
                                 <BoolInput
+                                    value={userData.is_admin}
                                     onChange={(value) => setUserData({...userData, is_admin: value})}
                                     label={'Права администратора'}
                                 />
