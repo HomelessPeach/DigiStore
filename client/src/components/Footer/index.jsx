@@ -14,7 +14,7 @@ const FooterBlock = styled.footer`
   width: 100%;
   height: ${({theme}) => theme.size.footer.height}px;
   position: relative;
-  z-index: 2;
+  z-index: 3;
 `
 
 const FooterContainer = styled.footer`

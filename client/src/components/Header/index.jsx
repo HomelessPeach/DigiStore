@@ -50,7 +50,7 @@ const HeaderBlock = styled.header`
   width: 100%;
   position: fixed;
   user-select: none;
-  z-index: 2;
+  z-index: 3;
 `
 
 const HeaderLargeContainer = styled.div`
