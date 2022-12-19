@@ -93,5 +93,15 @@ export const userAPI = createApi({
                 method: 'GET',
             }),
         }),
+        getUsersData: build.mutation({
+            query: () => ({
+                url: `/admin`,
+                method: 'GET',
+                params: {
+                    _sort: 'user_name',
+                    _order: 'ASC'
+                }
+            }),
+        }),
     })
 })
