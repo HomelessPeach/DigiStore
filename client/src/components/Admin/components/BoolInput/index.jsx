@@ -7,15 +7,12 @@ import {CheckMark, Cross} from "../../../Icons";
 export const BoolInput = (props) => {
 
     const {
-        value: defaultValue,
+        value = false,
         label,
         onChange
     } = props
 
-    const [value, setValue] = useState(Boolean(defaultValue) || false)
-
     function changeValue() {
-        setValue(!value)
         onChange(!value)
     }
 

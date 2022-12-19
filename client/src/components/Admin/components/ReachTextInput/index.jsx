@@ -37,7 +37,7 @@ export const ReachTextInput = (props) => {
     }
 
     function checkValidateOnBlur(event) {
-        const item = event.target.innerHTM;
+        const item = event.target.innerHTML;
         if (item) {
             setIsNotValid(!validate(item))
         }
