@@ -26,7 +26,7 @@ const ButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 17%;
+  width: 10%;
   padding: 10px;
   background-color: #ffffff;
   opacity: 0.4;
@@ -39,6 +39,6 @@ const ButtonContainer = styled.div`
 `
 
 const IconBlock = styled.div`
-  width: 30px;
+  width: 25px;
   fill: #595959;
 `
