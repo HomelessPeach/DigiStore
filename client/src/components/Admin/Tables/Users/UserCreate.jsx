@@ -34,19 +34,18 @@ export const UserCreate = () => {
     }
 
     async function createUserHandler() {
-        console.log(userData)
-        // if (validation.checkValidate()) {
-        //     const res = await createUser({...userData, user_password: await passwordHook(userData.user_password)})
-        //         .unwrap()
-        //         .catch((err) => {
-        //             console.log(err)
-        //         })
-        //     if (res) {
-        //         navigate(`${AdminRouteNames.ADMIN_USERS}/${res.user_id}`)
-        //     }
-        // } else {
-        //     setIsNotValid(true)
-        // }
+        if (validation.checkValidate()) {
+            const res = await createUser({...userData, user_password: await passwordHook(userData.user_password)})
+                .unwrap()
+                .catch((err) => {
+                    console.log(err)
+                })
+            if (res) {
+                navigate(`${AdminRouteNames.ADMIN_USERS}/${res.user_id}`)
+            }
+        } else {
+            setIsNotValid(true)
+        }
     }
 
     return (

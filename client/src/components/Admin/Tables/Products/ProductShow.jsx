@@ -1,39 +1,33 @@
 import * as React from "react";
 import styled from "styled-components"
-import {userAPI} from "../../../../services/UserService";
-import {useLocation} from "react-router-dom";
+import {useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import {productAPI} from "../../../../services/ProductService";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
 import {ToolbarBlock, LinkButton, DeleteButton, ShowContainer} from "../TablesStyledBlocks";
-import {CarouselImageInput} from "../../components/ImagesInput";
-import {Carousel} from "../../../Carousel";
-import {ReferenceInputField} from "../../components/ReferenceInputField";
-import {useState} from "react";
 
 export const ProductShow = () => {
 
-    // const {pathname} = useLocation()
-    // const userId = pathname.replace(`${AdminRouteNames.ADMIN_PRODUCT}/`, '')
-    // const {data, isLoading} = userAPI.useUserShowQuery(1)
-    //
-    // if (isLoading)
-    //     return <h1>LOADING...</h1>
+    const navigate = useNavigate();
+    const {pathname} = useLocation()
+    const productId = pathname.replace(`${AdminRouteNames.ADMIN_PRODUCT}/`, '')
+    const [deleteProduct] = productAPI.useProductDeleteMutation()
+    const {data, isLoading} = productAPI.useProductShowQuery(productId)
 
-    const [productData, setProductData] = useState({})
-
-    const data = [
-        {
-            image_path: 'https://www.meme-arsenal.com/memes/1a0d126c09ef9859f5946bde0c3a79ef.jpg'
-        }, {
-            image_path: 'https://abrakadabra.fun/uploads/posts/2021-12/1640388888_5-abrakadabra-fun-p-kosmos-na-rabochii-stol-telefona-5.jpg'
-        },
-        {
-            image_path: 'https://images.wallpaperscraft.ru/image/single/siluet_gorod_art_142434_1600x900.jpg'
-        },
-        {
-            image_path: 'https://images.wallpaperscraft.ru/image/single/siluet_gorod_ulitsa_123496_1600x900.jpg'
+    async function deleteProductHandler() {
+        const res = await deleteProduct(productId)
+            .unwrap()
+            .catch((err) => {
+                console.log(err)
+            })
+        if (res) {
+            navigate(AdminRouteNames.ADMIN_PRODUCT)
         }
-    ]
+    }
+
+    if (isLoading)
+        return <h1>LOADING...</h1>
 
     return (
         <ShowContainer>
@@ -41,15 +35,15 @@ export const ProductShow = () => {
                 <LinkButton
                     to={AdminRouteNames.ADMIN_PRODUCT}
                 >
-                    Список пользователей
+                    Список товаров
                 </LinkButton>
-                {/*<LinkButton*/}
-                {/*    to={`${AdminRouteNames.ADMIN_USERS}/edit/${userId}`}*/}
-                {/*>*/}
-                {/*    Изменить данные*/}
-                {/*</LinkButton>*/}
+                <LinkButton
+                    to={`${AdminRouteNames.ADMIN_PRODUCT}/edit/${productId}`}
+                >
+                    Изменить данные
+                </LinkButton>
                 <DeleteButton>
-                    Удалить пользователя
+                    Удалить товар
                 </DeleteButton>
             </ToolbarBlock>
             <ShowBlock>
@@ -57,18 +51,18 @@ export const ProductShow = () => {
                 {/*    label={'Изображения'}*/}
                 {/*/>*/}
 
-                <Carousel>
-                    {data.map((item, index) => <img src={item.image_path} alt={''}/>)}
-                </Carousel>
+                {/*<Carousel>*/}
+                {/*    {data.map((item, index) => <img src={item.image_path} alt={''}/>)}*/}
+                {/*</Carousel>*/}
 
-                <ReferenceInputField
-                    value={productData.fk_user}
-                    searchFunc={userAPI.useGetUsersDataMutation}
-                    idName={'user_id'}
-                    onChange={(value) => setProductData({...productData, fk_user: value})}
-                    searchFieldName={'user_name'}
-                    label={'User'}
-                />
+                {/*<ReferenceInputField*/}
+                {/*    value={productData.fk_user}*/}
+                {/*    searchFunc={userAPI.useGetUsersDataMutation}*/}
+                {/*    idName={'user_id'}*/}
+                {/*    onChange={(value) => setProductData({...productData, fk_user: value})}*/}
+                {/*    searchFieldName={'user_name'}*/}
+                {/*    label={'User'}*/}
+                {/*/>*/}
             </ShowBlock>
         </ShowContainer>
     )
