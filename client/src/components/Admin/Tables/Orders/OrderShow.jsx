@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components"
-import {userAPI} from "../../../../services/UserService";
 import {useLocation} from "react-router-dom";
+import {orderAPI} from "../../../../services/OrderService";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
 import {ToolbarBlock, LinkButton, ShowContainer} from "../TablesStyledBlocks";
@@ -9,8 +9,8 @@ import {ToolbarBlock, LinkButton, ShowContainer} from "../TablesStyledBlocks";
 export const OrderShow = () => {
 
     const {pathname} = useLocation()
-    const userId = pathname.replace(`${AdminRouteNames.ADMIN_ORDER}/`, '')
-    const {data, isLoading} = userAPI.useUserShowQuery(1)
+    const orderId = pathname.replace(`${AdminRouteNames.ADMIN_ORDER}/`, '')
+    const {data, isLoading} = orderAPI.useOrderShowQuery(orderId)
 
     if (isLoading)
         return <h1>LOADING...</h1>
@@ -19,17 +19,13 @@ export const OrderShow = () => {
         <ShowContainer>
             <ToolbarBlock>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_USERS}`}
+                    to={`${AdminRouteNames.ADMIN_ORDER}`}
                 >
-                    Список пользователей
+                    Список заказов
                 </LinkButton>
             </ToolbarBlock>
             <ShowBlock>
-                <TextField value={data.user_id} label={'id'}/>
-                <TextField value={data.user_email} label={'e-mail'}/>
-                <TextField value={data.user_password} label={'Пароль'}/>
-                <TextField value={data.user_name} label={'Имя'}/>
-                <TextField value={data.user_phone_number} label={'Номер телефона'}/>
+
             </ShowBlock>
         </ShowContainer>
     )
