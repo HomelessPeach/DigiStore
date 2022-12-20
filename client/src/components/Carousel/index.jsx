@@ -10,16 +10,18 @@ export const Carousel = (props) => {
 
     const {
         children,
-        width = 480,
-        itemWidth = 480,
-        height = 270,
+        width = 770,
+        aspect = 16/9,
         button = true,
         infinity = true,
         dots = true,
-        scroll = true,
+        scroll = false,
         scrollSpeed = 5,
         itemsToShow = 1
     } = props
+
+    const itemWidth = width / itemsToShow
+    const height = itemWidth * aspect ** -1
 
     const [showButton, setShowButton] = useState(false)
     const [items, setItems] = useState([])
@@ -66,6 +68,8 @@ export const Carousel = (props) => {
         }
         setItems(children.map((child) =>
             cloneElement(child, {
+                height: height,
+                width: itemWidth,
                 minWidth: itemWidth,
                 minHeight: height,
                 maxWidth: itemWidth,
@@ -78,7 +82,7 @@ export const Carousel = (props) => {
         if (!infinity)
             return;
 
-        if (page === 0) {
+        if (page < itemsToShow) {
             setTimeout(() => {
                 setAnimationTime(0)
                 setPage(items.length - itemsToShow - 1)
@@ -88,7 +92,7 @@ export const Carousel = (props) => {
             }, AnimationTime)
             return;
         }
-        if (page === items.length - 1) {
+        if (page > items.length - itemsToShow - 1) {
             setTimeout(() => {
                 setAnimationTime(0)
                 setPage(itemsToShow)
@@ -101,18 +105,26 @@ export const Carousel = (props) => {
     }, [infinity, page])
 
     useEffect(() => {
-        if (scroll && showButton === false && page < items.length - 1) {
-            setTimeout(nextHandler, scrollSpeed * 1000)
+        if (scroll && !showButton && page < items.length - 1) {
+            setTimeout(() => {
+                if (!showButton && page < items.length - 1) {
+                    nextHandler()
+                }
+            }, scrollSpeed * 1000)
         }
     }, [page, scroll, showButton])
 
     useEffect(() => {
+        if (-page * itemWidth - swipeWay < -itemWidth * items.length + width) {
+            setPagePosition(-itemWidth * items.length + width)
+            return;
+        }
         if (page === 0 || page === items.length - 1) {
             setPagePosition(-page * itemWidth)
-            return
+            return;
         }
         setPagePosition(-page * itemWidth - swipeWay)
-    }, [page, swipeWay])
+    }, [page, itemWidth, swipeWay, pagePosition])
 
     function nextHandler() {
         if (items.length - 1 !== page) {
@@ -137,10 +149,10 @@ export const Carousel = (props) => {
     }
 
     function mouseUpHandler() {
-        if (page !== 0 && swipeWay < -itemWidth * 0.2) {
+        if (page !== 0 && swipeWay < -itemWidth * 0.15) {
             backHandler()
         }
-        if (page !== items.length - 1 && swipeWay > width * 0.2) {
+        if (page !== items.length - 1 && swipeWay > width * 0.15) {
             nextHandler()
         }
         setPositionOnClick(0)
@@ -197,9 +209,9 @@ const CarouselContainer = styled.div`
   flex-direction: row;
   height: ${({h}) => h}px;
   width: ${({w}) => w}px;
-  user-select: none;
   border-radius: 10px;
   cursor: pointer;
+  user-select: none;
 `
 
 const CarouselBlock = styled.div`
@@ -220,4 +232,12 @@ const ItemsContainer = styled.div`
   width: 100%;
   transform: translateX(${({showItem}) => showItem}px);
   transition: ${({animationTime}) => animationTime}ms;
+  & > img {
+    -drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
 `

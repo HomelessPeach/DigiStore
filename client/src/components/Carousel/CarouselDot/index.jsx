@@ -18,10 +18,10 @@ export const CarouselDot = (props) => {
         if (!infinity) {
             return activePage
         }
-        if (activePage === 0) {
-            return items.length + itemsToShow - 1
+        if (activePage < itemsToShow) {
+            return items.length + activePage
         }
-        if (activePage > items.length) {
+        if (activePage > items.length + itemsToShow - 1) {
             return itemsToShow
         }
         return activePage
@@ -48,7 +48,7 @@ const CarouselDotBlock = styled.div`
   position: absolute;
   bottom: 0;
   z-index: 1;
-  width: 66%;
+  width: 80%;
   height: 15%;
   gap: 10px;
 `
