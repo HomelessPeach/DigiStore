@@ -1,13 +1,32 @@
 import * as React from "react";
 import styled from "styled-components"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {productAPI} from "../../../../services/ProductService";
 import {AdminRouteNames} from "../../../../Router";
 import {TextInput} from "../../components/TextInput";
 import {ToolbarBlock, LinkButton, EditContainer, Button, EditToolbarBlock} from "../TablesStyledBlocks";
+import {ImagesInput} from "../../components/ImagesInput";
 
 export const ProductCreate = () => {
+
+    // const data = [
+    //     {
+    //         image_path: 'https://www.meme-arsenal.com/memes/1a0d126c09ef9859f5946bde0c3a79ef.jpg'
+    //     },
+    //     {
+    //         image_path: 'https://abrakadabra.fun/uploads/posts/2021-12/1640388888_5-abrakadabra-fun-p-kosmos-na-rabochii-stol-telefona-5.jpg'
+    //     },
+    //     {
+    //         image_path: 'https://images.wallpaperscraft.ru/image/single/siluet_gorod_art_142434_1600x900.jpg'
+    //     },
+    //     {
+    //         image_path: 'https://images.wallpaperscraft.ru/image/single/siluet_gorod_ulitsa_123496_1600x900.jpg'
+    //     },
+    //     {
+    //         image_path: 'https://images.wallpaperscraft.ru/image/single/siluet_gorod_art_143985_1600x900.jpg'
+    //     }
+    // ]
 
     const navigate = useNavigate();
     const [createProduct] = productAPI.useProductCreateMutation()
@@ -48,7 +67,12 @@ export const ProductCreate = () => {
             </ToolbarBlock>
             <EditBlock>
                 <EditContent>
-
+                    <ImagesInput
+                        value={productData.images}
+                        size={{h: 540, w: 960, br: 20}}
+                        onChange={(value) => setProductData({...productData, images: [...(productData.images)? productData.images: [], ...value]})}
+                        label={'Изображения'}
+                    />
                 </EditContent>
                 <EditToolbarBlock>
                     <Button onClick={createProductHandler}>

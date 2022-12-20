@@ -76,7 +76,7 @@ export const ProductEdit = () => {
 
                 </EditContent>
                 <EditToolbarBlock>
-                    <Button onClick={createProductHandler}>
+                    <Button onClick={updateProductHandler}>
                         Сохранить
                     </Button>
                 </EditToolbarBlock>

@@ -7,19 +7,20 @@ import {MenuGroupItem} from "./MenuGroupItem";
 export const MenuItems = (props) => {
     const {
         items,
-        paddingLeft = 0,
+        pl = 0,
     } = props
 
     const {pathname} = useLocation()
 
     return (
-        items.map((item) =>
+        items.map((item, index) =>
             (item.pathname) ?
                 <NavLinkBlock
+                    key={index}
                     to={item.pathname}
                     title={item.name}
                     pathname={pathname}
-                    paddingLeft={paddingLeft + 10}
+                    pl={pl + 10}
                 >
                     <IconBlock>
                         {item.icon}
@@ -29,7 +30,7 @@ export const MenuItems = (props) => {
                     </TextBlock>
                 </NavLinkBlock>
                 :
-                <MenuGroupItem item={item} paddingLeft={paddingLeft}/>
+                <MenuGroupItem key={index} item={item} pl={pl}/>
         )
     )
 }
@@ -41,7 +42,7 @@ const NavLinkBlock = styled(NavLink)`
   align-items: center;
   font-size: var(--sidebar-font-size);
   text-decoration: none;
-  padding: var(--item-padding-vertical) 10px var(--item-padding-vertical) ${({paddingLeft}) => paddingLeft}px;
+  padding: var(--item-padding-vertical) 10px var(--item-padding-vertical) ${({pl}) => pl}px;
   color: #000000;
   fill: #000000;
 

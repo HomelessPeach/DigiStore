@@ -57,9 +57,10 @@ const Dots = styled.div`
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #ffffff;
+  background-color: #ee0000;
   opacity: ${({activePage, dotIndex}) => (activePage === dotIndex) ? 0.8 : 0.5};
   cursor: pointer;
+
   &:hover {
     opacity: 0.8;
   }

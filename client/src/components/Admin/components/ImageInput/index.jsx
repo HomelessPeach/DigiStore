@@ -14,13 +14,16 @@ export const ImageInput = (props) => {
         onChange
     } = props
 
-    function clickHandler(item) {
-        const files = item.target.files;
-        let reader = new FileReader();
-        reader.readAsDataURL(files[0]);
-        reader.onloadend = () => {
-            onChange(reader.result)
-        };
+    async function downloadImageHandler(item) {
+        const file = item.target.files[0];
+        const imagePath = await new Promise((resolve) => {
+            let reader = new FileReader();
+            reader.readAsDataURL(file)
+            reader.onloadend = () => {
+                resolve(reader.result);
+            }
+        })
+        onChange(imagePath)
     }
 
     return (
@@ -35,15 +38,14 @@ export const ImageInput = (props) => {
                         Нажмите для загрузки изображения
                     </TextBlock>
                 </Block>
-                {
-                    (value !== '' && value)?
-                        <Img src={(/^\//.test(value))? `${baseUrl}${value}` : value}/>
-                        : <NoImg src={`${attributeFilesUrl}/no-image.png`}/>
+                {(value !== '' && value)?
+                    <Img src={(/^\//.test(value))? `${baseUrl}${value}` : value}/>
+                    : <NoImg src={`${attributeFilesUrl}/no-image.png`}/>
                 }
                 <Input
                     type={'file'}
                     accept={mimeTypes}
-                    onChange={clickHandler}
+                    onChange={downloadImageHandler}
                 />
             </ImgBlock>
         </ContainerBlock>

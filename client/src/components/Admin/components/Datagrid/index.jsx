@@ -47,28 +47,29 @@ export const DataGrid = (props) => {
                     <>
                         <HeaderBlock>
                             {
-                                children.map((child) =>
+                                children.map((child, index) =>
                                     (child.props.sortable)?
-                                        <HeaderItemTitleBlock widthField={100 / children.length}>
+                                        <HeaderItemTitleBlock key={index} widthField={100 / children.length}>
                                             <TextBlock onClick={() => changeSort(child.props.source)} >
                                               {child.props.name}
                                             </TextBlock>
                                         </HeaderItemTitleBlock>
                                         :
-                                        <HeaderItemTitleBlock widthField={100 / children.length}>
+                                        <HeaderItemTitleBlock key={index} widthField={100 / children.length}>
                                             {child.props.name}
                                         </HeaderItemTitleBlock>
                                 )
                             }
                         </HeaderBlock>
                         {(totalCount > 0)?
-                            data.map((item) =>
+                            data.map((item, index) =>
                                 <ItemBlock
+                                    key={index}
                                     to={`${pathname}/${item[idName]}`}
                                 >
                                     {
-                                        children.map((child) =>
-                                            <ItemValueBlock widthField={100 / children.length}>
+                                        children.map((child, index) =>
+                                            <ItemValueBlock key={index} widthField={100 / children.length}>
                                                 {{...child, props: {...child.props, value: item[child.props.source]}}}
                                             </ItemValueBlock>
                                         )
@@ -96,7 +97,7 @@ export const DataGrid = (props) => {
                     </ButtonBlock>
                     {
                         maxPageCount.map((item, index) =>
-                            <ButtonBlock onClick={() => setPage(index)} pageNumber={index} activePage={page}>
+                            <ButtonBlock key={index} onClick={() => setPage(index)} pageNumber={index} activePage={page}>
                                 <ButtonItemBlock>
                                     {index + 1}
                                 </ButtonItemBlock>

@@ -11,8 +11,9 @@ export const HeaderGeneralNavbar = (props) => {
     return (
         <HeaderGeneralNavbarBlock>
             {
-                items.map((item) =>
+                items.map((item, index) =>
                     <NavLinkBlock
+                        key={index}
                         to={item.pathname}
                         title={item.name}
                    >

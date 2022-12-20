@@ -6,11 +6,12 @@ export const CarouselButton = (props) => {
 
     const {
         back,
-        onClick
+        roundButton,
+        onClick,
     } = props
 
     return (
-        <ButtonContainer onClick={onClick} reverse={back}>
+        <ButtonContainer roundButton={roundButton} onClick={onClick} reverse={back}>
             <IconBlock>
                 <Arrow/>
             </IconBlock>
@@ -25,20 +26,28 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 10%;
-  padding: 10px;
+  height: ${({roundButton}) => (roundButton)? '50px' : '100%'};
+  margin: ${({roundButton}) => (roundButton)? 1 : 0}%;
+  border-radius: ${({roundButton}) => (roundButton)? 50 : 0}%;
+  width: ${({roundButton}) => (roundButton)? '50px' : '10%'};
   background-color: #ffffff;
   opacity: 0.4;
   transform: rotate(${({reverse}) => (reverse) ? '180deg' : '0'});
-  ${({reverse}) => (reverse)? 'left: 0' : 'right: 0'};
+  ${({reverse}) => (reverse) ? 'left: 0' : 'right: 0'};
   cursor: pointer;
+  border-top-right-radius: ${({roundButton}) => (roundButton)? '50%' : 'inherit'};
+  border-bottom-right-radius: ${({roundButton}) => (roundButton)? '50%' : 'inherit'};
   &:hover {
     opacity: 0.6;
   }
 `
 
 const IconBlock = styled.div`
-  width: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  padding: 0 5px 0 0;
   fill: #595959;
 `

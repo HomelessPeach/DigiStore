@@ -8,14 +8,14 @@ export const MenuGroupItem = (props) => {
 
     const {
         item,
-        paddingLeft
+        pl = 0
     } = props
 
     const [isOpen, setOpen] = useState(true)
 
     return (
         <>
-            <MenuTitleBlock onClick={() => setOpen(!isOpen)} isOpen={isOpen} paddingLeft={paddingLeft + 10}>
+            <MenuTitleBlock onClick={() => setOpen(!isOpen)} isOpen={isOpen} pl={pl + 10}>
                 <IconBlock>
                     <IconTitleGroupBlock isOpen={isOpen}>
                         <Arrow/>
@@ -27,7 +27,7 @@ export const MenuGroupItem = (props) => {
             </MenuTitleBlock>
             {(isOpen)?
                 <SidebarGroupWrapper>
-                    <MenuItems items={item.items} paddingLeft={paddingLeft + 20}/>
+                    <MenuItems items={item.items} pl={pl + 20}/>
                 </SidebarGroupWrapper>
                 : null
             }
@@ -38,7 +38,7 @@ export const MenuGroupItem = (props) => {
 const MenuTitleBlock = styled.div`
   width: 100%;
   font-size: var(--sidebar-font-size);
-  padding: var(--item-padding-vertical) 10px var(--item-padding-vertical) ${({paddingLeft}) => paddingLeft}px;
+  padding: var(--item-padding-vertical) 10px var(--item-padding-vertical) ${({pl}) => pl}px;
   display: flex;
   flex-direction: row;
   align-items: center;
