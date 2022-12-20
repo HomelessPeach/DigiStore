@@ -85,11 +85,14 @@ export const ReferenceInputField = (props) => {
 
     return (
         <ContainerBlock>
-            <LabelBlock
-                isNotValid={isNotValid}
-            >
-                {label}
-            </LabelBlock>
+            {(label)?
+                <LabelBlock
+                    isNotValid={isNotValid}
+                >
+                    {label}
+                </LabelBlock>
+                :null
+            }
             <SelectBlock
                 ref={selectRef}
             >

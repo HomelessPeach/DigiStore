@@ -47,11 +47,14 @@ export const PasswordInput = (props) => {
 
     return (
         <ContainerBlock>
-            <LabelBlock
-                isNotValid={isNotValid}
-            >
-                {label}
-            </LabelBlock>
+            {(label)?
+                <LabelBlock
+                    isNotValid={isNotValid}
+                >
+                    {label}
+                </LabelBlock>
+                :null
+            }
             <InputContainer>
                 <InputBlock
                     type={(visible)? "text" : "password"}

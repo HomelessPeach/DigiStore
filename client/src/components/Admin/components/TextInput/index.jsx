@@ -45,11 +45,14 @@ export const TextInput = (props) => {
 
     return (
         <ContainerBlock>
-            <LabelBlock
-                isNotValid={isNotValid}
-            >
-                {label}
-            </LabelBlock>
+            {(label)?
+                <LabelBlock
+                    isNotValid={isNotValid}
+                >
+                    {label}
+                </LabelBlock>
+                :null
+            }
             <InputBlock
                 defaultValue={(value)? value : ''}
                 onChange={onInput}

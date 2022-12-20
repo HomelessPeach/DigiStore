@@ -18,10 +18,9 @@ export const BoolInput = (props) => {
 
     return (
         <ContainerBlock>
-            {
-                (label)?
-                    <LabelBlock>{label}</LabelBlock>
-                    :null
+            {(label)?
+                <LabelBlock>{label}</LabelBlock>
+                :null
             }
             <ValueBlock>
                 <YesIconBlock>

@@ -14,16 +14,14 @@ export const ImageField = (props) => {
 
     return (
         <ContainerBlock>
-            {
-                (label)?
-                    <LabelBlock>{label}</LabelBlock>
-                    :null
+            {(label)?
+                <LabelBlock>{label}</LabelBlock>
+                :null
             }
             <ImgBlock h={h} w={w} br={br}>
-                {
-                    (value !== '' && value)?
-                        <Img src={`${baseUrl}${value}`}/>
-                        : <NoImg src={`${attributeFilesUrl}/mask-1.svg`}/>
+                {(value !== '' && value)?
+                    <Img src={`${baseUrl}${value}`}/>
+                    : <NoImg src={`${attributeFilesUrl}/mask-1.svg`}/>
                 }
             </ImgBlock>
         </ContainerBlock>

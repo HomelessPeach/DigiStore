@@ -100,11 +100,14 @@ export const PhoneNumberInput = (props) => {
 
     return (
         <ContainerBlock>
-            <LabelBlock
-                isNotValid={false}
-            >
-                {label}
-            </LabelBlock>
+            {(label)?
+                <LabelBlock
+                    isNotValid={isNotValid}
+                >
+                    {label}
+                </LabelBlock>
+                :null
+            }
             <PhoneNumberBlock>
                 <TextBlock>+7&nbsp;(</TextBlock>
                 <InputBlock

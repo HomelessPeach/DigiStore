@@ -10,10 +10,9 @@ export const ReachTextField = (props) => {
 
     return (
         <ContainerBlock>
-            {
-                (label)?
-                    <LabelBlock>{label}</LabelBlock>
-                    :null
+            {(label)?
+                <LabelBlock>{label}</LabelBlock>
+                :null
             }
             <ValueBlock
                 dangerouslySetInnerHTML={{__html: value}}

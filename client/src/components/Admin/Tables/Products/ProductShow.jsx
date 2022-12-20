@@ -5,7 +5,7 @@ import {useLocation} from "react-router-dom";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
 import {ToolbarBlock, LinkButton, DeleteButton, ShowContainer} from "../TablesStyledBlocks";
-import {CarouselImageInput} from "../../components/CarouselImageInput";
+import {CarouselImageInput} from "../../components/ImagesInput";
 import {Carousel} from "../../../Carousel";
 import {ReferenceInputField} from "../../components/ReferenceInputField";
 import {useState} from "react";
@@ -28,10 +28,10 @@ export const ProductShow = () => {
             image_path: 'https://abrakadabra.fun/uploads/posts/2021-12/1640388888_5-abrakadabra-fun-p-kosmos-na-rabochii-stol-telefona-5.jpg'
         },
         {
-            image_path: 'https://www.meme-arsenal.com/memes/1a0d126c09ef9859f5946bde0c3a79ef.jpg'
+            image_path: 'https://images.wallpaperscraft.ru/image/single/siluet_gorod_art_142434_1600x900.jpg'
         },
         {
-            image_path: 'https://abrakadabra.fun/uploads/posts/2021-12/1640388888_5-abrakadabra-fun-p-kosmos-na-rabochii-stol-telefona-5.jpg'
+            image_path: 'https://images.wallpaperscraft.ru/image/single/siluet_gorod_ulitsa_123496_1600x900.jpg'
         }
     ]
 
@@ -53,7 +53,7 @@ export const ProductShow = () => {
                 </DeleteButton>
             </ToolbarBlock>
             <ShowBlock>
-                {/*<CarouselImageInput*/}
+                {/*<ImagesInput*/}
                 {/*    label={'Изображения'}*/}
                 {/*/>*/}
 

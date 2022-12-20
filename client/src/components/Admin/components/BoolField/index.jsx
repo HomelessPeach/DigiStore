@@ -12,10 +12,9 @@ export const BoolField = (props) => {
 
     return (
         <ContainerBlock>
-            {
-                (label)?
-                    <LabelBlock>{label}</LabelBlock>
-                    :null
+            {(label)?
+                <LabelBlock>{label}</LabelBlock>
+                :null
             }
             <ValueBlock value={value}>{(value)? <CheckMark/> : <Cross/>}</ValueBlock>
         </ContainerBlock>

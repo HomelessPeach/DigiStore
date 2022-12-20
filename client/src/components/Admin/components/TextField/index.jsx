@@ -21,10 +21,9 @@ export const TextField = (props) => {
 
     return (
         <ContainerBlock>
-            {
-                (label)?
-                    <LabelBlock>{label}</LabelBlock>
-                    :null
+            {(label)?
+                <LabelBlock>{label}</LabelBlock>
+                :null
             }
             <ValueBlock>
                 {(value)? formattedText(value) :  ''}

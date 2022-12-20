@@ -36,7 +36,8 @@ export const ChatComponent = (props) => {
         <ChatContainer>
             <MessageWrap>
                 <MessageContainer>
-                    {data.map((item) =>
+                    {
+                        data.map((item) =>
                         (item.is_user == true)?
                             <UserMessageBlock>
                                 <MessageBlock isUser={true}>
@@ -53,8 +54,7 @@ export const ChatComponent = (props) => {
                                     />
                                 </MessageBlock>
                             </AdminMessageBlock>
-                    )
-
+                        )
                     }
                 </MessageContainer>
             </MessageWrap>

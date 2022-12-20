@@ -49,11 +49,14 @@ export const ReachTextInput = (props) => {
 
     return (
         <ContainerBlock>
-            <LabelBlock
-                isNotValid={isNotValid}
-            >
-                {label}
-            </LabelBlock>
+            {(label)?
+                <LabelBlock
+                    isNotValid={isNotValid}
+                >
+                    {label}
+                </LabelBlock>
+                :null
+            }
             <ReachTextBlock isNotValid={isNotValid}>
                 <RichTextOptions>
                     <RichTextOptionsLine>

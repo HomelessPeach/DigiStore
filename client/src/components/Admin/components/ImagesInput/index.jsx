@@ -8,31 +8,16 @@ export const CarouselImageInput = (props) => {
         value,
         label,
         size: {h = '440px', w = '960px', br = '10px'} = {h: '440px', w: '960px', br: '10px'},
-        // onChange
+        onChange
     } = props
-
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
-    };
 
     return (
         <ContainerBlock>
-            {
-                (label)?
-                    <LabelBlock>{label}</LabelBlock>
-                    :null
+            {(label)?
+                <LabelBlock>{label}</LabelBlock>
+                :null
             }
-            <Carousel {...settings} h={h} w={w} br={br}>
-                {/*{data.map((item) =>*/}
 
-                {/*        <Img src={item.image_path} alt={''}/>*/}
-
-                {/*)}*/}
-            </Carousel>
         </ContainerBlock>
     );
 }

@@ -25,10 +25,9 @@ export const ImageInput = (props) => {
 
     return (
         <ContainerBlock>
-            {
-                (label)?
-                    <LabelBlock>{label}</LabelBlock>
-                    :null
+            {(label)?
+                <LabelBlock>{label}</LabelBlock>
+                :null
             }
             <ImgBlock h={h} w={w} br={br}>
                 <Block h={h} w={w} br={br}>

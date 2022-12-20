@@ -61,25 +61,24 @@ export const DataGrid = (props) => {
                                 )
                             }
                         </HeaderBlock>
-                        {
-                            (totalCount > 0)?
-                                data.map((item) =>
-                                    <ItemBlock
-                                        to={`${pathname}/${item[idName]}`}
-                                    >
-                                        {
-                                            children.map((child) =>
-                                                <ItemValueBlock widthField={100 / children.length}>
-                                                    {{...child, props: {...child.props, value: item[child.props.source]}}}
-                                                </ItemValueBlock>
-                                            )
-                                        }
-                                    </ItemBlock>
-                                )
-                                :
-                                <ItemEmptyBlock>
-                                    Эта таблица пуста
-                                </ItemEmptyBlock>
+                        {(totalCount > 0)?
+                            data.map((item) =>
+                                <ItemBlock
+                                    to={`${pathname}/${item[idName]}`}
+                                >
+                                    {
+                                        children.map((child) =>
+                                            <ItemValueBlock widthField={100 / children.length}>
+                                                {{...child, props: {...child.props, value: item[child.props.source]}}}
+                                            </ItemValueBlock>
+                                        )
+                                    }
+                                </ItemBlock>
+                            )
+                            :
+                            <ItemEmptyBlock>
+                                Эта таблица пуста
+                            </ItemEmptyBlock>
 
                         }
                     </>
@@ -88,30 +87,29 @@ export const DataGrid = (props) => {
                     </ItemEmptyBlock>
                 }
             </GridBlock>
-            {
-                (totalCount > 0)?
-                    <PageBlock>
-                        <ButtonBlock onClick={() => (page > 0)? setPage(page - 1) : null} pageNumber={null} activePage={page}>
-                            <ButtonItemBlock>
-                                <Back/>
-                            </ButtonItemBlock>
-                        </ButtonBlock>
-                        {
-                            maxPageCount.map((item, index) =>
-                                <ButtonBlock onClick={() => setPage(index)} pageNumber={index} activePage={page}>
-                                    <ButtonItemBlock>
-                                        {index + 1}
-                                    </ButtonItemBlock>
-                                </ButtonBlock>
-                            )
-                        }
-                    <ButtonBlock onClick={() => (page < maxPageCount.length - 1)? setPage(page + 1) : null} pageNumber={null} activePage={page}>
+            {(totalCount > 0)?
+                <PageBlock>
+                    <ButtonBlock onClick={() => (page > 0)? setPage(page - 1) : null} pageNumber={null} activePage={page}>
                         <ButtonItemBlock>
-                            <Next/>
+                            <Back/>
                         </ButtonItemBlock>
                     </ButtonBlock>
-                    </PageBlock>
-                    : null
+                    {
+                        maxPageCount.map((item, index) =>
+                            <ButtonBlock onClick={() => setPage(index)} pageNumber={index} activePage={page}>
+                                <ButtonItemBlock>
+                                    {index + 1}
+                                </ButtonItemBlock>
+                            </ButtonBlock>
+                        )
+                    }
+                <ButtonBlock onClick={() => (page < maxPageCount.length - 1)? setPage(page + 1) : null} pageNumber={null} activePage={page}>
+                    <ButtonItemBlock>
+                        <Next/>
+                    </ButtonItemBlock>
+                </ButtonBlock>
+                </PageBlock>
+                : null
             }
         </DataGridBlock>
     )
