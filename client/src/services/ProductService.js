@@ -70,6 +70,13 @@ export const productAPI = createApi({
                         }
                         data.product_images = images
                     }
+                    const productFeatureValues = []
+                    for (let item of data.product_feature_values) {
+                        if (item.fk_product_feature && item.product_features_values_value) {
+                            productFeatureValues.push(item)
+                        }
+                    }
+                    data.product_feature_values = productFeatureValues
                     formData.append('data', JSON.stringify(data));
                     return formData
                 })(data),
@@ -100,6 +107,13 @@ export const productAPI = createApi({
                         }
                         data.product_images = images
                     }
+                    const productFeatureValues = []
+                    for (let item of data.product_feature_values) {
+                        if (item.fk_product_feature && item.product_features_values_value) {
+                            productFeatureValues.push(item)
+                        }
+                    }
+                    data.product_feature_values = productFeatureValues
                     formData.append('data', JSON.stringify(data));
                     return formData
                 })(data),
@@ -113,5 +127,21 @@ export const productAPI = createApi({
             }),
             invalidatesTags: [{type: 'Product', id: 'LIST'}]
         }),
+        getProductData: build.mutation({
+            query: (id) => ({
+                url: `/admin/${id}`,
+                method: 'GET',
+            }),
+        }),
+        // getProductData: build.mutation({
+        //     query: () => ({
+        //         url: `/admin`,
+        //         method: 'GET',
+        //         params: {
+        //             _sort: 'product_name',
+        //             _order: 'ASC'
+        //         }
+        //     }),
+        // }),
     })
 })

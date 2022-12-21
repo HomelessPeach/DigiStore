@@ -21,29 +21,42 @@ export const ProductCreate = () => {
     const [isNotValid, setIsNotValid] = useState(false)
 
     const validation = {
-        product_name: (name) => name?.length > 0,
-        product_price: (price) => price?.length > 0,
+        product_name: (name) => name,
+        product_price: (price) => price,
+        fk_product_category: (productCategoryId) => productCategoryId,
+        product_feature_values: (productFeatureValues) => {
+            if (productFeatureValues.length === 1 && !productFeatureValues[0].fk_product_feature && !productFeatureValues[0].product_features_values_value)
+                return false
+            for (let item of productFeatureValues) {
+                if ((!item.fk_product_feature || !item.product_features_values_value) &&
+                    (item.fk_product_feature || item.product_features_values_value)) {
+                    return false
+                }
+            }
+            return true
+        },
         product_description: (description) => description?.length > 0,
         checkValidate: () =>
             validation.product_name(productData.product_name) &&
+            validation.fk_product_category(productData.fk_product_category) &&
+            validation.product_feature_values(productData.product_feature_values) &&
             validation.product_price(productData.product_price) &&
             validation.product_description(productData.product_description)
     }
 
     async function createProductHandler() {
-        console.log(productData)
-        // if (validation.checkValidate()) {
-        //     const res = await createProduct(productData)
-        //         .unwrap()
-        //         .catch((err) => {
-        //             console.log(err)
-        //         })
-        //     if (res) {
-        //         navigate(`${AdminRouteNames.ADMIN_PRODUCT}/${res.product_id}`)
-        //     }
-        // } else {
-        //     setIsNotValid(true)
-        // }
+        if (validation.checkValidate()) {
+            const res = await createProduct(productData)
+                .unwrap()
+                .catch((err) => {
+                    console.log(err)
+                })
+            if (res) {
+                navigate(`${AdminRouteNames.ADMIN_PRODUCT}/${res.product_id}`)
+            }
+        } else {
+            setIsNotValid(true)
+        }
     }
 
     return (
@@ -79,6 +92,11 @@ export const ProductCreate = () => {
                             <ReferenceInputField
                                 value={productData.fk_product_category}
                                 onChange={(value) => setProductData({...productData, fk_product_category: value})}
+                                validation={{
+                                    validate: validation.fk_product_category,
+                                    validationError: isNotValid,
+                                    validationMessage: 'Продукт обязательно должен иметь категорию.'
+                                }}
                                 searchFunc={productCategoryAPI.useGetProductCategoriesDataMutation}
                                 idName={'product_category_id'}
                                 searchFieldName={'product_category_name'}
@@ -90,9 +108,9 @@ export const ProductCreate = () => {
                                 validation={{
                                     validate: validation.product_price,
                                     validationError: isNotValid,
-                                    validationMessage: 'Продукт обязательно должен иметь название.'
+                                    validationMessage: 'Продукт обязательно должен иметь цену.'
                                 }}
-                                label={'Название'}
+                                label={'Цена'}
                             />
                         </LeftFieldBlock>
                         <RightFieldBlock>
@@ -117,6 +135,11 @@ export const ProductCreate = () => {
                     <TableInput
                         value={productData.product_feature_values}
                         onChange={(value) => setProductData({...productData, product_feature_values: [...(productData.product_feature_values)? productData.product_feature_values: [], value]})}
+                        validation={{
+                            validate: validation.product_feature_values,
+                            validationError: isNotValid,
+                            validationMessage: 'Не все поля характеристик заполнены или нет ни одной характеристики.'
+                        }}
                         label={'Характеристики продукта'}
                     >
                         <ReferenceInputField

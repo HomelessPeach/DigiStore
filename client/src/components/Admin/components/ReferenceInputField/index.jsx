@@ -43,7 +43,7 @@ export const ReferenceInputField = (props) => {
 
     useEffect(() => {
         if (validationError) {
-            setIsNotValid(!validate(selectValue))
+            setIsNotValid(!validate(id))
         }
     }, [validationError])
 

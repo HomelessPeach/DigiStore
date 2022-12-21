@@ -25,11 +25,25 @@ export const ProductEdit = () => {
     const [isNotValid, setIsNotValid] = useState(false)
 
     const validation = {
-        product_name: (name) => name?.length > 0,
-        product_price: (price) => price?.length > 0,
+        product_name: (name) => name,
+        product_price: (price) => price,
+        fk_product_category: (productCategoryId) => productCategoryId,
+        product_feature_values: (productFeatureValues) => {
+            if (productFeatureValues.length === 1 && !productFeatureValues[0].fk_product_feature && !productFeatureValues[0].product_features_values_value)
+                return false
+            for (let item of productFeatureValues) {
+                if ((!item.fk_product_feature || !item.product_features_values_value) &&
+                    (item.fk_product_feature || item.product_features_values_value)) {
+                    return false
+                }
+            }
+            return true
+        },
         product_description: (description) => description?.length > 0,
         checkValidate: () =>
             validation.product_name(productData.product_name) &&
+            validation.fk_product_category(productData.fk_product_category) &&
+            validation.product_feature_values(productData.product_feature_values) &&
             validation.product_price(productData.product_price) &&
             validation.product_description(productData.product_description)
     }
@@ -47,7 +61,7 @@ export const ProductEdit = () => {
                     console.log(err)
                 })
             if (res) {
-                navigate(`${AdminRouteNames.ADMIN_PRODUCT}/${productData}`)
+                navigate(`${AdminRouteNames.ADMIN_PRODUCT}/${productId}`)
             }
         } else {
             setIsNotValid(true)
@@ -115,9 +129,9 @@ export const ProductEdit = () => {
                                 validation={{
                                     validate: validation.product_price,
                                     validationError: isNotValid,
-                                    validationMessage: 'Продукт обязательно должен иметь название.'
+                                    validationMessage: 'Продукт обязательно должен иметь цену.'
                                 }}
-                                label={'Название'}
+                                label={'Цена'}
                             />
                         </LeftFieldBlock>
                         <RightFieldBlock>
