@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 export const CarouselDot = (props) => {
 
     const {
-        items,
+        itemsCount,
         setPage,
         activePage,
         itemsToShow,
@@ -19,19 +19,28 @@ export const CarouselDot = (props) => {
             return activePage
         }
         if (activePage < itemsToShow) {
-            return items.length + activePage
+            return itemsCount + activePage
         }
-        if (activePage > items.length + itemsToShow - 1) {
+        if (activePage > itemsCount + itemsToShow - 1) {
             return itemsToShow
         }
         return activePage
     }
 
     useEffect(() => {
-        setDots(items.map((item, index) => {
-            return <Dots activePage={getActivePage()} dotIndex={(infinity)? index + itemsToShow : index} onClick={() => setPage((infinity)? index + itemsToShow : index)}/>
-        }))
-    }, [items, activePage])
+        const items = []
+        for (let i = 0; i < itemsCount; i++) {
+            items.push(
+                <Dots
+                    key={i}
+                    activePage={getActivePage()}
+                    dotIndex={(infinity)? i + itemsToShow : i}
+                    onClick={() => setPage((infinity)? i + itemsToShow : i)}
+                />
+            )
+        }
+        setDots(items)
+    }, [itemsCount, activePage])
 
     return (
         <CarouselDotBlock>
@@ -57,7 +66,7 @@ const Dots = styled.div`
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #ee0000;
+  background-color: #ffffff;
   opacity: ${({activePage, dotIndex}) => (activePage === dotIndex) ? 0.8 : 0.5};
   cursor: pointer;
 

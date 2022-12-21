@@ -195,7 +195,7 @@ export const Carousel = (props) => {
                 </ItemsContainer>
                 {(dots)?
                     <CarouselDot
-                        items={children}
+                        itemsCount={children.length}
                         setPage={setPage}
                         activePage={page}
                         itemsToShow={itemsToShow}
