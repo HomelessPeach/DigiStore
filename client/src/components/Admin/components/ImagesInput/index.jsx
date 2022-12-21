@@ -61,6 +61,7 @@ export const ImagesInput = (props) => {
             }
             <ContentBlock
                 br={br}
+                w={w}
             >
                 <ImgBlock h={h} w={w} br={br}>
                     <Block h={h} w={w} br={br}>
@@ -101,7 +102,7 @@ export const ImagesInput = (props) => {
                                         >
                                             <ImgCarouselBlock
                                                 br={br}
-                                                onClick={() => setActiveImage(item.image_path)}
+                                                onClick={() => setActiveImage(item)}
                                                 src={(/^\//.test(item.image_path))? `${baseUrl}${item.image_path}` : item.image_path}
                                             />
                                             <PreviewImageBlock
@@ -147,6 +148,7 @@ const ContentBlock = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: ${({br}) => br + 5}px;
+  width: ${({w}) => w + 20}px;
   padding: 10px;
   gap: 10px;
   border: 1px solid #000000;

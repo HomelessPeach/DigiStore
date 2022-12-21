@@ -38,7 +38,20 @@ export const DataGrid = (props) => {
         return <h1>Loading...</h1>
 
     const {data, totalCount} = response
-    const maxPageCount = String(10 ** Math.ceil(totalCount/pagination) - 1).split('')
+
+    function getPagesButton() {
+        const items = []
+        for (let i = 0; i < totalCount/pagination; i++) {
+            items.push(
+                <ButtonBlock onClick={() => setPage(i)} pageNumber={i} activePage={page}>
+                    <ButtonItemBlock>
+                        {i + 1}
+                    </ButtonItemBlock>
+                </ButtonBlock>
+            )
+        }
+        return items
+    }
 
     return (
         <DataGridBlock>
@@ -83,7 +96,8 @@ export const DataGrid = (props) => {
 
                         }
                     </>
-                    : <ItemEmptyBlock>
+                    :
+                    <ItemEmptyBlock>
                         Нет данных для отображения
                     </ItemEmptyBlock>
                 }
@@ -95,20 +109,12 @@ export const DataGrid = (props) => {
                             <Back/>
                         </ButtonItemBlock>
                     </ButtonBlock>
-                    {
-                        maxPageCount.map((item, index) =>
-                            <ButtonBlock key={index} onClick={() => setPage(index)} pageNumber={index} activePage={page}>
-                                <ButtonItemBlock>
-                                    {index + 1}
-                                </ButtonItemBlock>
-                            </ButtonBlock>
-                        )
-                    }
-                <ButtonBlock onClick={() => (page < maxPageCount.length - 1)? setPage(page + 1) : null} pageNumber={null} activePage={page}>
-                    <ButtonItemBlock>
-                        <Next/>
-                    </ButtonItemBlock>
-                </ButtonBlock>
+                    {getPagesButton()}
+                    <ButtonBlock onClick={() => (page < totalCount/pagination - 1)? setPage(page + 1) : null} pageNumber={null} activePage={page}>
+                        <ButtonItemBlock>
+                            <Next/>
+                        </ButtonItemBlock>
+                    </ButtonBlock>
                 </PageBlock>
                 : null
             }

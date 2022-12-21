@@ -29,6 +29,7 @@ export const ImagesField = (props) => {
                 :null
             }
             <ValueBlock
+                w={w}
                 br={br}
             >
                 <ImgBlock h={h} w={w} br={br}>
@@ -38,35 +39,36 @@ export const ImagesField = (props) => {
                     }
                 </ImgBlock>
                 {(value.length)?
-                    <ImgCarousel
-                        carouselWidth={w}
-                        aspect={w/h}
-                        roundButton={true}
-                        buttonIn={false}
-                        infinity={false}
-                        dots={false}
-                        scroll={false}
-                        itemsToShow={4}
+                    <CarouselContainer
+                        br={br}
                     >
-                        {
-                            value.map((item) =>
-                                (
-                                    <ImgCarouselContainer>
-                                        <ImgCarouselBlock
-                                            br={br}
-                                            onClick={() => setActiveImage(item.image_path)}
-                                            src={`${baseUrl}${item.image_path}`}
-                                        />
-                                        <DeleteImageBlock
-                                            onClick={() => setActiveImage(item)}
+                        <Carousel
+                            carouselWidth={w}
+                            aspect={w/h}
+                            roundButton={true}
+                            buttonIn={false}
+                            infinity={false}
+                            dots={false}
+                            scroll={false}
+                            itemsToShow={4}
+                        >
+                            {
+                                value.map((item, index) =>
+                                    (
+                                        <ImgCarouselContainer
+                                            key={index}
                                         >
-                                            <Cross/>
-                                        </DeleteImageBlock>
-                                    </ImgCarouselContainer>
+                                            <ImgCarouselBlock
+                                                br={br}
+                                                onClick={() => setActiveImage(item)}
+                                                src={`${baseUrl}${item.image_path}`}
+                                            />
+                                        </ImgCarouselContainer>
+                                    )
                                 )
-                            )
-                        }
-                    </ImgCarousel>
+                            }
+                        </Carousel>
+                    </CarouselContainer>
                     :null
                 }
             </ValueBlock>
@@ -76,8 +78,15 @@ export const ImagesField = (props) => {
 }
 
 const ValueBlock = styled.div`
-  border-radius: ${({br}) => br}px;
-  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: ${({br}) => br + 5}px;
+  width: ${({w}) => w + 20}px;
+  padding: 10px;
+  gap: 10px;
+  border: 1px solid #000000;
 `
 
 const ImgBlock = styled.div`
@@ -101,32 +110,14 @@ const NoImg = styled.img`
   max-height: 50%;
 `
 
-const ImgCarousel = styled(Carousel)`
+const CarouselContainer = styled.div`
+  border: 1px solid ${({theme}) => theme.colors.tertiary};
   border-radius: ${({br}) => br}px;
-  border: 1px solid #000000;
 `
 
 const ImgCarouselContainer = styled.div`
   position: relative;
   padding: 10px 5px;
-`
-
-const DeleteImageBlock = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  top: 5px;
-  right: 5px;
-  z-index: 1;
-  fill: black;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  padding: 1%;
-  background-color: red;
-  cursor: pointer;
 `
 
 const ImgCarouselBlock = styled.img`

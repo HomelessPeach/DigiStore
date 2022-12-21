@@ -14,4 +14,5 @@ export const ContainerBlock = styled.div`
   flex-direction: column;
   line-height: 1.5;
   padding: 5px;
+  gap: 5px;
 `

@@ -18,6 +18,7 @@ export const TextInput = (props) => {
             validationMessage: 'Некорректно введённые данные',
         },
         onChange,
+        multiply
     } = props
 
     const [isNotValid, setIsNotValid] = useState(false)
@@ -53,12 +54,22 @@ export const TextInput = (props) => {
                 </LabelBlock>
                 :null
             }
-            <InputBlock
-                defaultValue={(value)? value : ''}
-                onChange={onInput}
-                onBlur={checkValidateOnBlur}
-                isNotValid={isNotValid}
-            />
+            {(multiply)?
+                <TextAreaBlock
+                    defaultValue={(value)? value : ''}
+                    rows={8}
+                    onChange={onInput}
+                    onBlur={checkValidateOnBlur}
+                    isNotValid={isNotValid}
+                />
+                :
+                <InputBlock
+                    defaultValue={(value)? value : ''}
+                    onChange={onInput}
+                    onBlur={checkValidateOnBlur}
+                    isNotValid={isNotValid}
+                />
+            }
             {(isNotValid)?
                 <ValidationMessage>
                     {validationMessage}
@@ -74,6 +85,17 @@ const InputBlock = styled.input`
   border-radius: 10px;
   font-size: 16px;
   padding: 10px;
+`
+
+const TextAreaBlock = styled.textarea`
+  border: 1px solid ${({isNotValid}) => (isNotValid)? '#ee0000' : '#000000'};
+  border-radius: 10px;
+  font-size: 16px;
+  padding: 10px 15px;
+  line-height: 1.5;
+  width: 100%;
+  overflow: visible;
+  resize: none;
 `
 
 const ValidationMessage = styled.div`

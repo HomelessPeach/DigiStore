@@ -99,22 +99,23 @@ export const ReferenceInputField = (props) => {
                 <SelectValue
                     onClick={() => setIsOpen(!isOpen)}
                     isNotValid={isNotValid}
-                >
-                    {(selectValue)? selectValue : <>&nbsp;</>}
-                </SelectValue>
+                    value={(selectValue)? selectValue : ''}
+                />
                 {(isOpen)?
                     <OptionsContainer
                         onClick={() => setIsOpen(false)}
                     >
                         <OptionBlock
+                            key={-1}
                             value={null}
                             onClick={() => changeValue(null)}
                         >
                             &nbsp;
                         </OptionBlock>
                         {(values)?
-                            values.map((item) =>
+                            values.map((item, index) =>
                                 <OptionBlock
+                                    key={index}
                                     onClick={() => changeValue(item[idName])}
                                 >
                                     {item[searchFieldName]}
@@ -142,16 +143,22 @@ const SelectBlock = styled.div`
   position: relative;
 `
 
-const SelectValue = styled.div`
+const SelectValue = styled.input`
+  display: flex;
+  align-items: center;
   border: 1px solid ${({isNotValid}) => (isNotValid) ? '#ee0000' : '#000000'};
   border-radius: 10px;
   font-size: 16px;
+  height: 40.5px;
   padding: 10px;
+  caret-color: transparent;
+  cursor: pointer;
 `
 
 const OptionsContainer = styled.div`
   position: absolute;
-  top: 46px;
+  z-index: 1;
+  top: 40.5px;
   width: 100%;
   border-radius: 10px;
   overflow: scroll;
@@ -162,6 +169,7 @@ const OptionsContainer = styled.div`
 const OptionBlock = styled.div`
   font-size: 16px;
   padding: 10px;
+  line-height: 1.2;
   cursor: pointer;
   border-bottom: 1px solid #c9c9c9;
   &:last-child {
