@@ -44,15 +44,9 @@ class ProductDatabaseService {
                 model: product_feature_values,
                 as: 'product_feature_values',
                 attributes: [
+                    'fk_product_feature',
                     'product_features_values_value'
                 ],
-                include: [{
-                    model: product_features,
-                    as: 'product_feature',
-                    attributes: [
-                        'product_feature_name'
-                    ]
-                }],
             }, {
                 model: product_images,
                 as: 'product_images',
