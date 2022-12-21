@@ -1,11 +1,16 @@
 import * as React from "react";
 import styled from "styled-components"
 import {baseUrl} from "../../services";
+import {Carousel} from "../../components/Carousel";
 
 export const Home = () => {
 
     return(
         <Container>
+            <Carousel>
+                <Img src={`${baseUrl}/files/product/macbook162021.png`}/>
+                <Img src={`${baseUrl}/files/product/macbook162021.png`}/>
+            </Carousel>
             <Card>
                 <ImageBlock>
                     <Img src={`${baseUrl}/files/product/macbook162021.png`}/>

@@ -9,7 +9,7 @@ const AnimationTime = 300
 export const Carousel = (props) => {
 
     const {
-        children,
+        children = [],
         carouselWidth = 770,
         aspect = 16/9,
         button = true,
@@ -51,23 +51,23 @@ export const Carousel = (props) => {
         }
 
         if (infinity) {
-            setItems([
-                ...cloneItems(children, children.length - itemsToShow, children.length),
-                ...children.map((child) =>
-                    cloneElement(child, {
-                            style: {
-                                minWidth: itemWidth,
-                                minHeight: height,
-                                maxWidth: itemWidth,
-                                maxHeight: height
+            setItems((children.length) ?
+                [...cloneItems(children, children.length - itemsToShow, children.length),
+                    ...children.map((child) =>
+                        cloneElement(child, {
+                                style: {
+                                    minWidth: itemWidth,
+                                    minHeight: height,
+                                    maxWidth: itemWidth,
+                                    maxHeight: height
+                                }
                             }
-                        }
-                    )),
-                ...cloneItems(children, 0, itemsToShow),
-            ])
+                        )),
+                    ...cloneItems(children, 0, itemsToShow),
+                ] : [])
             return;
         }
-        setItems(children.map((child) =>
+        setItems((children.length) ? children.map((child) =>
             cloneElement(child, {
                 style: {
                     minWidth: itemWidth,
@@ -76,7 +76,7 @@ export const Carousel = (props) => {
                     maxHeight: height
                 }
             })
-        ))
+        ) : [])
     }, [children, infinity])
 
     useEffect(() => {
