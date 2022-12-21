@@ -6,12 +6,13 @@ import {DataGrid} from "../../components/Datagrid";
 import {TextField} from "../../components/TextField";
 import {BoolField} from "../../components/BoolField";
 import {ReferenceField} from "../../components/ReferenceField";
-import {ListContainer} from "../TablesStyledBlocks";
+import {EmptyToolbarBlock, ListContainer} from "../TablesStyledBlocks";
 
 export const ChatList = () => {
 
     return (
         <ListContainer>
+            <EmptyToolbarBlock/>
             <DataGrid getData={chatAPI.useChatListQuery} idName={'chat_id'}>
                 <TextField source={'chat_id'} name={'id'} sortable={true}/>
                 <ReferenceField source={'fk_user'} name={'Пользователь'} sortable={true}

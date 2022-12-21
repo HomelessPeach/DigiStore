@@ -22,6 +22,12 @@ export const ToolbarBlock = styled.div`
   user-select: none;
 `
 
+export const EmptyToolbarBlock = styled.div`
+  display: flex;
+  height: 85px;
+  user-select: none;
+`
+
 export const EditToolbarBlock = styled.div`
   display: flex;
   flex-direction: row;

@@ -2,12 +2,13 @@ import * as React from "react";
 import {orderAPI} from "../../../../services/OrderService";
 import {DataGrid} from "../../components/Datagrid";
 import {TextField} from "../../components/TextField";
-import {ListContainer} from "../TablesStyledBlocks";
+import {EmptyToolbarBlock, ListContainer} from "../TablesStyledBlocks";
 
 export const OrderList = () => {
 
     return (
         <ListContainer>
+            <EmptyToolbarBlock/>
             <DataGrid getData={orderAPI.useOrderListQuery} idName={'order_id'}>
                 <TextField source={'order_id'} name={'id'} sortable={true}/>
                 <TextField source={'order_number'} name={'Номер'} sortable={true}/>

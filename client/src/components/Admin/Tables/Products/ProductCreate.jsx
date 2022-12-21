@@ -3,30 +3,17 @@ import styled from "styled-components"
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {productAPI} from "../../../../services/ProductService";
+import {productCategoryAPI} from "../../../../services/ProductCategoryService";
+import {productFeatureAPI} from "../../../../services/ProductFeatureService";
 import {AdminRouteNames} from "../../../../Router";
 import {TextInput} from "../../components/TextInput";
 import {ToolbarBlock, LinkButton, EditContainer, Button, EditToolbarBlock} from "../TablesStyledBlocks";
 import {ImagesInput} from "../../components/ImagesInput";
+import {TableInput} from "../../components/TableInput";
+import {ReferenceInputField} from "../../components/ReferenceInputField";
+import {BoolInput} from "../../components/BoolInput";
 
 export const ProductCreate = () => {
-
-    // const data = [
-    //     {
-    //         image_path: 'https://www.meme-arsenal.com/memes/1a0d126c09ef9859f5946bde0c3a79ef.jpg'
-    //     },
-    //     {
-    //         image_path: 'https://abrakadabra.fun/uploads/posts/2021-12/1640388888_5-abrakadabra-fun-p-kosmos-na-rabochii-stol-telefona-5.jpg'
-    //     },
-    //     {
-    //         image_path: 'https://images.wallpaperscraft.ru/image/single/siluet_gorod_art_142434_1600x900.jpg'
-    //     },
-    //     {
-    //         image_path: 'https://images.wallpaperscraft.ru/image/single/siluet_gorod_ulitsa_123496_1600x900.jpg'
-    //     },
-    //     {
-    //         image_path: 'https://images.wallpaperscraft.ru/image/single/siluet_gorod_art_143985_1600x900.jpg'
-    //     }
-    // ]
 
     const navigate = useNavigate();
     const [createProduct] = productAPI.useProductCreateMutation()
@@ -35,9 +22,12 @@ export const ProductCreate = () => {
 
     const validation = {
         product_name: (name) => name?.length > 0,
+        product_price: (price) => price?.length > 0,
+        product_description: (description) => description?.length > 0,
         checkValidate: () =>
             validation.product_name(productData.product_name) &&
-            validation.product_name(productData.product_name)
+            validation.product_price(productData.product_price) &&
+            validation.product_description(productData.product_description)
     }
 
     async function createProductHandler() {
@@ -68,11 +58,79 @@ export const ProductCreate = () => {
             <EditBlock>
                 <EditContent>
                     <ImagesInput
-                        value={productData.images}
+                        value={productData.product_images}
                         size={{h: 540, w: 960, br: 20}}
-                        onChange={(value) => setProductData({...productData, images: [...(productData.images)? productData.images: [], ...value]})}
+                        onChange={(value) => setProductData({...productData, product_images: [...(productData.product_images)? productData.product_images: [], ...value]})}
                         label={'Изображения'}
                     />
+
+                    <DoubleFieldBlock>
+                        <LeftFieldBlock>
+                            <TextInput
+                                value={productData.product_name}
+                                onChange={(value) => setProductData({...productData, product_name: value})}
+                                validation={{
+                                    validate: validation.product_name,
+                                    validationError: isNotValid,
+                                    validationMessage: 'Продукт обязательно должен иметь название.'
+                                }}
+                                label={'Название'}
+                            />
+                            <ReferenceInputField
+                                value={productData.fk_product_category}
+                                onChange={(value) => setProductData({...productData, fk_product_category: value})}
+                                searchFunc={productCategoryAPI.useGetProductCategoriesDataMutation}
+                                idName={'product_category_id'}
+                                searchFieldName={'product_category_name'}
+                                label={'Категория продукта'}
+                            />
+                            <TextInput
+                                value={productData.product_price}
+                                onChange={(value) => setProductData({...productData, product_price: value})}
+                                validation={{
+                                    validate: validation.product_price,
+                                    validationError: isNotValid,
+                                    validationMessage: 'Продукт обязательно должен иметь название.'
+                                }}
+                                label={'Название'}
+                            />
+                        </LeftFieldBlock>
+                        <RightFieldBlock>
+                            <BoolInput
+                                value={productData.is_publish}
+                                onChange={(value) => setProductData({...productData, is_publish: value})}
+                                label={'Опубликован'}
+                            />
+                        </RightFieldBlock>
+                    </DoubleFieldBlock>
+                    <TextInput
+                        value={productData.product_description}
+                        onChange={(value) => setProductData({...productData, product_description: value})}
+                        validation={{
+                            validate: validation.product_description,
+                            validationError: isNotValid,
+                            validationMessage: 'Продукт обязательно должен иметь описание.'
+                        }}
+                        multiply={true}
+                        label={'Описание'}
+                    />
+                    <TableInput
+                        value={productData.product_feature_values}
+                        onChange={(value) => setProductData({...productData, product_feature_values: [...(productData.product_feature_values)? productData.product_feature_values: [], value]})}
+                        label={'Характеристики продукта'}
+                    >
+                        <ReferenceInputField
+                            fieldName={'fk_product_feature'}
+                            searchFunc={productFeatureAPI.useGetProductFeaturesDataMutation}
+                            idName={'product_feature_id'}
+                            searchFieldName={'product_feature_name'}
+                            label={'Характеристика'}
+                        />
+                        <TextInput
+                            fieldName={'product_features_values_value'}
+                            label={'Значение'}
+                        />
+                    </TableInput>
                 </EditContent>
                 <EditToolbarBlock>
                     <Button onClick={createProductHandler}>
@@ -95,6 +153,23 @@ const EditBlock = styled.div`
 
 const EditContent = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 10px 40px
+`
+
+const DoubleFieldBlock = styled.div`
+  display: flex;
   flex-direction: row;
-  align-items: stretch
+  width: 100%;
+`
+
+const LeftFieldBlock = styled.div`
+  width: 50%;
+  padding-right: 100px;
+`
+
+const RightFieldBlock = styled.div`
+  width: 50%;
+  padding-left: 100px;
 `

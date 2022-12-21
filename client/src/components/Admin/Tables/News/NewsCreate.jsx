@@ -90,6 +90,7 @@ export const NewsCreate = () => {
                             validationError: isNotValid,
                             validationMessage: 'Новость обязательно должна иметь краткое описание.'
                         }}
+                        multiply={true}
                         label={'Краткое описание'}
                     />
                     <ReachTextInput
