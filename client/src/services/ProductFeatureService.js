@@ -69,5 +69,21 @@ export const productFeatureAPI = createApi({
             }),
             invalidatesTags: [{type: 'ProductFeature', id: 'LIST'}]
         }),
+        getProductFeatureData: build.mutation({
+            query: (id) => ({
+                url: `/admin/${id}`,
+                method: 'GET',
+            }),
+        }),
+        getProductFeaturesData: build.mutation({
+            query: () => ({
+                url: `/admin`,
+                method: 'GET',
+                params: {
+                    _sort: 'product_feature_name',
+                    _order: 'ASC'
+                }
+            }),
+        }),
     })
 })

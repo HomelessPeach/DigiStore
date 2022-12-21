@@ -85,5 +85,21 @@ export const productCategoryAPI = createApi({
             }),
             invalidatesTags: [{type: 'ProductCategory', id: 'LIST'}]
         }),
+        getProductCategoryData: build.mutation({
+            query: (id) => ({
+                url: `/admin/${id}`,
+                method: 'GET',
+            }),
+        }),
+        getProductCategoriesData: build.mutation({
+            query: () => ({
+                url: `/admin`,
+                method: 'GET',
+                params: {
+                    _sort: 'product_category_name',
+                    _order: 'ASC'
+                }
+            }),
+        }),
     })
 })

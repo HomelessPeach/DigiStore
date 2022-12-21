@@ -52,9 +52,23 @@ export const productAPI = createApi({
                 method: 'POST',
                 body: ((data) => {
                     const formData = new FormData();
-                    if (data?.image?.new_image) {
-                        formData.append('sourceImage', base64StringToFile(data.image.new_image, `image`));
-                        delete data.image.new_image
+                    if (data?.product_images) {
+                        const images = []
+                        for (let image of data?.product_images) {
+                            if (image.product_image_id) {
+                                images.push(image)
+                                continue
+                            }
+                            if (image.is_delete) {
+                                continue
+                            }
+                            if (image.is_preview) {
+                                formData.append('previewSourceImage', base64StringToFile(data.image.new_image, `image`));
+                                continue
+                            }
+                            formData.append('sourceImage', base64StringToFile(data.image.new_image, `image`));
+                        }
+                        data.product_images = images
                     }
                     formData.append('data', JSON.stringify(data));
                     return formData
@@ -68,9 +82,23 @@ export const productAPI = createApi({
                 method: 'PUT',
                 body: ((data) => {
                     const formData = new FormData();
-                    if (data?.image?.new_image) {
-                        formData.append('sourceImage', base64StringToFile(data.image.new_image, `image`));
-                        delete data.image.new_image
+                    if (data?.product_images) {
+                        const images = []
+                        for (let image of data?.product_images) {
+                            if (image.product_image_id) {
+                                images.push(image)
+                                continue
+                            }
+                            if (image.is_delete) {
+                                continue
+                            }
+                            if (image.is_preview) {
+                                formData.append('previewSourceImage', base64StringToFile(data.image.new_image, `image`));
+                                continue
+                            }
+                            formData.append('sourceImage', base64StringToFile(data.image.new_image, `image`));
+                        }
+                        data.product_images = images
                     }
                     formData.append('data', JSON.stringify(data));
                     return formData
