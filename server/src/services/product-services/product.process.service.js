@@ -32,6 +32,28 @@ class ProductProcessService {
         return {productSort}
     }
 
+    static productFeatureValueDataWrite(query, productId) {
+
+        const productFeaturesValueData = {
+            product_features_values_value: query.product_features_values_value,
+            fk_product_feature: query.fk_product_feature,
+            fk_product: productId
+        }
+
+        return {productFeaturesValueData}
+    }
+
+    static productImageDataWrite(productId, imageId, isPreview) {
+
+        const productImageData = {
+            product_image_position: (isPreview)? 'preview': null,
+            fk_image: imageId,
+            fk_product: productId
+        }
+
+        return {productImageData}
+    }
+
 }
 
 module.exports = {ProductProcessService}

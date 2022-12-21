@@ -16,23 +16,12 @@ class ProductDatabaseService {
             offset: productSort.offset,
             limit: productSort.limit,
             order: productSort.order,
-            include: [{
-                model: product_images,
-                as: 'product_images',
-                where: {
-                    product_image_position: 'preview'
-                },
-                attributes: [
-                    'product_image_position'
-                ],
-                include: [{
-                    model: images,
-                    as: 'image',
-                    attributes: [
-                        'image_path'
-                    ]
-                }]
-            }],
+            attributes: [
+                'product_id',
+                'product_name',
+                'is_publish',
+                'product_rating',
+            ],
             transaction: transaction
         })
     }
@@ -42,6 +31,15 @@ class ProductDatabaseService {
             where: {
                 product_id: productId
             },
+            attributes: [
+                'product_id',
+                'product_name',
+                'product_description',
+                'fk_product_category',
+                'product_price',
+                'is_publish',
+                'product_rating',
+            ],
             include: [{
                 model: product_feature_values,
                 as: 'product_feature_values',
@@ -59,6 +57,7 @@ class ProductDatabaseService {
                 model: product_images,
                 as: 'product_images',
                 attributes: [
+                    'product_image_id',
                     'product_image_position'
                 ],
                 include: [{
@@ -95,6 +94,51 @@ class ProductDatabaseService {
 
     static async countProduct() {
         return await products.count()
+    }
+
+    static async createProductFeatureValue(productFeatureData, transaction) {
+        return product_feature_values.create(
+            productFeatureData, {
+                transaction: transaction
+            })
+    }
+
+    static async deleteProductFeatureValue(productId, transaction) {
+        return await product_feature_values.destroy({
+            where: {
+                fk_product: productId
+            },
+            transaction: transaction
+        })
+    }
+
+    static async createProductImage(productImageData, transaction) {
+        return product_images.create(
+            productImageData, {
+                transaction: transaction
+            })
+    }
+
+    static async updateProductImage(productImageData, productId, imageId, transaction) {
+        return await products.update(
+            productImageData, {
+                where: {
+                    fk_product: productId,
+                    fk_image: imageId
+                },
+                returning: true,
+                transaction: transaction
+            })
+    }
+
+    static async deleteProductImage(productId, imageId, transaction) {
+        return await product_images.destroy({
+            where: {
+                fk_product: productId,
+                fk_image: imageId
+            },
+            transaction: transaction
+        })
     }
 
 }
