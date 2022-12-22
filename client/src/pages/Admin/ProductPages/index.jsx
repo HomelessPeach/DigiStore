@@ -1,7 +1,7 @@
-import {ProductCreate} from "../../../components/Admin/Tables/Products/ProductCreate";
-import {ProductEdit} from "../../../components/Admin/Tables/Products/ProductEdit";
-import {ProductsList} from "../../../components/Admin/Tables/Products/ProductList";
-import {ProductShow} from "../../../components/Admin/Tables/Products/ProductShow";
+import {ProductCreate} from "./ProductCreate";
+import {ProductEdit} from "./ProductEdit";
+import {ProductsList} from "./ProductList";
+import {ProductShow} from "./ProductShow";
 
 export {
     ProductCreate,

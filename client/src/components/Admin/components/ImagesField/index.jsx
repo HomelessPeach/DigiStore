@@ -58,7 +58,7 @@ export const ImagesField = (props) => {
                                         <ImgCarouselContainer
                                             key={index}
                                         >
-                                            <ImgCarouselBlock
+                                            <ImgCarousel
                                                 br={br}
                                                 onClick={() => setActiveImage(item)}
                                                 src={`${baseUrl}${item.image_path}`}
@@ -120,8 +120,8 @@ const ImgCarouselContainer = styled.div`
   padding: 10px 5px;
 `
 
-const ImgCarouselBlock = styled.img`
-  width: 100%;
-  height: 100%;
+const ImgCarousel = styled.img`
+  max-width: 100%;
+  max-height: 100%;
   border-radius: ${({br}) => br}px;;
 `

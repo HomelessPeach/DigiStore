@@ -1,7 +1,7 @@
-import {ProductFeatureCreate} from "../../../components/Admin/Tables/ProductFeatures/ProductFeatureCreate";
-import {ProductFeatureEdit} from "../../../components/Admin/Tables/ProductFeatures/ProductFeatureEdit";
-import {ProductFeatureList} from "../../../components/Admin/Tables/ProductFeatures/ProductFeatureList";
-import {ProductFeatureShow} from "../../../components/Admin/Tables/ProductFeatures/ProductFeatureShow";
+import {ProductFeatureCreate} from "./ProductFeatureCreate";
+import {ProductFeatureEdit} from "./ProductFeatureEdit";
+import {ProductFeatureList} from "./ProductFeatureList";
+import {ProductFeatureShow} from "./ProductFeatureShow";
 
 export {
     ProductFeatureCreate,

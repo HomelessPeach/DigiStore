@@ -1,5 +1,5 @@
-import {OrderList} from "../../../components/Admin/Tables/Orders/OrderList";
-import {OrderShow} from "../../../components/Admin/Tables/Orders/OrderShow";
+import {OrderList} from "./OrderList";
+import {OrderShow} from "./OrderShow";
 
 export {
     OrderList,

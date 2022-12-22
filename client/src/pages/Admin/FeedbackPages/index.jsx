@@ -1,5 +1,5 @@
-import {FeedbackList} from "../../../components/Admin/Tables/Feedbacks/FeedbackList";
-import {FeedbackShow} from "../../../components/Admin/Tables/Feedbacks/FeedbackShow";
+import {FeedbackList} from "./FeedbackList";
+import {FeedbackShow} from "./FeedbackShow";
 
 export {
     FeedbackList,

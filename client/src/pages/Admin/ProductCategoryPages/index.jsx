@@ -1,7 +1,7 @@
-import {ProductCategoryCreate} from "../../../components/Admin/Tables/ProductCategories/ProductCategoryCreate";
-import {ProductCategoryEdit} from "../../../components/Admin/Tables/ProductCategories/ProductCategoryEdit";
-import {ProductCategoryList} from "../../../components/Admin/Tables/ProductCategories/ProductCategoryList";
-import {ProductCategoryShow} from "../../../components/Admin/Tables/ProductCategories/ProductCategoryShow";
+import {ProductCategoryCreate} from "./ProductCategoryCreate";
+import {ProductCategoryEdit} from "./ProductCategoryEdit";
+import {ProductCategoryList} from "./ProductCategoryList";
+import {ProductCategoryShow} from "./ProductCategoryShow";
 
 export {
     ProductCategoryCreate,

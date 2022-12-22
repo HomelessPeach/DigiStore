@@ -1,7 +1,7 @@
-import {NewsCreate} from "../../../components/Admin/Tables/News/NewsCreate";
-import {NewsEdit} from "../../../components/Admin/Tables/News/NewsEdit";
-import {NewsList} from "../../../components/Admin/Tables/News/NewsList";
-import {NewsShow} from "../../../components/Admin/Tables/News/NewsShow";
+import {NewsCreate} from "./NewsCreate";
+import {NewsEdit} from "./NewsEdit";
+import {NewsList} from "./NewsList";
+import {NewsShow} from "./NewsShow";
 
 export {
     NewsCreate,

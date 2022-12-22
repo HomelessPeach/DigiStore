@@ -50,7 +50,10 @@ export const Home = () => {
 }
 
 const Container = styled.div`
-  padding: 0 200px;
+  padding: 100px 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 `
 
 const Card = styled.div`
@@ -61,7 +64,6 @@ const Card = styled.div`
   box-shadow: 0 0 5px 0;
   border-radius: 20px;
   padding: 30px;
-  margin: 30px 0;
 `
 
 const ImageBlock = styled.div`

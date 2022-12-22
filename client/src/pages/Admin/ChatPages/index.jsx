@@ -1,5 +1,5 @@
-import {ChatList} from "../../../components/Admin/Tables/Chats/ChatList";
-import {ChatShow} from "../../../components/Admin/Tables/Chats/ChatShow";
+import {ChatList} from "./ChatList";
+import {ChatShow} from "./ChatShow";
 
 export {
     ChatList,

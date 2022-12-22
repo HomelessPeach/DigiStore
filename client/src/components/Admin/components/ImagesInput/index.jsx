@@ -100,7 +100,7 @@ export const ImagesInput = (props) => {
                                         <ImgCarouselContainer
                                             key={index}
                                         >
-                                            <ImgCarouselBlock
+                                            <ImgCarousel
                                                 br={br}
                                                 onClick={() => setActiveImage(item)}
                                                 src={(/^\//.test(item.image_path))? `${baseUrl}${item.image_path}` : item.image_path}
@@ -234,9 +234,9 @@ const DeleteImageBlock = styled.div`
   box-shadow: 0 0 5px 0 #727171;
 `
 
-const ImgCarouselBlock = styled.img`
-  width: 100%;
-  height: 100%;
+const ImgCarousel = styled.img`
+  max-width: 100%;
+  max-height: 100%;
   border-radius: ${({br}) => br}px;;
 `
 

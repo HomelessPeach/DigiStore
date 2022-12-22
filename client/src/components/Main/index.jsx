@@ -27,10 +27,10 @@ export const Main = () => {
 
 const MainBlock = styled.main`
   padding-top: ${({paddingTop}) => paddingTop}px;
-  min-height: calc(100vh - ${({theme}) => theme.size.footer.height}px);
   background-color: ${({theme}) => theme.colors.secondary};
 `
 
 const MainContainer = styled.div`
-  padding: 20px 0;
+  background-color: ${({theme}) => theme.colors.secondary};
+  min-height: calc(100vh - ${({theme}) => theme.size.footer.height + theme.size.header.height}px);
 `
