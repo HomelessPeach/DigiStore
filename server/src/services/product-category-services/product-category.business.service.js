@@ -5,6 +5,10 @@ const {folderPath} = require("../../../config/config");
 
 class ProductCategoryBusinessService {
 
+    static async getProductCategories(query) {
+        return await ProductCategoryDatabaseService.getProductCategories()
+    }
+
     static async createProductCategory(body, files, transaction) {
         const {productCategoryData} = ProductCategoryProcessService.productCategoryDataWrite(body)
         if (files.sourceImage?.length) {

@@ -3,6 +3,26 @@ const {ProductBusinessService} = require("../../services/product-services/produc
 
 class ProductController {
 
+    static async getProduct(req, res, next) {
+        try {
+            const {id} = req.params;
+            const product = await ProductBusinessService.getProduct(id)
+            res.json(product)
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    static async getProducts(req, res, next) {
+        try {
+            const {query} = req
+            const products = await ProductBusinessService.getProducts(query)
+            res.json(products)
+        } catch (err) {
+            next(err)
+        }
+    }
+
     static async createProduct(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {

@@ -5,6 +5,15 @@ const {folderPath} = require("../../../config/config");
 
 class ProductBusinessService {
 
+    static async getProducts(query) {
+        const {productData} = ProductProcessService.productDataList(query)
+        return await ProductDatabaseService.getProducts(productData)
+    }
+
+    static async getProduct(productId) {
+        return await ProductDatabaseService.getProduct(productId)
+    }
+
     static async createProduct(body, files, transaction) {
         const {productData} = ProductProcessService.productDataWrite(body)
         const product = await ProductDatabaseService.createProduct(productData, transaction)

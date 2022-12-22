@@ -4,6 +4,77 @@ const {products, product_features, product_feature_values, product_images, image
 
 class ProductDatabaseService {
 
+    static async getProducts(productData, transaction = null) {
+        return await products.findAll({
+            where: {...productData},
+            attributes: [
+                'product_id',
+                'product_name',
+                'product_description',
+                'product_price',
+                'product_rating',
+            ],
+            include: [{
+                model: product_images,
+                as: 'product_images',
+                where: {
+                    product_image_position: 'preview'
+                },
+                attributes: [
+                    'product_image_id',
+                    'product_image_position'
+                ],
+                include: [{
+                    model: images,
+                    as: 'image',
+                    attributes: [
+                        'image_path'
+                    ]
+                }]
+            }],
+            transaction: transaction
+        })
+    }
+
+    static async getProduct(productId, transaction = null) {
+        return await products.findOne({
+            where: {
+                product_id: productId
+            },
+            attributes: [
+                'product_id',
+                'product_name',
+                'product_description',
+                'fk_product_category',
+                'product_price',
+                'product_rating',
+            ],
+            include: [{
+                model: product_feature_values,
+                as: 'product_feature_values',
+                attributes: [
+                    'fk_product_feature',
+                    'product_features_values_value'
+                ],
+            }, {
+                model: product_images,
+                as: 'product_images',
+                attributes: [
+                    'product_image_id',
+                    'product_image_position'
+                ],
+                include: [{
+                    model: images,
+                    as: 'image',
+                    attributes: [
+                        'image_path'
+                    ]
+                }]
+            }],
+            transaction: transaction
+        })
+    }
+
     static async createProduct(productData, transaction) {
         return products.create(
             productData, {

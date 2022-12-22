@@ -6,6 +6,8 @@ const routerProduct = Router()
 const middlewareMulter = multer();
 
 routerProduct
+    .get('/', ProductController.getProducts)
+    .get('/:id', ProductController.getProduct)
     .post('/admin', middlewareMulter.fields([{name: 'sourceImage'}, {name: 'previewSourceImage'}]), ProductController.createProduct)
     .get('/admin', ProductController.listProduct)
     .get('/admin/:id', ProductController.showProduct)

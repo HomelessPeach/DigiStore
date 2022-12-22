@@ -19,7 +19,7 @@ class ProductProcessService {
     static productDataList(query) {
 
         const productData = {
-
+            fk_product_category: query.fk_product_category
         }
 
         const productSort = {
@@ -29,7 +29,7 @@ class ProductProcessService {
                 [(query._sort) ? `${query._sort}` : 'product_id', (query._order) ? `${query._order}` : 'ASC'],
             ],
         }
-        return {productSort}
+        return {productData, productSort}
     }
 
     static productFeatureValueDataWrite(query, productId) {

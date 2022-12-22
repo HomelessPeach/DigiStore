@@ -4,6 +4,23 @@ const {product_categories, images} = initModels(SequelizeConnect)
 
 class ProductCategoryDatabaseService {
 
+    static async getProductCategories(transaction = null) {
+        return await product_categories.findAll({
+            attributes: [
+                'product_category_id',
+                'product_category_name'
+            ],
+            include: [{
+                model: images,
+                as: 'image',
+                attributes: [
+                    'image_path',
+                ],
+            }],
+            transaction: transaction
+        })
+    }
+
     static async createProductCategory(productCategoryData, transaction) {
         return product_categories.create(
             productCategoryData, {

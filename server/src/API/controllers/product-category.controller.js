@@ -3,6 +3,16 @@ const {ProductCategoryBusinessService} = require("../../services/product-categor
 
 class ProductCategoryController {
 
+    static async getProductCategories(req, res, next) {
+        try {
+            const {query} = req
+            const productCategories = await ProductCategoryBusinessService.getProductCategories(query)
+            res.json(productCategories)
+        } catch (err) {
+            next(err)
+        }
+    }
+
     static async createProductCategory(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
