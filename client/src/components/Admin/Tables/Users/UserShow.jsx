@@ -9,6 +9,7 @@ import {BoolField} from "../../components/BoolField";
 import {PhoneNumberField} from "../../components/PhoneNumberField";
 import {EmailField} from "../../components/EmailField";
 import {ToolbarBlock, LinkButton, ShowContainer, DeleteButton} from "../TablesStyledBlocks";
+import {NotThatWay} from "../../NotThatWay";
 
 export const UserShow = () => {
 
@@ -16,7 +17,7 @@ export const UserShow = () => {
     const {pathname} = useLocation()
     const userId = pathname.replace(`${AdminRouteNames.ADMIN_USERS}/`, '')
     const [deleteUser] = userAPI.useUserDeleteMutation()
-    const {data, isLoading} = userAPI.useUserShowQuery(userId, {refetchOnFocus: true})
+    const {data, isLoading, isError} = userAPI.useUserShowQuery(userId, {refetchOnFocus: true})
 
     async function deleteUserHandler() {
         const res = await deleteUser(userId)
@@ -29,6 +30,9 @@ export const UserShow = () => {
 
     if (isLoading)
         return <h1>LOADING...</h1>
+
+    if (!data && !isLoading)
+        return <NotThatWay/>
 
     return (
         <ShowContainer>

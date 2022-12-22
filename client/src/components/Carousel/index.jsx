@@ -3,13 +3,14 @@ import styled from "styled-components";
 import {cloneElement, useEffect, useState} from "react";
 import {CarouselButton} from "./CarouselButton";
 import {CarouselDot} from "./CarouselDot";
+import {CarouselDefaultChild} from "./CarouselDefaultChild";
 
 const AnimationTime = 300
 
 export const Carousel = (props) => {
 
     const {
-        children = [],
+        children,
         carouselWidth = 770,
         aspect = 16/9,
         button = true,
@@ -34,25 +35,12 @@ export const Carousel = (props) => {
 
     useEffect(() => {
 
-        function cloneItems(children, start, end) {
-            let items = []
-            for (let i = start; i < end; i++) {
-                items.push(cloneElement(children[i], {
-                    style: {
-                        minWidth: itemWidth,
-                        minHeight: height,
-                        maxWidth: itemWidth,
-                        maxHeight: height
-                    }
-                }))
+        cloneItems((children ? children : [CarouselDefaultChild()]))
 
-            }
-            return items
-        }
+        function cloneItems(children) {
 
-        if (infinity) {
-            setItems((children.length) ?
-                [...cloneItems(children, children.length - itemsToShow, children.length),
+            if (infinity) {
+                setItems([...clone(children, children.length - itemsToShow, children.length),
                     ...children.map((child) =>
                         cloneElement(child, {
                                 style: {
@@ -63,20 +51,37 @@ export const Carousel = (props) => {
                                 }
                             }
                         )),
-                    ...cloneItems(children, 0, itemsToShow),
-                ] : [])
-            return;
-        }
-        setItems((children.length) ? children.map((child) =>
-            cloneElement(child, {
-                style: {
-                    minWidth: itemWidth,
-                    minHeight: height,
-                    maxWidth: itemWidth,
-                    maxHeight: height
+                    ...clone(children, 0, itemsToShow),
+                ])
+                return;
+            }
+            setItems((children.length) ? children.map((child) =>
+                cloneElement(child, {
+                    style: {
+                        minWidth: itemWidth,
+                        minHeight: height,
+                        maxWidth: itemWidth,
+                        maxHeight: height
+                    }
+                })
+            ) : [])
+
+            function clone(children, start, end) {
+                let items = []
+                for (let i = start; i < end; i++) {
+                    items.push(cloneElement(children[i], {
+                        style: {
+                            minWidth: itemWidth,
+                            minHeight: height,
+                            maxWidth: itemWidth,
+                            maxHeight: height
+                        }
+                    }))
+
                 }
-            })
-        ) : [])
+                return items
+            }
+        }
     }, [children, infinity])
 
     useEffect(() => {
@@ -195,7 +200,7 @@ export const Carousel = (props) => {
                 </ItemsContainer>
                 {(dots)?
                     <CarouselDot
-                        itemsCount={children.length}
+                        itemsCount={children?.length || 1}
                         setPage={setPage}
                         activePage={page}
                         itemsToShow={itemsToShow}

@@ -1,10 +1,12 @@
 import {Routes, Route} from "react-router-dom";
 import {Layout} from "./Layout";
 import {AdminLayout} from "./AdminLayout";
+import {NotFound} from "../pages/NotFound";
 import {Home} from "../pages/Home";
 import {Product} from "../pages/Product";
 import {Profile} from "../pages/Profile";
 import {Basket} from "../pages/Basket";
+import {AdminNotFound} from "../pages/Admin/AdminNotFound";
 import {AdminHome} from "../pages/Admin/AdminHome";
 import {ChatList, ChatShow} from "../pages/Admin/ChatPages";
 import {FeedbackList, FeedbackShow} from "../pages/Admin/FeedbackPages";
@@ -30,7 +32,8 @@ export const RouteNames = {
     ADMIN: '/admin',
     PROFILE: '/profile',
     BASKET: '/basket',
-    PRODUCT: '/product'
+    PRODUCT: '/product',
+    NOT_FOUND: '/*'
 }
 
 export const AdminRouteNames = {
@@ -42,6 +45,7 @@ export const AdminRouteNames = {
     ADMIN_PRODUCT_CATEGORY: `${RouteNames.ADMIN}/product_category`,
     ADMIN_PRODUCT_FEATURE: `${RouteNames.ADMIN}/product_feature`,
     ADMIN_USERS: `${RouteNames.ADMIN}/user`,
+    ADMIN_NOT_FOUND: `${RouteNames.ADMIN}/*`
 }
 
 export const Router = () => {
@@ -77,10 +81,12 @@ export const Router = () => {
                     <Route path={`${AdminRouteNames.ADMIN_CHAT}/:id`} element={<ChatShow/>}/>
                     <Route path={AdminRouteNames.ADMIN_FEEDBACK} element={<FeedbackList/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_FEEDBACK}/:id`} element={<FeedbackShow/>}/>
+                    <Route path={AdminRouteNames.ADMIN_NOT_FOUND} element={<AdminNotFound/>}/>
                 </Route>
                 <Route path={RouteNames.PROFILE} element={<Profile/>}/>
                 <Route path={RouteNames.BASKET} element={<Basket/>}/>
                 <Route path={RouteNames.PRODUCT} element={<Product/>}/>
+                <Route path={RouteNames.NOT_FOUND} element={<NotFound/>}/>
             </Route>
         </Routes>
     )

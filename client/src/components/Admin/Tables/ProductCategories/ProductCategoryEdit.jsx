@@ -7,6 +7,7 @@ import {AdminRouteNames} from "../../../../Router";
 import {TextInput} from "../../components/TextInput";
 import {ImageInput} from "../../components/ImageInput";
 import {ToolbarBlock, LinkButton, DeleteButton, EditContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
+import {NotThatWay} from "../../NotThatWay";
 
 export const ProductCategoryEdit = () => {
 
@@ -58,6 +59,9 @@ export const ProductCategoryEdit = () => {
 
     if (isLoading)
         return <h1>LOADING...</h1>
+
+    if (!data && !isLoading)
+        return <NotThatWay/>
 
     return (
         <EditContainer>

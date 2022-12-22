@@ -8,8 +8,6 @@ export const Home = () => {
     return(
         <Container>
             <Carousel>
-                <Img src={`${baseUrl}/files/product/macbook162021.png`}/>
-                <Img src={`${baseUrl}/files/product/macbook162021.png`}/>
             </Carousel>
             <Card>
                 <ImageBlock>

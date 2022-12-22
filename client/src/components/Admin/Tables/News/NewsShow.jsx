@@ -8,6 +8,7 @@ import {ImageField} from "../../components/ImageField";
 import {BoolField} from "../../components/BoolField";
 import {ReachTextField} from "../../components/ReachTextField";
 import {ToolbarBlock, LinkButton, DeleteButton, ShowContainer} from "../TablesStyledBlocks";
+import {NotThatWay} from "../../NotThatWay";
 
 export const NewsShow = () => {
 
@@ -30,6 +31,9 @@ export const NewsShow = () => {
 
     if (isLoading)
         return <h1>LOADING...</h1>
+
+    if (!data && !isLoading)
+        return <NotThatWay/>
 
     return (
         <ShowContainer>

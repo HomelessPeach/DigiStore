@@ -6,6 +6,7 @@ import {AdminRouteNames} from "../../../../Router";
 import {ImageField} from "../../components/ImageField";
 import {TextField} from "../../components/TextField";
 import {ToolbarBlock, LinkButton, ShowContainer, DeleteButton} from "../TablesStyledBlocks";
+import {NotThatWay} from "../../NotThatWay";
 
 export const ProductCategoryShow = () => {
 
@@ -28,6 +29,9 @@ export const ProductCategoryShow = () => {
 
     if (isLoading)
         return <h1>LOADING...</h1>
+
+    if (!data && !isLoading)
+        return <NotThatWay/>
 
     return (
         <ShowContainer>

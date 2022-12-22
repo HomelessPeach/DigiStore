@@ -12,6 +12,7 @@ import {useEffect, useState} from "react";
 import {UserChangePasswordForm} from "./UserChangePasswordForm";
 import {emailValidate, passwordHook, passwordValidate, userNameValidate} from "../../../../utils";
 import {ToolbarBlock, LinkButton, DeleteButton, EditContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
+import {NotThatWay} from "../../NotThatWay";
 
 export const UserEdit = () => {
 
@@ -73,6 +74,9 @@ export const UserEdit = () => {
 
     if (isLoading)
         return <h1>LOADING...</h1>
+
+    if (!data && !isLoading)
+        return <NotThatWay/>
 
     return (
         <EditContainer>

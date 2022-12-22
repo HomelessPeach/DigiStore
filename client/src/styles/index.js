@@ -12,7 +12,7 @@ export const Theme = {
     size: {
         header: {
             maxHeight: 500,
-            height: 90
+            height: 90,
         },
         footer: {
             height: 200

@@ -3,6 +3,7 @@ import styled from "styled-components"
 import {useState} from "react";
 import {NavLink, useLocation} from "react-router-dom";
 import {Back, Next} from "../../../Icons";
+import {AdminNotFound} from "../../../../pages/Admin/AdminNotFound";
 
 export const DataGrid = (props) => {
 
@@ -36,6 +37,9 @@ export const DataGrid = (props) => {
 
     if (isLoading)
         return <h1>Loading...</h1>
+
+    if (!response && !isLoading)
+        return <AdminNotFound/>
 
     const {data, totalCount} = response
 

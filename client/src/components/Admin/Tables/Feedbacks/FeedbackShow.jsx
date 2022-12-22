@@ -7,6 +7,7 @@ import {TextField} from "../../components/TextField";
 import {BoolField} from "../../components/BoolField";
 import {EmailField} from "../../components/EmailField";
 import {ToolbarBlock, LinkButton, ShowContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
+import {NotThatWay} from "../../NotThatWay";
 
 export const FeedbackShow = () => {
 
@@ -25,6 +26,9 @@ export const FeedbackShow = () => {
 
     if (isLoading)
         return <h1>LOADING...</h1>
+
+    if (!data && !isLoading)
+        return <NotThatWay/>
 
     return (
         <ShowContainer>

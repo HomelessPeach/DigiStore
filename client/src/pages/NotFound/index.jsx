@@ -1,25 +1,25 @@
 import * as React from "react";
 import styled from "styled-components";
-import {attributeFilesUrl} from "../../../services";
+import {attributeFilesUrl} from "../../services";
 
-export const AdminHome = () => {
+export const NotFound = () => {
     return (
-        <AdminHomeContainer>
+        <NotFoundContainer>
             <Container>
                 <ImgContainer>
                     <Img src={`${attributeFilesUrl}/mask-1.svg`}/>
                 </ImgContainer>
                 <TextContainer>
-                    Добро пожаловать в панель администратора панель администратора
+                    Здесь ничего нет
                 </TextContainer>
             </Container>
-        </AdminHomeContainer>
+        </NotFoundContainer>
     )
 }
 
-const AdminHomeContainer = styled.div`
+const NotFoundContainer = styled.div`
   --padding-top: 50px;
-  padding: var(--padding-top) 100px;
+  padding: var(--padding-top) 300px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,5 +60,4 @@ const TextContainer = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  line-height: 1.5;
 `

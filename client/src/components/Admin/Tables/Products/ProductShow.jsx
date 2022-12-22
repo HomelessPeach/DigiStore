@@ -12,6 +12,7 @@ import {PriceField} from "../../components/PriceField";
 import {TableField} from "../../components/TableField";
 import {ImagesField} from "../../components/ImagesField";
 import {ToolbarBlock, LinkButton, DeleteButton, ShowContainer} from "../TablesStyledBlocks";
+import {NotThatWay} from "../../NotThatWay";
 
 export const ProductShow = () => {
 
@@ -34,6 +35,9 @@ export const ProductShow = () => {
 
     if (isLoading)
         return <h1>LOADING...</h1>
+
+    if (!data && !isLoading)
+        return <NotThatWay/>
 
     return (
         <ShowContainer>

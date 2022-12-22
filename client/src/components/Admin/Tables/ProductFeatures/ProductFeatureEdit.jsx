@@ -6,6 +6,7 @@ import {productFeatureAPI} from "../../../../services/ProductFeatureService";
 import {AdminRouteNames} from "../../../../Router";
 import {TextInput} from "../../components/TextInput";
 import {Button, DeleteButton, EditContainer, EditToolbarBlock, LinkButton, ToolbarBlock} from "../TablesStyledBlocks";import {TextField} from "../../components/TextField";
+import {NotThatWay} from "../../NotThatWay";
 
 export const ProductFeatureEdit = () => {
 
@@ -56,6 +57,9 @@ export const ProductFeatureEdit = () => {
 
     if (isLoading)
         return <h1>LOADING...</h1>
+
+    if (!data && !isLoading)
+        return <NotThatWay/>
 
     return (
         <EditContainer>

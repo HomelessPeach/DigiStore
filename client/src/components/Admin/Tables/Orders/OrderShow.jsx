@@ -5,6 +5,7 @@ import {orderAPI} from "../../../../services/OrderService";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
 import {ToolbarBlock, LinkButton, ShowContainer} from "../TablesStyledBlocks";
+import {NotThatWay} from "../../NotThatWay";
 
 export const OrderShow = () => {
 
@@ -14,6 +15,9 @@ export const OrderShow = () => {
 
     if (isLoading)
         return <h1>LOADING...</h1>
+
+    if (!data && !isLoading)
+        return <NotThatWay/>
 
     return (
         <ShowContainer>

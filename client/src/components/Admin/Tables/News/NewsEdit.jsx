@@ -6,10 +6,11 @@ import {newsAPI} from "../../../../services/NewsService";
 import {AdminRouteNames} from "../../../../Router";
 import {TextInput} from "../../components/TextInput";
 import {ImageInput} from "../../components/ImageInput";
-import {ToolbarBlock, LinkButton, EditContainer, Button, EditToolbarBlock, DeleteButton} from "../TablesStyledBlocks";
 import {BoolInput} from "../../components/BoolInput";
 import {ReachTextInput} from "../../components/ReachTextInput";
 import {TextField} from "../../components/TextField";
+import {ToolbarBlock, LinkButton, EditContainer, Button, EditToolbarBlock, DeleteButton} from "../TablesStyledBlocks";
+import {NotThatWay} from "../../NotThatWay";
 
 export const NewsEdit = () => {
 
@@ -65,6 +66,9 @@ export const NewsEdit = () => {
 
     if (isLoading)
         return <h1>LOADING...</h1>
+
+    if (!data && !isLoading)
+        return <NotThatWay/>
 
     return (
         <EditContainer>

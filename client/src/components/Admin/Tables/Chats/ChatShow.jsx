@@ -9,6 +9,8 @@ import {BoolField} from "../../components/BoolField";
 import {ReferenceField} from "../../components/ReferenceField";
 import {ChatComponent} from "./ChatComponent";
 import {ToolbarBlock, LinkButton, ShowContainer} from "../TablesStyledBlocks";
+import {NotThatWay} from "../../NotThatWay";
+
 
 
 export const ChatShow = () => {
@@ -19,6 +21,9 @@ export const ChatShow = () => {
 
     if (isLoading)
         return <h1>LOADING...</h1>
+
+    if (!data && !isLoading)
+        return <NotThatWay/>
 
     return (
         <ShowContainer>

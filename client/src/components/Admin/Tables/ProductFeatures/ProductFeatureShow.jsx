@@ -5,6 +5,7 @@ import {productFeatureAPI} from "../../../../services/ProductFeatureService";
 import {AdminRouteNames} from "../../../../Router";
 import {TextField} from "../../components/TextField";
 import {DeleteButton, LinkButton, ShowContainer, ToolbarBlock} from "../TablesStyledBlocks";
+import {NotThatWay} from "../../NotThatWay";
 
 export const ProductFeatureShow = () => {
 
@@ -27,6 +28,9 @@ export const ProductFeatureShow = () => {
 
     if (isLoading)
         return <h1>LOADING...</h1>
+
+    if (!data && !isLoading)
+        return <NotThatWay/>
 
     return (
         <ShowContainer>

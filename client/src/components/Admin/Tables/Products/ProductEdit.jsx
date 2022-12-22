@@ -3,15 +3,16 @@ import styled from "styled-components"
 import {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {productAPI} from "../../../../services/ProductService";
+import {productFeatureAPI} from "../../../../services/ProductFeatureService";
+import {productCategoryAPI} from "../../../../services/ProductCategoryService";
 import {AdminRouteNames} from "../../../../Router";
 import {TextInput} from "../../components/TextInput";
-import {ToolbarBlock, LinkButton, DeleteButton, ListContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
 import {ImagesInput} from "../../components/ImagesInput";
 import {ReferenceInputField} from "../../components/ReferenceInputField";
-import {productCategoryAPI} from "../../../../services/ProductCategoryService";
 import {BoolInput} from "../../components/BoolInput";
 import {TableInput} from "../../components/TableInput";
-import {productFeatureAPI} from "../../../../services/ProductFeatureService";
+import {ToolbarBlock, LinkButton, DeleteButton, ListContainer, EditToolbarBlock, Button} from "../TablesStyledBlocks";
+import {NotThatWay} from "../../NotThatWay";
 
 export const ProductEdit = () => {
 
@@ -81,6 +82,9 @@ export const ProductEdit = () => {
 
     if (isLoading)
         return <h1>LOADING...</h1>
+
+    if (!data && !isLoading)
+        return <NotThatWay/>
 
     return (
         <ListContainer>
