@@ -11,7 +11,7 @@ export const Theme = {
     },
     size: {
         header: {
-            maxHeight: 500,
+            maxHeight: 350,
             height: 90,
         },
         footer: {

@@ -38,9 +38,9 @@ export const Header = () => {
         <HeaderBlock id={'header'}>
             {(height !== Theme.size.header.height && pathname === '/')?
                 <HeaderLargeContainer id={'header1'} height={height}>
-                    <div style={{width: 800, height: Theme.size.header.maxHeight, color: "white", fontSize: 55, position: "fixed", top: height - Theme.size.header.maxHeight}}>
+                    <ImageBlock height={height}>
                         <Img src={`${attributeFilesUrl}/logo2.svg`}/>
-                    </div>
+                    </ImageBlock>
                 </HeaderLargeContainer>
                 : <HeaderContainer id={'header1'} height={Theme.size.header.height}>
                     <HeaderLogo/>
@@ -82,9 +82,19 @@ const HeaderContainer = styled.div`
   padding: 0 7vw;
 `
 
-
-
 const Img = styled.img`
   max-width: 100%;
   max-height: 100%;
+`
+
+const ImageBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: ${({theme}) => theme.size.header.maxHeight}px;
+  width: 1000px;
+  color: #ffffff;
+  position: fixed;
+  top: ${({theme, height}) => height - theme.size.header.maxHeight}px;
 `
