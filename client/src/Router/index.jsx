@@ -3,29 +3,38 @@ import {Layout} from "./Layout";
 import {AdminLayout} from "./AdminLayout";
 import {NotFound} from "../pages/NotFound";
 import {Home} from "../pages/Home";
-import {Product} from "../pages/Product";
+import {Product, ProductCard, ProductCategory} from "../pages/Product";
 import {Profile} from "../pages/Profile";
 import {Basket} from "../pages/Basket";
-import {AdminNotFound} from "../pages/Admin/AdminNotFound";
-import {AdminHome} from "../pages/Admin/AdminHome";
-import {ChatList, ChatShow} from "../pages/Admin/ChatPages";
-import {FeedbackList, FeedbackShow} from "../pages/Admin/FeedbackPages";
-import {NewsCreate, NewsEdit, NewsList, NewsShow} from "../pages/Admin/NewsPages";
-import {OrderList, OrderShow} from "../pages/Admin/OrderPages";
 import {
+    AdminNotFound,
+    AdminHome,
+    ChatList,
+    ChatShow,
+    FeedbackList,
+    FeedbackShow,
+    NewsCreate,
+    NewsEdit,
+    NewsList,
+    NewsShow,
+    OrderList,
+    OrderShow,
     ProductCategoryCreate,
     ProductCategoryEdit,
     ProductCategoryList,
-    ProductCategoryShow
-} from "../pages/Admin/ProductCategoryPages";
-import {
+    ProductCategoryShow,
     ProductFeatureShow,
     ProductFeatureList,
     ProductFeatureEdit,
-    ProductFeatureCreate
-} from "../pages/Admin/ProductFeaturePages";
-import {ProductsList, ProductShow, ProductEdit, ProductCreate} from "../pages/Admin/ProductPages";
-import {UserEdit, UserList, UserShow, UserCreate} from "../pages/Admin/UserPages";
+    ProductFeatureCreate,
+    ProductsList,
+    ProductShow,
+    ProductEdit,
+    ProductCreate,
+    UserEdit,
+    UserList,
+    UserShow,
+    UserCreate} from "../pages/Admin";
 
 export const RouteNames = {
     HOME: '/',
@@ -85,7 +94,9 @@ export const Router = () => {
                 </Route>
                 <Route path={RouteNames.PROFILE} element={<Profile/>}/>
                 <Route path={RouteNames.BASKET} element={<Basket/>}/>
-                <Route path={RouteNames.PRODUCT} element={<Product/>}/>
+                <Route path={RouteNames.PRODUCT} element={<ProductCategory/>}/>
+                <Route path={`${RouteNames.PRODUCT}/show`} element={<Product/>}/>
+                <Route path={`${RouteNames.PRODUCT}/show/:id`} element={<ProductCard/>}/>
                 <Route path={RouteNames.NOT_FOUND} element={<NotFound/>}/>
             </Route>
         </Routes>

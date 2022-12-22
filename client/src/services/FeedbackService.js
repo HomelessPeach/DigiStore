@@ -23,7 +23,7 @@ export const feedbackAPI = createApi({
             providesTags: ({data}) => {
                 return (data)?
                     [
-                        ...data.map(({feedback_id}) => ({type: 'Users', id: feedback_id})),
+                        ...data.map(({feedback_id}) => ({type: 'UserChangePasswordForm', id: feedback_id})),
                         {type: 'Feedbacks', id: 'LIST'}
                     ]
                     :

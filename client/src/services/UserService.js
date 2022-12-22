@@ -4,7 +4,7 @@ import {base64StringToFile} from "../utils";
 
 export const userAPI = createApi({
     reducerPath: 'userAPI',
-    tagTypes: ['Users'],
+    tagTypes: ['UserChangePasswordForm'],
     baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/user`}),
     endpoints: (build) => ({
         userList: build.query({
@@ -26,11 +26,11 @@ export const userAPI = createApi({
             providesTags: ({data}) => {
                 return (data)?
                     [
-                        ...data.map(({user_id}) => ({type: 'Users', id: user_id})),
-                        {type: 'Users', id: 'LIST'}
+                        ...data.map(({user_id}) => ({type: 'UserChangePasswordForm', id: user_id})),
+                        {type: 'UserChangePasswordForm', id: 'LIST'}
                     ]
                     :
-                    [{type: 'Users', id: 'LIST'}]
+                    [{type: 'UserChangePasswordForm', id: 'LIST'}]
             }
         }),
         userShow: build.query({
@@ -41,11 +41,11 @@ export const userAPI = createApi({
             providesTags: (data) => {
                 return (data)?
                     [
-                        {type: 'Users', id: data.user_id},
-                        {type: 'Users', id: 'SHOW'}
+                        {type: 'UserChangePasswordForm', id: data.user_id},
+                        {type: 'UserChangePasswordForm', id: 'SHOW'}
                     ]
                     :
-                    [{type: 'Users', id: 'SHOW'}]
+                    [{type: 'UserChangePasswordForm', id: 'SHOW'}]
             }
         }),
         userCreate: build.mutation({
@@ -62,7 +62,7 @@ export const userAPI = createApi({
                     return formData
                 })(data),
             }),
-            invalidatesTags: [{type: 'Users', id: 'LIST'}]
+            invalidatesTags: [{type: 'UserChangePasswordForm', id: 'LIST'}]
         }),
         userUpdate: build.mutation({
             query: (data) => ({
@@ -78,14 +78,14 @@ export const userAPI = createApi({
                     return formData
                 })(data),
             }),
-            invalidatesTags: [{type: 'Users', id: 'LIST'}, {type: 'Users', id: 'SHOW'}]
+            invalidatesTags: [{type: 'UserChangePasswordForm', id: 'LIST'}, {type: 'UserChangePasswordForm', id: 'SHOW'}]
         }),
         userDelete: build.mutation({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: [{type: 'Users', id: 'LIST'}]
+            invalidatesTags: [{type: 'UserChangePasswordForm', id: 'LIST'}]
         }),
         getUserData: build.mutation({
             query: (id) => ({

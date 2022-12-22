@@ -7,6 +7,21 @@ export const productCategoryAPI = createApi({
     tagTypes: ['ProductCategory'],
     baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/product_category`}),
     endpoints: (build) => ({
+        getProductCategories: build.query({
+            query: () => ({
+                url: `/`,
+                method: 'GET',
+            }),
+            providesTags: ({data}) => {
+                return (data)?
+                    [
+                        ...data.map(({product_category_id}) => ({type: 'ProductCategory', id: product_category_id})),
+                        {type: 'ProductCategory', id: 'CARDS'}
+                    ]
+                    :
+                    [{type: 'ProductCategory', id: 'CARDS'}]
+            }
+        }),
         productCategoryList: build.query({
             query: ({offset = 0, limit = 10, sort = '', order = 'ASC'}) => ({
                 url: `/admin`,
@@ -60,7 +75,7 @@ export const productCategoryAPI = createApi({
                     return formData
                 })(data),
             }),
-            invalidatesTags: [{type: 'ProductCategory', id: 'LIST'}]
+            invalidatesTags: [{type: 'ProductCategory', id: 'LIST'}, {type: 'ProductCategory', id: 'CARDS'}]
         }),
         productCategoryUpdate: build.mutation({
             query: (data) => ({
@@ -76,14 +91,14 @@ export const productCategoryAPI = createApi({
                     return formData
                 })(data),
             }),
-            invalidatesTags: [{type: 'ProductCategory', id: 'LIST'}, {type: 'ProductCategory', id: 'SHOW'}]
+            invalidatesTags: [{type: 'ProductCategory', id: 'LIST'}, {type: 'ProductCategory', id: 'SHOW'}, {type: 'ProductCategory', id: 'CARDS'}]
         }),
         productCategoryDelete: build.mutation({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: [{type: 'ProductCategory', id: 'LIST'}]
+            invalidatesTags: [{type: 'ProductCategory', id: 'LIST'}, {type: 'ProductCategory', id: 'CARDS'}]
         }),
         getProductCategoryData: build.mutation({
             query: (id) => ({
