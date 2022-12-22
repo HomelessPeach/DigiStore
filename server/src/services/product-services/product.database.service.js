@@ -6,7 +6,7 @@ class ProductDatabaseService {
 
     static async getProducts(productData, transaction = null) {
         return await products.findAll({
-            where: {...productData},
+            where: {...productData, is_publish: true},
             attributes: [
                 'product_id',
                 'product_name',
@@ -22,7 +22,6 @@ class ProductDatabaseService {
                 },
                 attributes: [
                     'product_image_id',
-                    'product_image_position'
                 ],
                 include: [{
                     model: images,
@@ -39,13 +38,13 @@ class ProductDatabaseService {
     static async getProduct(productId, transaction = null) {
         return await products.findOne({
             where: {
-                product_id: productId
+                product_id: productId,
+                is_publish: true
             },
             attributes: [
                 'product_id',
                 'product_name',
                 'product_description',
-                'fk_product_category',
                 'product_price',
                 'product_rating',
             ],
@@ -53,14 +52,19 @@ class ProductDatabaseService {
                 model: product_feature_values,
                 as: 'product_feature_values',
                 attributes: [
-                    'fk_product_feature',
                     'product_features_values_value'
                 ],
+                include: [{
+                    model: product_features,
+                    as: 'product_feature',
+                    attributes: [
+                        'product_feature_name'
+                    ]
+                }]
             }, {
                 model: product_images,
                 as: 'product_images',
                 attributes: [
-                    'product_image_id',
                     'product_image_position'
                 ],
                 include: [{

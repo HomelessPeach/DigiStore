@@ -6,11 +6,11 @@ const routerProductCategory = Router()
 const middlewareMulter = multer();
 
 routerProductCategory
-    .get('/', ProductCategoryController.getProductCategories)
     .post('/admin', middlewareMulter.fields([{name: 'sourceImage'}]), ProductCategoryController.createProductCategory)
     .get('/admin', ProductCategoryController.listProductCategory)
     .get('/admin/:id', ProductCategoryController.showProductCategory)
     .put('/admin/:id', middlewareMulter.fields([{name: 'sourceImage'}]), ProductCategoryController.updateProductCategory)
     .delete('/admin/:id', ProductCategoryController.deleteProductCategory)
+    .get('/', ProductCategoryController.getProductCategories)
 
 module.exports = {routerProductCategory}

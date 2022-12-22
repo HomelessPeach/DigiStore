@@ -11,7 +11,13 @@ class ProductBusinessService {
     }
 
     static async getProduct(productId) {
-        return await ProductDatabaseService.getProduct(productId)
+        const productData = await ProductDatabaseService.getProduct(productId)
+        const product = productData.get({plain: true})
+        for (let i = 0; i < product.product_images.length; i++) {
+            product.product_images[i].image_path = product.product_images[i].image.image_path
+            delete product.product_images[i].image
+        }
+        return product
     }
 
     static async createProduct(body, files, transaction) {

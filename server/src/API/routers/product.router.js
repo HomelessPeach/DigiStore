@@ -6,12 +6,12 @@ const routerProduct = Router()
 const middlewareMulter = multer();
 
 routerProduct
-    .get('/', ProductController.getProducts)
-    .get('/:id', ProductController.getProduct)
     .post('/admin', middlewareMulter.fields([{name: 'sourceImage'}, {name: 'previewSourceImage'}]), ProductController.createProduct)
     .get('/admin', ProductController.listProduct)
     .get('/admin/:id', ProductController.showProduct)
     .put('/admin/:id', middlewareMulter.fields([{name: 'sourceImage'}, {name: 'previewSourceImage'}]), ProductController.updateProduct)
     .delete('/admin/:id', ProductController.deleteProduct)
+    .get('/', ProductController.getProducts)
+    .get('/:id', ProductController.getProduct)
 
 module.exports = {routerProduct}
