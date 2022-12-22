@@ -42,7 +42,7 @@ export const UserShow = () => {
                     Список пользователей
                 </LinkButton>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_USERS}/edit/${id}`}
+                    to={`${AdminRouteNames.ADMIN_USERS}/${id}/edit`}
                 >
                     Изменить данные
                 </LinkButton>

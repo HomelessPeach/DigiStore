@@ -7,6 +7,39 @@ export const productAPI = createApi({
     tagTypes: ['Product'],
     baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/product`}),
     endpoints: (build) => ({
+        getProducts: build.query({
+            query: ({productCategoryId}) => ({
+                url: `/`,
+                method: 'GET',
+                params: {
+                    fk_product_category: productCategoryId
+                }
+            }),
+            providesTags: ({data}) => {
+                return (data)?
+                    [
+                        ...data.map(({product_id}) => ({type: 'Product', id: product_id})),
+                        {type: 'Product', id: 'CARDS'}
+                    ]
+                    :
+                    [{type: 'Product', id: 'CARDS'}]
+            }
+        }),
+        getProduct: build.query({
+            query: (id) => ({
+                url: `/${id}`,
+                method: 'GET',
+            }),
+            providesTags: (data) => {
+                return (data)?
+                    [
+                        {type: 'Product', id: data.product_id},
+                        {type: 'Product', id: 'CARD'}
+                    ]
+                    :
+                    [{type: 'Product', id: 'CARD'}]
+            }
+        }),
         productList: build.query({
             query: ({offset = 0, limit = 10, sort = '', order = 'ASC'}) => ({
                 url: `/admin`,

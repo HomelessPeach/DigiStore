@@ -7,8 +7,19 @@ export const Home = () => {
 
     return(
         <Container>
-            <Carousel>
-            </Carousel>
+            <CarouselBlock>
+                <Carousel
+                    carouselWidth={1000}
+                    aspect={16/9}
+                    button={true}
+                    infinity={true}
+                    dots={true}
+                    scroll={true}
+                    scrollSpeed={10}
+                    itemsToShow={1}
+                >
+                </Carousel>
+            </CarouselBlock>
             <Card>
                 <ImageBlock>
                     <Img src={`${baseUrl}/files/product/macbook162021.png`}/>
@@ -50,7 +61,7 @@ export const Home = () => {
 }
 
 const Container = styled.div`
-  padding: 100px 200px;
+  padding: 0 20%;
   display: flex;
   flex-direction: column;
   gap: 50px;
@@ -83,4 +94,10 @@ const TextBlock = styled.div`
   width: 70%;
   height: 100%;
   padding: 0 30px;
+`
+
+const CarouselBlock = styled.div`
+  box-shadow: 0 0 10px 0 #888888;
+  border-radius: 10px;
+  margin: 50px auto;
 `

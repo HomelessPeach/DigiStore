@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components"
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {productAPI} from "../../../services/ProductService";
 import {productCategoryAPI} from "../../../services/ProductCategoryService";
 import {productFeatureAPI} from "../../../services/ProductFeatureService";
@@ -17,13 +17,12 @@ import {DataError} from "../../../components/Admin/DataError";
 export const ProductShow = () => {
 
     const navigate = useNavigate();
-    const {pathname} = useLocation()
-    const productId = pathname.replace(`${AdminRouteNames.ADMIN_PRODUCT}/`, '')
+    const {id} = useParams()
     const [deleteProduct] = productAPI.useProductDeleteMutation()
-    const {data, isLoading} = productAPI.useProductShowQuery(productId)
+    const {data, isLoading} = productAPI.useProductShowQuery(id)
 
     async function deleteProductHandler() {
-        const res = await deleteProduct(productId)
+        const res = await deleteProduct(id)
             .unwrap()
             .catch((err) => {
                 console.log(err)
@@ -48,7 +47,7 @@ export const ProductShow = () => {
                     Список товаров
                 </LinkButton>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_PRODUCT}/edit/${productId}`}
+                    to={`${AdminRouteNames.ADMIN_PRODUCT}/${id}/edit`}
                 >
                     Изменить данные
                 </LinkButton>
@@ -81,7 +80,7 @@ export const ProductShow = () => {
                         <PriceField
                             value={data.product_price}
                             label={'Цена'}
-                            currency={'руб.'}
+                            currency={'р'}
                         />
                     </LeftFieldBlock>
                     <RightFieldBlock>

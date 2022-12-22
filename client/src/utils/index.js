@@ -45,3 +45,17 @@ export function userNameValidate(userName) {
     const USERNAME_REGEXP = /(?=(?:.*?[a-zа-я]){2})(?=(?!.*?\s{2}))^[0-9a-zа-я\s#*.():_\-]{2,30}$/ig
     return USERNAME_REGEXP.test(userName);
 }
+
+export function priceFormat(text) {
+    const newText = String(text)
+    const result = []
+    let str = ''
+    for (let i = newText.length - 1; i >= 0; i--) {
+        str += newText[i]
+        if (i === 0 || str.length%3 === 0) {
+            result.push(str.split('').reverse().join(''))
+            str = ''
+        }
+    }
+    return result.reverse().join('.')
+}

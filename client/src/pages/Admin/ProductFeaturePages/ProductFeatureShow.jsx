@@ -40,7 +40,7 @@ export const ProductFeatureShow = () => {
                     Список характеристик
                 </LinkButton>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/edit/${id}`}
+                    to={`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/${id}/edit`}
                 >
                     Изменить данные
                 </LinkButton>

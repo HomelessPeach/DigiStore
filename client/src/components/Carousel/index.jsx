@@ -40,7 +40,7 @@ export const Carousel = (props) => {
         function cloneItems(children) {
 
             if (infinity) {
-                setItems([...clone(children, children.length - itemsToShow, children.length),
+                setItems([...clone(children, children.length - itemsToShow, children.length, 's'),
                     ...children.map((child) =>
                         cloneElement(child, {
                                 style: {
@@ -51,7 +51,7 @@ export const Carousel = (props) => {
                                 }
                             }
                         )),
-                    ...clone(children, 0, itemsToShow),
+                    ...clone(children, 0, itemsToShow, 'e'),
                 ])
                 return;
             }
@@ -66,10 +66,11 @@ export const Carousel = (props) => {
                 })
             ) : [])
 
-            function clone(children, start, end) {
+            function clone(children, start, end, key) {
                 let items = []
                 for (let i = start; i < end; i++) {
                     items.push(cloneElement(children[i], {
+                        key: `${key}${i}`,
                         style: {
                             minWidth: itemWidth,
                             minHeight: height,
@@ -227,7 +228,7 @@ const CarouselContainer = styled.div`
   align-items: center;
   height: ${({h}) => h}px;
   width: ${({w}) => w}px;
-  border-radius: 10px;
+  border-radius: inherit;
   cursor: pointer;
   user-select: none;
 `

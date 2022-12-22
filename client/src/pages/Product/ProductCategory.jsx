@@ -23,9 +23,10 @@ export const ProductCategory = () => {
             </HeaderTitle>
             <ProductCategoriesWrapper>
                 {
-                    data.map((item) =>
+                    data.map((item, index) =>
                         <ProductCategoryCard
-                            to={`${RouteNames.PRODUCT}/show?product_category=${item.product_category_id}`}
+                            key={index}
+                            to={`${RouteNames.PRODUCT}/category/${item.product_category_id}`}
                         >
                             <ImageBlock>
                                 <Img src={`${baseUrl}${item.image.image_path}`}/>

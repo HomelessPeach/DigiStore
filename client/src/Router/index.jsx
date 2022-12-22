@@ -66,23 +66,23 @@ export const Router = () => {
                     <Route index element={<AdminHome/>}/>
                     <Route path={AdminRouteNames.ADMIN_USERS} element={<UserList/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_USERS}/:id`} element={<UserShow/>}/>
-                    <Route path={`${AdminRouteNames.ADMIN_USERS}/edit/:id`} element={<UserEdit/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_USERS}/:id/edit`} element={<UserEdit/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_USERS}/new`} element={<UserCreate/>}/>
                     <Route path={AdminRouteNames.ADMIN_PRODUCT} element={<ProductsList/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_PRODUCT}/:id`} element={<ProductShow/>}/>
-                    <Route path={`${AdminRouteNames.ADMIN_PRODUCT}/edit/:id`} element={<ProductEdit/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_PRODUCT}/:id/edit`} element={<ProductEdit/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_PRODUCT}/new`} element={<ProductCreate/>}/>
                     <Route path={AdminRouteNames.ADMIN_PRODUCT_CATEGORY} element={<ProductCategoryList/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/:id`} element={<ProductCategoryShow/>}/>
-                    <Route path={`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/edit/:id`} element={<ProductCategoryEdit/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/:id/edit`} element={<ProductCategoryEdit/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/new`} element={<ProductCategoryCreate/>}/>
                     <Route path={AdminRouteNames.ADMIN_PRODUCT_FEATURE} element={<ProductFeatureList/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/:id`} element={<ProductFeatureShow/>}/>
-                    <Route path={`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/edit/:id`} element={<ProductFeatureEdit/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/:id/edit`} element={<ProductFeatureEdit/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/new`} element={<ProductFeatureCreate/>}/>
                     <Route path={AdminRouteNames.ADMIN_NEWS} element={<NewsList/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_NEWS}/:id`} element={<NewsShow/>}/>
-                    <Route path={`${AdminRouteNames.ADMIN_NEWS}/edit/:id`} element={<NewsEdit/>}/>
+                    <Route path={`${AdminRouteNames.ADMIN_NEWS}/:id/edit`} element={<NewsEdit/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_NEWS}/new`} element={<NewsCreate/>}/>
                     <Route path={AdminRouteNames.ADMIN_ORDER} element={<OrderList/>}/>
                     <Route path={`${AdminRouteNames.ADMIN_ORDER}/:id`} element={<OrderShow/>}/>
@@ -95,7 +95,7 @@ export const Router = () => {
                 <Route path={RouteNames.PROFILE} element={<Profile/>}/>
                 <Route path={RouteNames.BASKET} element={<Basket/>}/>
                 <Route path={RouteNames.PRODUCT} element={<ProductCategory/>}/>
-                <Route path={`${RouteNames.PRODUCT}/show`} element={<Product/>}/>
+                <Route path={`${RouteNames.PRODUCT}/category/:categoryId`} element={<Product/>}/>
                 <Route path={`${RouteNames.PRODUCT}/show/:id`} element={<ProductCard/>}/>
                 <Route path={RouteNames.NOT_FOUND} element={<NotFound/>}/>
             </Route>

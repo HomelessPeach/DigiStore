@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components"
 import {ContainerBlock, LabelBlock} from "../ComponentsStyledBlocks";
+import {priceFormat} from "../../../../utils";
 
 export const PriceField = (props) => {
 
@@ -10,20 +11,6 @@ export const PriceField = (props) => {
         currency
     } = props
 
-    const formattedText = (text) => {
-        const newText = String(text)
-        const result = []
-        let str = ''
-        for (let i = newText.length - 1; i >= 0; i--) {
-            str += newText[i]
-            if (i === 0 || str.length%3 === 0) {
-                result.push(str.split('').reverse().join(''))
-                str = ''
-            }
-        }
-        return result.reverse().join('.')
-    }
-
     return (
         <ContainerBlock>
             {(label)?
@@ -31,8 +18,7 @@ export const PriceField = (props) => {
                 :null
             }
             <ValueBlock>
-                {(value)? formattedText(value) :  ''}
-                &nbsp;
+                {(value)? priceFormat(value) :  ''}
                 {currency}
             </ValueBlock>
         </ContainerBlock>

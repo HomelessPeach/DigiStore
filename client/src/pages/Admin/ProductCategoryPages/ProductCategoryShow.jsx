@@ -41,7 +41,7 @@ export const ProductCategoryShow = () => {
                     Список категорий
                 </LinkButton>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/edit/${id}`}
+                    to={`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/${id}/edit`}
                 >
                     Изменить данные
                 </LinkButton>

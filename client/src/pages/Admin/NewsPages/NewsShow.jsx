@@ -43,7 +43,7 @@ export const NewsShow = () => {
                     Список новостей
                 </LinkButton>
                 <LinkButton
-                    to={`${AdminRouteNames.ADMIN_NEWS}/edit/${id}`}
+                    to={`${AdminRouteNames.ADMIN_NEWS}/${id}/edit`}
                 >
                     Изменить данные
                 </LinkButton>
