@@ -18,8 +18,7 @@ export const NotFound = () => {
 }
 
 const NotFoundContainer = styled.div`
-  --padding-top: 50px;
-  padding: var(--padding-top) 300px;
+  padding: 60px 300px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,7 +33,7 @@ const Container = styled.div`
   box-shadow: 0 0 10px 0 #808080;
   border-radius: 30px;
   width: 100%;
-  height: calc(100vh - var(--padding-top) * 3 - ${({theme}) => theme.size.footer.height + theme.size.header.height}px);;
+  height: 55vh;
 `
 
 const ImgContainer = styled.div`
