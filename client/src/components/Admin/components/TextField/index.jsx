@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components"
 import {ContainerBlock, LabelBlock} from "../ComponentsStyledBlocks";
+import {formattedText} from "../../../../utils";
 
 export const TextField = (props) => {
 
@@ -8,16 +9,6 @@ export const TextField = (props) => {
         value = '',
         label
     } = props
-
-    const formattedText = (text) => {
-        const lines = String(text).split('\\n')
-        const lastLineIndex = lines.length - 1
-        return lines.map((item, index) =>
-            (lastLineIndex !== index)?
-                <>{item}<br/></>
-                : item
-        )
-    }
 
     return (
         <ContainerBlock>

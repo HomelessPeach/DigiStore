@@ -3,7 +3,6 @@ import styled from "styled-components";
 import {useEffect, useState} from "react";
 import {baseUrl, attributeFilesUrl} from "../../../../services";
 import {Carousel} from "../../../Carousel";
-import {Cross} from "../../../Icons";
 import {ContainerBlock, LabelBlock} from "../ComponentsStyledBlocks";
 
 export const ImagesField = (props) => {
