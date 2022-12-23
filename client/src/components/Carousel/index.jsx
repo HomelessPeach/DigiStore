@@ -5,7 +5,7 @@ import {CarouselButton} from "./CarouselButton";
 import {CarouselDot} from "./CarouselDot";
 import {CarouselDefaultChild} from "./CarouselDefaultChild";
 
-const AnimationTime = 300
+const AnimationTime = 250
 
 export const Carousel = (props) => {
 
@@ -40,6 +40,10 @@ export const Carousel = (props) => {
         function cloneItems(children) {
 
             if (infinity) {
+                const childrenLength = Number(children?.length)
+                for (let i = 0; i < itemsToShow - childrenLength; i++) {
+                    children.push(CarouselDefaultChild())
+                }
                 setItems([...clone(children, children.length - itemsToShow, children.length, 's'),
                     ...children.map((child) =>
                         cloneElement(child, {
@@ -112,9 +116,9 @@ export const Carousel = (props) => {
     }, [infinity, page])
 
     useEffect(() => {
-        if (scroll && !showButton && page < items.length - 1) {
+        if (scroll && !showButton && -page * itemWidth - swipeWay < -itemWidth * items.length + carouselWidth) {
             setTimeout(() => {
-                if (!showButton && page < items.length - 1) {
+                if (!showButton && -page * itemWidth - swipeWay < -itemWidth * items.length + carouselWidth) {
                     nextHandler()
                 }
             }, scrollSpeed * 1000)
@@ -250,7 +254,7 @@ const ItemsContainer = styled.div`
   height: 100%;
   width: 100%;
   transform: translateX(${({showItem}) => showItem}px);
-  transition: ${({animationTime}) => animationTime}ms;
+  transition: ${({animationTime}) => animationTime}ms ease-in-out;
   img {
     -drag: none;
     user-select: none;

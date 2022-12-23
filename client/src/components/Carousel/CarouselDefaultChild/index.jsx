@@ -10,7 +10,7 @@ export const CarouselDefaultChild = () => {
                 <Img src={`${attributeFilesUrl}/mask-1.svg`}/>
             </ImgContainer>
             <TextContainer>
-                Карусель пуста
+                Здесь должен быть элемент
             </TextContainer>
         </Container>
     )
@@ -21,7 +21,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 10% 20% 5%;
   background-color: #f5bee8;
 `
 
@@ -29,6 +28,7 @@ const ImgContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 5%;
   height: 70%;
 `
 
@@ -42,9 +42,9 @@ const Img = styled.img`
 const TextContainer = styled.div`
   width: 100%;
   display: flex;
-  font-size: 30px;
+  font-size: 20px;
   height: 30%;
-  padding: 20px;
+  padding: 10px;
   justify-content: center;
   align-items: center;
   text-align: center;
