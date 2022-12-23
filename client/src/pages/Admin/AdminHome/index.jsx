@@ -10,7 +10,7 @@ export const AdminHome = () => {
                     <Img src={`${attributeFilesUrl}/mask-1.svg`}/>
                 </ImgContainer>
                 <TextContainer>
-                    Добро пожаловать в панель администратора панель администратора
+                    Добро пожаловать в панель администратора
                 </TextContainer>
             </Container>
         </AdminHomeContainer>
