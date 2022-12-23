@@ -12,5 +12,6 @@ routerProductCategory
     .put('/admin/:id', middlewareMulter.fields([{name: 'sourceImage'}]), ProductCategoryController.updateProductCategory)
     .delete('/admin/:id', ProductCategoryController.deleteProductCategory)
     .get('/', ProductCategoryController.getProductCategories)
+    .get('/:id', ProductCategoryController.getProductCategoryName)
 
 module.exports = {routerProductCategory}

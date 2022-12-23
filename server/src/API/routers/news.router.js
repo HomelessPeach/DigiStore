@@ -11,5 +11,7 @@ routerNews
     .get('/admin/:id', NewsController.showNews)
     .put('/admin/:id', middlewareMulter.fields([{name: 'sourceImage'}]), NewsController.updateNews)
     .delete('/admin/:id', NewsController.deleteNews)
+    .get('/', NewsController.getAllNews)
+    .get('/:id', NewsController.getNews)
 
 module.exports = {routerNews}

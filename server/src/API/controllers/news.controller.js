@@ -3,6 +3,26 @@ const {NewsBusinessService} = require("../../services/news-services/news.busines
 
 class NewsController {
 
+    static async getAllNews(req, res, next) {
+        try {
+            const {query} = req
+            const news = await NewsBusinessService.getAllNews(query)
+            res.json(news)
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    static async getNews(req, res, next) {
+        try {
+            const {id} = req.params;
+            const news = await NewsBusinessService.getNews(id)
+            res.json(news)
+        } catch (err) {
+            next(err)
+        }
+    }
+
     static async createNews(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {

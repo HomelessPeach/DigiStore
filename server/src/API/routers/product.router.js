@@ -12,6 +12,7 @@ routerProduct
     .put('/admin/:id', middlewareMulter.fields([{name: 'sourceImage'}, {name: 'previewSourceImage'}]), ProductController.updateProduct)
     .delete('/admin/:id', ProductController.deleteProduct)
     .get('/', ProductController.getProducts)
+    .get('/carousel', ProductController.getProductsForCarousel)
     .get('/:id', ProductController.getProduct)
 
 module.exports = {routerProduct}

@@ -13,6 +13,16 @@ class ProductCategoryController {
         }
     }
 
+    static async getProductCategoryName(req, res, next) {
+        try {
+            const {id} = req.params;
+            const productCategory = await ProductCategoryBusinessService.getProductCategoryName(id)
+            res.json(productCategory)
+        } catch (err) {
+            next(err)
+        }
+    }
+
     static async createProductCategory(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {

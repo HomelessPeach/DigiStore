@@ -23,6 +23,16 @@ class ProductController {
         }
     }
 
+    static async getProductsForCarousel(req, res, next) {
+        try {
+            const {query} = req
+            const products = await ProductBusinessService.getProductsForCarousel(query)
+            res.json(products)
+        } catch (err) {
+            next(err)
+        }
+    }
+
     static async createProduct(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
