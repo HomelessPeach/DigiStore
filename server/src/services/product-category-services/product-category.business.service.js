@@ -9,6 +9,10 @@ class ProductCategoryBusinessService {
         return await ProductCategoryDatabaseService.getProductCategories()
     }
 
+    static async getProductCategoryName(productCategoryId) {
+        return await ProductCategoryDatabaseService.getProductCategoryName(productCategoryId)
+    }
+
     static async createProductCategory(body, files, transaction) {
         const {productCategoryData} = ProductCategoryProcessService.productCategoryDataWrite(body)
         if (files.sourceImage?.length) {

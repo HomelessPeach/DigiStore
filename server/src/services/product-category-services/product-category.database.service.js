@@ -21,6 +21,19 @@ class ProductCategoryDatabaseService {
         })
     }
 
+    static async getProductCategoryName(productCategoryId, transaction = null) {
+        return await product_categories.findOne({
+            where: {
+                product_category_id: productCategoryId
+            },
+            attributes: [
+                'product_category_id',
+                'product_category_name'
+            ],
+            transaction: transaction
+        })
+    }
+
     static async createProductCategory(productCategoryData, transaction) {
         return product_categories.create(
             productCategoryData, {
