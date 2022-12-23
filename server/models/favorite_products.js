@@ -15,6 +15,16 @@ module.exports = function(sequelize, DataTypes) {
     fk_user: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    is_favorite: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
+    is_basket: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
     }
   }, {
     sequelize,
