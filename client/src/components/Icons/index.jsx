@@ -8,6 +8,7 @@ import {Feedback} from "./Feedback";
 import {Heart} from "./Heart";
 import {Home} from "./Home";
 import {Invisible} from "./Invisible";
+import {New} from "./New";
 import {News} from "./News";
 import {Next} from "./Next";
 import {Order} from "./Order";
@@ -29,6 +30,7 @@ export {
     Heart,
     Home,
     Invisible,
+    New,
     News,
     Next,
     Order,
