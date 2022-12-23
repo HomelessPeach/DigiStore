@@ -79,6 +79,39 @@ class ProductDatabaseService {
         })
     }
 
+    static async getProductsForCarousel(transaction = null) {
+        return await products.findAll({
+            offset: 0,
+            limit: 5,
+            order: [['product_id', 'DESC']],
+            where: {
+                is_publish: true
+            },
+            attributes: [
+                'product_id',
+                'product_name',
+            ],
+            include: [{
+                model: product_images,
+                as: 'product_images',
+                where: {
+                    product_image_position: 'preview'
+                },
+                attributes: [
+                    'product_image_id',
+                ],
+                include: [{
+                    model: images,
+                    as: 'image',
+                    attributes: [
+                        'image_path'
+                    ]
+                }]
+            }],
+            transaction: transaction
+        })
+    }
+
     static async createProduct(productData, transaction) {
         return products.create(
             productData, {

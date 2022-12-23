@@ -20,6 +20,10 @@ class ProductBusinessService {
         return product
     }
 
+    static async getProductsForCarousel(query) {
+        return await ProductDatabaseService.getProductsForCarousel()
+    }
+
     static async createProduct(body, files, transaction) {
         const {productData} = ProductProcessService.productDataWrite(body)
         const product = await ProductDatabaseService.createProduct(productData, transaction)
