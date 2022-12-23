@@ -20,30 +20,14 @@ export const chatAPI = createApi({
             transformResponse(apiResponse, meta) {
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
             },
-            providesTags: ({data}) => {
-                return (data)?
-                    [
-                        ...data.map(({chat_id}) => ({type: 'Chat', id: chat_id})),
-                        {type: 'Chat', id: 'LIST'}
-                    ]
-                    :
-                    [{type: 'Chat', id: 'LIST'}]
-            }
+            providesTags: ['Chat']
         }),
         chatShow: build.query({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
-            providesTags: (data) => {
-                return (data)?
-                    [
-                        {type: 'Chat', id: data.chat_id},
-                        {type: 'Chat', id: 'SHOW'}
-                    ]
-                    :
-                    [{type: 'Chat', id: 'SHOW'}]
-            }
+            providesTags: ['Chat']
         }),
         messageCreate: build.mutation({
             query: (body) => ({
@@ -51,7 +35,7 @@ export const chatAPI = createApi({
                 method: 'POST',
                 body: body
             }),
-            invalidatesTags: [{type: 'Chat', id: 'SHOW'}]
+            invalidatesTags: ['Chat']
         }),
     })
 })

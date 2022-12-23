@@ -20,37 +20,21 @@ export const feedbackAPI = createApi({
             transformResponse(apiResponse, meta) {
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
             },
-            providesTags: ({data}) => {
-                return (data)?
-                    [
-                        ...data.map(({feedback_id}) => ({type: 'UserChangePasswordForm', id: feedback_id})),
-                        {type: 'Feedbacks', id: 'LIST'}
-                    ]
-                    :
-                    [{type: 'Feedbacks', id: 'LIST'}]
-            }
+            providesTags: ['Feedbacks']
         }),
         feedbackShow: build.query({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
-            providesTags: (data) => {
-                return (data)?
-                    [
-                        {type: 'Feedbacks', id: data.feedback_id},
-                        {type: 'Feedbacks', id: 'SHOW'}
-                    ]
-                    :
-                    [{type: 'Feedbacks', id: 'SHOW'}]
-            }
+            providesTags: ['Feedbacks']
         }),
         feedbackMarkAsAnswered: build.mutation({
             query: (id) => ({
                 url: `/answered/${id}`,
                 method: 'PUT',
             }),
-            invalidatesTags: [{type: 'Feedbacks', id: 'LIST'}, {type: 'Feedbacks', id: 'SHOW'}]
+            invalidatesTags: ['Feedbacks']
         })
     })
 })

@@ -21,30 +21,14 @@ export const productFeatureAPI = createApi({
             transformResponse(apiResponse, meta) {
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
             },
-            providesTags: ({data}) => {
-                return (data)?
-                    [
-                        ...data.map(({product_feature_id}) => ({type: 'ProductFeature', id: product_feature_id})),
-                        {type: 'ProductFeature', id: 'LIST'}
-                    ]
-                    :
-                    [{type: 'ProductFeature', id: 'LIST'}]
-            }
+            providesTags: ['ProductFeature']
         }),
         productFeatureShow: build.query({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
-            providesTags: (data) => {
-                return (data)?
-                    [
-                        {type: 'ProductFeature', id: data.product_feature_id},
-                        {type: 'ProductFeature', id: 'SHOW'}
-                    ]
-                    :
-                    [{type: 'ProductFeature', id: 'SHOW'}]
-            }
+            providesTags: ['ProductFeature']
         }),
         productFeatureCreate: build.mutation({
             query: (data) => ({
@@ -52,7 +36,7 @@ export const productFeatureAPI = createApi({
                 method: 'POST',
                 body: data
             }),
-            invalidatesTags: [{type: 'ProductFeature', id: 'LIST'}]
+            invalidatesTags: ['ProductFeature']
         }),
         productFeatureUpdate: build.mutation({
             query: (data) => ({
@@ -60,7 +44,7 @@ export const productFeatureAPI = createApi({
                 method: 'PUT',
                 body: data
             }),
-            invalidatesTags: [{type: 'ProductFeature', id: 'LIST'}, {type: 'ProductFeature', id: 'SHOW'}]
+            invalidatesTags: ['ProductFeature']
         }),
         productFeatureDelete: build.mutation({
             query: (id) => ({
@@ -74,6 +58,7 @@ export const productFeatureAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            providesTags: ['ProductFeature']
         }),
         getProductFeaturesData: build.mutation({
             query: () => ({
@@ -84,6 +69,7 @@ export const productFeatureAPI = createApi({
                     _order: 'ASC'
                 }
             }),
+            providesTags: ['ProductFeature']
         }),
     })
 })

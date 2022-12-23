@@ -7,6 +7,20 @@ export const newsAPI = createApi({
     tagTypes: ['News'],
     baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/news`}),
     endpoints: (build) => ({
+        getAllNews: build.query({
+            query: () => ({
+                url: `/`,
+                method: 'GET',
+            }),
+            providesTags: ['News']
+        }),
+        getNews: build.query({
+            query: (id) => ({
+                url: `/${id}`,
+                method: 'GET',
+            }),
+            providesTags: ['News']
+        }),
         newsList: build.query({
             query: ({offset = 0, limit = 10, sort = '', News = 'ASC'}) => ({
                 url: `/admin`,
@@ -21,30 +35,14 @@ export const newsAPI = createApi({
             transformResponse(apiResponse, meta) {
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
             },
-            providesTags: ({data}) => {
-                return (data)?
-                    [
-                        ...data.map(({news_id}) => ({type: 'News', id: news_id})),
-                        {type: 'News', id: 'LIST'}
-                    ]
-                    :
-                    [{type: 'News', id: 'LIST'}]
-            }
+            providesTags: ['News']
         }),
         newsShow: build.query({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
-            providesTags: (data) => {
-                return (data)?
-                    [
-                        {type: 'News', id: data.news_id},
-                        {type: 'News', id: 'SHOW'}
-                    ]
-                    :
-                    [{type: 'News', id: 'SHOW'}]
-            }
+            providesTags: ['News']
         }),
         newsCreate: build.mutation({
             query: (data) => ({
@@ -60,7 +58,7 @@ export const newsAPI = createApi({
                     return formData
                 })(data),
             }),
-            invalidatesTags: [{type: 'News', id: 'LIST'}]
+            invalidatesTags: ['News']
         }),
         newsUpdate: build.mutation({
             query: (data) => ({
@@ -76,14 +74,14 @@ export const newsAPI = createApi({
                     return formData
                 })(data),
             }),
-            invalidatesTags: [{type: 'News', id: 'LIST'}, {type: 'News', id: 'SHOW'}]
+            invalidatesTags: ['News']
         }),
         newsDelete: build.mutation({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: [{type: 'News', id: 'LIST'}]
+            invalidatesTags: ['News']
         }),
     })
 })

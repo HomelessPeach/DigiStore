@@ -7,6 +7,13 @@ export const productAPI = createApi({
     tagTypes: ['Product'],
     baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/product`}),
     endpoints: (build) => ({
+        getProductForCarousel: build.query({
+            query: () => ({
+                url: `/carousel`,
+                method: 'GET',
+            }),
+            providesTags: ['Product']
+        }),
         getProducts: build.query({
             query: ({productCategoryId}) => ({
                 url: `/`,
@@ -15,30 +22,14 @@ export const productAPI = createApi({
                     fk_product_category: productCategoryId
                 }
             }),
-            providesTags: ({data}) => {
-                return (data)?
-                    [
-                        ...data.map(({product_id}) => ({type: 'Product', id: product_id})),
-                        {type: 'Product', id: 'CARDS'}
-                    ]
-                    :
-                    [{type: 'Product', id: 'CARDS'}]
-            }
+            providesTags: ['Product']
         }),
         getProduct: build.query({
             query: (id) => ({
                 url: `/${id}`,
                 method: 'GET',
             }),
-            providesTags: (data) => {
-                return (data)?
-                    [
-                        {type: 'Product', id: data.product_id},
-                        {type: 'Product', id: 'CARD'}
-                    ]
-                    :
-                    [{type: 'Product', id: 'CARD'}]
-            }
+            providesTags: ['Product']
         }),
         productList: build.query({
             query: ({offset = 0, limit = 10, sort = '', order = 'ASC'}) => ({
@@ -54,30 +45,14 @@ export const productAPI = createApi({
             transformResponse(apiResponse, meta) {
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
             },
-            providesTags: ({data}) => {
-                return (data)?
-                    [
-                        ...data.map(({product_id}) => ({type: 'Product', id: product_id})),
-                        {type: 'Product', id: 'LIST'}
-                    ]
-                    :
-                    [{type: 'Product', id: 'LIST'}]
-            }
+            providesTags: ['Product']
         }),
         productShow: build.query({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
-            providesTags: (data) => {
-                return (data)?
-                    [
-                        {type: 'Product', id: data.product_id},
-                        {type: 'Product', id: 'SHOW'}
-                    ]
-                    :
-                    [{type: 'Product', id: 'SHOW'}]
-            }
+            providesTags: ['Product']
         }),
         productCreate: build.mutation({
             query: (data) => ({
@@ -114,7 +89,7 @@ export const productAPI = createApi({
                     return formData
                 })(data),
             }),
-            invalidatesTags: [{type: 'Product', id: 'LIST'}]
+            invalidatesTags: ['Product']
         }),
         productUpdate: build.mutation({
             query: (data) => ({
@@ -151,20 +126,21 @@ export const productAPI = createApi({
                     return formData
                 })(data),
             }),
-            invalidatesTags: [{type: 'Product', id: 'LIST'}, {type: 'Product', id: 'SHOW'}]
+            invalidatesTags: ['Product']
         }),
         productDelete: build.mutation({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: [{type: 'Product', id: 'LIST'}]
+            invalidatesTags: ['Product']
         }),
         getProductData: build.mutation({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            providesTags: ['Product']
         }),
         // getProductData: build.mutation({
         //     query: () => ({
@@ -175,6 +151,7 @@ export const productAPI = createApi({
         //             _order: 'ASC'
         //         }
         //     }),
+        //     providesTags: ['Product']
         // }),
     })
 })

@@ -4,7 +4,7 @@ import {base64StringToFile} from "../utils";
 
 export const userAPI = createApi({
     reducerPath: 'userAPI',
-    tagTypes: ['UserChangePasswordForm'],
+    tagTypes: ['User'],
     baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/user`}),
     endpoints: (build) => ({
         userList: build.query({
@@ -23,30 +23,14 @@ export const userAPI = createApi({
                         return {...item, image: item.image?.image_path}
                     }), totalCount: meta.response.headers.get('X-Total-Count')}
             },
-            providesTags: ({data}) => {
-                return (data)?
-                    [
-                        ...data.map(({user_id}) => ({type: 'UserChangePasswordForm', id: user_id})),
-                        {type: 'UserChangePasswordForm', id: 'LIST'}
-                    ]
-                    :
-                    [{type: 'UserChangePasswordForm', id: 'LIST'}]
-            }
+            providesTags: ['User']
         }),
         userShow: build.query({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
-            providesTags: (data) => {
-                return (data)?
-                    [
-                        {type: 'UserChangePasswordForm', id: data.user_id},
-                        {type: 'UserChangePasswordForm', id: 'SHOW'}
-                    ]
-                    :
-                    [{type: 'UserChangePasswordForm', id: 'SHOW'}]
-            }
+            providesTags: ['User']
         }),
         userCreate: build.mutation({
             query: (data) => ({
@@ -62,7 +46,7 @@ export const userAPI = createApi({
                     return formData
                 })(data),
             }),
-            invalidatesTags: [{type: 'UserChangePasswordForm', id: 'LIST'}]
+            invalidatesTags: ['User']
         }),
         userUpdate: build.mutation({
             query: (data) => ({
@@ -78,20 +62,21 @@ export const userAPI = createApi({
                     return formData
                 })(data),
             }),
-            invalidatesTags: [{type: 'UserChangePasswordForm', id: 'LIST'}, {type: 'UserChangePasswordForm', id: 'SHOW'}]
+            invalidatesTags: ['User']
         }),
         userDelete: build.mutation({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: [{type: 'UserChangePasswordForm', id: 'LIST'}]
+            invalidatesTags: ['User']
         }),
         getUserData: build.mutation({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            providesTags: ['User']
         }),
         getUsersData: build.mutation({
             query: () => ({
@@ -102,6 +87,7 @@ export const userAPI = createApi({
                     _order: 'ASC'
                 }
             }),
+            providesTags: ['User']
         }),
     })
 })

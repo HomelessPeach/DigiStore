@@ -59,3 +59,9 @@ export function priceFormat(text) {
     }
     return result.reverse().join('.')
 }
+
+export const formattedText = (text) => {
+    const lines = String(text).split('\\n')
+    const lastLineIndex = lines.length - 1
+    return lines.map((item, index) => (lastLineIndex !== index)? <>{item}<br/></> : item)
+}

@@ -12,15 +12,14 @@ export const productCategoryAPI = createApi({
                 url: `/`,
                 method: 'GET',
             }),
-            providesTags: ({data}) => {
-                return (data)?
-                    [
-                        ...data.map(({product_category_id}) => ({type: 'ProductCategory', id: product_category_id})),
-                        {type: 'ProductCategory', id: 'CARDS'}
-                    ]
-                    :
-                    [{type: 'ProductCategory', id: 'CARDS'}]
-            }
+            providesTags: ['ProductCategory']
+        }),
+        getProductCategoryName: build.query({
+            query: (id) => ({
+                url: `/${id}`,
+                method: 'GET',
+            }),
+            providesTags: ['ProductCategory']
         }),
         productCategoryList: build.query({
             query: ({offset = 0, limit = 10, sort = '', order = 'ASC'}) => ({
@@ -36,30 +35,14 @@ export const productCategoryAPI = createApi({
             transformResponse(apiResponse, meta) {
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
             },
-            providesTags: ({data}) => {
-                return (data)?
-                    [
-                        ...data.map(({product_category_id}) => ({type: 'ProductCategory', id: product_category_id})),
-                        {type: 'ProductCategory', id: 'LIST'}
-                    ]
-                    :
-                    [{type: 'ProductCategory', id: 'LIST'}]
-            }
+            providesTags: ['ProductCategory']
         }),
         productCategoryShow: build.query({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
-            providesTags: (data) => {
-                return (data)?
-                    [
-                        {type: 'ProductCategory', id: data.product_category_id},
-                        {type: 'ProductCategory', id: 'SHOW'}
-                    ]
-                    :
-                    [{type: 'ProductCategory', id: 'SHOW'}]
-            }
+            providesTags: ['ProductCategory']
         }),
         productCategoryCreate: build.mutation({
             query: (data) => ({
@@ -75,7 +58,7 @@ export const productCategoryAPI = createApi({
                     return formData
                 })(data),
             }),
-            invalidatesTags: [{type: 'ProductCategory', id: 'LIST'}, {type: 'ProductCategory', id: 'CARDS'}]
+            invalidatesTags: ['ProductCategory']
         }),
         productCategoryUpdate: build.mutation({
             query: (data) => ({
@@ -91,20 +74,21 @@ export const productCategoryAPI = createApi({
                     return formData
                 })(data),
             }),
-            invalidatesTags: [{type: 'ProductCategory', id: 'LIST'}, {type: 'ProductCategory', id: 'SHOW'}, {type: 'ProductCategory', id: 'CARDS'}]
+            invalidatesTags: ['ProductCategory']
         }),
         productCategoryDelete: build.mutation({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: [{type: 'ProductCategory', id: 'LIST'}, {type: 'ProductCategory', id: 'CARDS'}]
+            invalidatesTags: ['ProductCategory']
         }),
         getProductCategoryData: build.mutation({
             query: (id) => ({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            providesTags: ['ProductCategory']
         }),
         getProductCategoriesData: build.mutation({
             query: () => ({
@@ -115,6 +99,7 @@ export const productCategoryAPI = createApi({
                     _order: 'ASC'
                 }
             }),
+            providesTags: ['ProductCategory']
         }),
     })
 })
