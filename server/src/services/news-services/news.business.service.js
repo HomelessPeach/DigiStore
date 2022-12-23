@@ -5,6 +5,14 @@ const {folderPath} = require("../../../config/config");
 
 class NewsBusinessService {
 
+    static async getAllNews(query) {
+        return await NewsDatabaseService.getAllNews()
+    }
+
+    static async getNews(newsId) {
+        return await NewsDatabaseService.getNews(newsId)
+    }
+
     static async createNews(body, files, transaction) {
         const {newsData} = NewsProcessService.newsDataWrite(body)
         if (files.sourceImage?.length) {
