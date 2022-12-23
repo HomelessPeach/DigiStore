@@ -175,14 +175,14 @@ const MainInfo = styled.div`
   width: 300px;
   background-color: #dcdcdc;
   padding: 30px 20px;
+  margin-bottom: 90px;
 `
 
 const MainInfoBlock = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 30px;
   padding: 10px;
-  
 `
 
 const RatingProduct = styled.div`
@@ -193,6 +193,7 @@ const RatingProduct = styled.div`
   border-radius: 10px;
   background-color: #f3f3f3;
   padding: 10px;
+  user-select: none;
 `
 
 const RatingIcon = styled.div`

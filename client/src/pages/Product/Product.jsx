@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components"
 import {NavLink, useParams} from "react-router-dom";
 import {productAPI} from "../../services/ProductService";
+import {productCategoryAPI} from "../../services/ProductCategoryService";
 import {RouteNames} from "../../Router";
 import {NotFound} from "../NotFound";
 import {baseUrl} from "../../services";
@@ -12,17 +13,19 @@ export const Product = () => {
 
     const {categoryId} = useParams()
     const {data, isLoading} = productAPI.useGetProductsQuery({productCategoryId: categoryId}, {refetchOnFocus: true})
+    const {data: productCategory, isLoading: titleIsLoading} = productCategoryAPI.useGetProductCategoryNameQuery(categoryId, {refetchOnFocus: true})
 
-    if (isLoading)
+    if (isLoading || titleIsLoading)
         return <h1>LOADING...</h1>
 
     if (!data && !isLoading || !data.length)
         return <NotFound/>
 
-
-
     return (
         <ProductContainer>
+            <CategoryName>
+                {productCategory?.product_category_name}
+            </CategoryName>
             <ProductWrapper>
                 {
                     data.map((item, index) =>
@@ -47,12 +50,12 @@ export const Product = () => {
                                     <ProductActions>
                                         <ActionsBlock>
                                             <RatingBlock>
-                                                {/*<RatingIconBlock>*/}
-                                                {/*    <Star/>*/}
-                                                {/*</RatingIconBlock>*/}
-                                                {/*<RatingTextBlock>*/}
-                                                {/*    {item.product_rating.toFixed(1)}*/}
-                                                {/*</RatingTextBlock>*/}
+                                                <RatingIconBlock>
+                                                    <Star/>
+                                                </RatingIconBlock>
+                                                <RatingTextBlock>
+                                                    {item.product_rating.toFixed(1)}
+                                                </RatingTextBlock>
                                             </RatingBlock>
                                             <AddToBasket>
                                                 <Basket/>
@@ -81,6 +84,14 @@ const ProductContainer = styled.div`
   align-items: flex-start;
 `
 
+const CategoryName = styled.div`
+  line-height: 1.5;
+  font-size: 40px;
+  color: #888888;
+  font-weight: bolder;
+  padding: 50px 0 25px;
+`
+
 const ProductWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -88,7 +99,7 @@ const ProductWrapper = styled.div`
   align-items: center;
   flex-wrap: wrap;
   gap: 50px;
-  padding: 70px 0 100px;
+  padding: 25px 0 100px;
   background-color: #ffffff;
   width: 100%;
 `
