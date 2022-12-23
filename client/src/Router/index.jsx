@@ -6,6 +6,7 @@ import {Home} from "../pages/Home";
 import {Product, ProductCard, ProductCategory} from "../pages/Product";
 import {Profile} from "../pages/Profile";
 import {Basket} from "../pages/Basket";
+import {NewsCard} from "../pages/News";
 import {
     AdminNotFound,
     AdminHome,
@@ -42,6 +43,7 @@ export const RouteNames = {
     PROFILE: '/profile',
     BASKET: '/basket',
     PRODUCT: '/product',
+    NEWS: '/news',
     NOT_FOUND: '/*'
 }
 
@@ -97,6 +99,7 @@ export const Router = () => {
                 <Route path={RouteNames.PRODUCT} element={<ProductCategory/>}/>
                 <Route path={`${RouteNames.PRODUCT}/category/:categoryId`} element={<Product/>}/>
                 <Route path={`${RouteNames.PRODUCT}/show/:id`} element={<ProductCard/>}/>
+                <Route path={`:id${RouteNames.NEWS}`} element={<NewsCard/>}/>
                 <Route path={RouteNames.NOT_FOUND} element={<NotFound/>}/>
             </Route>
         </Routes>
