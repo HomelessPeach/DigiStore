@@ -164,6 +164,7 @@ const OptionsContainer = styled.div`
   overflow: scroll;
   box-shadow: 0 1px 10px 0 #5b5b5b;
   background-color: #ffffff;
+  max-height: 200px;
 `
 
 const OptionBlock = styled.div`

@@ -51,11 +51,12 @@ const ImageBlock = styled.div`
   align-items: center;
   width: 100%;
   height: 600px;
+  overflow: hidden;
   background-color: #fde4f3;
 `
 
 const Img = styled.img`
-  height: 100%;
+  width: 100%;
 `
 
 const NewsNameBlock = styled.div`

@@ -317,6 +317,9 @@ const NewsShortDescription = styled.div`
   height: 35%;
   background-color: #ececec;
   padding: 10px 20px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 const TextBlock = styled.div`
@@ -325,6 +328,11 @@ const TextBlock = styled.div`
   font-size: 18px;
   line-height: 1.5;
   overflow: hidden;
+  color: #000000;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
 `
 
 const VideoBlock = styled.div`

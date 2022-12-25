@@ -161,6 +161,7 @@ const ButtonItemBlock = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `
 
 const HeaderBlock = styled.div`

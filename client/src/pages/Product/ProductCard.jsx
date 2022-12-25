@@ -19,8 +19,6 @@ export const ProductCard = () => {
     if (!data && !isLoading)
         return <NotFound/>
 
-    console.log(data)
-
     return (
         <ProductContainer>
             <ProductCardBlock>
@@ -150,6 +148,7 @@ const NameBlock = styled.div`
 `
 
 const CarouselBlock = styled.div`
+  width: 750px;
   box-shadow: 0 0 10px 0 #888888;
   border-radius: 10px;
 `
@@ -268,6 +267,7 @@ const DescriptionBlock = styled.div`
   display: flex;
   flex-direction: row;
   font-size: 20px;
+  line-height: 1.5;
   background-color: #dcdcdc;
 `
 

@@ -71,10 +71,10 @@ export const productAPI = createApi({
                                 continue
                             }
                             if (image.is_preview) {
-                                formData.append('previewSourceImage', base64StringToFile(data.image.new_image, `image`));
+                                formData.append('previewSourceImage', base64StringToFile(image.image_path, `image`));
                                 continue
                             }
-                            formData.append('sourceImage', base64StringToFile(data.image.new_image, `image`));
+                            formData.append('sourceImage', base64StringToFile(image.image_path, `image`));
                         }
                         data.product_images = images
                     }
@@ -108,10 +108,10 @@ export const productAPI = createApi({
                                 continue
                             }
                             if (image.is_preview) {
-                                formData.append('previewSourceImage', base64StringToFile(data.image.new_image, `image`));
+                                formData.append('previewSourceImage', base64StringToFile(image.image_path, `image`));
                                 continue
                             }
-                            formData.append('sourceImage', base64StringToFile(data.image.new_image, `image`));
+                            formData.append('sourceImage', base64StringToFile(image.image_path, `image`));
                         }
                         data.product_images = images
                     }

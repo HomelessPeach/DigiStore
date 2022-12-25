@@ -41,7 +41,9 @@ export const Product = () => {
                                     {item.product_name}
                                 </ProductTitle>
                                 <ProductInfo>
-                                    {item.product_description}
+                                    <TextBlock>
+                                        {item.product_description}
+                                    </TextBlock>
                                 </ProductInfo>
                                 <ProductPriceAndActionsBlock>
                                     <ProductPrice>
@@ -144,14 +146,30 @@ const ProductTitle = styled.div`
   font-size: 30px;
   color: #888888;
   height: 30%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
 `
 
 const ProductInfo = styled.div`
   height: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const TextBlock = styled.div`
+  width: 100%;
   line-height: 1.5;
   font-size: 15px;
   color: #000000;
   overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
 `
 
 const ProductPriceAndActionsBlock = styled.div`
