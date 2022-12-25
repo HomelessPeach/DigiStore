@@ -21,6 +21,11 @@ export const ReachTextInput = (props) => {
     } = props
 
     const [isNotValid, setIsNotValid] = useState(false)
+    const [content, setContent] = useState()
+
+    useEffect(() => {
+        setContent(value)
+    }, [])
 
     useEffect(() => {
         if (validationError) {
@@ -218,8 +223,8 @@ export const ReachTextInput = (props) => {
                         onInput={onInput}
                         onBlur={checkValidateOnBlur}
                         isNotValid={isNotValid}
-                        contentEditable="true"
-                        dangerouslySetInnerHTML={{__html: value}}
+                        contentEditable={true}
+                        dangerouslySetInnerHTML={{__html: content}}
                     />
                 </ReachTextInputBlock>
 
