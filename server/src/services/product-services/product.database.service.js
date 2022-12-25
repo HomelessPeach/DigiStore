@@ -7,6 +7,7 @@ class ProductDatabaseService {
     static async getProducts(productData, transaction = null) {
         return await products.findAll({
             where: {...productData, is_publish: true},
+            order: [['product_id', 'DESC']],
             attributes: [
                 'product_id',
                 'product_name',

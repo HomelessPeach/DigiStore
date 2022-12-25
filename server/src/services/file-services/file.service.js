@@ -26,7 +26,7 @@ class FileService {
     static async createImages(files, recourse, transaction) {
         const imageIds = []
         for (let file of files) {
-            const image = await FileDatabaseService.createImage(file, recourse, transaction)
+            const image = await FileService.createImage(file, recourse, transaction)
             imageIds.push(image.image_id)
         }
         return imageIds

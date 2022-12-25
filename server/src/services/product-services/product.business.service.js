@@ -36,8 +36,8 @@ class ProductBusinessService {
         let preview = false
 
         if (files.previewSourceImage?.length) {
-            const imageId = await FileService.createImage(files.previewSourceImage[0], folderPath.product, transaction)
-            const {productImageData} = ProductProcessService.productImageDataWrite(product.product_id, imageId, true)
+            const image = await FileService.createImage(files.previewSourceImage[0], folderPath.product, transaction)
+            const {productImageData} = ProductProcessService.productImageDataWrite(product.product_id, image.image_id, true)
             await ProductDatabaseService.createProductImage(productImageData, transaction)
             preview = true
         }
@@ -85,8 +85,8 @@ class ProductBusinessService {
         let preview = false
 
         if (files.previewSourceImage?.length) {
-            const imageId = await FileService.createImage(files.previewSourceImage[0], folderPath.product, transaction)
-            const {productImageData} = ProductProcessService.productImageDataWrite(productId, imageId, true)
+            const image = await FileService.createImage(files.previewSourceImage[0], folderPath.product, transaction)
+            const {productImageData} = ProductProcessService.productImageDataWrite(productId, image.image_id, true)
             await ProductDatabaseService.createProductImage(productImageData, transaction)
             preview = true
         }
