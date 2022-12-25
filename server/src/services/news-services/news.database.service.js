@@ -6,6 +6,9 @@ class NewsDatabaseService {
 
     static async getAllNews(transaction = null) {
         return await news.findAll({
+            where: {
+                is_publish: true
+            },
             transaction: transaction,
             attributes: [
                 'news_id',
@@ -25,7 +28,8 @@ class NewsDatabaseService {
     static async getNews(newsId, transaction = null) {
         return await news.findOne({
             where: {
-                news_id: newsId
+                news_id: newsId,
+                is_publish: true
             },
             attributes: [
                 'news_id',
