@@ -9,7 +9,7 @@ class NewsDatabaseService {
             where: {
                 is_publish: true
             },
-            transaction: transaction,
+            order: [['news_id', 'DESC']],
             attributes: [
                 'news_id',
                 'news_name',
@@ -22,6 +22,7 @@ class NewsDatabaseService {
                     'image_path',
                 ],
             }],
+            transaction: transaction,
         })
     }
 
