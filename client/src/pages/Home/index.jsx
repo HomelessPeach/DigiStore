@@ -200,8 +200,6 @@ const CarouselBlock = styled.div`
 `
 
 const IconBlock = styled.div`
-  position: absolute;
-  top: 0;
   width: 250px;
   padding: 30px;
   display: flex;
