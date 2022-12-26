@@ -10,9 +10,11 @@ import {productFeatureAPI} from "../services/ProductFeatureService";
 import {productAPI} from "../services/ProductService";
 import {userAPI} from "../services/UserService";
 import {UserSlice} from "./reducers/UserSlice";
+import {FormSlice} from "./reducers/FormSlice";
 
 const rootReducer = combineReducers({
     [UserSlice.name]: UserSlice.reducer,
+    [FormSlice.name]: FormSlice.reducer,
     // [authAPI.reducerPath]: authAPI.reducer,
     [chatAPI.reducerPath]: chatAPI.reducer,
     [feedbackAPI.reducerPath]: feedbackAPI.reducer,
