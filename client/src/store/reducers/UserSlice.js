@@ -5,7 +5,7 @@ export const UserSlice = createSlice({
     initialState: {
         data: {
             id: 1,
-            email: 'q',
+            email: '',
             name: '',
             phoneNumber: '',
             isAdmin: false,

@@ -32,7 +32,7 @@ export const Styles = createGlobalStyle`
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-family: 'Bellota Text', cursive;
   }
 
   body {

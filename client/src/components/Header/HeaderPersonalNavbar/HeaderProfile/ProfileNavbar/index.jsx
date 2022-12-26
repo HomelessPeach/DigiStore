@@ -24,12 +24,12 @@ export const ProfileNavbar = (props) => {
             <ProfileNavbarContainer>
                 {(Auth)?
                     <>
-                        <NavLinkBlock to={RouteNames.PROFILE} title="Профиль" onClick={() => setIsOpen(false)}>Профиль</NavLinkBlock>
+                        {/*<NavLinkBlock to={RouteNames.PROFILE} title="Профиль" onClick={() => setIsOpen(false)}>Профиль</NavLinkBlock>*/}
                         {(true)?
                             <NavLinkBlock to={RouteNames.ADMIN} title="Панель администратора" onClick={() => setIsOpen(false)}>Панель администратора</NavLinkBlock>
                             : null
                         }
-                        <ProfileNavbarButton onClick={() => setIsOpen(false)}>Выйти</ProfileNavbarButton>
+                        {/*<ProfileNavbarButton onClick={() => setIsOpen(false)}>Выйти</ProfileNavbarButton>*/}
                     </>
                     : <>
                         <ProfileNavbarButton onClick={() => setIsOpen(false)}>Войти</ProfileNavbarButton>
