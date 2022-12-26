@@ -13,8 +13,6 @@ export const NewsCard = () => {
     if (isLoading)
         return <h1>LOADING...</h1>
 
-    console.log(data)
-
     return (
         <NewsCardBlock>
             <ImageBlock>
