@@ -3,7 +3,7 @@ import {createSlice} from "@reduxjs/toolkit";
 export const UserSlice = createSlice({
     name: 'user',
     initialState: {
-        data: {
+        data: JSON.parse(localStorage.getItem('user')) || {
             id: 1,
             email: '',
             name: '',
@@ -11,12 +11,12 @@ export const UserSlice = createSlice({
             isAdmin: false,
             avatar: '',
         },
-        tokens: {
+        tokens: JSON.parse(localStorage.getItem('tokens')) || {
             accessToken: '',
             refreshToken: '',
         },
-        wishList: [],
-        basket: [],
+        wishList: JSON.parse(localStorage.getItem('wishList')) || [],
+        basket: JSON.parse(localStorage.getItem('basket')) || [],
     },
     reducers: {
         addToBasket(state, action) {
@@ -26,6 +26,7 @@ export const UserSlice = createSlice({
                 return;
             }
             state.basket = [...basket]
+            localStorage.setItem('basket', JSON.stringify(state.basket))
         },
         setCountInBasket(state, action) {
             for (let i = 0; i < state.basket.length; i++) {
@@ -38,14 +39,17 @@ export const UserSlice = createSlice({
                 }
                 state.basket[i] = {...state.basket[i], count: action.payload.count}
             }
+            localStorage.setItem('basket', JSON.stringify(state.basket))
         },
         addToFavorite(state, action) {
             const wishList = state.wishList.filter((item)=> item.id !== action.payload.id)
             if (wishList.length === state.wishList.length) {
                 state.wishList.push(action.payload)
+                localStorage.setItem('wishList', JSON.stringify(state.wishList))
                 return;
             }
             state.wishList = [...wishList]
+            localStorage.setItem('wishList', JSON.stringify(state.wishList))
         },
     }
 })
