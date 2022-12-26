@@ -4,6 +4,7 @@ import {Basket} from "./Basket";
 import {Chat} from "./Chat";
 import {CheckMark} from "./CheckMark";
 import {Cross} from "./Cross";
+import {Delete} from "./Delete";
 import {Feedback} from "./Feedback";
 import {Heart} from "./Heart";
 import {Home} from "./Home";
@@ -26,6 +27,7 @@ export {
     Chat,
     CheckMark,
     Cross,
+    Delete,
     Feedback,
     Heart,
     Home,

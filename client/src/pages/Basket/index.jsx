@@ -1,48 +1,161 @@
 import * as React from "react";
 import styled from "styled-components";
+import {useDispatch, useSelector} from "react-redux";
+import {NavLink} from "react-router-dom";
+import {RouteNames} from "../../Router";
 import {baseUrl} from "../../services";
+import {Delete} from "../../components/Icons";
+import {CreateOrder} from "./CreateOrder";
+import {UserSlice} from "../../store/reducers/UserSlice"
+import {priceFormat} from "../../utils";
 
 export const Basket = () => {
+
+    const {basket} = useSelector(state => state.user)
+    const {setCountInBasket, addToBasket} = UserSlice.actions
+    const dispatch = useDispatch()
+
+    function getAllSum() {
+        return basket.reduce((result, item) => result + (item.price * item.count), 0)
+    }
+
     return (
         <BasketContainer>
-            <div style={{fontSize: 50, color: '#989797'}}>
+            <HeaderTitle>
                 Корзина
-            </div>
-            <BasketCard>
-                <ImageBlock>
-                    <Img src={`${baseUrl}/files/product/macbook162021.png`}/>
-                </ImageBlock>
-                <TextBlock>
-                    <div style={{fontSize: 30}}>MacBook 16, 2021</div>
-                    <div style={{fontSize: 30, display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-                        <div style={{fontSize: 30, color: '#989797'}}>300.000р</div>
-                        <div style={{display: "flex", justifyContent: "space-between", width: 200}}>
-                            <div style={{fontSize: 30, padding: '20px 30px', boxShadow: '0 0 5px 0', backgroundColor: '#989797', borderRadius: 30}}>+</div>
-                            <div style={{fontSize: 30, padding: '20px 30px', boxShadow: '0 0 5px 0', backgroundColor: '#989797', borderRadius: 30}}>-</div>
-                        </div>
-                    </div>
-                </TextBlock>
-            </BasketCard>
-            <div style={{fontSize: 30, width: '50%', margin:"auto", boxShadow: '0 0 5px 0', backgroundColor: 'pink', padding: '10px 20px', textAlign: "center", borderRadius: 50}}>
-                Оформить заказ
-            </div>
+            </HeaderTitle>
+            <BasketContent>
+                {(basket.length)?
+                    <>
+                    {
+                        basket.map((item, index) =>
+                            <BasketItem
+                                key={index}
+                                to={`${RouteNames.PRODUCT}/show/${item.id}`}
+                            >
+                                <ImageBlock>
+                                    <Img src={`${baseUrl}${item.image}`}/>
+                                </ImageBlock>
+                                <DataBlock>
+                                    <ProductTitle>
+                                        {item.name}
+                                    </ProductTitle>
+                                    <ValueBlock>
+                                        <ProductPrice>
+                                            Цена: {priceFormat(item.price)}р
+                                        </ProductPrice>
+                                        <CountBlock>
+                                            <DecreaseButton
+                                                onClick={(event) => {
+                                                    dispatch(setCountInBasket({
+                                                        id: item.id,
+                                                        image: item.image,
+                                                        name: item.name,
+                                                        price: item.price,
+                                                        count: item.count - 1
+                                                    }))
+                                                    event.preventDefault();
+                                                }}
+                                            >
+                                                -
+                                            </DecreaseButton>
+                                            <CountValue>
+                                                {item.count}
+                                            </CountValue>
+                                            <AddButton
+                                                onClick={(event) => {
+                                                    dispatch(setCountInBasket({
+                                                        id: item.id,
+                                                        image: item.image,
+                                                        name: item.name,
+                                                        price: item.price,
+                                                        count: item.count + 1
+                                                    }))
+                                                    event.preventDefault();
+                                                }}
+                                            >
+                                                +
+                                            </AddButton>
+                                            <DeleteButton
+                                                onClick={(event) => {
+                                                    dispatch(addToBasket({
+                                                        id: item.id,
+                                                        image: item.image,
+                                                        name: item.name,
+                                                        price: item.price,
+                                                        count: item.count
+                                                    }))
+                                                    event.preventDefault();
+                                                }}
+                                            >
+                                                <Delete/>
+                                            </DeleteButton>
+                                        </CountBlock>
+                                        <SumProductBlock>
+                                            Итог: {priceFormat(item.price * item.count)}р
+                                        </SumProductBlock>
+                                    </ValueBlock>
+                                </DataBlock>
+                            </BasketItem>
+                        )
+                    }
+                    <AllSumBlock>
+                        <AllSumText>
+                            Итог:
+                        </AllSumText>
+                        <AllSumText>
+                            {priceFormat(getAllSum())}р
+                        </AllSumText>
+                    </AllSumBlock>
+                    </>
+                    :
+                    <EmptyBasketBlock>
+                        Корзина пуста
+                    </EmptyBasketBlock>
+                }
+            </BasketContent>
+            {(basket.length)?
+                <CreateOrder basketContent={basket} sum={getAllSum()}/>
+                :null
+            }
         </BasketContainer>
     )
 }
 
 const BasketContainer = styled.div`
-  padding: 0 200px;
+  padding: 0 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 `
 
-const BasketCard = styled.div`
-  height: 300px;
+const HeaderTitle = styled.div`
+  line-height: 1.5;
+  font-size: 40px;
+  color: #888888;
+  font-weight: bolder;
+  padding: 50px 0 25px;
+`
+
+const BasketContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 30px;
+  padding: 25px 50px;
+  background-color: #e8e8e8;
+`
+
+const BasketItem = styled(NavLink)`
+  text-decoration: none;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  box-shadow: 0 0 5px 0;
-  border-radius: 20px;
-  padding: 30px;
-  margin: 30px 0;
+  align-items: stretch;
+  color: #000000;
+  height: 150px;
+  padding: 25px;
+  border-bottom: 1px solid #888888;
 `
 
 const ImageBlock = styled.div`
@@ -58,11 +171,136 @@ const Img = styled.img`
   max-height: 100%;
 `
 
-const TextBlock = styled.div`
-  width: 70%;
+const DataBlock = styled.div`
+  width: 100%;
   height: 100%;
-  padding: 0 30px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  padding: 5px 15px;
 `
+
+const ProductTitle = styled.div`
+  text-decoration: none;
+  line-height: 1.5;
+  font-size: 25px;
+  color: #888888;
+  height: 40%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+`
+
+const ValueBlock = styled.div`
+  height: 60%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+`
+
+const ProductPrice = styled.div`
+  max-width: 30%;
+  line-height: 1.5;
+  font-size: 18px;
+  color: #000000;
+`
+
+const CountBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  max-width: 30%;
+  user-select: none;
+`
+
+const DecreaseButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 25px;
+  height: 25px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #888888;
+  box-shadow: 0 0 5px 0 #888888;
+  cursor: pointer;
+  &:active {
+    box-shadow: none;
+  }
+`
+
+const CountValue = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+`
+
+const AddButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 25px;
+  height: 25px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #888888;
+  box-shadow: 0 0 5px 0 #888888;
+  cursor: pointer;
+  &:active {
+    box-shadow: none;
+  }
+`
+
+const DeleteButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #ff0000;
+  box-shadow: 0 0 5px 0 #888888;
+  cursor: pointer;
+  &:active {
+    box-shadow: none;
+  }
+`
+
+const SumProductBlock = styled.div`
+  max-width: 30%;
+  line-height: 1.5;
+  font-size: 20px;
+  color: #000000;
+`
+
+const AllSumBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 25px;
+`
+
+const AllSumText = styled.div`
+  font-size: 30px;
+  font-weight: bolder;
+  color: #888888;
+  cursor: default;
+`
+
+const EmptyBasketBlock = styled.div`
+  width: 100%;
+  text-align: center;
+  line-height: 1.5;
+  font-size: 25px;
+  color: #888888;
+  font-weight: bolder;
+  padding: 15px;
+`
+

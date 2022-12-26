@@ -7,11 +7,16 @@ import {NotFound} from "../NotFound";
 import {Carousel} from "../../components/Carousel";
 import {priceFormat} from "../../utils";
 import {Basket, Heart, Star} from "../../components/Icons";
+import {UserSlice} from "../../store/reducers/UserSlice";
+import {useDispatch, useSelector} from "react-redux";
 
 export const ProductCard = () => {
 
     const {id} = useParams()
     const {data, isLoading} = productAPI.useGetProductQuery(id, {refetchOnFocus: true})
+    const {addToBasket, addToFavorite} = UserSlice.actions
+    const {data: userData, basket, wishList} = useSelector(state => state.user)
+    const dispatch = useDispatch()
 
     if (isLoading)
         return <h1>LOADING...</h1>
@@ -58,17 +63,41 @@ export const ProductCard = () => {
                                     {data.product_rating.toFixed(1)}
                                 </ProductRating>
                             </RatingProduct>
-                            <AddToFavorite>
-                                <ButtonIcon>
-                                    <Heart/>
-                                </ButtonIcon>
-                                <ButtonText>
-                                    В избранное
-                                </ButtonText>
-                            </AddToFavorite>
+                            {(userData.id)?
+                                <AddToFavorite
+                                    onClick={() => {
+                                        dispatch(addToFavorite({
+                                            id: data.product_id,
+                                            image: data.product_images[0].image_path,
+                                            name: data.product_name,
+                                            price: data.product_price,
+                                        }))
+                                    }}
+                                    inWishList={wishList.filter((product) => product.id === data.product_id).length}
+                                >
+                                    <ButtonIcon>
+                                        <Heart/>
+                                    </ButtonIcon>
+                                    <ButtonText>
+                                        В избранное
+                                    </ButtonText>
+                                </AddToFavorite>
+                                :null
+                            }
                         </MainInfoBlock>
                         <MainInfoBlock>
-                            <AddToBasket>
+                            <AddToBasket
+                                onClick={() => {
+                                    dispatch(addToBasket({
+                                        id: data.product_id,
+                                        image: data.product_images[0].image_path,
+                                        name: data.product_name,
+                                        price: data.product_price,
+                                        count: 1
+                                    }))
+                                }}
+                                inBasket={basket.filter((product) => product.id === data.product_id).length}
+                            >
                                 <ButtonIcon>
                                     <Basket/>
                                 </ButtonIcon>
@@ -215,7 +244,9 @@ const AddToFavorite = styled.div`
   flex-direction: row;
   align-items: center;
   width: 100%;
-  background-color: #ff0000;
+  background-color: ${({inWishList}) => (inWishList)? '#888888' : '#ff0000'};
+  fill: ${({inWishList}) => (inWishList)? '#ff0000' : '#000000'};
+  color:  ${({inWishList}) => (inWishList)? '#b70000' : '#000000'};;
   border-radius: 10px;
   padding: 10px 20px;
   box-shadow: 0 0 10px 0 #888888;
@@ -231,7 +262,9 @@ const AddToBasket = styled.div`
   flex-direction: row;
   align-items: center;
   width: 100%;
-  background-color: ${({theme}) => theme.colors.tertiary};
+  background-color: ${({theme, inBasket}) => (inBasket)? '#888888' : theme.colors.tertiary};
+  fill: ${({theme, inBasket}) => (inBasket)? theme.colors.tertiary: '#000000'};
+  color: ${({inBasket}) => (inBasket)? '#840088': '#000000'};
   border-radius: 10px;
   padding: 10px 20px;
   box-shadow: 0 0 10px 0 #888888;
@@ -245,7 +278,6 @@ const AddToBasket = styled.div`
 const ButtonIcon = styled.div`
   width: 25px;
   height: 25px;
-  fill: #000000;
 `
 
 const ButtonText = styled.div`

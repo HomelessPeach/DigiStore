@@ -8,12 +8,17 @@ import {NotFound} from "../NotFound";
 import {baseUrl} from "../../services";
 import {Basket, Heart, Star} from "../../components/Icons";
 import {priceFormat} from "../../utils";
+import {useDispatch, useSelector} from "react-redux";
+import {UserSlice} from "../../store/reducers/UserSlice"
 
 export const Product = () => {
 
     const {categoryId} = useParams()
     const {data, isLoading} = productAPI.useGetProductsQuery({productCategoryId: categoryId}, {refetchOnFocus: true})
     const {data: productCategory, isLoading: titleIsLoading} = productCategoryAPI.useGetProductCategoryNameQuery(categoryId, {refetchOnFocus: true})
+    const {addToBasket, addToFavorite} = UserSlice.actions
+    const {data: userData, basket, wishList} = useSelector(state => state.user)
+    const dispatch = useDispatch()
 
     if (isLoading || titleIsLoading)
         return <h1>LOADING...</h1>
@@ -59,12 +64,38 @@ export const Product = () => {
                                                     {item.product_rating.toFixed(1)}
                                                 </RatingTextBlock>
                                             </RatingBlock>
-                                            <AddToBasket>
+                                            <AddToBasket
+                                                onClick={(event) => {
+                                                    dispatch(addToBasket({
+                                                        id: item.product_id,
+                                                        image: item.product_images[0].image.image_path,
+                                                        name: item.product_name,
+                                                        price: item.product_price,
+                                                        count: 1
+                                                    }))
+                                                    event.preventDefault();
+                                                }}
+                                                inBasket={basket.filter((product) => product.id === item.product_id).length}
+                                            >
                                                 <Basket/>
                                             </AddToBasket>
-                                            <AddToFavorite>
-                                                <Heart/>
-                                            </AddToFavorite>
+                                            {(userData.id)?
+                                                <AddToFavorite
+                                                    onClick={(event) => {
+                                                        dispatch(addToFavorite({
+                                                            id: item.product_id,
+                                                            image: item.product_images[0].image.image_path,
+                                                            name: item.product_name,
+                                                            price: item.product_price,
+                                                        }))
+                                                        event.preventDefault();
+                                                    }}
+                                                    inWishList={wishList.filter((product) => product.id === item.product_id).length}
+                                                >
+                                                    <Heart/>
+                                                </AddToFavorite>
+                                                :null
+                                            }
                                         </ActionsBlock>
                                     </ProductActions>
                                 </ProductPriceAndActionsBlock>
@@ -223,8 +254,8 @@ const ActionsBlock = styled.div`
 const AddToBasket = styled.div`
   width: 30px;
   height: 30px;
-  background-color: ${({theme}) => theme.colors.tertiary};
-  fill: #000000;
+  background-color: ${({theme, inBasket}) => (inBasket)? '#888888' : theme.colors.tertiary};
+  fill: ${({theme, inBasket}) => (inBasket)? theme.colors.tertiary: '#000000'};
   border-radius: 5px;
   padding: 5px;
 `
@@ -232,8 +263,8 @@ const AddToBasket = styled.div`
 const AddToFavorite = styled.div`
   width: 30px;
   height: 30px;
-  background-color: #ff0000;
-  fill: #000000;
+  background-color: ${({inWishList}) => (inWishList)? '#888888' : '#ff0000'};
+  fill: ${({inWishList}) => (inWishList)? '#ff0000' : '#000000'};
   border-radius: 5px;
   padding: 5px;
 `
