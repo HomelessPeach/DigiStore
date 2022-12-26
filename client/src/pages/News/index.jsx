@@ -76,7 +76,7 @@ const NewsName = styled.div`
   align-items: center;
   width: 100%;
   font-size: 50px;
-  color: ${({theme}) => theme.colors.tertiary};
+  color: #efefef;
   font-weight: bolder;
 `
 

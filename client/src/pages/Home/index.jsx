@@ -103,9 +103,11 @@ export const Home = () => {
                                                     <NewsImageBlock>
                                                         <ImgNews src={`${baseUrl}${item.image.image_path}`}/>
                                                     </NewsImageBlock>
-                                                    <NewsName>
-                                                        {item.news_name}
-                                                    </NewsName>
+                                                    <NewsNameBlock>
+                                                        <NewsName>
+                                                            {item.news_name}
+                                                        </NewsName>
+                                                    </NewsNameBlock>
                                                 </NewsNameImg>
                                                 <NewsShortDescription>
                                                     <TextBlock>
@@ -296,18 +298,27 @@ const ImgNews = styled.img`
   height: 100%;
 `
 
-const NewsName = styled.div`
+const NewsNameBlock = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
+  overflow: hidden;
   display: flex;
   align-items: flex-end;
   height: 100px;
   padding: 0 20px 15px;
-  color: #e8e8e8;
-  font-size: 25px;
   background: linear-gradient(to top, ${({theme}) => theme.colors.tertiary} 0%, rgba(255, 255, 255, 0) 100%);
+`
+
+const NewsName = styled.div`
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  color: #efefef;
+  font-size: 25px;
 `
 
 const NewsShortDescription = styled.div`
