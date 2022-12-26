@@ -8,6 +8,7 @@ export const TextInput = (props) => {
         label,
         onChange,
         w,
+        ...another
     } = props
 
     function onInput(event) {
@@ -26,6 +27,7 @@ export const TextInput = (props) => {
                 defaultValue={value}
                 onChange={onInput}
                 contentEditable={true}
+                {...another}
             />
         </TextInputBlock>
     )

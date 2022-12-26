@@ -4,7 +4,7 @@ export const UserSlice = createSlice({
     name: 'user',
     initialState: {
         data: JSON.parse(localStorage.getItem('user')) || {
-            id: 1,
+            id: null,
             email: '',
             name: '',
             phoneNumber: '',
@@ -19,6 +19,19 @@ export const UserSlice = createSlice({
         basket: JSON.parse(localStorage.getItem('basket')) || [],
     },
     reducers: {
+        setUserData(state, action) {
+            state.data = {...action.data, ...action.payload}
+        },
+        clearUserData(state) {
+            state.data = {
+                id: null,
+                email: '',
+                name: '',
+                phoneNumber: '',
+                isAdmin: false,
+                avatar: '',
+            }
+        },
         addToBasket(state, action) {
             const basket = state.basket.filter((item)=> item.id !== action.payload.id)
             if (basket.length === state.basket.length) {

@@ -1,7 +1,10 @@
 import * as React from "react";
 import styled from "styled-components"
 import {useEffect, useState} from "react";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {FormSlice} from "../../../../../store/reducers/FormSlice";
+import {UserSlice} from "../../../../../store/reducers/UserSlice";
 import {RouteNames} from "../../../../../Router";
 import {Theme} from "../../../../../styles";
 
@@ -11,28 +14,46 @@ export const ProfileNavbar = (props) => {
         isOpen = false,
         setIsOpen
     } = props
-    const Auth = true
-
-    const [profileNavbarHeight, setProfileNavbarHeight] = useState(document.getElementById('profile-navbar')?.offsetHeight || 500)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.user.data)
+    const {clearUserData} = UserSlice.actions
+    const {setLoginForm} = FormSlice.actions
+    const [profileNavbarHeight, setProfileNavbarHeight] = useState(document.getElementById('profile-navbar')?.offsetHeight || 250)
 
     useEffect(() => {
         setProfileNavbarHeight(document.getElementById('profile-navbar')?.offsetHeight)
-    }, [])
+    }, [user.id])
 
     return (
         <ProfileNavbarBlock id='profile-navbar' isOpen={isOpen} headerHeight={Theme.size.header.height} profileNavbarHeight={profileNavbarHeight}>
             <ProfileNavbarContainer>
-                {(Auth)?
+                {(user.id)?
                     <>
-                        {/*<NavLinkBlock to={RouteNames.PROFILE} title="Профиль" onClick={() => setIsOpen(false)}>Профиль</NavLinkBlock>*/}
-                        {(true)?
+                        <NavLinkBlock to={RouteNames.PROFILE} title="Профиль" onClick={() => setIsOpen(false)}>Профиль</NavLinkBlock>
+                        {(user.isAdmin)?
                             <NavLinkBlock to={RouteNames.ADMIN} title="Панель администратора" onClick={() => setIsOpen(false)}>Панель администратора</NavLinkBlock>
                             : null
                         }
-                        {/*<ProfileNavbarButton onClick={() => setIsOpen(false)}>Выйти</ProfileNavbarButton>*/}
+                        <ProfileNavbarButton
+                            onClick={() => {
+                                dispatch(clearUserData())
+                                setIsOpen(false)
+                                navigate('/')
+                            }}
+                        >
+                            Выйти
+                        </ProfileNavbarButton>
                     </>
                     : <>
-                        <ProfileNavbarButton onClick={() => setIsOpen(false)}>Войти</ProfileNavbarButton>
+                        <ProfileNavbarButton
+                            onClick={() => {
+                                dispatch(setLoginForm(true))
+                                setIsOpen(false)
+                            }}
+                        >
+                            Войти
+                        </ProfileNavbarButton>
                     </>
                 }
             </ProfileNavbarContainer>
