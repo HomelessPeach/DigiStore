@@ -9,8 +9,10 @@ import {productCategoryAPI} from "../services/ProductCategoryService";
 import {productFeatureAPI} from "../services/ProductFeatureService";
 import {productAPI} from "../services/ProductService";
 import {userAPI} from "../services/UserService";
+import {UserSlice} from "./reducers/UserSlice";
 
 const rootReducer = combineReducers({
+    [UserSlice.name]: UserSlice.reducer,
     // [authAPI.reducerPath]: authAPI.reducer,
     [chatAPI.reducerPath]: chatAPI.reducer,
     [feedbackAPI.reducerPath]: feedbackAPI.reducer,
