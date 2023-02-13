@@ -7,10 +7,10 @@ class AuthController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body} = req
-            const user = await AuthBusinessService.userLogin(body, transaction)
+            const tokens = await AuthBusinessService.userLogin(body, transaction)
             await transaction.commit();
-            res.cookie('refreshToken', user.tokens.refresh_token, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
-            res.json(user)
+            res.cookie('refreshToken', tokens.refresh_token, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
+            res.json({accessToken: tokens.access_token})
         } catch (err) {
             await transaction.rollback();
             next(err)
@@ -24,7 +24,7 @@ class AuthController {
             const tokens = await AuthBusinessService.userRefresh(refreshToken, transaction)
             await transaction.commit();
             res.cookie('refreshToken', tokens.refresh_token, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
-            res.json(tokens)
+            res.json({accessToken: tokens.access_token})
         } catch (err) {
             await transaction.rollback();
             next(err)
