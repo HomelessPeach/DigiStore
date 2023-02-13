@@ -1,20 +1,33 @@
 import {createSlice} from "@reduxjs/toolkit";
+import jwtDecode from "jwt-decode";
 
 export const UserSlice = createSlice({
     name: 'user',
     initialState: {
-        data: JSON.parse(localStorage.getItem('user')) || {
-            id: null,
-            email: '',
-            name: '',
-            phoneNumber: '',
-            isAdmin: false,
-            avatar: '',
-        },
-        tokens: JSON.parse(localStorage.getItem('tokens')) || {
-            accessToken: '',
-            refreshToken: '',
-        },
+        data: (() => {
+            const accessToken = localStorage.getItem('accessToken')
+
+            if (!accessToken)
+                return {
+                    id: null,
+                    email: '',
+                    name: '',
+                    phoneNumber: '',
+                    isAdmin: false,
+                    avatar: '',
+                }
+
+            const user = jwtDecode(localStorage.getItem('accessToken'))
+
+            return {
+                id: user.user_id,
+                email: user.user_email,
+                name: user.user_name,
+                phoneNumber: user.user_phone_number,
+                isAdmin: user.is_admin,
+                avatar: user.image
+            }
+        })(),
         wishList: JSON.parse(localStorage.getItem('wishList')) || [],
         basket: JSON.parse(localStorage.getItem('basket')) || [],
     },

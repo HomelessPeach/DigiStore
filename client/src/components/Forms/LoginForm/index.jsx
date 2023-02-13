@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import jwtDecode from 'jwt-decode';
 import {authAPI} from "../../../services/AuthService";
 import {UserSlice} from "../../../store/reducers/UserSlice";
 import {FormSlice} from "../../../store/reducers/FormSlice";
@@ -24,7 +25,7 @@ export const LoginForm = () => {
             .catch((err) => {
                 console.log(err)
             })
-        const {user} = res
+        const user = jwtDecode(res.accessToken)
         dispatch(setUserData({
             id: user.user_id,
             email: user.user_email,
@@ -34,6 +35,7 @@ export const LoginForm = () => {
             avatar: user.image
         }))
         dispatch(setLoginForm(false))
+        localStorage.setItem('accessToken', res.accessToken)
     }
 
     if (!loginForm)

@@ -32,6 +32,7 @@ export const ProfileNavbar = (props) => {
         dispatch(clearUserData())
         setIsOpen(false)
         navigate('/')
+        localStorage.removeItem('accessToken')
     }
 
     useEffect(() => {
