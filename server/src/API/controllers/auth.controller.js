@@ -20,7 +20,7 @@ class AuthController {
     static async refresh(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
-            const {cookies: {refresh_token: refreshToken}} = req;
+            const {cookies: {refreshToken}} = req;
             const tokens = await AuthBusinessService.userRefresh(refreshToken, transaction)
             await transaction.commit();
             res.cookie('refreshToken', tokens.refresh_token, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
@@ -34,7 +34,7 @@ class AuthController {
     static async logout(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
-            const {cookies: {refresh_token: refreshToken}} = req;
+            const {cookies: {refreshToken}} = req;
             await AuthBusinessService.userLogout(refreshToken, transaction)
             await transaction.commit();
             res.clearCookie('refreshToken');
