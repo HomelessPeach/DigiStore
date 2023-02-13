@@ -1,5 +1,5 @@
 const {Router} = require("express");
-// const {routerAuth} = require("./routers/auth.router");
+const {routerAuth} = require("./routers/auth.router");
 const {routerChat} = require("./routers/chat.router");
 const {routerFeedback} = require("./routers/feedback.router");
 const {routerNews} = require("./routers/news.router");
@@ -12,7 +12,7 @@ const {routerUser} = require("./routers/user.router");
 const routerApi = Router()
 
 routerApi
-    // .use('/auth', routerAuth)
+    .use('/auth', routerAuth)
     .use('/chat', routerChat)
     .use('/feedback', routerFeedback)
     .use('/news', routerNews)
