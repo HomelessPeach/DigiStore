@@ -7,3 +7,5 @@ routerAuth
     .post('/login', AuthController.login)
     .put('/refresh', AuthController.refresh)
     .delete('/logout', AuthController.logout)
+
+module.exports = {routerAuth}

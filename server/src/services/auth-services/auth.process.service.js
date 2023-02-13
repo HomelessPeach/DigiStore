@@ -1,9 +1,9 @@
 const {compare} = require("bcryptjs")
 const jwt = require('jsonwebtoken')
-const {AuthDatabaseService} = require('auth.database.service')
+const {AuthDatabaseService} = require('./auth.database.service')
 const {UserDatabaseService} = require("../user-services/user.database.service")
 const {ApiError} = require("../../errors/api.error")
-import {application} from '../../../config/config';
+const {application} = require('../../../config/config');
 
 class AuthProcessService {
 
