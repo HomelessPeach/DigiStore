@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {authAPI} from "../../../services/AuthService";
 import {UserSlice} from "../../../store/reducers/UserSlice";
 import {FormSlice} from "../../../store/reducers/FormSlice";
 import {attributeFilesUrl} from "../../../services";
@@ -11,10 +12,28 @@ import {TextInput} from "../../TextInput";
 export const LoginForm = () => {
 
     const dispatch = useDispatch()
+    const [login] = authAPI.useUserLoginMutation()
     const loginForm = useSelector(state => state.form.loginForm)
     const {setLoginForm} = FormSlice.actions
     const {setUserData} = UserSlice.actions
     const [loginData, setLoginData] = useState({})
+
+    async function loginHandler() {
+        const res = await login({user_email: loginData.email, user_password: loginData.password})
+            .unwrap()
+            .catch((err) => {
+                console.log(err)
+            })
+        dispatch(setUserData({
+            id: res.user_id,
+            email: res.user_email,
+            name: res.user_name,
+            phoneNumber: res.user_phone_number,
+            isAdmin: res.is_admin,
+            avatar: res.image
+        }))
+        dispatch(setLoginForm(false))
+    }
 
     if (!loginForm)
         return;
@@ -44,10 +63,7 @@ export const LoginForm = () => {
                 </InputBlock>
                 <ButtonBlock>
                     <Button
-                        onClick={() => {
-                            dispatch(setUserData({id: 1, email: loginData.email, isAdmin: true}))
-                            dispatch(setLoginForm(false))
-                        }}
+                        onClick={loginHandler}
                     >
                         Войти
                     </Button>

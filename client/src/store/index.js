@@ -1,6 +1,6 @@
 import {configureStore, combineReducers} from "@reduxjs/toolkit";
 import {setupListeners} from "@reduxjs/toolkit/query";
-// import {authAPI} from "../services/AuthService";
+import {authAPI} from "../services/AuthService";
 import {chatAPI} from "../services/ChatService";
 import {feedbackAPI} from "../services/FeedbackService";
 import {newsAPI} from "../services/NewsService";
@@ -15,7 +15,7 @@ import {FormSlice} from "./reducers/FormSlice";
 const rootReducer = combineReducers({
     [UserSlice.name]: UserSlice.reducer,
     [FormSlice.name]: FormSlice.reducer,
-    // [authAPI.reducerPath]: authAPI.reducer,
+    [authAPI.reducerPath]: authAPI.reducer,
     [chatAPI.reducerPath]: chatAPI.reducer,
     [feedbackAPI.reducerPath]: feedbackAPI.reducer,
     [newsAPI.reducerPath]: newsAPI.reducer,
@@ -32,7 +32,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
             .concat(
-                // authAPI.middleware,
+                authAPI.middleware,
                 chatAPI.middleware,
                 feedbackAPI.middleware,
                 newsAPI.middleware,

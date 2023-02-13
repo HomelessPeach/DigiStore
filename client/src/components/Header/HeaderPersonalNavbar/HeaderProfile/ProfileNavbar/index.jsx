@@ -3,6 +3,7 @@ import styled from "styled-components"
 import {useEffect, useState} from "react";
 import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+import {authAPI} from "../../../../../services/AuthService";
 import {FormSlice} from "../../../../../store/reducers/FormSlice";
 import {UserSlice} from "../../../../../store/reducers/UserSlice";
 import {RouteNames} from "../../../../../Router";
@@ -16,10 +17,21 @@ export const ProfileNavbar = (props) => {
     } = props
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [logout] = authAPI.useLogoutMutation()
     const user = useSelector(state => state.user.data)
     const {clearUserData} = UserSlice.actions
     const {setLoginForm} = FormSlice.actions
     const [profileNavbarHeight, setProfileNavbarHeight] = useState(document.getElementById('profile-navbar')?.offsetHeight || 250)
+
+    async function logoutHandler() {
+        await logout()
+            .unwrap()
+            .catch((err) => {
+                console.log(err)
+            })
+        dispatch(setLoginForm(true))
+        setIsOpen(false)
+    }
 
     useEffect(() => {
         setProfileNavbarHeight(document.getElementById('profile-navbar')?.offsetHeight)
@@ -47,10 +59,7 @@ export const ProfileNavbar = (props) => {
                     </>
                     : <>
                         <ProfileNavbarButton
-                            onClick={() => {
-                                dispatch(setLoginForm(true))
-                                setIsOpen(false)
-                            }}
+                            onClick={logoutHandler}
                         >
                             Войти
                         </ProfileNavbarButton>
