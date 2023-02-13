@@ -4,6 +4,29 @@ const {users, images, chats, favorite_products, orders, reviews} = initModels(Se
 
 class UserDatabaseService {
 
+    static async findUserByEmail(email, transaction = null) {
+        return await users.findOne({
+            where: {
+                user_email: email
+            },
+            attributes: [
+                'user_id',
+                'user_email',
+                'user_name',
+                'user_phone_number',
+                'is_admin',
+            ],
+            include: [{
+                model: images,
+                as: 'image',
+                attributes: [
+                    'image_path',
+                ],
+            }],
+            transaction: transaction
+        })
+    }
+
     static async createUser(userData, transaction) {
         return users.create(
             userData, {

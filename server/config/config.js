@@ -5,6 +5,8 @@ module.exports = {
     application: {
         domain: 'localhost',
         port: 8081,
+        accessTokenKey: 'access_token',
+        refreshTokenKey: 'refresh_token',
         cors: {
             whiteList: [
                 'http://localhost:3000',
