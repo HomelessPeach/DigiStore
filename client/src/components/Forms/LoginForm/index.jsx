@@ -12,7 +12,7 @@ import {TextInput} from "../../TextInput";
 export const LoginForm = () => {
 
     const dispatch = useDispatch()
-    const [login] = authAPI.useUserLoginMutation()
+    const [login] = authAPI.useLoginMutation()
     const loginForm = useSelector(state => state.form.loginForm)
     const {setLoginForm} = FormSlice.actions
     const {setUserData} = UserSlice.actions
@@ -24,13 +24,14 @@ export const LoginForm = () => {
             .catch((err) => {
                 console.log(err)
             })
+        const {user} = res
         dispatch(setUserData({
-            id: res.user_id,
-            email: res.user_email,
-            name: res.user_name,
-            phoneNumber: res.user_phone_number,
-            isAdmin: res.is_admin,
-            avatar: res.image
+            id: user.user_id,
+            email: user.user_email,
+            name: user.user_name,
+            phoneNumber: user.user_phone_number,
+            isAdmin: user.is_admin,
+            avatar: user.image
         }))
         dispatch(setLoginForm(false))
     }

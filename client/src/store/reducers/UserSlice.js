@@ -20,7 +20,7 @@ export const UserSlice = createSlice({
     },
     reducers: {
         setUserData(state, action) {
-            state.data = {...action.data, ...action.payload}
+            state.data = {...action.payload}
         },
         clearUserData(state) {
             state.data = {

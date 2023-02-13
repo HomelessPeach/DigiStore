@@ -29,8 +29,9 @@ export const ProfileNavbar = (props) => {
             .catch((err) => {
                 console.log(err)
             })
-        dispatch(setLoginForm(true))
+        dispatch(clearUserData())
         setIsOpen(false)
+        navigate('/')
     }
 
     useEffect(() => {
@@ -48,18 +49,17 @@ export const ProfileNavbar = (props) => {
                             : null
                         }
                         <ProfileNavbarButton
-                            onClick={() => {
-                                dispatch(clearUserData())
-                                setIsOpen(false)
-                                navigate('/')
-                            }}
+                            onClick={logoutHandler}
                         >
                             Выйти
                         </ProfileNavbarButton>
                     </>
                     : <>
                         <ProfileNavbarButton
-                            onClick={logoutHandler}
+                            onClick={() => {
+                                dispatch(setLoginForm(true))
+                                setIsOpen(false)
+                            }}
                         >
                             Войти
                         </ProfileNavbarButton>
