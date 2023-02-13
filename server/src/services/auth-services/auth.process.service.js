@@ -29,7 +29,14 @@ class AuthProcessService {
         const isValidPassword = await compare(userData.user_password, user.user_password)
         if (!isValidPassword)
             throw ApiError.BadRequest('Ошибка авторизации!');
-        return user
+        return {
+            user_id: user.user_id,
+            user_email: user.user_email,
+            user_name: user.user_name,
+            user_phone_number: user.user_phone_number,
+            is_admin: user.is_admin,
+            image: user.image?.image_path
+        }
     }
 
     static generateToken(userData) {
