@@ -7,8 +7,8 @@ class ChatController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body: {data}, files} = req;
-            await transaction.commit();
             const chat = await ChatBusinessService.createChat()
+            await transaction.commit();
             res.json(chat)
         } catch (err) {
             await transaction.rollback();
@@ -43,8 +43,8 @@ class ChatController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body} = req;
-            await transaction.commit();
             const message = await ChatBusinessService.createMessage(body)
+            await transaction.commit();
             res.json(message)
         } catch (err) {
             await transaction.rollback();

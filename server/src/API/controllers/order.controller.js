@@ -44,8 +44,8 @@ class OrderController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body: {data}, files} = req;
-            await transaction.commit();
 
+            await transaction.commit();
             res.json('')
         } catch (err) {
             await transaction.rollback();
