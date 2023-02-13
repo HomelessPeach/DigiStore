@@ -12,6 +12,7 @@ class UserDatabaseService {
             attributes: [
                 'user_id',
                 'user_email',
+                'user_password',
                 'user_name',
                 'user_phone_number',
                 'is_admin',

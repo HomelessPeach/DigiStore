@@ -13,7 +13,7 @@ class AuthProcessService {
         return {
             token_jwt: refreshToken,
             fk_user: userId,
-            expired: dateExpired
+            expired: dateExpired.toJSON().slice(0, 19).replace('T', ' ')
         }
     }
 
