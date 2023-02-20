@@ -31,6 +31,10 @@ export async function passwordHook(password) {
     return await bcrypt.hash(password, salt);
 }
 
+export async function checkPassword(password, hashPassword) {
+    return await bcrypt.compare(password, hashPassword)
+}
+
 export function passwordValidate(password) {
     const PASSWORD_REGEXP = /(?=.*[0-9])(?=.*[a-z])^[0-9a-z!@#$%^&*:().;<>'"{}[\]?/|\-_\\~`]{5,25}$/ig
     return PASSWORD_REGEXP.test(password)

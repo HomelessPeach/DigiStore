@@ -49,6 +49,7 @@ export const UserSlice = createSlice({
             const basket = state.basket.filter((item)=> item.id !== action.payload.id)
             if (basket.length === state.basket.length) {
                 state.basket.push(action.payload)
+                localStorage.setItem('basket', JSON.stringify(state.basket))
                 return;
             }
             state.basket = [...basket]
