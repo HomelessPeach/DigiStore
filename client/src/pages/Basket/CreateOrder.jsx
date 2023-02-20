@@ -1,8 +1,13 @@
 import * as React from "react";
 import styled from "styled-components";
 import {useEffect, useState} from "react";
+import {orderAPI} from "../../services/OrderService";
 import {TextInput} from "../../components/TextInput";
 import {useSelector} from "react-redux";
+import {PhoneNumberInput} from "../../components/PhoneNumberInput";
+import {emailValidate, userNameValidate} from "../../utils";
+import {AdminRouteNames} from "../../Router";
+import {useNavigate} from "react-router-dom";
 
 export const CreateOrder = (props) => {
 
@@ -11,14 +16,42 @@ export const CreateOrder = (props) => {
         sum
     } = props
 
+    const navigate = useNavigate();
+    const [createOrder] = orderAPI.useAddOrderMutation()
     const [orderData, setOrderData] = useState({})
+    const [isNotValid, setIsNotValid] = useState(false)
     const {data: user} = useSelector(state => state.user)
 
+    const validation = {
+        client_email: (email) => email && emailValidate(email),
+        client_name: (name) => name && userNameValidate(name),
+        client_phone_number: (phoneNumber) => {
+            return phoneNumber?.length === 10
+        },
+        checkValidate: () =>
+            validation.client_email(orderData.client_email) &&
+            validation.client_phone_number(orderData.client_phone_number) &&
+            validation.client_name(orderData.client_name)
+    }
+
     useEffect(() => {
-        setOrderData({products: basketContent, sum: sum})
+        setOrderData({products: basketContent, sum: sum, user_id: user.id, client_name: user.name, client_email: user.email, client_phone_number: user.phoneNumber})
     }, [basketContent, sum])
 
-    console.log(user)
+    async function createOrderHandler() {
+        if (validation.checkValidate()) {
+            const res = await createOrder(orderData)
+                .unwrap()
+                .catch((err) => {
+                    console.log(err)
+                })
+            if (res) {
+                navigate('/')
+            }
+        } else {
+            setIsNotValid(true)
+        }
+    }
 
     return(
         <CreateOrderContainer>
@@ -26,22 +59,22 @@ export const CreateOrder = (props) => {
                 <InputBlock>
                     <TextInput
                         value={user.name}
-                        onChange={(value) => setOrderData({...orderData, userData: {...orderData.userData, user_name: value}})}
+                        onChange={(value) => setOrderData({...orderData, client_name: value})}
                         label={'Имя'}
                     />
                     <TextInput
-                        value={user.phoneNumber}
-                        onChange={(value) => setOrderData({...orderData, userData: {...orderData.userData, user_phone_number: value}})}
-                        label={'Номер телефона'}
-                    />
-                    <TextInput
                         value={user.email}
-                        onChange={(value) => setOrderData({...orderData, userData: {...orderData.userData, user_email: value}})}
+                        onChange={(value) => setOrderData({...orderData, client_email: value})}
                         label={'e-mail'}
+                    />
+                    <PhoneNumberInput
+                        value={user.phoneNumber}
+                        onChange={(value) => setOrderData({...orderData, client_phone_number: value})}
+                        label={'Номер телефона'}
                     />
                 </InputBlock>
                 <ButtonBlock>
-                    <Button>
+                    <Button onClick={createOrderHandler}>
                         Оформить заказ
                     </Button>
                 </ButtonBlock>
@@ -78,6 +111,7 @@ const ButtonBlock = styled.div`
 `
 
 const Button = styled.div`
+  user-select: none;
   text-decoration: none;
   display: flex;
   align-items: center;
