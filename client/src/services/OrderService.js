@@ -6,6 +6,13 @@ export const orderAPI = createApi({
     tagTypes: ['Order'],
     baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/order`}),
     endpoints: (build) => ({
+        addOrder: build.mutation({
+            query: (data) => ({
+                url: `/add`,
+                method: 'POST',
+                body: data
+            })
+        }),
         orderList: build.query({
             query: ({offset = 0, limit = 10, sort = '', order = 'ASC'}) => ({
                 url: `/admin`,
@@ -28,6 +35,6 @@ export const orderAPI = createApi({
                 method: 'GET',
             }),
             providesTags: ['Order']
-        })
+        }),
     })
 })
