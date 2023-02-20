@@ -4,10 +4,8 @@ const {OrderController} = require("../controllers/order.controller");
 const routerOrder = Router()
 
 routerOrder
-    .post('/admin', OrderController.createOrder)
+    .post('/add', OrderController.addOrder)
     .get('/admin', OrderController.listOrder)
     .get('/admin/:id', OrderController.showOrder)
-    .put('/admin/:id', OrderController.updateOrder)
-    .delete('/admin/:id', OrderController.deleteOrder)
 
 module.exports = {routerOrder}

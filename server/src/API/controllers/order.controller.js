@@ -4,13 +4,13 @@ const {or} = require("sequelize");
 
 class OrderController {
 
-    static async createOrder(req, res, next) {
+    static async addOrder(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
-            const {body: {data}, files} = req;
-
+            const {body} = req;
+            const order = await OrderBusinessService.addOrder(body, transaction)
             await transaction.commit();
-            res.json('')
+            res.json(order)
         } catch (err) {
             await transaction.rollback();
             next(err)
@@ -36,32 +36,6 @@ class OrderController {
             const order = await OrderBusinessService.showOrder(id)
             res.json(order)
         } catch (err) {
-            next(err)
-        }
-    }
-
-    static async updateOrder(req, res, next) {
-        const transaction = await SequelizeConnect.transaction()
-        try {
-            const {body: {data}, files} = req;
-
-            await transaction.commit();
-            res.json('')
-        } catch (err) {
-            await transaction.rollback();
-            next(err)
-        }
-    }
-
-    static async deleteOrder(req, res, next) {
-        const transaction = await SequelizeConnect.transaction()
-        try {
-            const {id} = req.params;
-
-            await transaction.commit();
-            res.json('Данные удалены')
-        } catch (err) {
-            await transaction.rollback();
             next(err)
         }
     }

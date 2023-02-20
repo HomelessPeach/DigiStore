@@ -11,5 +11,6 @@ routerUser
     .get('/admin/:id', UserController.showUser)
     .put('/admin/:id', middlewareMulter.fields([{name: 'sourceImage'}]), UserController.updateUser)
     .delete('/admin/:id', UserController.deleteUser)
+    .get('/check_pass/:id', UserController.checkPassword)
 
 module.exports = {routerUser}
