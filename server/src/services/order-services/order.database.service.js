@@ -1,6 +1,6 @@
 const {SequelizeConnect} = require('../database-connect')
 const initModels = require('../../../models/init-models')
-const {orders} = initModels(SequelizeConnect)
+const {order_products, orders} = initModels(SequelizeConnect)
 
 class OrderDatabaseService {
 
@@ -29,28 +29,15 @@ class OrderDatabaseService {
         })
     }
 
-    static async updateOrder(orderData, orderId, transaction) {
-        return await orders.update(
-            orderData, {
-                where: {
-                    order_id: orderId
-                },
-                returning: true,
-                transaction: transaction
-            })
-    }
-
-    static async deleteOrder(orderId, transaction) {
-        return await orders.destroy({
-            where: {
-                order_id: orderId
-            },
-            transaction: transaction
-        })
-    }
-
     static async countOrder() {
         return await orders.count()
+    }
+
+    static async createProductOrder(orderProductData, transaction) {
+        return order_products.create(
+            orderProductData, {
+                transaction: transaction
+            })
     }
 
 }

@@ -4,6 +4,18 @@ const {users, images, chats, favorite_products, orders, reviews} = initModels(Se
 
 class UserDatabaseService {
 
+    static async getUserPassword(userId, transaction = null) {
+        return await users.findOne({
+            where: {
+                user_id: userId
+            },
+            attributes: [
+                'user_password',
+            ],
+            transaction: transaction
+        })
+    }
+
     static async findUserByEmail(email, transaction = null) {
         return await users.findOne({
             where: {

@@ -3,8 +3,11 @@ const {OrderProcessService} = require("./order.process.service");
 
 class OrderBusinessService {
 
-    static async createOrder() {
-        return 1
+    static async addOrder(body, transaction) {
+        const {orderData} = OrderProcessService.orderDataWrite(body)
+        const order = await OrderDatabaseService.createOrder(orderData, transaction)
+        await OrderProcessService.orderProductDataWrite(body, order.order_id, transaction)
+        return order
     }
 
     static async listOrder(query) {

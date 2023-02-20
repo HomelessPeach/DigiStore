@@ -5,6 +5,10 @@ const {folderPath} = require("../../../config/config")
 
 class UserBusinessService {
 
+    static async getUserPassword(userId) {
+        return await UserDatabaseService.getUserPassword(userId)
+    }
+
     static async createUser(body, files, transaction) {
         const {userData} = UserProcessService.userDataWrite(body)
         if (files.sourceImage?.length) {
