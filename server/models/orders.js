@@ -25,7 +25,20 @@ module.exports = function(sequelize, DataTypes) {
     client_phone_number: {
       type: DataTypes.TEXT,
       allowNull: false
-    }
+    },
+    client_email: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    client_name: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    is_cancel: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
   }, {
     sequelize,
     tableName: 'orders',
