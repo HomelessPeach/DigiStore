@@ -5,7 +5,7 @@ import {CarouselButton} from "./CarouselButton";
 import {CarouselDot} from "./CarouselDot";
 import {CarouselDefaultChild} from "./CarouselDefaultChild";
 
-const AnimationTime = 250
+const AnimationTime = 150
 
 export const Carousel = (props) => {
 
