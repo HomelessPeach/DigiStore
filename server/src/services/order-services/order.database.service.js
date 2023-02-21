@@ -16,6 +16,15 @@ class OrderDatabaseService {
             offset: orderSort.offset,
             limit: orderSort.limit,
             order: orderSort.order,
+            attributes: [
+                'order_id',
+                'order_number',
+                'fk_user',
+                'client_name',
+                'client_phone_number',
+                'is_complete',
+                'is_cancel'
+            ],
             transaction: transaction
         })
     }
@@ -25,6 +34,26 @@ class OrderDatabaseService {
             where: {
                 order_id: orderId
             },
+            attributes: [
+                'order_id',
+                'order_number',
+                'fk_user',
+                'client_name',
+                'client_phone_number',
+                'client_email',
+                'is_complete',
+                'is_cancel'
+            ],
+            include: [{
+                model: order_products,
+                as: 'order_products',
+                attributes: [
+                    'fk_product',
+                    'order_product_count',
+                    'order_product_price',
+                    'order_product_name'
+                ],
+            }],
             transaction: transaction
         })
     }
@@ -38,6 +67,36 @@ class OrderDatabaseService {
             orderProductData, {
                 transaction: transaction
             })
+    }
+
+    static async cancelOrder(orderId, transaction) {
+        return await orders.update(
+            {
+                is_cancel: true,
+            },{
+                where: {
+                    order_id: orderId,
+                    is_complete: false
+                },
+                returning: true,
+                transaction: transaction
+            }
+        )
+    }
+
+    static async completeOrder(orderId, transaction) {
+        return await orders.update(
+            {
+                is_complete: true,
+            },{
+                where: {
+                    order_id: orderId,
+                    is_cancel: false
+                },
+                returning: true,
+                transaction: transaction
+            }
+        )
     }
 
 }

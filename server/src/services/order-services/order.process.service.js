@@ -1,6 +1,7 @@
 const {v4} = require('uuid')
 const {OrderDatabaseService} = require("./order.database.service");
 const {ApiError} = require("../../errors/api.error");
+const {ProductDatabaseService} = require("../product-services/product.database.service");
 
 class OrderProcessService {
 
@@ -28,8 +29,14 @@ class OrderProcessService {
                 fk_order: orderId,
                 fk_product: product.id,
                 order_product_count: product.count,
-                order_product_total: product.count * product.price
             }
+            const checkProductData = await ProductDatabaseService.showProduct(product.id, transaction)
+
+            if (product.price !== checkProductData.product_price)
+                throw ApiError.BadRequest('Ошибка при создание заказа')
+
+            productData.order_product_price = checkProductData.product_price
+            productData.order_product_name = checkProductData.product_name
             await OrderDatabaseService.createProductOrder(productData, transaction)
         }
     }

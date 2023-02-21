@@ -21,12 +21,12 @@ class OrderBusinessService {
         return await OrderDatabaseService.showOrder(orderId)
     }
 
-    static async updateOrder() {
-        return 1
+    static async cancelOrder(orderId, transaction) {
+        return await OrderDatabaseService.cancelOrder(orderId, transaction)
     }
 
-    static async deleteOrder(orderId) {
-        return await OrderDatabaseService.deleteOrder(orderId)
+    static async completeOrder(orderId, transaction) {
+        return await OrderDatabaseService.completeOrder(orderId, transaction)
     }
 
 }

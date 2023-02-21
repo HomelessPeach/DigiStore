@@ -40,6 +40,32 @@ class OrderController {
         }
     }
 
+    static async cancelOrder(req, res, next) {
+        const transaction = await SequelizeConnect.transaction()
+        try {
+            const {id} = req.params;
+            await OrderBusinessService.cancelOrder(id, transaction)
+            await transaction.commit();
+            res.json(`Заказ отменён`)
+        } catch (err) {
+            await transaction.rollback();
+            next(err)
+        }
+    }
+
+    static async completeOrder(req, res, next) {const transaction = await SequelizeConnect.transaction()
+        try {
+            const {id} = req.params;
+            await OrderBusinessService.completeOrder(id, transaction)
+            await transaction.commit();
+            res.json(`Заказ выполнен`)
+        } catch (err) {
+            await transaction.rollback();
+            next(err)
+        }
+
+    }
+
 }
 
 module.exports = {OrderController}
