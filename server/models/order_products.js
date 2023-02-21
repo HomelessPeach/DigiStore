@@ -21,8 +21,12 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 1
     },
-    order_product_total: {
+    order_product_price: {
       type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    order_product_name: {
+      type: DataTypes.TEXT,
       allowNull: true
     }
   }, {
