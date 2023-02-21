@@ -55,8 +55,8 @@ export const FeedbackShow = () => {
                     <EditToolbarBlock>
                         <Button
                             onClick={markAsAnswered}
-                            width={150}
-                            height={50}
+                            width={250}
+                            height={45}
                         >
                             Пометить как отвеченное
                         </Button>

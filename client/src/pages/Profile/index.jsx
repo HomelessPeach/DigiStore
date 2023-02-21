@@ -42,7 +42,7 @@ export const Profile = () => {
                     </ProfileInfo>
                 </ProfileCard>
             </ProfileContainer>
-            <FavoriteContainer>
+            <ItemsContainer>
                 <Title>Избранное</Title>
                 {(favorite.length)?
                     <CarouselWrapper>
@@ -118,9 +118,18 @@ export const Profile = () => {
                             }
                         </Carousel>
                     </CarouselWrapper>
-                    : <EmptyWishList>Пусто</EmptyWishList>
+                    : <EmptyBlock>Здесь ничего нет</EmptyBlock>
                 }
-            </FavoriteContainer>
+            </ItemsContainer>
+            <ItemsContainer>
+                <Title>Заказы</Title>
+                {(false)?
+                    <OrdersContainer>
+
+                    </OrdersContainer>
+                    :<EmptyBlock>Здесь ничего нет</EmptyBlock>
+                }
+            </ItemsContainer>
         </ProfilePage>
     )
 }
@@ -173,7 +182,7 @@ const Block = styled.div`
   width: 50%;
 `
 
-const FavoriteContainer = styled.div`
+const ItemsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -293,7 +302,7 @@ const AddToBasket = styled.div`
   padding: 5px;
 `
 
-const EmptyWishList = styled.div`
+const EmptyBlock = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -302,4 +311,15 @@ const EmptyWishList = styled.div`
   font-size: 25px;
   box-shadow: 0 0 10px 0 #808080;
   border-radius: 30px;
+`
+
+const OrdersContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  box-shadow: 0 0 10px 0 #808080;
+  border-radius: 30px;
+  width: 100%;
 `

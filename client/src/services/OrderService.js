@@ -36,5 +36,19 @@ export const orderAPI = createApi({
             }),
             providesTags: ['Order']
         }),
+        orderCancel: build.mutation({
+            query: (id) => ({
+                url: `/cancel/${id}`,
+                method: 'PUT',
+            }),
+            invalidatesTags: ['Order']
+        }),
+        orderComplete: build.mutation({
+            query: (id) => ({
+                url: `/complete/${id}`,
+                method: 'PUT',
+            }),
+            invalidatesTags: ['Order']
+        })
     })
 })
