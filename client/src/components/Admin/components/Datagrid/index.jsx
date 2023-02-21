@@ -11,7 +11,7 @@ export const DataGrid = (props) => {
         getData,
         children,
         idName = 'id',
-        pagination = 10
+        pagination = 10,
     } = props
 
     const [sort, setSort] = useState(idName)
@@ -33,6 +33,14 @@ export const DataGrid = (props) => {
         }
     }
 
+    function convertParams(data, params = []) {
+        const result = {}
+        params.forEach((item) => {
+            result[item] = data[item]
+        })
+        return result
+    }
+
     const {data: response, isLoading} = getData({limit: pagination, offset: pagination * page, sort: sort, order: order}, {refetchOnFocus: true})
 
     if (isLoading)
@@ -47,7 +55,7 @@ export const DataGrid = (props) => {
         const items = []
         for (let i = 0; i < totalCount/pagination; i++) {
             items.push(
-                <ButtonBlock onClick={() => setPage(i)} pageNumber={i} activePage={page}>
+                <ButtonBlock key={i} onClick={() => setPage(i)} pageNumber={i} activePage={page}>
                     <ButtonItemBlock>
                         {i + 1}
                     </ButtonItemBlock>
@@ -87,7 +95,7 @@ export const DataGrid = (props) => {
                                     {
                                         children.map((child, index) =>
                                             <ItemValueBlock key={index} widthField={100 / children.length}>
-                                                {{...child, props: {...child.props, value: item[child.props.source]}}}
+                                                {{...child, props: {...child.props, value: item[child.props.source], paramsValue: convertParams(item, child.props.params)}}}
                                             </ItemValueBlock>
                                         )
                                     }
