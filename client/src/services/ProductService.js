@@ -31,6 +31,47 @@ export const productAPI = createApi({
             }),
             providesTags: ['Product']
         }),
+        getProductReview: build.mutation({
+            query: ({id, userId}) => ({
+                url: `/${id}/review/${userId}`,
+                method: 'GET',
+            }),
+            providesTags: ['Product']
+        }),
+        getProductReviews: build.query({
+            query: ({id, offset, limit}) => ({
+                url: `/${id}/review`,
+                method: 'GET',
+                params: {
+                    _offset: offset,
+                    _limit: limit,
+                }
+            }),
+            providesTags: ['Product']
+        }),
+        createProductReview: build.mutation({
+           query: (data) => ({
+               url: `/review`,
+               method: 'POST',
+               body: data
+           }),
+            invalidatesTags: ['Product']
+        }),
+        updateProductReview: build.mutation({
+            query: (data) => ({
+                url: `/review/${data.review_id}`,
+                method: 'PUT',
+                body: data
+            }),
+            invalidatesTags: ['Product']
+        }),
+        deleteProductReview: build.mutation({
+            query: (id) => ({
+                url: `/review/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Product']
+        }),
         productList: build.query({
             query: ({offset = 0, limit = 10, sort = '', order = 'ASC'}) => ({
                 url: `/admin`,
