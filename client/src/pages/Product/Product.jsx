@@ -39,7 +39,7 @@ export const Product = () => {
                             to={`${RouteNames.PRODUCT}/show/${item.product_id}`}
                         >
                             <ImageBlock>
-                                <Img src={`${baseUrl}${item.product_images[0].image.image_path}`}/>
+                                <Img src={`${baseUrl}${item.product_images[0]?.image.image_path}`}/>
                             </ImageBlock>
                             <InfoBlock>
                                 <ProductTitle>
@@ -68,7 +68,7 @@ export const Product = () => {
                                                 onClick={(event) => {
                                                     dispatch(addToBasket({
                                                         id: item.product_id,
-                                                        image: item.product_images[0].image.image_path,
+                                                        image: item.product_images[0]?.image.image_path,
                                                         name: item.product_name,
                                                         price: item.product_price,
                                                         count: 1
@@ -84,7 +84,7 @@ export const Product = () => {
                                                     onClick={(event) => {
                                                         dispatch(addToFavorite({
                                                             id: item.product_id,
-                                                            image: item.product_images[0].image.image_path,
+                                                            image: item.product_images[0]?.image.image_path,
                                                             name: item.product_name,
                                                             price: item.product_price,
                                                         }))

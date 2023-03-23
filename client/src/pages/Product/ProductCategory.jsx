@@ -29,7 +29,7 @@ export const ProductCategory = () => {
                             to={`${RouteNames.PRODUCT}/category/${item.product_category_id}`}
                         >
                             <ImageBlock>
-                                <Img src={`${baseUrl}${item.image.image_path}`}/>
+                                <Img src={`${baseUrl}${item?.image?.image_path}`}/>
                             </ImageBlock>
                             <TextBlock>
                                 {item.product_category_name}

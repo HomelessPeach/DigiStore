@@ -58,7 +58,7 @@ export const Home = () => {
                                             }}
                                             key={index}
                                         >
-                                            <Img src={`${baseUrl}${item.product_images[0].image.image_path}`}/>
+                                            <Img src={`${baseUrl}${item.product_images[0]?.image.image_path}`}/>
                                             <BlockForIcon>
                                                 <IconBlock>
                                                     <New/>
@@ -101,7 +101,7 @@ export const Home = () => {
                                             >
                                                 <NewsNameImg>
                                                     <NewsImageBlock>
-                                                        <ImgNews src={`${baseUrl}${item.image.image_path}`}/>
+                                                        <ImgNews src={`${baseUrl}${item.image?.image_path}`}/>
                                                     </NewsImageBlock>
                                                     <NewsNameBlock>
                                                         <NewsName>

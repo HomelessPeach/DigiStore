@@ -16,7 +16,7 @@ export const NewsCard = () => {
     return (
         <NewsCardBlock>
             <ImageBlock>
-                <Img src={`${baseUrl}${data.image.image_path}`}/>
+                <Img src={`${baseUrl}${data.image?.image_path}`}/>
                 <NewsNameBlock>
                     <NewsName>
                         {data.news_name}

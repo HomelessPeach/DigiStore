@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 import {RouteNames} from "../../Router";
 import {baseUrl} from "../../services";
 import {Delete} from "../../components/Icons";
-import {CreateOrder} from "./CreateOrder";
+import {CreateOrder} from "../../components/CreateOrder";
 import {UserSlice} from "../../store/reducers/UserSlice"
 import {priceFormat} from "../../utils";
 
