@@ -31,7 +31,7 @@ export const productAPI = createApi({
             }),
             providesTags: ['Product']
         }),
-        getProductReview: build.mutation({
+        getProductReview: build.query({
             query: ({id, userId}) => ({
                 url: `/${id}/review/${userId}`,
                 method: 'GET',
@@ -51,7 +51,7 @@ export const productAPI = createApi({
         }),
         createProductReview: build.mutation({
            query: (data) => ({
-               url: `/review`,
+               url: `/${data.fk_product}/review`,
                method: 'POST',
                body: data
            }),
@@ -59,15 +59,15 @@ export const productAPI = createApi({
         }),
         updateProductReview: build.mutation({
             query: (data) => ({
-                url: `/review/${data.review_id}`,
+                url: `/${data.fk_product}/review/${data.review_id}`,
                 method: 'PUT',
                 body: data
             }),
             invalidatesTags: ['Product']
         }),
         deleteProductReview: build.mutation({
-            query: (id) => ({
-                url: `/review/${id}`,
+            query: ({productId, reviewId}) => ({
+                url: `/${productId}/review/${reviewId}`,
                 method: 'DELETE',
             }),
             invalidatesTags: ['Product']

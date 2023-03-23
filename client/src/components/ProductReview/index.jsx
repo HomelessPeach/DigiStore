@@ -14,8 +14,7 @@ export const ProductReview = (props) => {
     } = props
 
     const {data: userData} = useSelector(state => state.user)
-    const [getReview] = productAPI.useGetProductReviewMutation()
-    const [review, setReview] = useState()
+    const {data: review, isLoading} = productAPI.useGetProductReviewQuery({id: productId, userId: userData.id}, {refetchOnFocus: true})
     const [edit, setEdit] = useState(true)
     const [addComment, setAddComment] = useState(false)
     const [createReview] = productAPI.useCreateProductReviewMutation()
@@ -40,24 +39,14 @@ export const ProductReview = (props) => {
     }
 
     async function deleteReviewHandler() {
-        await deleteReview(review.review_id)
+        setEdit(true)
+        setReviewData({fk_product: productId, fk_user: userData.id})
+        await deleteReview({productId: productId, reviewId: review.review_id})
             .unwrap()
             .catch((err) => {
                 console.log(err)
             })
     }
-
-    useEffect( () => {
-        async function getReviewHandler() {
-            const res = await getReview({id: productId, userId: userData.id})
-                .unwrap()
-                .catch((err) => {
-                    console.log(err)
-                })
-            setReview(res)
-        }
-        getReviewHandler()
-    }, [])
 
     useEffect(() => {
         if (review) {
@@ -68,6 +57,9 @@ export const ProductReview = (props) => {
             setAddComment(true)
         }
     }, [review])
+
+    if (isLoading)
+        return <h1>LOADING...</h1>
 
     return (
         <ProductReviews>

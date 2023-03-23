@@ -27,7 +27,7 @@ export const ProductCard = () => {
     const [showAllReviews, setShowAllReviews] = useState(false)
 
     async function deleteReviewHandler(reviewId) {
-        await deleteReview(reviewId)
+        await deleteReview({productId: id, reviewId: reviewId})
             .unwrap()
             .catch((err) => {
                 console.log(err)
@@ -175,7 +175,9 @@ export const ProductCard = () => {
                                     <TextField value={item.review_description}/>
                                     {(item.fk_user === userData.id)?
                                         <DeleteButton
-                                            onClick={() => deleteReviewHandler(item.review_id)}
+                                            onClick={() => {
+                                                deleteReviewHandler(item.review_id)
+                                            }}
                                         >
                                             Удалить отзыв
                                         </DeleteButton>

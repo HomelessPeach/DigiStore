@@ -19,7 +19,7 @@ export const ProductReviewsList = (props) => {
     const [deleteReview] = productAPI.useDeleteProductReviewMutation()
 
     async function deleteReviewHandler(reviewId) {
-        await deleteReview(reviewId)
+        await deleteReview({productId: productId, reviewId: reviewId})
             .unwrap()
             .catch((err) => {
                 console.log(err)
