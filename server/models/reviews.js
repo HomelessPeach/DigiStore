@@ -18,7 +18,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     fk_user: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      references: {
+        model: 'users',
+        key: 'user_id'
+      }
     },
     fk_product: {
       type: DataTypes.INTEGER,

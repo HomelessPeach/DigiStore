@@ -54,6 +54,8 @@ function initModels(sequelize) {
   product_features.hasMany(product_feature_values, { as: "product_feature_value", foreignKey: "fk_product_feature"});
   orders.hasMany(order_products, { as: "order_products", foreignKey: "fk_order"});
   order_products.belongsTo(orders, { as: "orders", foreignKey: "fk_order"});
+  reviews.belongsTo(users, { as: "users", foreignKey: "fk_user"});
+  users.hasMany(reviews, { as: "reviews", foreignKey: "fk_user"});
 
   return {
     auth_tokens,
