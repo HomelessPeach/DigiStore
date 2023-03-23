@@ -5,6 +5,40 @@ const {folderPath} = require("../../../config/config");
 
 class ProductBusinessService {
 
+    static async getProductReview(productId, userId) {
+        return await ProductDatabaseService.getReview(productId, userId)
+    }
+
+    static async createProductReview(body, transaction) {
+        const {reviewData} = ProductProcessService.productReviewDataWrite(body)
+        const review = await ProductDatabaseService.createReview(reviewData, transaction)
+        await ProductProcessService.productMarkUpdate(reviewData.fk_product, transaction)
+        return review
+    }
+
+    static async updateProductReview(body, transaction) {
+        const {reviewData, reviewId} = ProductProcessService.productReviewDataWrite(body)
+        const review = await ProductDatabaseService.updateReview(reviewData, reviewId, transaction)
+        await ProductProcessService.productMarkUpdate(reviewData.fk_product, transaction)
+        return review
+
+    }
+
+    static async deleteProductReview(productId, reviewId, transaction) {
+        const review = await ProductDatabaseService.deleteReview(reviewId, transaction)
+        console.log(productId, reviewId)
+        await ProductProcessService.productMarkUpdate(productId, transaction)
+        return review
+    }
+
+    static async getProductReviews(productId, query) {
+        const reviewSort = {
+            offset: query._offset,
+            limit: query._limit
+        }
+        return await ProductDatabaseService.getReviews(productId, reviewSort)
+    }
+
     static async getProducts(query) {
         const {productData} = ProductProcessService.productDataList(query)
         return await ProductDatabaseService.getProducts(productData)

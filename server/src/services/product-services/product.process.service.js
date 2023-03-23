@@ -1,3 +1,5 @@
+const {ProductDatabaseService} = require("./product.database.service");
+
 class ProductProcessService {
 
     static productDataWrite(query) {
@@ -52,6 +54,28 @@ class ProductProcessService {
         }
 
         return {productImageData}
+    }
+
+    static productReviewDataWrite(query) {
+
+        const reviewData = {
+            fk_user: query.fk_user,
+            fk_product: query.fk_product,
+            review_rating: query.review_rating,
+            review_description: query.review_description || null,
+            create_at: query.create_at || null
+        }
+
+        const reviewId = query.product_id;
+
+        return  {reviewData, reviewId}
+    }
+
+    static async productMarkUpdate(productId, transaction) {
+        const reviews = await ProductDatabaseService.getAllProductMarks(productId, transaction)
+        const rating = reviews.reduce((sum, item) => sum + item.review_rating, 0)/reviews.length
+        console.log(reviews.reduce((sum, item) => sum + item.review_rating, 0), reviews.length, rating)
+        await ProductDatabaseService.updateProduct({product_rating: (rating)? rating: 0}, productId, transaction)
     }
 
 }

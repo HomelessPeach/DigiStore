@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     create_at: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
       defaultValue: "datetime(now, localtime)"
     }
   }, {

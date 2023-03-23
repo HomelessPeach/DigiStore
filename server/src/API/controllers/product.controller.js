@@ -3,6 +3,66 @@ const {ProductBusinessService} = require("../../services/product-services/produc
 
 class ProductController {
 
+    static async getProductReview(req, res, next) {
+        try {
+            const {id, user} = req.params
+            const reviews = await ProductBusinessService.getProductReview(id, user)
+            res.json(reviews)
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    static async createReview(req, res, next) {
+        const transaction = await SequelizeConnect.transaction()
+        try {
+            const {body} = req
+            const review = await ProductBusinessService.createProductReview(body, transaction)
+            await transaction.commit();
+            res.json(review)
+        } catch (err) {
+            await transaction.rollback();
+            next(err)
+        }
+    }
+
+    static async updateReview(req, res, next) {
+        const transaction = await SequelizeConnect.transaction()
+        try {
+            const {body} = req
+            const review = await ProductBusinessService.createProductReview(body, transaction)
+            await transaction.commit();
+            res.json(review)
+        } catch (err) {
+            await transaction.rollback();
+            next(err)
+        }
+    }
+
+    static async deleteReview(req, res, next) {
+        const transaction = await SequelizeConnect.transaction()
+        try {
+            const {id, review} = req.params
+            console.log(1)
+            await ProductBusinessService.deleteProductReview(id, review,transaction)
+            await transaction.commit();
+            res.json('Комментарий удалён')
+        } catch (err) {
+            await transaction.rollback();
+            next(err)
+        }
+    }
+
+    static async getProductReviews(req, res, next) {
+        try {
+            const {query, params: {id}} = req
+            const reviews = await ProductBusinessService.getProductReviews(id, query)
+            res.json(reviews)
+        } catch (err) {
+            next(err)
+        }
+    }
+
     static async getProduct(req, res, next) {
         try {
             const {id} = req.params;

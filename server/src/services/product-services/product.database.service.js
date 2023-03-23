@@ -1,8 +1,100 @@
+const {Op} = require("sequelize");
 const {SequelizeConnect} = require('../database-connect')
 const initModels = require('../../../models/init-models')
-const {products, product_features, product_feature_values, product_images, images} = initModels(SequelizeConnect)
+const {products, product_features, product_feature_values, product_images, images, reviews, users} = initModels(SequelizeConnect)
 
 class ProductDatabaseService {
+
+    static async getReview(productId, userId, transaction = null) {
+        return await reviews.findOne({
+            where: {
+                fk_product: productId,
+                fk_user: userId
+            },
+            attributes: [
+                'review_id',
+                'review_rating',
+                'review_description',
+                'create_at',
+            ],
+            transaction: transaction
+        })
+    }
+
+    static async createReview(reviewData, transaction) {
+        return reviews.create(
+            reviewData, {
+                transaction: transaction
+            })
+    }
+
+    static async updateReview(reviewData, reviewId, transaction) {
+        await reviews.update(
+            reviewData, {
+                where: {
+                    review_id: reviewId
+                },
+                returning: true,
+                transaction: transaction
+            })
+    }
+
+    static async deleteReview(reviewId, transaction) {
+        return await reviews.destroy({
+            where: {
+                review_id: reviewId,
+            },
+            transaction: transaction
+        })
+    }
+
+    static async getReviews(productId, reviewSort, transaction = null) {
+        return await reviews.findAll({
+            where: {
+                fk_product: productId,
+                [Op.not]: {
+                    review_description: ''
+                },
+            },
+            offset: reviewSort.offset,
+            limit: reviewSort.limit,
+            attributes: [
+                'review_id',
+                'review_rating',
+                'review_description',
+                'fk_user',
+                'create_at',
+            ],
+            include: [{
+                model: users,
+                as: 'users',
+                attributes: [
+                    'user_name'
+                ],
+                include: [{
+                    model: images,
+                    as: 'image',
+                    attributes: [
+                        'image_path',
+                    ],
+                }],
+            }],
+            order: [['create_at', 'DESC']],
+            transaction: transaction
+        })
+    }
+
+    static async getAllProductMarks(productId, transaction = null) {
+        return await reviews.findAll({
+            where: {
+                fk_product: productId
+            },
+            attributes: [
+                'review_rating',
+            ],
+            transaction
+        })
+    }
 
     static async getProducts(productData, transaction = null) {
         return await products.findAll({
