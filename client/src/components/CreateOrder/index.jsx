@@ -2,11 +2,10 @@ import * as React from "react";
 import styled from "styled-components";
 import {useEffect, useState} from "react";
 import {orderAPI} from "../../services/OrderService";
-import {TextInput} from "../../components/TextInput";
+import {TextInput} from "../TextInput";
 import {useSelector} from "react-redux";
-import {PhoneNumberInput} from "../../components/PhoneNumberInput";
+import {PhoneNumberInput} from "../PhoneNumberInput";
 import {emailValidate, userNameValidate} from "../../utils";
-import {AdminRouteNames} from "../../Router";
 import {useNavigate} from "react-router-dom";
 
 export const CreateOrder = (props) => {
