@@ -13,6 +13,7 @@ var _product_feature_values = require("./product_feature_values");
 var _product_features = require("./product_features");
 var _product_images = require("./product_images");
 var _products = require("./products");
+var _reset_password = require("./reset_password");
 var _reviews = require("./reviews");
 var _users = require("./users");
 
@@ -31,6 +32,7 @@ function initModels(sequelize) {
   var product_features = _product_features(sequelize, DataTypes);
   var product_images = _product_images(sequelize, DataTypes);
   var products = _products(sequelize, DataTypes);
+  var reset_password = _reset_password(sequelize, DataTypes);
   var reviews = _reviews(sequelize, DataTypes);
   var users = _users(sequelize, DataTypes);
 
@@ -56,6 +58,8 @@ function initModels(sequelize) {
   order_products.belongsTo(orders, { as: "orders", foreignKey: "fk_order"});
   reviews.belongsTo(users, { as: "users", foreignKey: "fk_user"});
   users.hasMany(reviews, { as: "reviews", foreignKey: "fk_user"});
+  reset_password.belongsTo(users, { as: "fk_user_user", foreignKey: "fk_user"});
+  users.hasMany(reset_password, { as: "reset_passwords", foreignKey: "fk_user"});
 
   return {
     auth_tokens,
@@ -72,6 +76,7 @@ function initModels(sequelize) {
     product_features,
     product_images,
     products,
+    reset_password,
     reviews,
     users,
   };
