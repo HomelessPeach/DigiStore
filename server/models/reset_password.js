@@ -5,21 +5,20 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
-      unique: true
+      primaryKey: true
     },
     fk_user: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'users',
-        key: 'user_id'
-      },
       unique: true
     },
     code: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    create_at: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     }
   }, {
     sequelize,
@@ -31,13 +30,6 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         fields: [
           { name: "fk_user" },
-        ]
-      },
-      {
-        name: "reset_password_id",
-        unique: true,
-        fields: [
-          { name: "reset_password_id" },
         ]
       },
     ]
