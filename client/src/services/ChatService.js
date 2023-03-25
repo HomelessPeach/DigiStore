@@ -37,5 +37,20 @@ export const chatAPI = createApi({
             }),
             invalidatesTags: ['Chat']
         }),
+        getUserChat: build.query({
+            query: (userId) => ({
+                url: `/${userId}`,
+                method: 'GET',
+            }),
+            providesTags: ['Chat']
+        }),
+        createChat: build.mutation({
+            query: (body) => ({
+                url: `/create`,
+                method: 'POST',
+                body: body
+            }),
+            invalidatesTags: ['Chat']
+        }),
     })
 })

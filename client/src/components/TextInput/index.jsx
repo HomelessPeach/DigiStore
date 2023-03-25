@@ -57,7 +57,6 @@ const Input = styled.input`
   border: none;
   outline: none;
   color: #414141;
-
   &:focus {
     box-shadow: 0 0 3px 0 #888888;
   }
