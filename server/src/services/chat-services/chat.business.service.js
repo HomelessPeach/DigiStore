@@ -3,8 +3,13 @@ const {ChatProcessService} = require("./chat.process.service");
 
 class ChatBusinessService {
 
-    static async createChat() {
-        return 1
+    static async createChat(body, transaction) {
+        const {chatData} = ChatProcessService.chatDataWrite(body)
+        return await ChatDatabaseService.createChat(chatData, transaction)
+    }
+
+    static async getUserChat(userId) {
+        return await ChatDatabaseService.getUserChat(userId)
     }
 
     static async listChat(query) {

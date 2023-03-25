@@ -4,6 +4,30 @@ const {chats, chat_messages} = initModels(SequelizeConnect)
 
 class ChatDatabaseService {
 
+    static async getUserChat(userId, transaction = null) {
+        return await chats.findOne({
+            where: {
+                fk_user: userId
+            },
+            order: [[{model: chat_messages, as: 'chat_messages'}, 'create_at', 'ASC']],
+            attributes: [
+                'chat_id',
+                'fk_user',
+                'is_answer'
+            ],
+            include: [{
+                model: chat_messages,
+                as: 'chat_messages',
+                attributes: [
+                    'chat_message_content',
+                    'create_at',
+                    'is_user'
+                ]
+            }],
+            transaction: transaction
+        })
+    }
+
     static async createChat(chatData, transaction) {
         return chats.create(
             chatData, {

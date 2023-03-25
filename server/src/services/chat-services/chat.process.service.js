@@ -1,7 +1,12 @@
 class ChatProcessService {
 
     static chatDataWrite(query) {
+        const chatData = {
+            fk_user: query.fk_user,
+            is_answer: 0,
+        }
 
+        return {chatData}
     }
 
     static chatDataList(query) {

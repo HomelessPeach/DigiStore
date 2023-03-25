@@ -6,12 +6,22 @@ class ChatController {
     static async createChat(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
-            const {body: {data}, files} = req;
-            const chat = await ChatBusinessService.createChat()
+            const {body} = req;
+            const chat = await ChatBusinessService.createChat(body, transaction)
             await transaction.commit();
             res.json(chat)
         } catch (err) {
             await transaction.rollback();
+            next(err)
+        }
+    }
+
+    static async getUserChat(req, res, next) {
+        try {
+            const {user} = req.params;
+            const chat = await ChatBusinessService.getUserChat(user)
+            res.json(chat)
+        } catch (err) {
             next(err)
         }
     }
