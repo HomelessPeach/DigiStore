@@ -1,13 +1,27 @@
 import * as React from "react";
 import styled from "styled-components";
+import {feedbackAPI} from "../../services/FeedbackService";
 import {TextInput} from "../../components/TextInput";
 import {useState} from "react";
 import {TextArea} from "../../components/TextArea";
 import {Button} from "../../components/Admin/TablesStyledBlocks";
+import {useNavigate} from "react-router-dom";
+import {RouteNames} from "../../Router";
 
 export const Feedback = () => {
 
+    const navigate = useNavigate();
     const [feedbackData, setFeedbackData] = useState({})
+
+    const [createFeedback] = feedbackAPI.useFeedbackCreateMutation()
+
+    function onClick() {
+        if (feedbackData.feedback_email && feedbackData.feedback_message) {
+            createFeedback(feedbackData)
+            navigate(RouteNames.HOME)
+        }
+
+    }
 
     return (
         <FeedbackPage>
@@ -27,7 +41,9 @@ export const Feedback = () => {
                     w={'100%'}
                 />
                 <Toolbar>
-                    <Button>
+                    <Button
+                        onClick={onClick}
+                    >
                         Отправить
                     </Button>
                 </Toolbar>

@@ -37,6 +37,14 @@ export const feedbackAPI = createApi({
                 method: 'PUT',
             }),
             invalidatesTags: ['Feedbacks']
-        })
+        }),
+        feedbackCreate: build.mutation({
+            query: (data) => ({
+                url: `/create`,
+                method: 'POST',
+                body: data
+            }),
+            invalidatesTags: ['Feedbacks']
+        }),
     })
 })
