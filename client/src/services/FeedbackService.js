@@ -1,10 +1,12 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {apiUrl} from "./index";
+import {apiUrl, fetchBaseQueryWithRefresh} from "./index";
 
 export const feedbackAPI = createApi({
     reducerPath: 'feedbackAPI',
     tagTypes: ['Feedbacks'],
-    baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/feedback`}),
+    baseQuery: fetchBaseQueryWithRefresh({
+        baseUrl: `${apiUrl}/feedback`
+    }),
     endpoints: (build) => ({
         feedbackList: build.query({
             query: ({offset = 0, limit = 10, sort = '', order = 'ASC'}) => ({

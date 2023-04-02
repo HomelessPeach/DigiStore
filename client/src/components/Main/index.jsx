@@ -21,5 +21,5 @@ const MainBlock = styled.main`
 
 const MainContainer = styled.div`
   background-color: ${({theme}) => theme.colors.secondary};
-  min-height: calc(100vh - ${({theme}) => theme.size.footer.height + theme.size.header.height}px);
+  min-height: calc(100vh - ${({theme}) => theme.size.header.height}px);
 `

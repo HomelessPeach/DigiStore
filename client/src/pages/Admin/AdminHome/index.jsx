@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import {attributeFilesUrl} from "../../../services";
+import {Button} from "../../../components/Admin/TablesStyledBlocks";
 
 export const AdminHome = () => {
     return (
@@ -33,7 +34,7 @@ const Container = styled.div`
   box-shadow: 0 0 10px 0 #808080;
   border-radius: 30px;
   width: 100%;
-  height: 45vh;
+  height: 60vh;
 `
 
 const ImgContainer = styled.div`

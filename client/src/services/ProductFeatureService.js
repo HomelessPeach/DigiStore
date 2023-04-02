@@ -1,11 +1,13 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {apiUrl} from "./index";
+import {apiUrl, fetchBaseQueryWithRefresh} from "./index";
 import {base64StringToFile} from "../utils";
 
 export const productFeatureAPI = createApi({
     reducerPath: 'productFeatureAPI',
     tagTypes: ['ProductFeature'],
-    baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/product_feature`}),
+    baseQuery: fetchBaseQueryWithRefresh({
+        baseUrl: `${apiUrl}/product_feature`
+    }),
     endpoints: (build) => ({
         productFeatureList: build.query({
             query: ({offset = 0, limit = 10, sort = '', order = 'ASC'}) => ({

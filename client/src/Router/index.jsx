@@ -36,6 +36,9 @@ import {
     UserList,
     UserShow,
     UserCreate} from "../pages/Admin";
+import {Feedback} from "../pages/Feedback";
+import {Registration} from "../pages/Registration";
+import {ForgotPassword} from "../pages/ForgotPassword";
 
 export const RouteNames = {
     HOME: '/',
@@ -44,6 +47,9 @@ export const RouteNames = {
     BASKET: '/basket',
     PRODUCT: '/product',
     NEWS: '/news',
+    FEEDBACK: '/feedback',
+    REGISTRATION: '/registration',
+    FORGOT_PASSWORD: '/forgot_password',
     NOT_FOUND: '/*'
 }
 
@@ -100,6 +106,9 @@ export const Router = () => {
                 <Route path={`${RouteNames.PRODUCT}/category/:categoryId`} element={<Product/>}/>
                 <Route path={`${RouteNames.PRODUCT}/show/:id`} element={<ProductCard/>}/>
                 <Route path={`:id${RouteNames.NEWS}`} element={<NewsCard/>}/>
+                <Route path={`/${RouteNames.FEEDBACK}`} element={<Feedback/>}/>
+                <Route path={`/${RouteNames.REGISTRATION}`} element={<Registration/>}/>
+                <Route path={`/${RouteNames.FORGOT_PASSWORD}`} element={<ForgotPassword/>}/>
                 <Route path={RouteNames.NOT_FOUND} element={<NotFound/>}/>
             </Route>
         </Routes>

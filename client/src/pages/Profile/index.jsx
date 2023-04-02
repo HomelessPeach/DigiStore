@@ -27,8 +27,6 @@ export const Profile = () => {
     const [createMessage] = chatAPI.useMessageCreateMutation()
     const [createChat] = chatAPI.useCreateChatMutation()
 
-    console.log(chatData, data.id)
-
     async function sendMessage() {
         const sendMessage = message.replace(/^\s*|\s*$/g, '');
         if (sendMessage.length > 0) {

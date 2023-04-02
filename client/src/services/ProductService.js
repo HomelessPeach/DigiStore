@@ -1,11 +1,13 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {apiUrl} from "./index";
+import {apiUrl, fetchBaseQueryWithRefresh} from "./index";
 import {base64StringToFile} from "../utils";
 
 export const productAPI = createApi({
     reducerPath: 'productAPI',
     tagTypes: ['Product'],
-    baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/product`}),
+    baseQuery: fetchBaseQueryWithRefresh({
+        baseUrl: `${apiUrl}/product`
+    }),
     endpoints: (build) => ({
         getProductForCarousel: build.query({
             query: () => ({

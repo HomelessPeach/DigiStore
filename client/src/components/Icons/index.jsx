@@ -17,8 +17,11 @@ import {Product} from "./Product";
 import {ProductCategory} from "./ProductCategory";
 import {ProductFeature} from "./ProductFeature";
 import {Star} from "./Star";
+import {Telegram} from "./Telegram";
 import {User} from "./User";
 import {Visible} from "./Visible";
+import {Vk} from "./Vk";
+import {WhatsApp} from "./WhatsApp";
 
 export {
     Arrow,
@@ -40,6 +43,9 @@ export {
     ProductCategory,
     ProductFeature,
     Star,
+    Telegram,
     User,
-    Visible
+    Visible,
+    Vk,
+    WhatsApp
 }

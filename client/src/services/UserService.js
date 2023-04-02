@@ -1,11 +1,13 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {apiUrl} from "./index";
+import {apiUrl, fetchBaseQueryWithRefresh} from "./index";
 import {base64StringToFile} from "../utils";
 
 export const userAPI = createApi({
     reducerPath: 'userAPI',
     tagTypes: ['User'],
-    baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/user`}),
+    baseQuery: fetchBaseQueryWithRefresh({
+        baseUrl: `${apiUrl}/user`
+    }),
     endpoints: (build) => ({
         userList: build.query({
             query: ({offset = 0, limit = 10, sort = '', order = 'ASC'}) => ({

@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components"
 import {useEffect, useState} from "react";
-import {ContainerBlock, LabelBlock} from "../ComponentsStyledBlocks";
+import {LabelBlock} from "../ComponentsStyledBlocks";
 
 export const PhoneNumberInput = (props) => {
 
@@ -18,6 +18,7 @@ export const PhoneNumberInput = (props) => {
             validationMessage: 'Некорректно введён номер телефона',
         },
         onChange,
+        w
     } = props
 
     const [number, setNumber] = useState(value.split('') || Array(10))
@@ -100,7 +101,7 @@ export const PhoneNumberInput = (props) => {
     }
 
     return (
-        <ContainerBlock>
+        <ContainerBlock w={w}>
             {(label)?
                 <LabelBlock
                     isNotValid={isNotValid}
@@ -246,4 +247,13 @@ const ValidationMessage = styled.div`
   color: #ee0000;
   font-size: 13px;
   padding: 3px 0;
+`
+
+const ContainerBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5;
+  padding: 5px;
+  gap: 5px;
+  width: ${({w}) => (w)? w: '300px'};
 `

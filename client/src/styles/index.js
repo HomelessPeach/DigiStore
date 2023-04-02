@@ -15,7 +15,7 @@ export const Theme = {
             height: 90,
         },
         footer: {
-            height: 200
+            height: 250
         },
     },
     // media: {

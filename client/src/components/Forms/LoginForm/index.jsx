@@ -8,6 +8,8 @@ import {UserSlice} from "../../../store/reducers/UserSlice";
 import {FormSlice} from "../../../store/reducers/FormSlice";
 import {attributeFilesUrl} from "../../../services";
 import {TextInput} from "../../TextInput";
+import {NavLink} from "react-router-dom";
+import {RouteNames} from "../../../Router";
 
 
 export const LoginForm = () => {
@@ -64,6 +66,20 @@ export const LoginForm = () => {
                         type={'password'}
                     />
                 </InputBlock>
+                <ActionsBlock>
+                    <Action
+                        to={RouteNames.REGISTRATION}
+                        onClick={() => dispatch(setLoginForm(false))}
+                    >
+                        Зарегистрироваться
+                    </Action>
+                    <Action
+                        to={RouteNames.FORGOT_PASSWORD}
+                        onClick={() => dispatch(setLoginForm(false))}
+                    >
+                        Забыл пароль
+                    </Action>
+                </ActionsBlock>
                 <ButtonBlock>
                     <Button
                         onClick={loginHandler}
@@ -121,6 +137,32 @@ const InputBlock = styled.div`
   align-items: center;
   width: 100%;
   height: 50%;
+`
+
+const ActionsBlock = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+`
+
+const Action = styled(NavLink)`
+  text-decoration: none;
+  font-size: 15px;
+  color: #b13a8e;
+  cursor: pointer;
+  user-select: none;
+  &:after {
+    transition: all 1s;
+    content: "";
+    background: none repeat scroll 0 0 #b13a8e;
+    display: block;
+    height: 2px;
+    width: 0;
+  }
+  &:hover:after {
+    width: 100%;
+  }
 `
 
 const ButtonBlock = styled.div`

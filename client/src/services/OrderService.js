@@ -1,10 +1,12 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {apiUrl} from "./index";
+import {apiUrl, fetchBaseQueryWithRefresh} from "./index";
 
 export const orderAPI = createApi({
     reducerPath: 'orderAPI',
     tagTypes: ['Order'],
-    baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/order`}),
+    baseQuery: fetchBaseQueryWithRefresh({
+        baseUrl: `${apiUrl}/order`
+    }),
     endpoints: (build) => ({
         addOrder: build.mutation({
             query: (data) => ({

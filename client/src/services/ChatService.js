@@ -1,10 +1,12 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {apiUrl} from "./index";
+import {apiUrl, fetchBaseQueryWithRefresh} from "./index";
 
 export const chatAPI = createApi({
     reducerPath: 'chatAPI',
     tagTypes: ['Chat'],
-    baseQuery: fetchBaseQuery({baseUrl: `${apiUrl}/chat`}),
+    baseQuery: fetchBaseQueryWithRefresh({
+        baseUrl: `${apiUrl}/chat`
+    }),
     endpoints: (build) => ({
         chatList: build.query({
             query: ({offset = 0, limit = 10, sort = '', order = 'ASC'}) => ({
