@@ -6,10 +6,10 @@ class FeedbackController {
     static async createFeedback(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {
-            const {body: {data}, files} = req;
-
+            const {body} = req;
+            const feedback = await FeedbackBusinessService.createFeedback(body, transaction)
             await transaction.commit();
-            res.json('')
+            res.json(feedback)
         } catch (err) {
             await transaction.rollback();
             next(err)

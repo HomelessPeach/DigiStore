@@ -1,16 +1,18 @@
 class FeedbackProcessService {
 
-    static feedbackDataWrite() {
+    static feedbackDataWrite(query) {
+        const feedbackData = {
+            feedback_email: query.feedback_email,
+            feedback_message: query.feedback_message,
+        }
 
+        return {feedbackData}
     }
 
     static feedbackDataList(query) {
 
         const feedbackData = {
-            user_id: query.user_id,
-            user_email: query.user_email,
-            user_name: query.user_name,
-            user_phone: query.user_phone_number
+
         }
 
         const feedbackSort = {

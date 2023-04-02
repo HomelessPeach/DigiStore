@@ -4,7 +4,7 @@ const {FeedbackController} = require("../controllers/feedback.controller");
 const routerFeedback = Router()
 
 routerFeedback
-    .post('/admin', FeedbackController.createFeedback)
+    .post('/create', FeedbackController.createFeedback)
     .get('/admin', FeedbackController.listFeedback)
     .get('/admin/:id', FeedbackController.showFeedback)
     .put('/answered/:id', FeedbackController.markAsAnsweredFeedback)

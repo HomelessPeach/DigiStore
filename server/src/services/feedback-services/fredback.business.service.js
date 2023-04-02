@@ -3,8 +3,9 @@ const {FeedbackProcessService} = require("./fredback.process.service");
 
 class FeedbackBusinessService {
 
-    static async createFeedback() {
-        return 1
+    static async createFeedback(body, transaction) {
+        const {feedbackData} = FeedbackProcessService.feedbackDataWrite(body)
+        return await FeedbackDatabaseService.createFeedback(feedbackData, transaction)
     }
 
     static async listFeedback(query) {
