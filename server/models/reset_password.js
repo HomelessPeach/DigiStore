@@ -12,11 +12,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: true
     },
-    code: {
-      type: DataTypes.INTEGER,
+    reset_password_token: {
+      type: DataTypes.TEXT,
       allowNull: false
     },
-    create_at: {
+    expired_at: {
       type: DataTypes.INTEGER,
       allowNull: false,
     }

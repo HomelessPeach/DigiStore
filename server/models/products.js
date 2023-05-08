@@ -38,6 +38,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.REAL,
       allowNull: true,
       defaultValue: 0.0
+    },
+    in_stock: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
     }
   }, {
     sequelize,
