@@ -106,6 +106,7 @@ class ProductDatabaseService {
                 'product_description',
                 'product_price',
                 'product_rating',
+                'in_stock',
             ],
             include: [{
                 model: product_images,
@@ -140,6 +141,7 @@ class ProductDatabaseService {
                 'product_description',
                 'product_price',
                 'product_rating',
+                'in_stock',
             ],
             include: [{
                 model: product_feature_values,
@@ -222,6 +224,7 @@ class ProductDatabaseService {
                 'product_name',
                 'is_publish',
                 'product_rating',
+                'in_stock',
             ],
             transaction: transaction
         })
@@ -240,6 +243,7 @@ class ProductDatabaseService {
                 'product_price',
                 'is_publish',
                 'product_rating',
+                'in_stock',
             ],
             include: [{
                 model: product_feature_values,

@@ -26,7 +26,6 @@ class ProductBusinessService {
 
     static async deleteProductReview(productId, reviewId, transaction) {
         const review = await ProductDatabaseService.deleteReview(reviewId, transaction)
-        console.log(productId, reviewId)
         await ProductProcessService.productMarkUpdate(productId, transaction)
         return review
     }
@@ -109,6 +108,7 @@ class ProductBusinessService {
 
     static async updateProduct(body, files, transaction) {
         const {productData, productId} = ProductProcessService.productDataWrite(body)
+        console.log(productData)
         const product = await ProductDatabaseService.updateProduct(productData, productId, transaction)
         await ProductDatabaseService.deleteProductFeatureValue(productId, transaction)
         for (let productFeatureValue of body.product_feature_values) {

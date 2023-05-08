@@ -10,7 +10,8 @@ class ProductProcessService {
             product_rating: query.product_rating || 0,
             fk_product_category: query.fk_product_category || null,
             product_price: query.product_price,
-            is_publish: query.is_publish || false
+            is_publish: query.is_publish || false,
+            in_stock: query.in_stock || null
         }
 
         const productId = query.product_id;
@@ -74,7 +75,6 @@ class ProductProcessService {
     static async productMarkUpdate(productId, transaction) {
         const reviews = await ProductDatabaseService.getAllProductMarks(productId, transaction)
         const rating = reviews.reduce((sum, item) => sum + item.review_rating, 0)/reviews.length
-        console.log(reviews.reduce((sum, item) => sum + item.review_rating, 0), reviews.length, rating)
         await ProductDatabaseService.updateProduct({product_rating: (rating)? rating: 0}, productId, transaction)
     }
 
