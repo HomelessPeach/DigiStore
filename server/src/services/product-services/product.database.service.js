@@ -1,7 +1,7 @@
 const {Op} = require("sequelize");
 const {SequelizeConnect} = require('../database-connect')
 const initModels = require('../../../models/init-models')
-const {products, product_features, product_feature_values, product_images, images, reviews, users} = initModels(SequelizeConnect)
+const {products, product_features, product_feature_values, product_images, images, reviews, users, product_categories} = initModels(SequelizeConnect)
 
 class ProductDatabaseService {
 
@@ -169,6 +169,13 @@ class ProductDatabaseService {
                         'image_path'
                     ]
                 }]
+            }, {
+                model: product_categories,
+                as: 'product_category',
+                attributes: [
+                    'product_category_id',
+                    'product_category_name'
+                ]
             }],
             transaction: transaction
         })
