@@ -88,7 +88,7 @@ const ProductReviewsListContainer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 2;
+  z-index: 4;
   background-color: rgba(150, 150, 150, 0.52);
   display: flex;
   flex-direction: row;
@@ -101,9 +101,9 @@ const ProductReviewsListBlock = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px;
-  width: 1000px;
-  height: 650px;
-  margin: 0 0 100px;
+  width: 900px;
+  height: 600px;
+  margin: 0 0 150px;
   padding: 50px;
   border-radius: 20px;
   background-color: white;

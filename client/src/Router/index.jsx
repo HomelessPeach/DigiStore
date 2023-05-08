@@ -46,6 +46,7 @@ export const RouteNames = {
     PROFILE: '/profile',
     BASKET: '/basket',
     PRODUCT: '/product',
+    CATEGORY: '/category',
     NEWS: '/news',
     FEEDBACK: '/feedback',
     REGISTRATION: '/registration',
@@ -103,7 +104,7 @@ export const Router = () => {
                 <Route path={RouteNames.PROFILE} element={<Profile/>}/>
                 <Route path={RouteNames.BASKET} element={<Basket/>}/>
                 <Route path={RouteNames.PRODUCT} element={<ProductCategory/>}/>
-                <Route path={`${RouteNames.PRODUCT}/category/:categoryId`} element={<Product/>}/>
+                <Route path={`${RouteNames.PRODUCT}${RouteNames.CATEGORY}/:categoryId`} element={<Product/>}/>
                 <Route path={`${RouteNames.PRODUCT}/show/:id`} element={<ProductCard/>}/>
                 <Route path={`:id${RouteNames.NEWS}`} element={<NewsCard/>}/>
                 <Route path={`/${RouteNames.FEEDBACK}`} element={<Feedback/>}/>

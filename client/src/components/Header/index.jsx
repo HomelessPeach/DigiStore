@@ -28,7 +28,7 @@ const HeaderBlock = styled.header`
   width: 100%;
   user-select: none;
   position: relative;
-  z-index: 4;
+  z-index: 5;
 `
 
 const HeaderContainer = styled.div`

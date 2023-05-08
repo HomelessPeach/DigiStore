@@ -12,16 +12,15 @@ export const Layout = () => {
     const {pathname} = useLocation()
     const [scroll, setScroll] = useState(0)
     const [isHeader, setIsHeader] = useState(pathname !== '/')
-    const ref = useRef()
 
     function scrollHandler() {
-        setScroll(ref.current?.scrollTop || 0)
+        setScroll(document.getElementById("Content").scrollTop || 0)
     }
 
     useEffect(() => {
         scrollHandler()
-        ref.current.addEventListener("scroll", scrollHandler);
-        return () => ref.current.removeEventListener("scroll", scrollHandler);
+        document.getElementById("Content").addEventListener("scroll", scrollHandler);
+        return () => document.getElementById("Content").removeEventListener("scroll", scrollHandler);
     }, [pathname])
 
     useEffect(() => {
@@ -34,18 +33,18 @@ export const Layout = () => {
 
     useEffect(() => {
         if (isHeader) {
-            ref.current.scrollTop = ref.current.scrollTop + Theme.size.header.height
+            document.getElementById("Content").scrollTop = document.getElementById("Content").scrollTop + Theme.size.header.height
         } else {
-            ref.current.scrollTop = ref.current.scrollTop - Theme.size.header.height
+            document.getElementById("Content").scrollTop = document.getElementById("Content").scrollTop - Theme.size.header.height
         }
     }, [isHeader])
 
     return (
-        <LayoutContainer id="App">
+        <LayoutContainer id={'App'}>
             <HeaderContainer vis={isHeader}>
                 <Header/>
             </HeaderContainer>
-            <ContentContainer ref={ref}>
+            <ContentContainer id={'Content'}>
                 <Main/>
                 <Footer/>
             </ContentContainer>

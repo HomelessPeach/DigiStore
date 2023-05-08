@@ -14,6 +14,8 @@ import {ProductReview} from "../../components/ProductReview";
 import {MarkField} from "../../components/MarkField";
 import {TextField} from "../../components/TextField";
 import {ProductReviewsList} from "../../components/ProductReviewsList";
+import {Breadcrumb} from "../../components/Breadcrumb";
+import {RouteNames} from "../../Router";
 
 export const ProductCard = () => {
 
@@ -43,6 +45,14 @@ export const ProductCard = () => {
     return (
         <ProductContainer>
             <ProductCardBlock>
+                <BreadcrumbWrapper>
+                    <Breadcrumb links={[
+                        {link: RouteNames.HOME, name: 'Главная страница'},
+                        {link: RouteNames.PRODUCT, name: 'Категории продукции'},
+                        {link: `${RouteNames.PRODUCT}${RouteNames.CATEGORY}/${data?.product_category?.product_category_id}`, name: `${data?.product_category?.product_category_name || ''}`},
+                        {link: null, name: `${data.product_name || ''}`}
+                    ]}/>
+                </BreadcrumbWrapper>
                 <MainBlock>
                     <NameImageContainer>
                         <CarouselBlock>
@@ -102,25 +112,32 @@ export const ProductCard = () => {
                             }
                         </MainInfoBlock>
                         <MainInfoBlock>
-                            <AddToBasket
-                                onClick={() => {
-                                    dispatch(addToBasket({
-                                        id: data.product_id,
-                                        image: data.product_images[0]?.image_path,
-                                        name: data.product_name,
-                                        price: data.product_price,
-                                        count: 1
-                                    }))
-                                }}
-                                inBasket={basket.filter((product) => product.id === data.product_id).length}
-                            >
-                                <ButtonIcon>
-                                    <Basket/>
-                                </ButtonIcon>
-                                <ButtonText>
-                                    Добавить в корзину
-                                </ButtonText>
-                            </AddToBasket>
+                            {(data?.in_stock)?
+                                <>
+                                    <AddToBasket
+                                        onClick={() => {
+                                            dispatch(addToBasket({
+                                                id: data.product_id,
+                                                image: data.product_images[0]?.image_path,
+                                                name: data.product_name,
+                                                price: data.product_price,
+                                                count: 1
+                                            }))
+                                        }}
+                                        inBasket={basket.filter((product) => product.id === data.product_id).length}
+                                    >
+                                        <ButtonIcon>
+                                            <Basket/>
+                                        </ButtonIcon>
+                                        <ButtonText>
+                                            Добавить в корзину
+                                        </ButtonText>
+                                    </AddToBasket>
+                                    <InStockBlock>В наличии: {data.in_stock}</InStockBlock>
+                                </>
+                                :
+                                <InStockBlock>Нет в наличии</InStockBlock>
+                            }
                             <ProductPrice>
                                 Цена: {priceFormat(data.product_price)}р
                             </ProductPrice>
@@ -210,6 +227,10 @@ const ProductContainer = styled.div`
   align-items: flex-start;
 `
 
+const BreadcrumbWrapper = styled.div`
+  padding: 0 0 10px;
+`
+
 const ProductCardBlock = styled.div`
   display: flex;
   flex-direction: column;
@@ -272,15 +293,14 @@ const MainInfo = styled.div`
   border-radius: 10px;
   width: 300px;
   background-color: #dcdcdc;
-  padding: 30px 20px;
+  padding: 35px 30px;
   margin-bottom: 90px;
 `
 
 const MainInfoBlock = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  padding: 10px;
+  gap: 15px;
 `
 
 const RatingProduct = styled.div`
@@ -536,4 +556,9 @@ const DeleteButton = styled.div`
   &:active {
     box-shadow: none;
   }
+`
+
+const InStockBlock = styled.div`
+  font-size: 20px;
+  padding: 0 10px;
 `

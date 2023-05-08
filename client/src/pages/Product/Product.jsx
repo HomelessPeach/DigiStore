@@ -10,6 +10,7 @@ import {Basket, Heart, Star} from "../../components/Icons";
 import {priceFormat} from "../../utils";
 import {useDispatch, useSelector} from "react-redux";
 import {UserSlice} from "../../store/reducers/UserSlice"
+import {Breadcrumb} from "../../components/Breadcrumb";
 
 export const Product = () => {
 
@@ -31,6 +32,13 @@ export const Product = () => {
             <CategoryName>
                 {productCategory?.product_category_name}
             </CategoryName>
+            <BreadcrumbWrapper>
+                <Breadcrumb links={[
+                    {link: RouteNames.HOME, name: 'Главная страница'},
+                    {link: RouteNames.PRODUCT, name: 'Категории продукции'},
+                    {link: null, name: `${productCategory?.product_category_name || ''}`},
+                ]}/>
+            </BreadcrumbWrapper>
             <ProductWrapper>
                 {
                     data.map((item, index) =>
@@ -117,12 +125,16 @@ const ProductContainer = styled.div`
   align-items: flex-start;
 `
 
+const BreadcrumbWrapper = styled.div`
+  padding: 0 0 10px;
+`
+
 const CategoryName = styled.div`
   line-height: 1.5;
   font-size: 40px;
   color: #888888;
   font-weight: bolder;
-  padding: 50px 0 25px;
+  padding: 25px 0 15px;
 `
 
 const ProductWrapper = styled.div`
