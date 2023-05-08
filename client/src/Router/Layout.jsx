@@ -10,8 +10,13 @@ import styled from "styled-components";
 export const Layout = () => {
 
     const {pathname} = useLocation()
+    const [scroll, setScroll] = useState(0)
     const [isHeader, setIsHeader] = useState(pathname !== '/')
     const ref = useRef()
+
+    function scrollHandler() {
+        setScroll(ref.current?.scrollTop || 0)
+    }
 
     useEffect(() => {
         scrollHandler()
@@ -19,16 +24,21 @@ export const Layout = () => {
         return () => ref.current.removeEventListener("scroll", scrollHandler);
     }, [pathname])
 
-    function scrollHandler() {
-        if (pathname === '/' && ref.current.scrollTop < Theme.size.header.maxHeight - Theme.size.header.height) {
+    useEffect(() => {
+        if (pathname === '/' && (scroll < (Theme.size.header.maxHeight - Theme.size.header.height) || (scroll < Theme.size.header.maxHeight && isHeader))) {
             setIsHeader(false)
             return
         }
-        if (pathname === '/' && !isHeader) {
-            ref.current.scrollTop = ref.current.scrollTop + Theme.size.header.height
-        }
         setIsHeader(true)
-    }
+    }, [scroll])
+
+    useEffect(() => {
+        if (isHeader) {
+            ref.current.scrollTop = ref.current.scrollTop + Theme.size.header.height
+        } else {
+            ref.current.scrollTop = ref.current.scrollTop - Theme.size.header.height
+        }
+    }, [isHeader])
 
     return (
         <LayoutContainer id="App">
