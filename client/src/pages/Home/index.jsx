@@ -13,36 +13,39 @@ import {New} from "../../components/Icons";
 export const Home = () => {
 
     const navigate = useNavigate()
-    const {data: productData, isLoading: productIsLoading} = productAPI.useGetProductForCarouselQuery({refetchOnFocus: true})
+    const {
+        data: productData,
+        isLoading: productIsLoading
+    } = productAPI.useGetProductForCarouselQuery({refetchOnFocus: true})
     const {data: newsData, isLoading: newsIsLoading} = newsAPI.useGetAllNewsQuery({refetchOnFocus: true})
     const [muteVideo, setMuteVideo] = useState(true)
 
     if (productIsLoading || newsIsLoading)
         return (
-            <HomePage>
+            <>
                 <HeaderLargeContainer>
                     <ImageHeaderBlock>
                         <Img src={`${attributeFilesUrl}/logo2.svg`}/>
                     </ImageHeaderBlock>
                 </HeaderLargeContainer>
                 <h1>LOADING...</h1>
-            </HomePage>
+            </>
         )
 
-    return(
-        <HomePage>
+    return (
+        <>
             <HeaderLargeContainer>
                 <ImageHeaderBlock>
                     <Img src={`${attributeFilesUrl}/logo2.svg`}/>
                 </ImageHeaderBlock>
             </HeaderLargeContainer>
-            <HomeContainer>
-                {(productData)?
+            <HomePage>
+                {(productData) ?
                     <CarouselWrapper>
                         <CarouselBlock>
                             <Carousel
                                 carouselWidth={1000}
-                                aspect={16/9}
+                                aspect={16 / 9}
                                 button={true}
                                 infinity={true}
                                 dots={true}
@@ -73,9 +76,9 @@ export const Home = () => {
                             </Carousel>
                         </CarouselBlock>
                     </CarouselWrapper>
-                    :null
+                    : null
                 }
-                {(newsData)?
+                {(newsData) ?
                     <NewsContainer>
                         <NewsTitle>
                             Блог
@@ -83,7 +86,7 @@ export const Home = () => {
                         <NewsBlock>
                             <Carousel
                                 carouselWidth={window.innerWidth}
-                                aspect={3/4}
+                                aspect={3 / 4}
                                 roundButton={true}
                                 infinity={true}
                                 dots={false}
@@ -139,23 +142,12 @@ export const Home = () => {
                         <source src={`${attributeFilesUrl}/dg-video.mp4`}/>
                     </Video>
                 </VideoBlock>
-            </HomeContainer>
-        </HomePage>
+            </HomePage>
+        </>
     )
 }
 
-const HomePage = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: ${({theme}) => theme.size.header.maxHeight - theme.size.header.height}px;
-`
-
 const HeaderLargeContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   height: ${({theme}) => theme.size.header.maxHeight}px;
   background-color: ${({theme}) => theme.colors.primary};
   transition: 0s;
@@ -180,7 +172,7 @@ const Img = styled.img`
   max-height: 100%;
 `
 
-const HomeContainer = styled.div`
+const HomePage = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

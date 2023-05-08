@@ -56,7 +56,7 @@ export const TextInput = (props) => {
             }
             {(multiply)?
                 <TextAreaBlock
-                    defaultValue={(value)? value : ''}
+                    defaultValue={(String(value))? value : ''}
                     rows={8}
                     onChange={onInput}
                     onBlur={checkValidateOnBlur}
@@ -64,7 +64,7 @@ export const TextInput = (props) => {
                 />
                 :
                 <InputBlock
-                    defaultValue={(value)? value : ''}
+                    defaultValue={(String(value))? value : ''}
                     onChange={onInput}
                     onBlur={checkValidateOnBlur}
                     isNotValid={isNotValid}

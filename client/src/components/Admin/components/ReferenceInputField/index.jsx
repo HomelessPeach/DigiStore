@@ -80,7 +80,6 @@ export const ReferenceInputField = (props) => {
         if (validationError || isNotValid) {
             setIsNotValid(!validate(value))
         }
-        setIsNotValid(!validate(value))
     }
 
     return (

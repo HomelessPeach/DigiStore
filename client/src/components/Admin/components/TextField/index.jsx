@@ -17,7 +17,7 @@ export const TextField = (props) => {
                 :null
             }
             <ValueBlock>
-                {(value)? formattedText(value) :  ''}
+                {(String(value))? formattedText(value) :  ''}
             </ValueBlock>
         </ContainerBlock>
     )

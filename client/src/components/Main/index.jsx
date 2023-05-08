@@ -15,8 +15,8 @@ export const Main = () => {
 }
 
 const MainBlock = styled.main`
-  padding-top: ${({theme}) => theme.size.header.height}px;
   background-color: ${({theme}) => theme.colors.secondary};
+  min-height: calc(100vh - ${({theme}) => theme.size.header.height}px);
 `
 
 const MainContainer = styled.div`

@@ -5,6 +5,7 @@ import {DataGrid} from "../../../components/Admin/components/Datagrid";
 import {TextField} from "../../../components/Admin/components/TextField";
 import {BoolField} from "../../../components/Admin/components/BoolField";
 import {ToolbarBlock, LinkButton, ListContainer} from "../../../components/Admin/TablesStyledBlocks";
+import {RatingField} from "../../../components/Admin/components/RatingField";
 
 export const ProductsList = () => {
 
@@ -20,8 +21,9 @@ export const ProductsList = () => {
             <DataGrid getData={productAPI.useProductListQuery} idName={'product_id'}>
                 <TextField source={'product_id'} name={'id'} sortable={true}/>
                 <TextField source={'product_name'} name={'Название'} sortable={true}/>
-                <TextField source={'product_rating'} name={'Рейтинг'} sortable={true}/>
+                <RatingField source={'product_rating'} name={'Рейтинг'} sortable={true}/>
                 <BoolField source={'is_publish'} name={'Опубликован'} sortable={true}/>
+                <TextField source={'in_stock'} name={'В наличии'} sortable={true}/>
             </DataGrid>
         </ListContainer>
     )

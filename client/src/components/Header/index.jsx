@@ -26,9 +26,9 @@ export const Header = () => {
 
 const HeaderBlock = styled.header`
   width: 100%;
-  position: fixed;
   user-select: none;
-  z-index: 3;
+  position: relative;
+  z-index: 4;
 `
 
 const HeaderContainer = styled.div`

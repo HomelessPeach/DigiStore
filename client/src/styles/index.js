@@ -36,6 +36,6 @@ export const Styles = createGlobalStyle`
   }
 
   body {
-    background-color: ${({theme}) => theme.colors.secondary};
+    background-color: ${({theme}) => theme.colors.primary};
   }
 `

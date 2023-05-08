@@ -13,6 +13,7 @@ import {TableField} from "../../../components/Admin/components/TableField";
 import {ImagesField} from "../../../components/Admin/components/ImagesField";
 import {ToolbarBlock, LinkButton, DeleteButton, ShowContainer} from "../../../components/Admin/TablesStyledBlocks";
 import {DataError} from "../../../components/Admin/DataError";
+import {RatingField} from "../../../components/Admin/components/RatingField";
 
 export const ProductShow = () => {
 
@@ -82,16 +83,20 @@ export const ProductShow = () => {
                             label={'Цена'}
                             currency={'р'}
                         />
+                        <TextField
+                            value={data.in_stock}
+                            label={'В наличии, шт.'}
+                        />
                     </LeftFieldBlock>
                     <RightFieldBlock>
                         <BoolField
                             value={data.is_publish}
                             label={'Опубликован'}
                         />
-                        {/*<TextField*/}
-                        {/*    value={data.product_rating}*/}
-                        {/*    label={'Рейтинг товара'}*/}
-                        {/*/>*/}
+                        <RatingField
+                            value={data.product_rating}
+                            label={'Рейтинг товара'}
+                        />
                     </RightFieldBlock>
                 </DoubleFieldBlock>
                 <TextField

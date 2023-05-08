@@ -13,6 +13,8 @@ import {BoolInput} from "../../../components/Admin/components/BoolInput";
 import {TableInput} from "../../../components/Admin/components/TableInput";
 import {ToolbarBlock, LinkButton, DeleteButton, ListContainer, EditToolbarBlock, Button} from "../../../components/Admin/TablesStyledBlocks";
 import {DataError} from "../../../components/Admin/DataError";
+import {RatingField} from "../../../components/Admin/components/RatingField";
+import {TextField} from "../../../components/Admin/components/TextField";
 
 export const ProductEdit = () => {
 
@@ -26,7 +28,7 @@ export const ProductEdit = () => {
 
     const validation = {
         product_name: (name) => name,
-        product_price: (price) => price,
+        product_price: (price) => Number(price),
         fk_product_category: (productCategoryId) => productCategoryId,
         product_feature_values: (productFeatureValues) => {
             if (productFeatureValues.length === 1 && !productFeatureValues[0].fk_product_feature && !productFeatureValues[0].product_features_values_value)
@@ -132,9 +134,14 @@ export const ProductEdit = () => {
                                 validation={{
                                     validate: validation.product_price,
                                     validationError: isNotValid,
-                                    validationMessage: 'Продукт обязательно должен иметь цену.'
+                                    validationMessage: 'Некорректная цена.'
                                 }}
                                 label={'Цена'}
+                            />
+                            <TextInput
+                                value={data.in_stock}
+                                onChange={(value) => setProductData({...productData, in_stock: value})}
+                                label={'В наличии, шт.'}
                             />
                         </LeftFieldBlock>
                         <RightFieldBlock>
@@ -142,6 +149,10 @@ export const ProductEdit = () => {
                                 value={productData.is_publish}
                                 onChange={(value) => setProductData({...productData, is_publish: value})}
                                 label={'Опубликован'}
+                            />
+                            <RatingField
+                                value={data.product_rating}
+                                label={'Рейтинг товара'}
                             />
                         </RightFieldBlock>
                     </DoubleFieldBlock>

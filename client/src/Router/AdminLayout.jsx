@@ -49,11 +49,10 @@ export const AdminLayout = () => {
 const AdminContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: left;
 `
 
 const AdminContentBlock = styled.div`
   padding: 20px;
-  margin-left: 350px;
   width: 100%;
+  min-height: calc(100vh - ${({theme}) => theme.size.header.height}px);
 `

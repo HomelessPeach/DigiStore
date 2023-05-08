@@ -44,7 +44,9 @@ export const TableInput = (props) => {
                 const [childValue, setChildValue] = useState(ceilValue)
 
                 useEffect(() => {
-                    setIsNotValid(!validate(value))
+                    if (childValue) {
+                        setIsNotValid(!validate(value))
+                    }
                 }, [isNotValid, childValue])
 
                 return (

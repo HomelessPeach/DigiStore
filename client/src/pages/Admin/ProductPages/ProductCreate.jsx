@@ -22,10 +22,11 @@ export const ProductCreate = () => {
 
     const validation = {
         product_name: (name) => name,
-        product_price: (price) => price,
+        product_price: (price) => Number(price),
         fk_product_category: (productCategoryId) => productCategoryId,
         product_feature_values: (productFeatureValues) => {
-            if (productFeatureValues.length === 1 && !productFeatureValues[0].fk_product_feature && !productFeatureValues[0].product_features_values_value)
+            // console.log()
+            if (productFeatureValues.length === 1 && !productFeatureValues[0]?.fk_product_feature && !productFeatureValues[0]?.product_features_values_value)
                 return false
             for (let item of productFeatureValues) {
                 if ((!item.fk_product_feature || !item.product_features_values_value) &&
@@ -108,9 +109,14 @@ export const ProductCreate = () => {
                                 validation={{
                                     validate: validation.product_price,
                                     validationError: isNotValid,
-                                    validationMessage: 'Продукт обязательно должен иметь цену.'
+                                    validationMessage: 'Некорректная цена.'
                                 }}
                                 label={'Цена'}
+                            />
+                            <TextInput
+                                value={productData.in_stock}
+                                onChange={(value) => setProductData({...productData, in_stock: value})}
+                                label={'В наличии, шт.'}
                             />
                         </LeftFieldBlock>
                         <RightFieldBlock>
