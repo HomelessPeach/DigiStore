@@ -26,9 +26,11 @@ class AuthProcessService {
 
     static async checkUser(userData, transaction = null) {
         const user = await UserDatabaseService.findUserByEmail(userData.user_email, transaction)
+        if (!user)
+            throw ApiError.UnauthorizedError('Ошибка авторизации!');
         const isValidPassword = await compare(userData.user_password, user.user_password)
         if (!isValidPassword)
-            throw ApiError.BadRequest('Ошибка авторизации!');
+            throw ApiError.UnauthorizedError('Ошибка авторизации!');
         return {
             user_id: user.user_id,
             user_email: user.user_email,
