@@ -15,7 +15,7 @@ export const ProductReviewsList = (props) => {
     } = props
 
     const {data: reviewData, isLoading: reviewIsLoading} = productAPI.useGetProductReviewsQuery({id: productId}, {refetchOnFocus: true})
-    const {data: userData} = useSelector(state => state.user)
+    const {data: user} = useSelector(state => state.user)
     const [deleteReview] = productAPI.useDeleteProductReviewMutation()
 
     async function deleteReviewHandler(reviewId) {
@@ -51,7 +51,7 @@ export const ProductReviewsList = (props) => {
                     Отзывы
                 </TextBlock>
                 {reviewData.map((item, index) =>
-                    <ProductReviewBlock key={index} my={item.fk_user === userData.id}>
+                    <ProductReviewBlock key={index} my={item.fk_user === user?.id}>
                         <HeaderLineReview>
                             <UserInfo>
                                 <UserAvatar>
@@ -66,7 +66,7 @@ export const ProductReviewsList = (props) => {
                             </ReviewRatingBlock>
                         </HeaderLineReview>
                         <TextField value={item.review_description}/>
-                        {(item.fk_user === userData.id)?
+                        {(item.fk_user === user?.id)?
                             <DeleteButton
                                 onClick={() => deleteReviewHandler(item.review_id)}
                             >

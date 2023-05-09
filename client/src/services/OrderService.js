@@ -13,7 +13,14 @@ export const orderAPI = createApi({
                 url: `/add`,
                 method: 'POST',
                 body: data
-            })
+            }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
         }),
         orderList: build.query({
             query: ({offset = 0, limit = 10, sort = '', order = 'ASC'}) => ({
@@ -26,7 +33,14 @@ export const orderAPI = createApi({
                     _order: order
                 }
             }),
-            transformResponse(apiResponse, meta) {
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+            transformResponse: (apiResponse, meta) => {
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
             },
             providesTags: ['Order']
@@ -36,6 +50,13 @@ export const orderAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['Order']
         }),
         orderCancel: build.mutation({
@@ -43,6 +64,13 @@ export const orderAPI = createApi({
                 url: `/cancel/${id}`,
                 method: 'PUT',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['Order']
         }),
         orderComplete: build.mutation({
@@ -50,6 +78,13 @@ export const orderAPI = createApi({
                 url: `/complete/${id}`,
                 method: 'PUT',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['Order']
         })
     })

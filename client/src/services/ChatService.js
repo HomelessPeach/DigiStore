@@ -1,5 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {apiUrl, fetchBaseQueryWithRefresh} from "./index";
+import {UserSlice} from "../store/reducers/UserSlice";
 
 export const chatAPI = createApi({
     reducerPath: 'chatAPI',
@@ -19,7 +20,14 @@ export const chatAPI = createApi({
                     _order: order
                 }
             }),
-            transformResponse(apiResponse, meta) {
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+            transformResponse: (apiResponse, meta) => {
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
             },
             providesTags: ['Chat']
@@ -29,6 +37,13 @@ export const chatAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['Chat']
         }),
         messageCreate: build.mutation({
@@ -37,6 +52,13 @@ export const chatAPI = createApi({
                 method: 'POST',
                 body: body
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['Chat']
         }),
         getUserChat: build.query({
@@ -44,6 +66,13 @@ export const chatAPI = createApi({
                 url: `/${userId}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['Chat']
         }),
         createChat: build.mutation({
@@ -52,6 +81,13 @@ export const chatAPI = createApi({
                 method: 'POST',
                 body: body
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['Chat']
         }),
     })

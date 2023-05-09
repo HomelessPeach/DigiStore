@@ -1,8 +1,9 @@
 import * as React from "react";
 import styled from "styled-components";
 import {useEffect, useState} from "react";
+import {Invisible, Visible} from "../Icons";
 
-export const TextInput = (props) => {
+export const PasswordInput = (props) => {
 
     const {
         value,
@@ -10,17 +11,18 @@ export const TextInput = (props) => {
         validation: {
             validate = () => true,
             validationError = false,
-            validationMessage = 'Некорректно введённые данные',
+            validationMessage = 'Некорректно введённый пароль',
         } = {
             validate: () => true,
             validationError: false,
-            validationMessage: 'Некорректно введённые данные',
+            validationMessage: 'Некорректно введённый пароль',
         },
         onChange,
         w,
         ...another
     } = props
 
+    const [visible, setVisible] = useState(false)
     const [isNotValid, setIsNotValid] = useState(false)
 
     useEffect(() => {
@@ -51,14 +53,22 @@ export const TextInput = (props) => {
                     {label}
                 </LabelBlock>
             }
-            <Input
-                defaultValue={value}
-                onChange={onInput}
-                onBlur={checkValidateOnBlur}
-                contentEditable={true}
-                {...another}
-            />
-            {(isNotValid)?
+            <InputContainer>
+                <Input
+                    type={(visible) ? "text" : "password"}
+                    defaultValue={value}
+                    onChange={onInput}
+                    onBlur={checkValidateOnBlur}
+                    contentEditable={true}
+                    {...another}
+                />
+                <IconButton
+                    onClick={() => setVisible(!visible)}
+                >
+                    {(visible) ? <Invisible/> : <Visible/>}
+                </IconButton>
+            </InputContainer>
+            {(isNotValid) ?
                 <ValidationMessage>
                     {validationMessage}
                 </ValidationMessage>
@@ -68,8 +78,27 @@ export const TextInput = (props) => {
     )
 }
 
+const InputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+`
+
+const IconButton = styled.div`
+  padding: 15px 10px;
+  border-radius: 0 10px 0 0;
+  border-left: 1px solid black;
+  background-color: rgb(237, 194, 255);
+  height: 100%;
+  position: absolute;
+  right: 0;
+  &:active {
+    box-shadow: 0 0 3px 0 #888888;
+  }
+`
+
 const TextInputBlock = styled.div`
-  width: ${({w}) => (w)? w: '300px'};
+  width: ${({w}) => (w) ? w : '300px'};
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -92,6 +121,7 @@ const Input = styled.input`
   border: none;
   outline: none;
   color: #414141;
+
   &:focus {
     box-shadow: 0 0 3px 0 #888888;
   }

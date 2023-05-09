@@ -14,6 +14,13 @@ export const productAPI = createApi({
                 url: `/carousel`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['Product']
         }),
         getProducts: build.query({
@@ -24,6 +31,13 @@ export const productAPI = createApi({
                     fk_product_category: productCategoryId
                 }
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['Product']
         }),
         getProduct: build.query({
@@ -31,6 +45,13 @@ export const productAPI = createApi({
                 url: `/${id}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['Product']
         }),
         getProductReview: build.query({
@@ -38,6 +59,13 @@ export const productAPI = createApi({
                 url: `/${id}/review/${userId}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['Product']
         }),
         getProductReviews: build.query({
@@ -49,14 +77,28 @@ export const productAPI = createApi({
                     _limit: limit,
                 }
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['Product']
         }),
         createProductReview: build.mutation({
-           query: (data) => ({
+            query: (data) => ({
                url: `/${data.fk_product}/review`,
                method: 'POST',
                body: data
-           }),
+            }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['Product']
         }),
         updateProductReview: build.mutation({
@@ -65,6 +107,13 @@ export const productAPI = createApi({
                 method: 'PUT',
                 body: data
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['Product']
         }),
         deleteProductReview: build.mutation({
@@ -72,6 +121,13 @@ export const productAPI = createApi({
                 url: `/${productId}/review/${reviewId}`,
                 method: 'DELETE',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['Product']
         }),
         productList: build.query({
@@ -85,7 +141,14 @@ export const productAPI = createApi({
                     _order: order
                 }
             }),
-            transformResponse(apiResponse, meta) {
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+            transformResponse: (apiResponse, meta) => {
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
             },
             providesTags: ['Product']
@@ -95,6 +158,13 @@ export const productAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['Product']
         }),
         productCreate: build.mutation({
@@ -132,6 +202,13 @@ export const productAPI = createApi({
                     return formData
                 })(data),
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['Product']
         }),
         productUpdate: build.mutation({
@@ -169,6 +246,13 @@ export const productAPI = createApi({
                     return formData
                 })(data),
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['Product']
         }),
         productDelete: build.mutation({
@@ -176,6 +260,13 @@ export const productAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'DELETE',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['Product']
         }),
         getProductData: build.mutation({
@@ -183,6 +274,13 @@ export const productAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['Product']
         }),
         // getProductData: build.mutation({

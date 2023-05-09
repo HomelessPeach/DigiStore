@@ -13,14 +13,14 @@ export const ProductReview = (props) => {
         productId,
     } = props
 
-    const {data: userData} = useSelector(state => state.user)
-    const {data: review, isLoading} = productAPI.useGetProductReviewQuery({id: productId, userId: userData.id}, {refetchOnFocus: true})
+    const {data: user} = useSelector(state => state.user)
+    const {data: review, isLoading} = productAPI.useGetProductReviewQuery({id: productId, userId: user?.id}, {refetchOnFocus: true})
     const [edit, setEdit] = useState(true)
     const [addComment, setAddComment] = useState(false)
     const [createReview] = productAPI.useCreateProductReviewMutation()
     const [updateReview] = productAPI.useUpdateProductReviewMutation()
     const [deleteReview] = productAPI.useDeleteProductReviewMutation()
-    const [reviewData, setReviewData] = useState({fk_product: productId, fk_user: userData.id})
+    const [reviewData, setReviewData] = useState({fk_product: productId, fk_user: user?.id})
 
     async function createReviewHandler() {
         await createReview(reviewData)
@@ -40,7 +40,7 @@ export const ProductReview = (props) => {
 
     async function deleteReviewHandler() {
         setEdit(true)
-        setReviewData({fk_product: productId, fk_user: userData.id})
+        setReviewData({fk_product: productId, fk_user: user?.id})
         await deleteReview({productId: productId, reviewId: review.review_id})
             .unwrap()
             .catch((err) => {
@@ -63,7 +63,7 @@ export const ProductReview = (props) => {
 
     return (
         <ProductReviews>
-            {(userData.id)?
+            {(user)?
                 (edit)?
                     <AddReview>
                         <ProductMark>

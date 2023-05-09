@@ -18,6 +18,11 @@ export const Layout = () => {
     }
 
     useEffect(() => {
+        if (pathname === '/') {
+            setIsHeader(false)
+        } else {
+            setIsHeader(true)
+        }
         scrollHandler()
         document.getElementById("Content").addEventListener("scroll", scrollHandler);
         return () => document.getElementById("Content").removeEventListener("scroll", scrollHandler);

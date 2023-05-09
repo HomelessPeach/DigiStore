@@ -18,7 +18,7 @@ export const Product = () => {
     const {data, isLoading} = productAPI.useGetProductsQuery({productCategoryId: categoryId}, {refetchOnFocus: true})
     const {data: productCategory, isLoading: titleIsLoading} = productCategoryAPI.useGetProductCategoryNameQuery(categoryId, {refetchOnFocus: true})
     const {addToBasket, addToFavorite} = UserSlice.actions
-    const {data: userData, basket, wishList} = useSelector(state => state.user)
+    const {data: user, basket, wishList} = useSelector(state => state.user)
     const dispatch = useDispatch()
 
     if (isLoading || titleIsLoading)
@@ -87,7 +87,7 @@ export const Product = () => {
                                             >
                                                 <Basket/>
                                             </AddToBasket>
-                                            {(userData.id)?
+                                            {(user)?
                                                 <AddToFavorite
                                                     onClick={(event) => {
                                                         dispatch(addToFavorite({

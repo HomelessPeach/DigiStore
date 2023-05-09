@@ -7,12 +7,16 @@ import {emailValidate} from "../../utils";
 
 export const ForgotPassword = () => {
 
-    const [code, setCode] = useState('')
-    const [password, setPassword] = useState('')
-    const [repeatPassword, setRepeatPassword] = useState('')
     const [email, setEmail] = useState('')
-    const [sendEmail, setSendEmail] = useState(false)
-    const [codeIsTrue, setCodeIsTrue] = useState(false)
+    const [isNotValid, setIsNotValid] = useState(false)
+
+    async function sendResetPassword() {
+        if (emailValidate(email)) {
+
+        } else {
+            setIsNotValid(true)
+        }
+    }
 
     return (
         <ForgotPasswordPage>
@@ -20,80 +24,29 @@ export const ForgotPassword = () => {
                 <Title>
                     Восстановление пароля
                 </Title>
-                {(sendEmail) ?
-                    (codeIsTrue) ?
-                        <PasswordContainer>
-                            <Description>
-                                Введите новый пароль
-                            </Description>
-                                <TextInput
-                                    value={password}
-                                    onChange={(value) => setPassword(value)}
-                                    label={'Пароль'}
-                                    w={'100%'}
-                                />
-                                <TextInput
-                                    value={repeatPassword}
-                                    onChange={(value) => setRepeatPassword(value)}
-                                    label={'Повторите пароль'}
-                                    w={'100%'}
-                                />
-                            <Toolbar>
-                                <Button>
-                                    Сохранить
-                                </Button>
-                            </Toolbar>
-                        </PasswordContainer>
-                        :
-                        <CodeContainer>
-                            <Description>
-                                Введите код отправленный на вашу почту
-                            </Description>
-                            <TextInput
-                                value={code}
-                                onChange={(value) => setCode(value)}
-                                label={'Код'}
-                                w={'100%'}
-                            />
-                            <CodeToolbar>
-                                <Button
-                                    onClick={() => setSendEmail(false)}
-                                >
-                                    Назад
-                                </Button>
-                                <Button
-                                    onClick={() => {
-                                        setCodeIsTrue(true)
-                                    }}
-                                >
-                                    Далее
-                                </Button>
-                            </CodeToolbar>
-                        </CodeContainer>
-                    :
-                    <EmailContainer>
-                        <Description>
-                            Укажите вашу почту
-                        </Description>
-                        <TextInput
-                            value={email}
-                            onChange={(value) => setEmail(value)}
-                            label={'e-mail'}
-                            w={'100%'}
-                        />
-                        <Toolbar>
-                            <Button
-                                onClick={() => {
-                                    if (email && emailValidate(email)) {
-                                        setSendEmail(true)
-                                    }
-                                }}
-                            >
-                                Далее
-                            </Button>
-                        </Toolbar>
-                    </EmailContainer>
-                }
+                <Description>
+                    Укажите почту привязанную к аккаунту
+                </Description>
+                <EmailContainer>
+                    <TextInput
+                        value={email}
+                        onChange={(value) => setEmail(value)}
+                        validation={{
+                            validate: emailValidate,
+                            validationError: isNotValid,
+                            validationMessage: 'Некорректный e-mail'
+                        }}
+                        label={'e-mail'}
+                        w={'100%'}
+                    />
+                    <Toolbar>
+                        <Button
+                            onClick={sendResetPassword}
+                        >
+                            Отправить
+                        </Button>
+                    </Toolbar>
+                </EmailContainer>
             </ForgotPasswordContainer>
         </ForgotPasswordPage>
     )
@@ -114,20 +67,6 @@ const EmailContainer = styled.div`
   width: 300px;
 `
 
-const CodeContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 300px;
-`
-
-const PasswordContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 300px;
-`
-
 const ForgotPasswordContainer = styled.div`
   width: 100%;
   min-height: calc(100vh - ${({theme}) => theme.size.header.height}px);
@@ -142,12 +81,6 @@ const ForgotPasswordContainer = styled.div`
 const Title = styled.div`
   font-size: 35px;
   padding: 0 10px 20px;
-`
-
-const CodeToolbar = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 10px 10px 0;
 `
 
 const Toolbar = styled.div`

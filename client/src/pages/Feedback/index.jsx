@@ -7,11 +7,13 @@ import {TextArea} from "../../components/TextArea";
 import {Button} from "../../components/Admin/TablesStyledBlocks";
 import {useNavigate} from "react-router-dom";
 import {RouteNames} from "../../Router";
+import {useSelector} from "react-redux";
 
 export const Feedback = () => {
 
     const navigate = useNavigate();
-    const [feedbackData, setFeedbackData] = useState({})
+    const {data: user} = useSelector(state => state.user)
+    const [feedbackData, setFeedbackData] = useState({feedback_email: user?.email || '', feedback_message: ''})
 
     const [createFeedback] = feedbackAPI.useFeedbackCreateMutation()
 

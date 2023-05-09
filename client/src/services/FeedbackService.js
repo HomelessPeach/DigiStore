@@ -19,7 +19,14 @@ export const feedbackAPI = createApi({
                     _order: order
                 }
             }),
-            transformResponse(apiResponse, meta) {
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+            transformResponse: (apiResponse, meta) =>{
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
             },
             providesTags: ['Feedbacks']
@@ -29,6 +36,13 @@ export const feedbackAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['Feedbacks']
         }),
         feedbackMarkAsAnswered: build.mutation({
@@ -36,6 +50,13 @@ export const feedbackAPI = createApi({
                 url: `/answered/${id}`,
                 method: 'PUT',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['Feedbacks']
         }),
         feedbackCreate: build.mutation({
@@ -44,6 +65,13 @@ export const feedbackAPI = createApi({
                 method: 'POST',
                 body: data
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['Feedbacks']
         }),
     })

@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import {PhoneNumberInput} from "../PhoneNumberInput";
 import {emailValidate, userNameValidate} from "../../utils";
 import {useNavigate} from "react-router-dom";
+import {RouteNames} from "../../Router";
 
 export const CreateOrder = (props) => {
 
@@ -33,10 +34,6 @@ export const CreateOrder = (props) => {
             validation.client_name(orderData.client_name)
     }
 
-    useEffect(() => {
-        setOrderData({products: basketContent, sum: sum, user_id: user.id, client_name: user.name, client_email: user.email, client_phone_number: user.phoneNumber})
-    }, [basketContent, sum])
-
     async function createOrderHandler() {
         if (validation.checkValidate()) {
             const res = await createOrder(orderData)
@@ -45,30 +42,49 @@ export const CreateOrder = (props) => {
                     console.log(err)
                 })
             if (res) {
-                navigate('/')
+                navigate(RouteNames.PROFILE)
             }
         } else {
             setIsNotValid(true)
         }
     }
 
+    useEffect(() => {
+        setOrderData({products: basketContent, sum: sum, user_id: user?.id, client_name: user?.name, client_email: user?.email, client_phone_number: user?.phoneNumber})
+    }, [basketContent, sum])
+
     return(
         <CreateOrderContainer>
             <CreateOrderForm>
                 <InputBlock>
                     <TextInput
-                        value={user.name}
+                        value={user?.name}
                         onChange={(value) => setOrderData({...orderData, client_name: value})}
+                        validation={{
+                            validate: validation.client_name,
+                            validationError: isNotValid,
+                            validationMessage: 'Введите имя (от 2-х символов)'
+                        }}
                         label={'Имя'}
                     />
                     <TextInput
-                        value={user.email}
+                        value={user?.email}
                         onChange={(value) => setOrderData({...orderData, client_email: value})}
+                        validation={{
+                            validate: validation.client_email,
+                            validationError: isNotValid,
+                            validationMessage: 'Некорректный e-mail'
+                        }}
                         label={'e-mail'}
                     />
                     <PhoneNumberInput
-                        value={user.phoneNumber}
+                        value={user?.phoneNumber}
                         onChange={(value) => setOrderData({...orderData, client_phone_number: value})}
+                        validation={{
+                            validate: validation.client_phone_number,
+                            validationError: isNotValid,
+                            validationMessage: 'Заполните номер телефона'
+                        }}
                         label={'Номер телефона'}
                     />
                 </InputBlock>
@@ -92,6 +108,8 @@ const CreateOrderForm = styled.div`
   padding: 50px;
   border-radius: 30px;
   box-shadow: 0 0 3px 0 #888888;
+  display: flex;
+  flex-direction: column;
 `
 
 const InputBlock = styled.div`

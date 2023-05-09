@@ -8,8 +8,6 @@ export const Breadcrumb = (props) => {
         links
     } = props
 
-    console.log(links)
-
     return (
         links.length > 0 &&
             <BreadcrumbContainer>

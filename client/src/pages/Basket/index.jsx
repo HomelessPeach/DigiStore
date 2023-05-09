@@ -25,7 +25,7 @@ export const Basket = () => {
                 Корзина
             </HeaderTitle>
             <BasketContent>
-                {(basket.length)?
+                {(basket?.length)?
                     <>
                     {
                         basket.map((item, index) =>

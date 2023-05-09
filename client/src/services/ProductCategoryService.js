@@ -14,6 +14,13 @@ export const productCategoryAPI = createApi({
                 url: `/`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['ProductCategory']
         }),
         getProductCategoryName: build.query({
@@ -21,6 +28,13 @@ export const productCategoryAPI = createApi({
                 url: `/${id}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['ProductCategory']
         }),
         productCategoryList: build.query({
@@ -34,7 +48,14 @@ export const productCategoryAPI = createApi({
                     _order: order
                 }
             }),
-            transformResponse(apiResponse, meta) {
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+            transformResponse: (apiResponse, meta) => {
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
             },
             providesTags: ['ProductCategory']
@@ -44,6 +65,13 @@ export const productCategoryAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['ProductCategory']
         }),
         productCategoryCreate: build.mutation({
@@ -60,6 +88,13 @@ export const productCategoryAPI = createApi({
                     return formData
                 })(data),
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['ProductCategory']
         }),
         productCategoryUpdate: build.mutation({
@@ -76,6 +111,13 @@ export const productCategoryAPI = createApi({
                     return formData
                 })(data),
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['ProductCategory']
         }),
         productCategoryDelete: build.mutation({
@@ -83,6 +125,13 @@ export const productCategoryAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'DELETE',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['ProductCategory']
         }),
         getProductCategoryData: build.mutation({
@@ -90,6 +139,13 @@ export const productCategoryAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['ProductCategory']
         }),
         getProductCategoriesData: build.mutation({
@@ -101,6 +157,13 @@ export const productCategoryAPI = createApi({
                     _order: 'ASC'
                 }
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['ProductCategory']
         }),
     })

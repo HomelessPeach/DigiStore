@@ -10,22 +10,53 @@ import {RouteNames} from "../../Router";
 import {baseUrl} from "../../services";
 import {Basket, Heart} from "../../components/Icons";
 import {UserSlice} from "../../store/reducers/UserSlice";
-import {formattedText, priceFormat} from "../../utils";
+import {emailValidate, formattedText, passwordValidate, priceFormat, userNameValidate} from "../../utils";
 import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
-import {Button} from "../../components/Admin/TablesStyledBlocks";
+import {TextField} from "../../components/TextField";
+import {TextInput} from "../../components/TextInput";
+import {PhoneNumberInput} from "../../components/PhoneNumberInput";
+import {UserChangePasswordForm} from "../../components/UserChangePasswordForm";
+import {ImageInput} from "../../components/ImageInput";
 
 export const Profile = () => {
 
-    const {data, basket, wishList} = useSelector(state => state.user)
+    const {data: user, basket, wishList} = useSelector(state => state.user)
     const {addToBasket, addToFavorite} = UserSlice.actions
     const dispatch = useDispatch()
     const [favorite, setFavorite] = useState([...wishList])
     const [profile, setProfile] = useState(true)
     const [message, setMessage] = useState('')
-    const {data: chatData, isLoading: chatLoading} = chatAPI.useGetUserChatQuery(data.id, {refetchOnFocus: true})
+    const [isEdit, setIsEdit] = useState(false)
+    const [userData, setUserData] = useState({image: {image_path: user.avatar}, user_name: user.name, user_phone_number: user.phoneNumber, user_email: user.email})
+    const [password, setPassword] = useState('')
+    const [isOpenPassword, setIsOpenPassword] = useState(false)
+    const [isNotValid, setIsNotValid] = useState(false)
+    const {data: chatData, isLoading: chatLoading} = chatAPI.useGetUserChatQuery(user.id, {refetchOnFocus: true})
     const [createMessage] = chatAPI.useMessageCreateMutation()
     const [createChat] = chatAPI.useCreateChatMutation()
+
+    const validation = {
+        user_email: (email) => email && emailValidate(email),
+        user_name: (name) => name && userNameValidate(name),
+        user_phone_number: (phoneNumber) => {
+            return phoneNumber?.length === 10
+        },
+        user_password: (password) => password && passwordValidate(password),
+        checkValidate: () =>
+            validation.user_email(userData.user_email) &&
+            validation.user_phone_number(userData.user_phone_number) &&
+            validation.user_name(userData.user_name) &&
+            (!password || validation.user_password(password))
+    }
+
+    async function saveProfile() {
+        if (validation.checkValidate()) {
+            setIsEdit(false)
+        } else {
+            setIsNotValid(true)
+        }
+    }
 
     async function sendMessage() {
         const sendMessage = message.replace(/^\s*|\s*$/g, '');
@@ -46,7 +77,7 @@ export const Profile = () => {
     async function sendFirstMessage() {
         const sendMessage = message.replace(/^\s*|\s*$/g, '');
         if (sendMessage.length > 0) {
-            const res = await createChat({fk_user: data.id})
+            const res = await createChat({fk_user: user.id})
                 .unwrap()
                 .catch((err) => {
                     console.log(err)
@@ -90,16 +121,94 @@ export const Profile = () => {
                     <ProfileContainer>
                         <Title>Профиль</Title>
                         <ProfileCard>
-                            <ProfileInfo>
-                                <ImageBlock>
-                                    <ImageField value={data?.avatar} size={{h: "300px", w: "300px", br: '150px'}}/>
-                                </ImageBlock>
-                                <Block>
-                                    <EmailField value={data.email} label={'e-mail'}/>
-                                    <TextField value={data.name} label={'Имя'}/>
-                                    <PhoneNumberField value={data.phoneNumber} label={'Номер телефона'}/>
-                                </Block>
-                            </ProfileInfo>
+                            {(isEdit)?
+                                <ProfileInfo>
+                                    <ImageBlock style={{width: '40%'}}>
+                                        <ImageInput
+                                            value={userData.image?.new_image || userData.image?.image_path || ''}
+                                            onChange={(value) => (value) ?
+                                                setUserData({...userData, image: {...userData.image, new_image: value}})
+                                                : null}
+                                            size={{h: "300px", w: "300px", br: '150px'}}/>
+                                    </ImageBlock>
+                                    <Block style={{width: '60%'}}>
+                                        <RowBlock>
+                                            <TextInput
+                                                value={userData.user_email}
+                                                onChange={(value) => setUserData({...userData, user_email: value})}
+                                                validation={{
+                                                    validate: validation.user_email,
+                                                    validationError: isNotValid,
+                                                    validationMessage: 'Некорректный e-mail'
+                                                }}
+                                                label={'e-mail'}
+                                            />
+                                            <TextInput
+                                                value={userData.user_name}
+                                                onChange={(value) => setUserData({...userData, user_name: value})}
+                                                validation={{
+                                                    validate: validation.user_name,
+                                                    validationError: isNotValid,
+                                                    validationMessage: 'Введите имя (от 2-х символов)'
+                                                }}
+                                                label={'Имя'}
+                                            />
+                                        </RowBlock>
+                                        <PhoneNumberInput
+                                            value={userData.user_phone_number}
+                                            onChange={(value) => setUserData({...userData, user_phone_number: value})}
+                                            validation={{
+                                                validate: validation.user_phone_number,
+                                                validationError: isNotValid,
+                                                validationMessage: 'Заполните номер телефона'
+                                            }}
+                                            label={'Номер телефона'}
+                                        />
+                                        <ChangePasswordButtonBlock>
+                                            <Button
+                                                onClick={() => setIsOpenPassword(true)}
+                                            >
+                                                Изменить пароль
+                                            </Button>
+                                        </ChangePasswordButtonBlock>
+                                    </Block>
+                                    <EditButton
+                                        bottom
+                                        onClick={saveProfile}
+                                    >
+                                        Сохранить
+                                    </EditButton>
+                                </ProfileInfo>
+                                :
+                                <ProfileInfo>
+                                    <ImageBlock>
+                                        <ImageField value={user?.avatar} size={{h: "300px", w: "300px", br: '150px'}}/>
+                                    </ImageBlock>
+                                    <Block>
+                                        <EmailField value={user.email} label={'e-mail'}/>
+                                        <TextField value={user.name} label={'Имя'}/>
+                                        <PhoneNumberField value={user.phoneNumber} label={'Номер телефона'}/>
+                                    </Block>
+                                    <EditButton
+                                        onClick={() => setIsEdit(true)}
+                                    >
+                                        Редактировать
+                                    </EditButton>
+                                </ProfileInfo>
+                            }
+                            {(isOpenPassword) &&
+                                <UserChangePasswordForm
+                                    password={password}
+                                    setIsOpen={setIsOpenPassword}
+                                    setPassword={setPassword}
+                                    validation={{
+                                        validate: validation.user_password,
+                                        validationError: isNotValid,
+                                        validationMessage: 'Некорректный пароль. Пароль должен состоять из букв латинского алфавит (минимум 1), арабских цифр (минимум 1), длиной от 5 до 25 символов. Допускается содержание специальных символов: ' +
+                                            '"!", "@", "#", "$", "%", "^", "&", "*", ":", "(", ")", ".", ";", "<", ">", "\'", """, "{", "}", "[", "]", "?", "\\", "/", "|", "-", "_", "~".'
+                                    }}
+                                />
+                            }
                         </ProfileCard>
                     </ProfileContainer>
                     <ItemsContainer>
@@ -204,17 +313,17 @@ export const Profile = () => {
                                             (item.is_user == true) ?
                                                 <UserMessageBlock>
                                                     <MessageBlock isUser={true}>
-                                                        <TextField>
+                                                        <Text>
                                                             {formattedText(item.chat_message_content)}
-                                                        </TextField>
+                                                        </Text>
                                                     </MessageBlock>
                                                 </UserMessageBlock>
                                                 :
                                                 <AdminMessageBlock>
                                                     <MessageBlock isUser={false}>
-                                                        <TextField>
+                                                        <Text>
                                                             {formattedText(item.chat_message_content)}
-                                                        </TextField>
+                                                        </Text>
                                                     </MessageBlock>
                                                 </AdminMessageBlock>
                                         )
@@ -321,6 +430,7 @@ const ProfileInfo = styled.div`
   display: flex;
   flex-direction: row;
   align-items: stretch;
+  position: relative;
   width: 100%;
 `
 
@@ -529,7 +639,7 @@ const MessageBlock = styled.div`
   padding: 10px 15px;
 `
 
-const TextField = styled.div`
+const Text = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -541,6 +651,7 @@ const MessageInputContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: stretch;
+  gap: 15px;
   width: 100%;
   padding: 15px 0;
 `
@@ -576,6 +687,68 @@ const EmptyChat = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 600px;
+  height: 500px;
   font-size: 20px;
+`
+
+const Button = styled.div`
+  user-select: none;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  background-color: ${({theme}) => theme.colors.tertiary};
+  border-radius: 15px;
+  color: white;
+  box-shadow: 0 0 10px 0 #5e5e5e;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  &:active {
+    box-shadow: none;
+  }
+  &:disabled {
+    box-shadow: none;
+    pointer-events: none;
+  }
+`
+
+const EditButton = styled.div`
+  user-select: none;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  background-color: ${({theme}) => theme.colors.tertiary};
+  border-radius: 15px;
+  color: white;
+  box-shadow: 0 0 10px 0 #5e5e5e;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  &:active {
+    box-shadow: none;
+  }
+  &:disabled {
+    box-shadow: none;
+    pointer-events: none;
+  }
+  position: absolute;
+  right: 0;
+  bottom: ${({bottom}) => bottom? 0 : 'none'}
+`
+
+const RowBlock = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const ChangePasswordButtonBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 50%;
+  padding: 20px 0 0;
 `

@@ -18,8 +18,7 @@ export const ProfileNavbar = (props) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [logout] = authAPI.useLogoutMutation()
-    const user = useSelector(state => state.user.data)
-    const {clearUserData} = UserSlice.actions
+    const {data: user} = useSelector(state => state.user)
     const {setLoginForm} = FormSlice.actions
     const [profileNavbarHeight, setProfileNavbarHeight] = useState(document.getElementById('profile-navbar')?.offsetHeight || 250)
 
@@ -29,20 +28,18 @@ export const ProfileNavbar = (props) => {
             .catch((err) => {
                 console.log(err)
             })
-        dispatch(clearUserData())
         setIsOpen(false)
         navigate('/')
-        localStorage.removeItem('accessToken')
     }
 
     useEffect(() => {
         setProfileNavbarHeight(document.getElementById('profile-navbar')?.offsetHeight)
-    }, [user.id])
+    }, [user])
 
     return (
         <ProfileNavbarBlock id='profile-navbar' isOpen={isOpen} headerHeight={Theme.size.header.height} profileNavbarHeight={profileNavbarHeight}>
             <ProfileNavbarContainer>
-                {(user.id)?
+                {(user)?
                     <>
                         <NavLinkBlock to={RouteNames.PROFILE} title="Профиль" onClick={() => setIsOpen(false)}>Профиль</NavLinkBlock>
                         {(user.isAdmin)?

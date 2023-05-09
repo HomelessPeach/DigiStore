@@ -14,6 +14,13 @@ export const newsAPI = createApi({
                 url: `/`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['News']
         }),
         getNews: build.query({
@@ -21,6 +28,13 @@ export const newsAPI = createApi({
                 url: `/${id}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['News']
         }),
         newsList: build.query({
@@ -34,7 +48,14 @@ export const newsAPI = createApi({
                     _order: News
                 }
             }),
-            transformResponse(apiResponse, meta) {
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+            transformResponse: (apiResponse, meta) => {
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
             },
             providesTags: ['News']
@@ -44,6 +65,13 @@ export const newsAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['News']
         }),
         newsCreate: build.mutation({
@@ -60,6 +88,13 @@ export const newsAPI = createApi({
                     return formData
                 })(data),
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['News']
         }),
         newsUpdate: build.mutation({
@@ -76,6 +111,13 @@ export const newsAPI = createApi({
                     return formData
                 })(data),
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['News']
         }),
         newsDelete: build.mutation({
@@ -83,6 +125,13 @@ export const newsAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'DELETE',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['News']
         }),
     })

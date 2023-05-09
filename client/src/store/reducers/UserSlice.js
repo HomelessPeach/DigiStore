@@ -4,22 +4,26 @@ import jwtDecode from "jwt-decode";
 export const UserSlice = createSlice({
     name: 'user',
     initialState: {
-        data: (() => {
-            const accessToken = localStorage.getItem('accessToken')
-
-            if (!accessToken)
+        data: localStorage.getItem('accessToken')?
+            (() => {
+                const user = jwtDecode(localStorage.getItem('accessToken'))
                 return {
-                    id: null,
-                    email: '',
-                    name: '',
-                    phoneNumber: '',
-                    isAdmin: false,
-                    avatar: '',
+                    id: user.user_id,
+                    email: user.user_email,
+                    name: user.user_name,
+                    phoneNumber: user.user_phone_number,
+                    isAdmin: user.is_admin,
+                    avatar: user.image
                 }
-
-            const user = jwtDecode(localStorage.getItem('accessToken'))
-
-            return {
+            })()
+            : null,
+        wishList: JSON.parse(localStorage.getItem('wishList')) || [],
+        basket: JSON.parse(localStorage.getItem('basket')) || [],
+    },
+    reducers: {
+        login(state, action) {
+            const user = jwtDecode(action.payload)
+            state.data = {
                 id: user.user_id,
                 email: user.user_email,
                 name: user.user_name,
@@ -27,23 +31,12 @@ export const UserSlice = createSlice({
                 isAdmin: user.is_admin,
                 avatar: user.image
             }
-        })(),
-        wishList: JSON.parse(localStorage.getItem('wishList')) || [],
-        basket: JSON.parse(localStorage.getItem('basket')) || [],
-    },
-    reducers: {
-        setUserData(state, action) {
-            state.data = {...action.payload}
+            if (!action.payload)
+                localStorage.setItem('accessToken', action.payload);
         },
-        clearUserData(state) {
-            state.data = {
-                id: null,
-                email: '',
-                name: '',
-                phoneNumber: '',
-                isAdmin: false,
-                avatar: '',
-            }
+        logout(state) {
+            localStorage.removeItem('accessToken');
+            state.data = null;
         },
         addToBasket(state, action) {
             const basket = state.basket.filter((item)=> item.id !== action.payload.id)

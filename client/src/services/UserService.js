@@ -20,7 +20,14 @@ export const userAPI = createApi({
                     _order: order
                 }
             }),
-            transformResponse(apiResponse, meta) {
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+            transformResponse: (apiResponse, meta) => {
                 return {data: apiResponse.map((item) => {
                         return {...item, image: item.image?.image_path}
                     }), totalCount: meta.response.headers.get('X-Total-Count')}
@@ -32,6 +39,13 @@ export const userAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['User']
         }),
         userCreate: build.mutation({
@@ -64,6 +78,13 @@ export const userAPI = createApi({
                     return formData
                 })(data),
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['User']
         }),
         userDelete: build.mutation({
@@ -71,6 +92,13 @@ export const userAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'DELETE',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['User']
         }),
         getUserData: build.mutation({
@@ -78,6 +106,13 @@ export const userAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['User']
         }),
         getUsersData: build.mutation({
@@ -89,6 +124,13 @@ export const userAPI = createApi({
                     _order: 'ASC'
                 }
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['User']
         }),
     })

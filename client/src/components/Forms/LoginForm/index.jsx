@@ -8,36 +8,32 @@ import {UserSlice} from "../../../store/reducers/UserSlice";
 import {FormSlice} from "../../../store/reducers/FormSlice";
 import {attributeFilesUrl} from "../../../services";
 import {TextInput} from "../../TextInput";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {RouteNames} from "../../../Router";
+import {emailValidate} from "../../../utils";
 
 
 export const LoginForm = () => {
 
+    const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [login] = authAPI.useLoginMutation()
+    const [login, {isUninitialized, isError}] = authAPI.useLoginMutation()
     const loginForm = useSelector(state => state.form.loginForm)
     const {setLoginForm} = FormSlice.actions
-    const {setUserData} = UserSlice.actions
     const [loginData, setLoginData] = useState({})
+    const [isNotValid, setIsNotValid] = useState(false)
+    const [unauthorized, setUnauthorized] = useState(false)
 
     async function loginHandler() {
-        const res = await login({user_email: loginData.email, user_password: loginData.password})
-            .unwrap()
-            .catch((err) => {
-                console.log(err)
-            })
-        const user = jwtDecode(res.accessToken)
-        dispatch(setUserData({
-            id: user.user_id,
-            email: user.user_email,
-            name: user.user_name,
-            phoneNumber: user.user_phone_number,
-            isAdmin: user.is_admin,
-            avatar: user.image
-        }))
-        dispatch(setLoginForm(false))
-        localStorage.setItem('accessToken', res.accessToken)
+        if (emailValidate(loginData?.email)) {
+            await login({user_email: loginData.email, user_password: loginData.password, unauthorizedHandler: () => setUnauthorized(true)})
+            if (!isUninitialized && !isError) {
+                dispatch(setLoginForm(false))
+                navigate(RouteNames.HOME)
+            }
+        } else {
+            setIsNotValid(true)
+        }
     }
 
     if (!loginForm)
@@ -45,10 +41,10 @@ export const LoginForm = () => {
 
     return (
         <LoginFormContainer
-            onClick={() => dispatch(setLoginForm(false))}
+            onMouseDown={() => dispatch(setLoginForm(false))}
         >
             <FormBlock
-                onClick={(event) => event.stopPropagation()}
+                onMouseDown={(event) => event.stopPropagation()}
             >
                 <IconBlock>
                     <Img src={`${attributeFilesUrl}/mask-1.svg`}/>
@@ -56,15 +52,27 @@ export const LoginForm = () => {
                 <InputBlock>
                     <TextInput
                         label={'Логин'}
-                        onChange={(value) => setLoginData({...loginData, email: value})}
+                        onChange={(value) => {
+                            setUnauthorized(false)
+                            setLoginData({...loginData, email: value})
+                        }}
+                        validation={{
+                            validate: emailValidate,
+                            validationError: isNotValid,
+                            validationMessage: 'Некорректный e-mail'
+                        }}
                         w={'100%'}
                     />
                     <TextInput
-                        onChange={(value) => setLoginData({...loginData, password: value})}
+                        onChange={(value) => {
+                            setUnauthorized(false)
+                            setLoginData({...loginData, password: value})
+                        }}
                         label={'Пароль'}
                         w={'100%'}
                         type={'password'}
                     />
+                    {(unauthorized) && <ValidationMessage>Неверный логин или пароль</ValidationMessage>}
                 </InputBlock>
                 <ActionsBlock>
                     <Action
@@ -196,5 +204,8 @@ const Button = styled.div`
   }
 `
 
-
-
+const ValidationMessage = styled.div`
+  color: #ee0000;
+  font-size: 15px;
+  padding: 3px 0;
+`

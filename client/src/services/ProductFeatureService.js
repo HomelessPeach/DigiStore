@@ -20,7 +20,14 @@ export const productFeatureAPI = createApi({
                     _order: order
                 }
             }),
-            transformResponse(apiResponse, meta) {
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+            transformResponse: (apiResponse, meta) => {
                 return {data: apiResponse, totalCount: meta.response.headers.get('X-Total-Count')}
             },
             providesTags: ['ProductFeature']
@@ -30,6 +37,13 @@ export const productFeatureAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['ProductFeature']
         }),
         productFeatureCreate: build.mutation({
@@ -38,6 +52,13 @@ export const productFeatureAPI = createApi({
                 method: 'POST',
                 body: data
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['ProductFeature']
         }),
         productFeatureUpdate: build.mutation({
@@ -46,6 +67,13 @@ export const productFeatureAPI = createApi({
                 method: 'PUT',
                 body: data
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: ['ProductFeature']
         }),
         productFeatureDelete: build.mutation({
@@ -53,6 +81,13 @@ export const productFeatureAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'DELETE',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             invalidatesTags: [{type: 'ProductFeature', id: 'LIST'}]
         }),
         getProductFeatureData: build.mutation({
@@ -60,6 +95,13 @@ export const productFeatureAPI = createApi({
                 url: `/admin/${id}`,
                 method: 'GET',
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['ProductFeature']
         }),
         getProductFeaturesData: build.mutation({
@@ -71,6 +113,13 @@ export const productFeatureAPI = createApi({
                     _order: 'ASC'
                 }
             }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
             providesTags: ['ProductFeature']
         }),
     })

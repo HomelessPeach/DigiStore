@@ -23,7 +23,7 @@ export const ProductCard = () => {
     const {data, isLoading} = productAPI.useGetProductQuery(id, {refetchOnFocus: true})
     const {data: reviewData, isLoading: reviewIsLoading} = productAPI.useGetProductReviewsQuery({id: id, offset: 0, limit: 2}, {refetchOnFocus: true})
     const {addToBasket, addToFavorite} = UserSlice.actions
-    const {data: userData, basket, wishList} = useSelector(state => state.user)
+    const {data: user, basket, wishList} = useSelector(state => state.user)
     const [deleteReview] = productAPI.useDeleteProductReviewMutation()
     const dispatch = useDispatch()
     const [showAllReviews, setShowAllReviews] = useState(false)
@@ -89,7 +89,7 @@ export const ProductCard = () => {
                                     {data.product_rating.toFixed(1)}
                                 </ProductRating>
                             </RatingProduct>
-                            {(userData.id)?
+                            {(user)?
                                 <AddToFavorite
                                     onClick={() => {
                                         dispatch(addToFavorite({
@@ -175,7 +175,7 @@ export const ProductCard = () => {
                         <ProductReview productId={data.product_id}/>
                         <ProductReviewContainer>
                             {reviewData.map((item, index) =>
-                                <ProductReviewBlock key={index} my={item.fk_user === userData.id}>
+                                <ProductReviewBlock key={index} my={item.fk_user === user?.id}>
                                     <HeaderLineReview>
                                         <UserInfo>
                                             <UserAvatar>
@@ -190,7 +190,7 @@ export const ProductCard = () => {
                                         </ReviewRatingBlock>
                                     </HeaderLineReview>
                                     <TextField value={item.review_description}/>
-                                    {(item.fk_user === userData.id)?
+                                    {(item.fk_user === user?.id)?
                                         <DeleteButton
                                             onClick={() => {
                                                 deleteReviewHandler(item.review_id)
@@ -228,7 +228,7 @@ const ProductContainer = styled.div`
 `
 
 const BreadcrumbWrapper = styled.div`
-  padding: 0 0 10px;
+  padding: 0 0 20px;
 `
 
 const ProductCardBlock = styled.div`

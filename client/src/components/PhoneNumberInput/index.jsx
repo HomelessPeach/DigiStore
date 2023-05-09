@@ -1,7 +1,6 @@
 import * as React from "react";
 import styled from "styled-components"
 import {useEffect, useState} from "react";
-import {LabelBlock} from "../ComponentsStyledBlocks";
 
 export const PhoneNumberInput = (props) => {
 
@@ -103,9 +102,7 @@ export const PhoneNumberInput = (props) => {
     return (
         <ContainerBlock w={w}>
             {(label)?
-                <LabelBlock
-                    isNotValid={isNotValid}
-                >
+                <LabelBlock>
                     {label}
                 </LabelBlock>
                 :null
@@ -220,7 +217,7 @@ const PhoneNumberBlock = styled.div`
   display: flex;
   align-items: center;
   min-height: 40.5px;
-  width: 310px;
+  padding: 20px 10px 0;
 `
 
 const TextBlock = styled.div`
@@ -243,9 +240,16 @@ const InputBlock = styled.input`
   }
 `
 
+const LabelBlock = styled.div`
+  width: 100%;
+  color: #888888;
+  font-size: 15px;
+  padding: 0 5px;
+`
+
 const ValidationMessage = styled.div`
   color: #ee0000;
-  font-size: 13px;
+  font-size: 15px;
   padding: 3px 0;
 `
 
@@ -255,5 +259,5 @@ const ContainerBlock = styled.div`
   line-height: 1.5;
   padding: 5px;
   gap: 5px;
-  width: ${({w}) => (w)? w: '300px'};
+  width: ${({w}) => (w)? w: '330px'};
 `
