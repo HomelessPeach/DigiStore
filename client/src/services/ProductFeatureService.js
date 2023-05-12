@@ -6,7 +6,14 @@ export const productFeatureAPI = createApi({
     reducerPath: 'productFeatureAPI',
     tagTypes: ['ProductFeature'],
     baseQuery: fetchBaseQueryWithRefresh({
-        baseUrl: `${apiUrl}/product_feature`
+        baseUrl: `${apiUrl}/product_feature`,
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem("accessToken");
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        }
     }),
     endpoints: (build) => ({
         productFeatureList: build.query({

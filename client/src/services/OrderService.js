@@ -5,7 +5,14 @@ export const orderAPI = createApi({
     reducerPath: 'orderAPI',
     tagTypes: ['Order'],
     baseQuery: fetchBaseQueryWithRefresh({
-        baseUrl: `${apiUrl}/order`
+        baseUrl: `${apiUrl}/order`,
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem("accessToken");
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        }
     }),
     endpoints: (build) => ({
         addOrder: build.mutation({

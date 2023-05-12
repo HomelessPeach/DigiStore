@@ -5,7 +5,14 @@ export const feedbackAPI = createApi({
     reducerPath: 'feedbackAPI',
     tagTypes: ['Feedbacks'],
     baseQuery: fetchBaseQueryWithRefresh({
-        baseUrl: `${apiUrl}/feedback`
+        baseUrl: `${apiUrl}/feedback`,
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem("accessToken");
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        }
     }),
     endpoints: (build) => ({
         feedbackList: build.query({

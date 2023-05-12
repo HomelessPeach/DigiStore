@@ -14,7 +14,7 @@ export const authAPI = createApi({
                 method: 'POST',
                 body: {
                     user_email: user.user_email,
-                    user_password: user.user_password
+                    password: user.password
                 }
             }),
             onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
@@ -25,6 +25,20 @@ export const authAPI = createApi({
                     if (error.error.status === 401) {
                         args?.unauthorizedHandler()
                     }
+                }
+            }
+        }),
+        refresh: build.mutation({
+            query: () => ({
+                url: '/refresh',
+                method: 'PUT'
+            }),
+            onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+                try {
+                    const {data} = await queryFulfilled;
+                    setUserOnQueryFulfilled(data, dispatch);
+                } catch (error) {
+                    dispatch(UserSlice.actions.logout());
                 }
             }
         }),
@@ -40,6 +54,21 @@ export const authAPI = createApi({
                     console.log(error)
                 }
                 dispatch(UserSlice.actions.logout());
+            }
+        }),
+        registration: build.mutation({
+            query: (user) => ({
+                url: '/registration',
+                method: 'POST',
+                body: user
+            }),
+            onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+                try {
+                    const { data } = await queryFulfilled;
+                    setUserOnQueryFulfilled(data, dispatch);
+                } catch (error) {
+                    console.log(error)
+                }
             }
         }),
     })

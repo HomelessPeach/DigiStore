@@ -6,7 +6,14 @@ export const productAPI = createApi({
     reducerPath: 'productAPI',
     tagTypes: ['Product'],
     baseQuery: fetchBaseQueryWithRefresh({
-        baseUrl: `${apiUrl}/product`
+        baseUrl: `${apiUrl}/product`,
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem("accessToken");
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        }
     }),
     endpoints: (build) => ({
         getProductForCarousel: build.query({

@@ -6,7 +6,14 @@ export const newsAPI = createApi({
     reducerPath: 'newsAPI',
     tagTypes: ['News'],
     baseQuery: fetchBaseQueryWithRefresh({
-        baseUrl: `${apiUrl}/news`
+        baseUrl: `${apiUrl}/news`,
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem("accessToken");
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        }
     }),
     endpoints: (build) => ({
         getAllNews: build.query({

@@ -4,23 +4,26 @@ import {useState} from "react";
 import {TextInput} from "../../components/TextInput";
 import {Button} from "../../components/Admin/TablesStyledBlocks";
 import {PhoneNumberInput} from "../../components/PhoneNumberInput";
-import {emailValidate, passwordValidate, userNameValidate} from "../../utils";
+import {emailValidate, passwordHook, passwordValidate, userNameValidate} from "../../utils";
 import {PasswordInput} from "../../components/PasswordInput";
+import {authAPI} from "../../services/AuthService";
+import {RouteNames} from "../../Router";
+import {useNavigate} from "react-router-dom";
 
 export const Registration = () => {
 
+    const navigate = useNavigate()
     const [userData, setUserData] = useState({})
     const [repeatPassword, setRepeatPassword] = useState('')
     const [isNotValid, setIsNotValid] = useState(false)
+    const [registration, {isError}] = authAPI.useRegistrationMutation()
 
     const validation = {
         user_name: (name) => name && userNameValidate(name),
         user_email: (email) => email && emailValidate(email),
         user_password: (password) => password && passwordValidate(password),
         repeat_password: (resetPassword, password) => resetPassword === password,
-        user_phone_number: (phoneNumber) => {
-            return phoneNumber?.length === 10
-        },
+        user_phone_number: (phoneNumber) => phoneNumber?.length === 10,
         checkValidate: () =>
             validation.user_name(userData.user_name) &&
             validation.user_email(userData.user_email) &&
@@ -29,9 +32,12 @@ export const Registration = () => {
             validation.user_phone_number(userData.user_phone_number)
     }
 
-    async function registration() {
+    async function registrationHandler() {
         if (validation.checkValidate()) {
-            console.log(userData, true)
+            await registration({...userData, user_password: await passwordHook(userData.user_password), password: userData.user_password})
+            if (!isError) {
+                navigate(RouteNames.HOME)
+            }
         } else {
             setIsNotValid(true)
         }
@@ -90,7 +96,7 @@ export const Registration = () => {
                     value={userData?.user_phone_number}
                     onChange={(value) => setUserData({...userData, user_phone_number: value})}
                     validation={{
-                        validate: validation.repeat_password,
+                        validate: validation.user_phone_number,
                         validationError: isNotValid,
                         validationMessage: 'Заполните номер телефона'
                     }}
@@ -100,7 +106,7 @@ export const Registration = () => {
                 <Toolbar>
                     <Button
                         width={210}
-                        onClick={registration}
+                        onClick={registrationHandler}
                     >
                         Зарегистрироваться
                     </Button>

@@ -31,8 +31,9 @@ export const UserSlice = createSlice({
                 isAdmin: user.is_admin,
                 avatar: user.image
             }
-            if (!action.payload)
+            if (action.payload) {
                 localStorage.setItem('accessToken', action.payload);
+            }
         },
         logout(state) {
             localStorage.removeItem('accessToken');

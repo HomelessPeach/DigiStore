@@ -9,16 +9,16 @@ export const apiUrl = `${baseUrl}/api`;
 
 export const fetchBaseQueryWithRefresh = (fetchBaseQueryArgs) => {
     const baseQuery = fetchBaseQuery(fetchBaseQueryArgs)
-    const baseQueryRefresh = fetchBaseQuery({baseUrl: apiUrl})
+    const baseQueryRefresh = fetchBaseQuery({baseUrl: `${apiUrl}/auth`})
     return async (args, api, extraOptions) => {
         let result = await baseQuery(args, api, extraOptions);
         if (result.error && result.error.status === 401) {
             const refreshResult = await baseQueryRefresh('/refresh', api, extraOptions);
             if (refreshResult.data) {
-                setUserOnQueryFulfilled({ data: refreshResult.data }, api.dispatch);
+                setUserOnQueryFulfilled(refreshResult.data, api.dispatch);
                 result = await baseQuery(args, api, extraOptions);
             } else {
-                await baseQueryRefresh('/sign-out', api, extraOptions);
+                await baseQueryRefresh('/logout', api, extraOptions);
                 api.dispatch(UserSlice.actions.logout());
             }
         }

@@ -8,7 +8,7 @@ import {UserSlice} from "../../../store/reducers/UserSlice";
 import {FormSlice} from "../../../store/reducers/FormSlice";
 import {attributeFilesUrl} from "../../../services";
 import {TextInput} from "../../TextInput";
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {RouteNames} from "../../../Router";
 import {emailValidate} from "../../../utils";
 
@@ -16,8 +16,9 @@ import {emailValidate} from "../../../utils";
 export const LoginForm = () => {
 
     const navigate = useNavigate()
+    const {pathname} = useLocation()
     const dispatch = useDispatch()
-    const [login, {isUninitialized, isError}] = authAPI.useLoginMutation()
+    const [login] = authAPI.useLoginMutation()
     const loginForm = useSelector(state => state.form.loginForm)
     const {setLoginForm} = FormSlice.actions
     const [loginData, setLoginData] = useState({})
@@ -26,10 +27,13 @@ export const LoginForm = () => {
 
     async function loginHandler() {
         if (emailValidate(loginData?.email)) {
-            await login({user_email: loginData.email, user_password: loginData.password, unauthorizedHandler: () => setUnauthorized(true)})
-            if (!isUninitialized && !isError) {
+            const res = await login({user_email: loginData.email, password: loginData.password, unauthorizedHandler: () => setUnauthorized(true)})
+            if (res.data) {
                 dispatch(setLoginForm(false))
-                navigate(RouteNames.HOME)
+                if (pathname === RouteNames.REGISTRATION ||
+                    pathname === RouteNames.FORGOT_PASSWORD) {
+                    navigate(RouteNames.HOME)
+                }
             }
         } else {
             setIsNotValid(true)

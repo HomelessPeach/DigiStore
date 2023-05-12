@@ -6,7 +6,14 @@ export const productCategoryAPI = createApi({
     reducerPath: 'productCategoryAPI',
     tagTypes: ['ProductCategory'],
     baseQuery: fetchBaseQueryWithRefresh({
-        baseUrl: `${apiUrl}/product_category`
+        baseUrl: `${apiUrl}/product_category`,
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem("accessToken");
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        }
     }),
     endpoints: (build) => ({
         getProductCategories: build.query({

@@ -6,7 +6,14 @@ export const chatAPI = createApi({
     reducerPath: 'chatAPI',
     tagTypes: ['Chat'],
     baseQuery: fetchBaseQueryWithRefresh({
-        baseUrl: `${apiUrl}/chat`
+        baseUrl: `${apiUrl}/chat`,
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem("accessToken");
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        }
     }),
     endpoints: (build) => ({
         chatList: build.query({

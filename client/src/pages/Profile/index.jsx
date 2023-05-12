@@ -10,7 +10,7 @@ import {RouteNames} from "../../Router";
 import {baseUrl} from "../../services";
 import {Basket, Heart} from "../../components/Icons";
 import {UserSlice} from "../../store/reducers/UserSlice";
-import {emailValidate, formattedText, passwordValidate, priceFormat, userNameValidate} from "../../utils";
+import {emailValidate, formattedText, passwordHook, passwordValidate, priceFormat, userNameValidate} from "../../utils";
 import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 import {TextField} from "../../components/TextField";
@@ -18,6 +18,8 @@ import {TextInput} from "../../components/TextInput";
 import {PhoneNumberInput} from "../../components/PhoneNumberInput";
 import {UserChangePasswordForm} from "../../components/UserChangePasswordForm";
 import {ImageInput} from "../../components/ImageInput";
+import {userAPI} from "../../services/UserService";
+import {authAPI} from "../../services/AuthService";
 
 export const Profile = () => {
 
@@ -28,11 +30,13 @@ export const Profile = () => {
     const [profile, setProfile] = useState(true)
     const [message, setMessage] = useState('')
     const [isEdit, setIsEdit] = useState(false)
-    const [userData, setUserData] = useState({image: {image_path: user.avatar}, user_name: user.name, user_phone_number: user.phoneNumber, user_email: user.email})
+    const [userData, setUserData] = useState({user_id: user.id ,image: {image_path: user.avatar}, user_name: user.name, user_phone_number: user.phoneNumber, user_email: user.email})
     const [password, setPassword] = useState('')
     const [isOpenPassword, setIsOpenPassword] = useState(false)
     const [isNotValid, setIsNotValid] = useState(false)
     const {data: chatData, isLoading: chatLoading} = chatAPI.useGetUserChatQuery(user.id, {refetchOnFocus: true})
+    const [updateUserInfo] = userAPI.useUpdateUserInfoMutation()
+    const [refresh] = authAPI.useRefreshMutation()
     const [createMessage] = chatAPI.useMessageCreateMutation()
     const [createChat] = chatAPI.useCreateChatMutation()
 
@@ -52,7 +56,11 @@ export const Profile = () => {
 
     async function saveProfile() {
         if (validation.checkValidate()) {
-            setIsEdit(false)
+            const res = await updateUserInfo((password.length > 0) ? {...userData, user_password: await passwordHook(password)} : userData)
+            await refresh()
+            if (res.data) {
+                setIsEdit(false)
+            }
         } else {
             setIsNotValid(true)
         }

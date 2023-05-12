@@ -1,4 +1,4 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {createApi} from '@reduxjs/toolkit/query/react';
 import {apiUrl, fetchBaseQueryWithRefresh} from "./index";
 import {base64StringToFile} from "../utils";
 
@@ -6,7 +6,14 @@ export const userAPI = createApi({
     reducerPath: 'userAPI',
     tagTypes: ['User'],
     baseQuery: fetchBaseQueryWithRefresh({
-        baseUrl: `${apiUrl}/user`
+        baseUrl: `${apiUrl}/user`,
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem("accessToken");
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        }
     }),
     endpoints: (build) => ({
         userList: build.query({
@@ -133,5 +140,27 @@ export const userAPI = createApi({
             },
             providesTags: ['User']
         }),
+        updateUserInfo: build.mutation({
+            query: (data) => ({
+                url: `/update-info`,
+                method: 'PUT',
+                body: ((data) => {
+                    const formData = new FormData();
+                    if (data?.image?.new_image) {
+                        formData.append('sourceImage', base64StringToFile(data.image.new_image, `avatar`));
+                        delete data.image.new_image
+                    }
+                    formData.append('data', JSON.stringify(data));
+                    return formData
+                })(data),
+            }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+        })
     })
 })
