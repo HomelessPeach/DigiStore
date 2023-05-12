@@ -13,7 +13,8 @@ class AuthBusinessService {
 
     static async userRefresh(refreshToken, transaction) {
         const tokenPayload = AuthProcessService.validateRefreshToken(refreshToken)
-        const tokens = AuthProcessService.generateToken(tokenPayload)
+        const user = await AuthProcessService.getUserInfo(tokenPayload, transaction)
+        const tokens = AuthProcessService.generateToken(user)
         const tokenData = await AuthProcessService.getTokenInfo(refreshToken, transaction)
         const updateTokenData = AuthProcessService.tokenDataToWrite(tokenData.fk_user, tokens.refresh_token)
         await AuthDatabaseService.updateToken(updateTokenData, refreshToken, transaction)

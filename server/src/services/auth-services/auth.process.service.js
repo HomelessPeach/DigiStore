@@ -28,8 +28,22 @@ class AuthProcessService {
         const user = await UserDatabaseService.findUserByEmail(userData.user_email, transaction)
         if (!user)
             throw ApiError.UnauthorizedError('Ошибка авторизации!');
-        const isValidPassword = await compare(userData.user_password, user.user_password)
+        const isValidPassword = await compare(userData.password, user.user_password)
         if (!isValidPassword)
+            throw ApiError.UnauthorizedError('Ошибка авторизации!');
+        return {
+            user_id: user.user_id,
+            user_email: user.user_email,
+            user_name: user.user_name,
+            user_phone_number: user.user_phone_number,
+            is_admin: user.is_admin,
+            image: user.image?.image_path
+        }
+    }
+
+    static async getUserInfo(userData, transaction = null) {
+        const user = await UserDatabaseService.showUser(userData.user_id, transaction)
+        if (!user)
             throw ApiError.UnauthorizedError('Ошибка авторизации!');
         return {
             user_id: user.user_id,

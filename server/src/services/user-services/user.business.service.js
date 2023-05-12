@@ -5,8 +5,9 @@ const {folderPath} = require("../../../config/config")
 
 class UserBusinessService {
 
-    static async getUserPassword(userId) {
-        return await UserDatabaseService.getUserPassword(userId)
+    static async createSimpleUser(body, transaction) {
+        const {userData} = UserProcessService.userDataWrite(body)
+        return await UserDatabaseService.createUser(userData, transaction);
     }
 
     static async createUser(body, files, transaction) {

@@ -3,16 +3,6 @@ const {UserBusinessService} = require("../../services/user-services/user.busines
 
 class UserController {
 
-    static async checkPassword(req, res, next) {
-        try {
-            const {id} = req.params;
-            const password = await UserBusinessService.getUserPassword(id)
-            res.json(password)
-        } catch (err) {
-            next(err)
-        }
-    }
-
     static async createUser(req, res, next) {
         const transaction = await SequelizeConnect.transaction()
         try {

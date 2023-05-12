@@ -1,23 +1,24 @@
 const {Router} = require("express");
 const {ProductController} = require("../controllers/product.controller");
+const {AuthMiddleware} = require("../../middlewares/auth-middleware")
 const multer = require("multer");
 
 const routerProduct = Router()
 const middlewareMulter = multer();
 
 routerProduct
-    .post('/admin', middlewareMulter.fields([{name: 'sourceImage'}, {name: 'previewSourceImage'}]), ProductController.createProduct)
-    .get('/admin', ProductController.listProduct)
-    .get('/admin/:id', ProductController.showProduct)
-    .put('/admin/:id', middlewareMulter.fields([{name: 'sourceImage'}, {name: 'previewSourceImage'}]), ProductController.updateProduct)
-    .delete('/admin/:id', ProductController.deleteProduct)
+    .post('/admin', AuthMiddleware, middlewareMulter.fields([{name: 'sourceImage'}, {name: 'previewSourceImage'}]), ProductController.createProduct)
+    .get('/admin', AuthMiddleware, ProductController.listProduct)
+    .get('/admin/:id', AuthMiddleware, ProductController.showProduct)
+    .put('/admin/:id', AuthMiddleware, middlewareMulter.fields([{name: 'sourceImage'}, {name: 'previewSourceImage'}]), ProductController.updateProduct)
+    .delete('/admin/:id', AuthMiddleware, ProductController.deleteProduct)
     .get('/carousel', ProductController.getProductsForCarousel)
     .get('/', ProductController.getProducts)
-    .post('/:id/review', ProductController.createReview)
-    .put('/:id/review/:review', ProductController.updateReview)
-    .delete('/:id/review/:review', ProductController.deleteReview)
+    .post('/:id/review', AuthMiddleware, ProductController.createReview)
+    .put('/:id/review/:review', AuthMiddleware, ProductController.updateReview)
+    .delete('/:id/review/:review', AuthMiddleware, ProductController.deleteReview)
     .get('/:id/review', ProductController.getProductReviews)
-    .get('/:id/review/:user', ProductController.getProductReview)
+    .get('/:id/review/:user', AuthMiddleware, ProductController.getProductReview)
     .get('/:id', ProductController.getProduct)
 
 
