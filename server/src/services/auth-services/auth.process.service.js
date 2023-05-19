@@ -27,10 +27,10 @@ class AuthProcessService {
     static async checkUser(userData, transaction = null) {
         const user = await UserDatabaseService.findUserByEmail(userData.user_email, transaction)
         if (!user)
-            throw ApiError.UnauthorizedError('Ошибка авторизации!');
+            throw ApiError.UnauthorizedError();
         const isValidPassword = await compare(userData.password, user.user_password)
         if (!isValidPassword)
-            throw ApiError.UnauthorizedError('Ошибка авторизации!');
+            throw ApiError.UnauthorizedError();
         return {
             user_id: user.user_id,
             user_email: user.user_email,
@@ -44,7 +44,7 @@ class AuthProcessService {
     static async getUserInfo(userData, transaction = null) {
         const user = await UserDatabaseService.showUser(userData.user_id, transaction)
         if (!user)
-            throw ApiError.UnauthorizedError('Ошибка авторизации!');
+            throw ApiError.UnauthorizedError();
         return {
             user_id: user.user_id,
             user_email: user.user_email,
@@ -70,7 +70,7 @@ class AuthProcessService {
         try {
             return jwt.verify(accessToken, application.accessTokenKey);
         } catch (err) {
-            throw ApiError.UnauthorizedError();
+            return null
         }
     }
 
@@ -78,7 +78,7 @@ class AuthProcessService {
         try {
             return jwt.verify(refreshToken, application.refreshTokenKey);
         } catch (err) {
-            throw ApiError.UnauthorizedError();
+            return null
         }
     }
 

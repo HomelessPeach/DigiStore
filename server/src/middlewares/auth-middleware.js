@@ -4,7 +4,6 @@ const {AuthProcessService} = require("../services/auth-services/auth.process.ser
 const AuthMiddleware = async (req, res, next) => {
     try {
         const authorizationHeader = req.headers.authorization;
-        console.log(req.headers)
         if (!authorizationHeader) {
             return next(ApiError.UnauthorizedError());
         }
@@ -31,8 +30,8 @@ const AuthMiddleware = async (req, res, next) => {
         };
 
         next();
-    } catch (e) {
-        return next(ApiError.UnauthorizedError());
+    } catch (err) {
+        return next(err);
     }
 
 }
