@@ -40,12 +40,11 @@ export const UserSlice = createSlice({
             state.data = null;
         },
         addToBasket(state, action) {
+            state.basket.push(action.payload)
+            localStorage.setItem('basket', JSON.stringify(state.basket))
+        },
+        removeFromBasket(state, action) {
             const basket = state.basket.filter((item)=> item.id !== action.payload.id)
-            if (basket.length === state.basket.length) {
-                state.basket.push(action.payload)
-                localStorage.setItem('basket', JSON.stringify(state.basket))
-                return;
-            }
             state.basket = [...basket]
             localStorage.setItem('basket', JSON.stringify(state.basket))
         },
@@ -63,14 +62,13 @@ export const UserSlice = createSlice({
             localStorage.setItem('basket', JSON.stringify(state.basket))
         },
         addToFavorite(state, action) {
-            const wishList = state.wishList.filter((item)=> item.id !== action.payload.id)
-            if (wishList.length === state.wishList.length) {
-                state.wishList.push(action.payload)
-                localStorage.setItem('wishList', JSON.stringify(state.wishList))
-                return;
-            }
-            state.wishList = [...wishList]
+            state.wishList.push(action.payload)
             localStorage.setItem('wishList', JSON.stringify(state.wishList))
+        },
+        removeFromFavorite(state, action) {
+            const favorite = state.wishList.filter((item)=> item.id !== action.payload.id)
+            state.wishList = [...favorite]
+            localStorage.setItem('basket', JSON.stringify(state.wishList))
         },
     }
 })

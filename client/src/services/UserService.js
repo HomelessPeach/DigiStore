@@ -161,6 +161,20 @@ export const userAPI = createApi({
                     console.log(error)
                 }
             },
-        })
+        }),
+        setUserFavoriteProduct: build.mutation({
+            query: (data) => ({
+                url: `/set-favorite-product`,
+                method: 'POST',
+                body: data
+            }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+        }),
     })
 })

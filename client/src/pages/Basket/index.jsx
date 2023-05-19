@@ -11,9 +11,19 @@ import {priceFormat} from "../../utils";
 
 export const Basket = () => {
 
-    const {basket} = useSelector(state => state.user)
-    const {setCountInBasket, addToBasket} = UserSlice.actions
+    const {data: user, basket} = useSelector(state => state.user)
+    const {setCountInBasket, removeFromBasket} = UserSlice.actions
     const dispatch = useDispatch()
+
+    async function handleSetBasket(count) {
+        if (user) {
+            if (count > 0) {
+                await setFavoriteProduct({basket_count: count})
+            } else {
+                await setFavoriteProduct({is_basket: false})
+            }
+        }
+    }
 
     function getAllSum() {
         return basket.reduce((result, item) => result + (item.price * item.count), 0)
@@ -47,13 +57,12 @@ export const Basket = () => {
                                         <CountBlock>
                                             <DecreaseButton
                                                 onClick={(event) => {
-                                                    dispatch(setCountInBasket({
+                                                    const count = item.count - 1
+                                                        dispatch(setCountInBasket({
                                                         id: item.id,
-                                                        image: item.image,
-                                                        name: item.name,
-                                                        price: item.price,
-                                                        count: item.count - 1
+                                                        count: count
                                                     }))
+                                                    handleSetBasket(count)
                                                     event.preventDefault();
                                                 }}
                                             >
@@ -64,13 +73,12 @@ export const Basket = () => {
                                             </CountValue>
                                             <AddButton
                                                 onClick={(event) => {
+                                                    const count = (item.count + 1 > item.in_stock)? item.count : item.count + 1
                                                     dispatch(setCountInBasket({
                                                         id: item.id,
-                                                        image: item.image,
-                                                        name: item.name,
-                                                        price: item.price,
-                                                        count: item.count + 1
+                                                        count: count
                                                     }))
+                                                    handleSetBasket(count)
                                                     event.preventDefault();
                                                 }}
                                             >
@@ -78,13 +86,14 @@ export const Basket = () => {
                                             </AddButton>
                                             <DeleteButton
                                                 onClick={(event) => {
-                                                    dispatch(addToBasket({
+                                                    dispatch(removeFromBasket({
                                                         id: item.id,
                                                         image: item.image,
                                                         name: item.name,
                                                         price: item.price,
                                                         count: item.count
                                                     }))
+                                                    handleSetBasket(0, false)
                                                     event.preventDefault();
                                                 }}
                                             >

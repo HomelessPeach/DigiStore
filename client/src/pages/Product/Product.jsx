@@ -11,15 +11,29 @@ import {priceFormat} from "../../utils";
 import {useDispatch, useSelector} from "react-redux";
 import {UserSlice} from "../../store/reducers/UserSlice"
 import {Breadcrumb} from "../../components/Breadcrumb";
+import {userAPI} from "../../services/UserService";
 
 export const Product = () => {
 
     const {categoryId} = useParams()
     const {data, isLoading} = productAPI.useGetProductsQuery({productCategoryId: categoryId}, {refetchOnFocus: true})
     const {data: productCategory, isLoading: titleIsLoading} = productCategoryAPI.useGetProductCategoryNameQuery(categoryId, {refetchOnFocus: true})
-    const {addToBasket, addToFavorite} = UserSlice.actions
+    const {addToBasket, addToFavorite, removeFromBasket, removeFromFavorite} = UserSlice.actions
     const {data: user, basket, wishList} = useSelector(state => state.user)
     const dispatch = useDispatch()
+    const [setFavoriteProduct] = userAPI.useSetUserFavoriteProductMutation()
+
+    async function handleSetBasket(productId, isBasket) {
+        if (user) {
+            await setFavoriteProduct({fk_product: productId, fk_user: user.id, is_basket: isBasket})
+        }
+    }
+
+    async function handleSetFavorite(productId, isFavorite) {
+        if (user) {
+            await setFavoriteProduct({fk_product: productId, fk_user: user.id, is_favorite: isFavorite})
+        }
+    }
 
     if (isLoading || titleIsLoading)
         return <h1>LOADING...</h1>
@@ -72,30 +86,51 @@ export const Product = () => {
                                                     {item.product_rating.toFixed(1)}
                                                 </RatingTextBlock>
                                             </RatingBlock>
-                                            <AddToBasket
-                                                onClick={(event) => {
-                                                    dispatch(addToBasket({
-                                                        id: item.product_id,
-                                                        image: item.product_images[0]?.image.image_path,
-                                                        name: item.product_name,
-                                                        price: item.product_price,
-                                                        count: 1
-                                                    }))
-                                                    event.preventDefault();
-                                                }}
-                                                inBasket={basket.filter((product) => product.id === item.product_id).length}
-                                            >
-                                                <Basket/>
-                                            </AddToBasket>
-                                            {(user)?
-                                                <AddToFavorite
+                                            {(item.in_stock)?
+                                                <AddToBasket
                                                     onClick={(event) => {
-                                                        dispatch(addToFavorite({
+                                                        const product = {
                                                             id: item.product_id,
                                                             image: item.product_images[0]?.image.image_path,
                                                             name: item.product_name,
                                                             price: item.product_price,
-                                                        }))
+                                                            in_stock: item.in_stock || 0,
+                                                            count: 1
+                                                        }
+                                                        if (!basket.filter((product) => product.id === item.product_id).length) {
+                                                            dispatch(addToBasket(product))
+                                                            handleSetBasket(item.product_id, true)
+                                                        } else {
+                                                            dispatch(removeFromBasket(product))
+                                                            handleSetBasket(item.product_id,false)
+                                                        }
+                                                        event.preventDefault();
+                                                    }}
+                                                    inBasket={basket.filter((product) => product.id === item.product_id).length}
+                                                >
+                                                    <Basket/>
+                                                </AddToBasket>
+                                                :
+                                                <RatingTextBlock>
+                                                    Нет в наличии
+                                                </RatingTextBlock>
+                                            }
+                                            {(user)?
+                                                <AddToFavorite
+                                                    onClick={(event) => {
+                                                        const product = {
+                                                            id: item.product_id,
+                                                            image: item.product_images[0]?.image.image_path,
+                                                            name: item.product_name,
+                                                            price: item.product_price,
+                                                        }
+                                                        if (!wishList.filter((product) => product.id === item.product_id).length) {
+                                                            dispatch(addToFavorite(product))
+                                                            handleSetFavorite(item.product_id, true)
+                                                        } else {
+                                                            dispatch(removeFromFavorite(product))
+                                                            handleSetFavorite(item.product_id,false)
+                                                        }
                                                         event.preventDefault();
                                                     }}
                                                     inWishList={wishList.filter((product) => product.id === item.product_id).length}

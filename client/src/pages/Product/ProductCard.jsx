@@ -16,17 +16,31 @@ import {TextField} from "../../components/TextField";
 import {ProductReviewsList} from "../../components/ProductReviewsList";
 import {Breadcrumb} from "../../components/Breadcrumb";
 import {RouteNames} from "../../Router";
+import {userAPI} from "../../services/UserService";
 
 export const ProductCard = () => {
 
     const {id} = useParams()
     const {data, isLoading} = productAPI.useGetProductQuery(id, {refetchOnFocus: true})
     const {data: reviewData, isLoading: reviewIsLoading} = productAPI.useGetProductReviewsQuery({id: id, offset: 0, limit: 2}, {refetchOnFocus: true})
-    const {addToBasket, addToFavorite} = UserSlice.actions
+    const {addToBasket, addToFavorite, removeFromBasket, removeFromFavorite} = UserSlice.actions
     const {data: user, basket, wishList} = useSelector(state => state.user)
     const [deleteReview] = productAPI.useDeleteProductReviewMutation()
     const dispatch = useDispatch()
     const [showAllReviews, setShowAllReviews] = useState(false)
+    const [setFavoriteProduct] = userAPI.useSetUserFavoriteProductMutation()
+
+    async function handleSetBasket(isBasket) {
+        if (user) {
+            await setFavoriteProduct({fk_product: id, fk_user: user.id, is_basket: isBasket})
+        }
+    }
+
+    async function handleSetFavorite(isFavorite) {
+        if (user) {
+            await setFavoriteProduct({fk_product: id, fk_user: user.id, is_favorite: isFavorite})
+        }
+    }
 
     async function deleteReviewHandler(reviewId) {
         await deleteReview({productId: id, reviewId: reviewId})
@@ -92,12 +106,19 @@ export const ProductCard = () => {
                             {(user)?
                                 <AddToFavorite
                                     onClick={() => {
-                                        dispatch(addToFavorite({
+                                        const product = {
                                             id: data.product_id,
                                             image: data.product_images[0]?.image_path,
                                             name: data.product_name,
                                             price: data.product_price,
-                                        }))
+                                        }
+                                        if (!wishList.filter((product) => product.id === data.product_id).length) {
+                                            dispatch(addToFavorite(product))
+                                            handleSetFavorite(true)
+                                        } else {
+                                            dispatch(removeFromFavorite(product))
+                                            handleSetFavorite(false)
+                                        }
                                     }}
                                     inWishList={wishList.filter((product) => product.id === data.product_id).length}
                                 >
@@ -116,13 +137,21 @@ export const ProductCard = () => {
                                 <>
                                     <AddToBasket
                                         onClick={() => {
-                                            dispatch(addToBasket({
+                                            const product = {
                                                 id: data.product_id,
                                                 image: data.product_images[0]?.image_path,
                                                 name: data.product_name,
                                                 price: data.product_price,
+                                                in_stock: data.in_stock || 0,
                                                 count: 1
-                                            }))
+                                            }
+                                            if (!basket.filter((product) => product.id === data.product_id).length) {
+                                                dispatch(addToBasket(product))
+                                                handleSetBasket(true)
+                                            } else {
+                                                dispatch(removeFromBasket(product))
+                                                handleSetBasket(false)
+                                            }
                                         }}
                                         inBasket={basket.filter((product) => product.id === data.product_id).length}
                                     >
