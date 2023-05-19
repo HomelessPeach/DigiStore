@@ -67,6 +67,28 @@ class UserController {
         }
     }
 
+    static async getUserFavoriteProducts(req, res, next) {
+        try {
+            const {id} = req.params;
+            const favoriteProducts = await UserBusinessService.getUserFavoriteProducts(id)
+            res.json(favoriteProducts)
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    static async setUserFavoriteProduct(req, res, next) {
+        const transaction = await SequelizeConnect.transaction()
+        try {
+            const {body} = req;
+            await UserBusinessService.setUserFavoriteProduct(body, transaction)
+            await transaction.commit();
+            res.json('')
+        } catch (err) {
+            await transaction.rollback();
+            next(err)
+        }
+    }
 }
 
 module.exports = {UserController}

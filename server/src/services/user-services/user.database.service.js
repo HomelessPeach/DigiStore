@@ -117,11 +117,9 @@ class UserDatabaseService {
             })
     }
 
-    static async deleteUserFromFavoriteProducts(userId, transaction) {
-        return await favorite_products.update(
+    static async deleteUserFavoriteProducts(userId, transaction) {
+        return await favorite_products.destroy(
             {
-                fk_user: null,
-            }, {
                 where: {
                     fk_user: userId
                 },
@@ -153,6 +151,54 @@ class UserDatabaseService {
             })
     }
 
+    static async getUserFavoriteProducts(userId, transaction = null) {
+        return await favorite_products.findAll({
+            where: {
+                fk_user: userId,
+            },
+            transaction: transaction
+        })
+    }
+
+    static async addUserFavoriteProduct(favoriteProductData, transaction) {
+        return favorite_products.create(
+            favoriteProductData, {
+                transaction: transaction
+            })
+    }
+
+    static async getFavoriteProduct(userId, productId, transaction = null) {
+        return await favorite_products.findOne({
+            where: {
+                fk_user: userId,
+                fk_product: productId,
+            },
+            transaction: transaction
+        })
+    }
+
+    static async updateUserFavoriteProduct(favoriteProductData, userId, productId, transaction) {
+        return await favorite_products.update(
+            favoriteProductData,
+            {
+                where: {
+                    fk_user: userId,
+                    fk_product: productId,
+                },
+                transaction: transaction
+            })
+    }
+
+    static async deleteUserFavoriteProduct(userId, productId, transaction) {
+        return await favorite_products.destroy(
+            {
+                where: {
+                    fk_user: userId,
+                    fk_product: productId,
+                },
+                transaction: transaction
+            })
+    }
 }
 
 module.exports = {UserDatabaseService}

@@ -32,12 +32,21 @@ class OrderProcessService {
             }
             const checkProductData = await ProductDatabaseService.showProduct(product.id, transaction)
 
-            if (product.price !== checkProductData.product_price)
+            if (product.price !== checkProductData.product_price && checkProductData.in_stock < product.count)
                 throw ApiError.BadRequest('Ошибка при создание заказа')
+
+            await ProductDatabaseService.updateProduct({in_stock: checkProductData.in_stock - product.count}, product.id, transaction)
 
             productData.order_product_price = checkProductData.product_price
             productData.order_product_name = checkProductData.product_name
             await OrderDatabaseService.createProductOrder(productData, transaction)
+        }
+    }
+
+    static async updateProductCount(products, transaction) {
+        for (let product of products) {
+            const productData = await ProductDatabaseService.showProduct(product.fk_product, transaction)
+            await ProductDatabaseService.updateProduct({in_stock: productData.in_stock + product.order_product_count}, product.fk_product, transaction)
         }
     }
 

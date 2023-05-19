@@ -67,7 +67,7 @@ class ProductProcessService {
             create_at: query.create_at || null
         }
 
-        const reviewId = query.product_id;
+        const reviewId = query.review_id;
 
         return  {reviewData, reviewId}
     }

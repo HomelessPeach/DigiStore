@@ -30,7 +30,7 @@ class ProductController {
         const transaction = await SequelizeConnect.transaction()
         try {
             const {body} = req
-            const review = await ProductBusinessService.createProductReview(body, transaction)
+            const review = await ProductBusinessService.updateProductReview(body, transaction)
             await transaction.commit();
             res.json(review)
         } catch (err) {

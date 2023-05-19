@@ -13,4 +13,6 @@ routerUser
     .put('/admin/:id', AuthMiddleware, middlewareMulter.fields([{name: 'sourceImage'}]), UserController.updateUser)
     .delete('/admin/:id', AuthMiddleware, UserController.deleteUser)
     .put('/update-info', middlewareMulter.fields([{name: 'sourceImage'}]), UserController.updateUser)
+    .post('/set-favorite-product', UserController.setUserFavoriteProduct)
+    .get('/user-favorite-product/:id', UserController.getUserFavoriteProducts)
 module.exports = {routerUser}

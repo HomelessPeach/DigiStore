@@ -42,6 +42,23 @@ class UserProcessService {
         return  {userData, userSort}
     }
 
+    static favoriteProductDataWrite(query) {
+
+        const favoriteProductData = {
+            fk_user: query.fk_user,
+            fk_product: query.fk_product,
+        }
+
+        const params = {
+            is_favorite: query.is_favorite,
+            is_basket: query.is_basket,
+            basket_count: query.basket_count
+        }
+
+        const favoriteProductParams = ValidationService.clearData(params)
+        return {favoriteProductData, favoriteProductParams}
+    }
+
 }
 
 module.exports = {UserProcessService}

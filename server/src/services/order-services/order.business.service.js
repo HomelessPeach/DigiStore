@@ -22,7 +22,10 @@ class OrderBusinessService {
     }
 
     static async cancelOrder(orderId, transaction) {
-        return await OrderDatabaseService.cancelOrder(orderId, transaction)
+        await OrderDatabaseService.cancelOrder(orderId, transaction)
+        const order = await OrderDatabaseService.showOrder(orderId)
+        await OrderProcessService.updateProductCount(order.order_products, transaction)
+        return order
     }
 
     static async completeOrder(orderId, transaction) {
