@@ -4,6 +4,7 @@ const {AuthDatabaseService} = require('./auth.database.service')
 const {UserDatabaseService} = require("../user-services/user.database.service")
 const {ApiError} = require("../../errors/api.error")
 const {application} = require('../../../config/config');
+const {v4} = require("uuid")
 
 class AuthProcessService {
 
@@ -86,6 +87,28 @@ class AuthProcessService {
         } catch (err) {
             return null
         }
+    }
+
+    static async createResetPasswordToken(userEmail, transaction) {
+        const user = await UserDatabaseService.findUserByEmail(userEmail, transaction)
+        if (!user)
+            throw ApiError.BadRequest('')
+        const date = new Date()
+        const tokenData = {
+            fk_user: user.user_id,
+            reset_password_token: v4(),
+            expired_at: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours() + 3}:${date.getMinutes()}:${date.getSeconds()}`
+        }
+        await AuthDatabaseService.createResetPassword(tokenData, transaction)
+        return tokenData.reset_password_token
+    }
+
+    static async resetPasswordPassword(password, resetToken, transaction) {
+        const token = await AuthDatabaseService.getResetPassword(resetToken, transaction)
+        if (!token || new Date() > new Date(token.expired_at))
+            throw ApiError.BadRequest('')
+        await UserDatabaseService.updateUser({user_password: password}, token.fk_user, transaction)
+        await AuthDatabaseService.deleteResetPassword(token.fk_user, transaction)
     }
 
 }

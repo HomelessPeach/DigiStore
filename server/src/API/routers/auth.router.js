@@ -8,5 +8,7 @@ routerAuth
     .post('/login', AuthController.login)
     .put('/refresh', AuthController.refresh)
     .delete('/logout', AuthController.logout)
+    .post('/reset-password', AuthController.sendResetPassword)
+    .put('/reset-password/:token', AuthController.resetPassword)
 
 module.exports = {routerAuth}

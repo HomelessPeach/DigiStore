@@ -1,5 +1,6 @@
 const {AuthDatabaseService} = require("./auth.database.service")
 const {AuthProcessService} = require("./auth.process.service")
+const {MailService} = require("../../services/mail-services/mail.service")
 
 class AuthBusinessService {
 
@@ -24,6 +25,16 @@ class AuthBusinessService {
     static async userLogout(refreshToken, transaction) {
         AuthProcessService.validateRefreshToken(refreshToken);
         return await AuthDatabaseService.deleteToken(refreshToken, transaction);
+    }
+
+    static async sendResetPassword(body, transaction) {
+        const token = await AuthProcessService.createResetPasswordToken(body.user_email, transaction)
+        const template = MailService.getTemplate(token)
+        await MailService.sendMail(body.user_email, 'Смена пароля', template)
+    }
+
+    static async resetPassword(body, token, transaction) {
+        await AuthProcessService.resetPasswordPassword(body.user_password, token, transaction)
     }
 
 }

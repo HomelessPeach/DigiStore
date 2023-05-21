@@ -3,7 +3,7 @@ const path = require("path")
 
 module.exports = {
     application: {
-        domain: 'localhost',
+        domain: 'http://localhost:8081',
         port: 8081,
         accessTokenKey: 'access_token',
         refreshTokenKey: 'refresh_token',
@@ -17,6 +17,12 @@ module.exports = {
     database: {
         dialect: 'sqlite',
         storage: path.join('../', 'DigiStore.sqlite'),
+    },
+    mailOptions: {
+        host: 'smtp.mail.ru',
+        port: 485,
+        login: 'digi.store@mail.ru',
+        password: 'Password_test_23'
     },
     paths: {
         readPath: path.join('/', 'files'),

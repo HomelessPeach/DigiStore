@@ -61,6 +61,33 @@ class AuthController {
         }
     }
 
+    static async sendResetPassword(req, res, next) {
+        const transaction = await SequelizeConnect.transaction()
+        try {
+            const {body} = req
+            await AuthBusinessService.sendResetPassword(body, transaction)
+            await transaction.commit();
+            res.json('')
+        } catch (err) {
+            await transaction.rollback();
+            next(err)
+        }
+    }
+
+    static async resetPassword(req, res, next) {
+        const transaction = await SequelizeConnect.transaction()
+        try {
+            const {token} = req.params
+            const {body} = req
+            await AuthBusinessService.resetPassword(body, token, transaction)
+            await transaction.commit();
+            res.json('')
+        } catch (err) {
+            await transaction.rollback();
+            next(err)
+        }
+    }
+
 }
 
 module.exports = {AuthController}
