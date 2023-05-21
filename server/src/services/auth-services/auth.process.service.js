@@ -24,6 +24,12 @@ class AuthProcessService {
         return token
     }
 
+    static async isUserExist(userData, transaction = null) {
+        const user = await UserDatabaseService.findUserByEmail(userData.user_email, transaction)
+        if (user)
+            throw ApiError.BadRequest('Пользователь уже существует');
+    }
+
     static async checkUser(userData, transaction = null) {
         const user = await UserDatabaseService.findUserByEmail(userData.user_email, transaction)
         if (!user)

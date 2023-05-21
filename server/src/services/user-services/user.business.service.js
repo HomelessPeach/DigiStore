@@ -2,11 +2,13 @@ const {UserDatabaseService} = require("./user.database.service");
 const {UserProcessService} = require("./user.process.service");
 const {FileService} = require("../file-services/file.service");
 const {folderPath} = require("../../../config/config")
+const {AuthProcessService} = require("../auth-services/auth.process.service");
 
 class UserBusinessService {
 
     static async createSimpleUser(body, transaction) {
         const {userData} = UserProcessService.userDataWrite(body)
+        await AuthProcessService.isUserExist(userData, transaction)
         return await UserDatabaseService.createUser(userData, transaction);
     }
 

@@ -87,18 +87,11 @@ export const Profile = () => {
         if (sendMessage.length > 0) {
             const res = await createChat({fk_user: user.id})
                 .unwrap()
-                .catch((err) => {
-                    console.log(err)
-                })
             await createMessage({
                 fk_chat: res.chat_id,
                 is_user: true,
                 chat_message_content: sendMessage
             })
-                .unwrap()
-                .catch((err) => {
-                    console.log(err)
-                })
         }
         setMessage('');
     }

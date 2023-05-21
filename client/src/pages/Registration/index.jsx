@@ -16,7 +16,8 @@ export const Registration = () => {
     const [userData, setUserData] = useState({})
     const [repeatPassword, setRepeatPassword] = useState('')
     const [isNotValid, setIsNotValid] = useState(false)
-    const [registration, {isError}] = authAPI.useRegistrationMutation()
+    const [isEmailUsed, setIsEmailUsed] = useState(false)
+    const [registration, {data}] = authAPI.useRegistrationMutation()
 
     const validation = {
         user_name: (name) => name && userNameValidate(name),
@@ -34,8 +35,11 @@ export const Registration = () => {
 
     async function registrationHandler() {
         if (validation.checkValidate()) {
-            await registration({...userData, user_password: await passwordHook(userData.user_password), password: userData.user_password})
-            if (!isError) {
+            const res = await registration({...userData, user_password: await passwordHook(userData.user_password), password: userData.user_password})
+            if (res?.error?.status === 400) {
+                setIsEmailUsed(true)
+            }
+            if (!res?.error) {
                 navigate(RouteNames.HOME)
             }
         } else {
@@ -49,7 +53,10 @@ export const Registration = () => {
                 <Title>Регистрация</Title>
                 <TextInput
                     value={userData?.user_name}
-                    onChange={(value) => setUserData({...userData, user_name: value})}
+                    onChange={(value) => {
+                        setIsEmailUsed(false)
+                        setUserData({...userData, user_name: value})
+                    }}
                     validation={{
                         validate: validation.user_name,
                         validationError: isNotValid,
@@ -70,6 +77,11 @@ export const Registration = () => {
                     label={'e-mail'}
                     w={'50%'}
                 />
+                {(isEmailUsed) &&
+                    <ValidationMessage>
+                        e-mail уже используется для другой учётной записи
+                    </ValidationMessage>
+                }
                 <PasswordInput
                     value={userData?.user_password}
                     onChange={(value) => setUserData({...userData, user_password: value})}
@@ -145,4 +157,10 @@ const Toolbar = styled.div`
   display: flex;
   justify-content: right;
   padding: 30px;
+`
+
+const ValidationMessage = styled.div`
+  color: #ee0000;
+  font-size: 15px;
+  padding: 3px 0;
 `
