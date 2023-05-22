@@ -8,11 +8,13 @@ import {Delete} from "../../components/Icons";
 import {CreateOrder} from "../../components/CreateOrder";
 import {UserSlice} from "../../store/reducers/UserSlice"
 import {priceFormat} from "../../utils";
+import {userAPI} from "../../services/UserService";
 
 export const Basket = () => {
 
     const {data: user, basket} = useSelector(state => state.user)
     const {setCountInBasket, removeFromBasket} = UserSlice.actions
+    const [setFavoriteProduct] = userAPI.useSetUserFavoriteProductMutation()
     const dispatch = useDispatch()
 
     async function handleSetBasket(count) {
