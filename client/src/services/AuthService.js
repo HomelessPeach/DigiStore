@@ -77,10 +77,9 @@ export const authAPI = createApi({
                 method: 'POST',
                 body: data
             }),
-            onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+            onQueryStarted: async (args, { queryFulfilled }) => {
                 try {
-                    const { data } = await queryFulfilled;
-                    setUserOnQueryFulfilled(data, dispatch);
+                    await queryFulfilled;
                 } catch (error) {
                     console.log(error)
                 }
@@ -92,10 +91,9 @@ export const authAPI = createApi({
                 method: 'PUT',
                 body: data
             }),
-            onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+            onQueryStarted: async (args, { queryFulfilled }) => {
                 try {
-                    const { data } = await queryFulfilled;
-                    setUserOnQueryFulfilled(data, dispatch);
+                    await queryFulfilled;
                 } catch (error) {
                     console.log(error)
                 }

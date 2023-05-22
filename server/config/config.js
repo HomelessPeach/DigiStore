@@ -3,7 +3,7 @@ const path = require("path")
 
 module.exports = {
     application: {
-        domain: 'http://localhost:8081',
+        domain: 'http://localhost:3000',
         port: 8081,
         accessTokenKey: 'access_token',
         refreshTokenKey: 'refresh_token',
@@ -19,10 +19,10 @@ module.exports = {
         storage: path.join('../', 'DigiStore.sqlite'),
     },
     mailOptions: {
-        host: 'smtp.mail.ru',
-        port: 485,
-        login: 'digi.store@mail.ru',
-        password: 'Password_test_23'
+        host: 'smtp.ethereal.email',
+        port: '587',
+        login: 'angelina.bauch@ethereal.email',
+        password: '1XSj36RwkBCZNfSE7w'
     },
     paths: {
         readPath: path.join('/', 'files'),

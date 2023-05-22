@@ -29,7 +29,7 @@ class AuthBusinessService {
 
     static async sendResetPassword(body, transaction) {
         const token = await AuthProcessService.createResetPasswordToken(body.user_email, transaction)
-        const template = MailService.getTemplate(token)
+        const template = await MailService.getTemplate(token)
         await MailService.sendMail(body.user_email, 'Смена пароля', template)
     }
 
