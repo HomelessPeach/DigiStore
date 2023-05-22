@@ -10,5 +10,6 @@ routerOrder
     .get('/admin/:id', AuthMiddleware, OrderController.showOrder)
     .put('/cancel/:id', AuthMiddleware, OrderController.cancelOrder)
     .put('/complete/:id', AuthMiddleware, OrderController.completeOrder)
+    .get('/user-order/:id', AuthMiddleware, OrderController.getUserOrder)
 
 module.exports = {routerOrder}

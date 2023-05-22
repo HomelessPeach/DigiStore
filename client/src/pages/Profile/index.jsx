@@ -20,6 +20,8 @@ import {UserChangePasswordForm} from "../../components/UserChangePasswordForm";
 import {ImageInput} from "../../components/ImageInput";
 import {userAPI} from "../../services/UserService";
 import {authAPI} from "../../services/AuthService";
+import {orderAPI} from "../../services/OrderService";
+import {OrderDetails} from "../../components/OrderDetails";
 
 export const Profile = () => {
 
@@ -39,6 +41,10 @@ export const Profile = () => {
     const [refresh] = authAPI.useRefreshMutation()
     const [createMessage] = chatAPI.useMessageCreateMutation()
     const [createChat] = chatAPI.useCreateChatMutation()
+    const {data: userOrderData} = orderAPI.useGetUserOrderQuery(user.id)
+    const [cancelOrder] = orderAPI.useOrderCancelMutation()
+    const [orderData, setOrderData] = useState({})
+    const [isOrderOpen, setIsOrderOpen] = useState(false)
 
     const validation = {
         user_email: (email) => email && emailValidate(email),
@@ -64,6 +70,11 @@ export const Profile = () => {
         } else {
             setIsNotValid(true)
         }
+    }
+
+    async function handleCancelOrder(orderId) {
+        console.log(orderId)
+        await cancelOrder(orderId)
     }
 
     async function sendMessage() {
@@ -228,7 +239,7 @@ export const Profile = () => {
                                 >
                                     {
                                         favorite.map((item, index) =>
-                                            <FavoriteCardWrapper key={index}>
+                                            <CardWrapper key={index}>
                                                 <FavoriteCard
                                                     key={index}
                                                     to={`${RouteNames.PRODUCT}/show/${item.id}`}
@@ -283,7 +294,7 @@ export const Profile = () => {
                                                         </ActionPriceBlock>
                                                     </FavoriteInfoBlock>
                                                 </FavoriteCard>
-                                            </FavoriteCardWrapper>
+                                            </CardWrapper>
                                         )
                                     }
                                 </Carousel>
@@ -293,11 +304,66 @@ export const Profile = () => {
                     </ItemsContainer>
                     <ItemsContainer>
                         <Title>Заказы</Title>
-                        {(false)?
-                            <OrdersContainer>
-
-                            </OrdersContainer>
+                        {(userOrderData)?
+                            <CarouselWrapper>
+                                <Carousel
+                                    carouselWidth={window.innerWidth - 600}
+                                    aspect={5/3}
+                                    button={false}
+                                    roundButton={favorite.length > 3}
+                                    infinity={favorite.length > 3}
+                                    dots={false}
+                                    scroll={favorite.length > 3}
+                                    itemsToShow={4}
+                                >
+                                    {
+                                        userOrderData.map((item, index) =>
+                                            <CardWrapper key={index}>
+                                                <OrderCard
+                                                    key={index}
+                                                    onClick={() => {
+                                                        setOrderData(item)
+                                                        setIsOrderOpen(true)
+                                                    }}
+                                                    isComplete={item.is_complete}
+                                                    isCancel={item.is_cancel}
+                                                >
+                                                    <OrderTitleBlock>
+                                                        Номер заказа: {item.order_number}
+                                                    </OrderTitleBlock>
+                                                    {(item.is_complete)?
+                                                        <OrderBlock>
+                                                            <CompleteBlock>
+                                                                Завершён
+                                                            </CompleteBlock>
+                                                        </OrderBlock>
+                                                        : (item.is_cancel)?
+                                                            <OrderBlock>
+                                                                <CancelBlock>
+                                                                    Отменён
+                                                                </CancelBlock>
+                                                            </OrderBlock>
+                                                            :
+                                                            <OrderBlock
+                                                                onClick={(event) => event.stopPropagation()}
+                                                            >
+                                                                <Button
+                                                                    onClick={() => handleCancelOrder(item.order_id)}
+                                                                >
+                                                                    Отменить
+                                                                </Button>
+                                                            </OrderBlock>
+                                                    }
+                                                </OrderCard>
+                                            </CardWrapper>
+                                        )
+                                    }
+                                </Carousel>
+                            </CarouselWrapper>
                             :<EmptyBlock>Здесь ничего нет</EmptyBlock>
+                        }
+                        {(isOrderOpen) &&
+                            <OrderDetails orderData={orderData} setClose={() => setIsOrderOpen(false)}/>
                         }
                     </ItemsContainer>
                 </ProfilePage>
@@ -464,7 +530,7 @@ const Title = styled.div`
 const CarouselWrapper = styled.div`
 `
 
-const FavoriteCardWrapper = styled.div`
+const CardWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -580,15 +646,17 @@ const EmptyBlock = styled.div`
   border-radius: 30px;
 `
 
-const OrdersContainer = styled.div`
+const OrderCard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 50px;
+  padding: 15px;
   box-shadow: 0 0 10px 0 #808080;
-  border-radius: 30px;
+  border-radius: 20px;
   width: 100%;
+  height: 100%;
+  background-color: ${({isComplete, isCancel}) => (isComplete)? 'rgba(0, 255, 34, 0.4)' : (isCancel)? 'rgba(255, 0, 0, 0.4)' : null};
 `
 
 const ChatPage = styled.div`
@@ -752,4 +820,35 @@ const ChangePasswordButtonBlock = styled.div`
   justify-content: center;
   width: 50%;
   padding: 20px 0 0;
+`
+
+const OrderTitleBlock = styled.div`
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+`
+
+const OrderBlock = styled.div`
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: right;
+  align-items: end;
+`
+
+const CompleteBlock = styled.div`
+  font-weight: bold;
+  background-color: #00FF22;
+  padding: 7px 10px;
+  border-radius: 10px;
+  
+`
+
+const CancelBlock = styled.div`
+  font-weight: bold;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background-color: #FF0000;
 `

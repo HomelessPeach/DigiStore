@@ -99,6 +99,34 @@ class OrderDatabaseService {
         )
     }
 
+    static async getUserOrder(userId, transaction = null) {
+        return orders.findAll({
+            where: {
+                fk_user: userId
+            },
+            attributes: [
+                'order_id',
+                'order_number',
+                'client_name',
+                'client_phone_number',
+                'client_email',
+                'is_complete',
+                'is_cancel'
+            ],
+            include: [{
+                model: order_products,
+                as: 'order_products',
+                attributes: [
+                    'fk_product',
+                    'order_product_count',
+                    'order_product_price',
+                    'order_product_name'
+                ],
+            }],
+            transaction: transaction
+        })
+    }
+
 }
 
 module.exports = {OrderDatabaseService}

@@ -32,6 +32,10 @@ class OrderBusinessService {
         return await OrderDatabaseService.completeOrder(orderId, transaction)
     }
 
+    static async getUserOrder(userId) {
+        return await OrderDatabaseService.getUserOrder(userId)
+    }
+
 }
 
 module.exports = {OrderBusinessService}

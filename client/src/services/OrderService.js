@@ -93,6 +93,20 @@ export const orderAPI = createApi({
                 }
             },
             invalidatesTags: ['Order']
-        })
+        }),
+        getUserOrder: build.query({
+            query: (id) => ({
+                url: `/user-order/${id}`,
+                method: 'GET',
+            }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+            providesTags: ['Order']
+        }),
     })
 })

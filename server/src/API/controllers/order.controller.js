@@ -53,7 +53,8 @@ class OrderController {
         }
     }
 
-    static async completeOrder(req, res, next) {const transaction = await SequelizeConnect.transaction()
+    static async completeOrder(req, res, next) {
+        const transaction = await SequelizeConnect.transaction()
         try {
             const {id} = req.params;
             await OrderBusinessService.completeOrder(id, transaction)
@@ -64,6 +65,16 @@ class OrderController {
             next(err)
         }
 
+    }
+
+    static async getUserOrder(req, res, next) {
+        try {
+            const {id} = req.params;
+            const orders = await OrderBusinessService.getUserOrder(id)
+            res.json(orders)
+        } catch (err) {
+            next(err)
+        }
     }
 
 }
