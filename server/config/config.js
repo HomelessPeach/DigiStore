@@ -22,7 +22,7 @@ module.exports = {
         host: 'smtp.mail.ru',
         port: 465,
         login: 'digi.store@mail.ru',
-        password: 'Password_test_23'
+        password: 'rusiZKFBJ2kgsubxrxaU'
     },
     paths: {
         readPath: path.join('/', 'files'),
