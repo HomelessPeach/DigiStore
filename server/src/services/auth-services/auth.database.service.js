@@ -37,6 +37,15 @@ class AuthDatabaseService {
         })
     }
 
+    static async deleteTokenById(userId, transaction) {
+        return auth_tokens.destroy({
+            where: {
+                fk_user: userId,
+            },
+            transaction: transaction,
+        })
+    }
+
     static async createResetPassword(data, transaction) {
         return reset_password.create(data, {
             transaction: transaction

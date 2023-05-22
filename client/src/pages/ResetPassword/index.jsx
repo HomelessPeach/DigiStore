@@ -1,24 +1,34 @@
 import * as React from "react";
 import styled from "styled-components";
-import {TextInput} from "../../components/TextInput";
 import {useState} from "react";
 import {Button} from "../../components/Admin/TablesStyledBlocks";
-import {emailValidate} from "../../utils";
-import {useNavigate} from "react-router-dom";
+import {passwordHook, passwordValidate} from "../../utils";
+import {useNavigate, useParams} from "react-router-dom";
 import {RouteNames} from "../../Router";
+import {PasswordInput} from "../../components/PasswordInput";
 import {authAPI} from "../../services/AuthService";
 
-export const ForgotPassword = () => {
+export const ResetPassword = () => {
 
     const navigate = useNavigate()
-    const [email, setEmail] = useState('')
+    const {token} = useParams()
+    const [userData, setUserData] = useState({user_password: ''})
+    const [repeatPassword, setRepeatPassword] = useState('')
     const [isNotValid, setIsNotValid] = useState(false)
     const [isSuccess, setIsSuccess] = useState(false)
-    const [forgotPassword] = authAPI.useSendResetPasswordMutation()
+    const [reset] = authAPI.useResetPasswordMutation()
 
-    async function sendResetPassword() {
-        if (emailValidate(email)) {
-            const res = await forgotPassword({user_email: email})
+    const validation = {
+        user_password: (password) => password && passwordValidate(password),
+        repeat_password: (resetPassword, password) => resetPassword === password,
+        checkValidate: () =>
+            validation.user_password(userData.user_password) &&
+            validation.repeat_password(repeatPassword, userData.user_password)
+    }
+
+    async function resetPassword() {
+        if (validation.checkValidate()) {
+            const res = await reset({data: {user_password: await passwordHook(userData.user_password)}, token})
             if (!res?.error) {
                 setIsSuccess(true)
             }
@@ -33,10 +43,10 @@ export const ForgotPassword = () => {
                 {(isSuccess)?
                     <>
                         <Title>
-                            Восстановление пароля
+                            Пароль изменён
                         </Title>
                         <Description>
-                            На вашу почту отправлено письмо для изменения пароля
+                            Пароль успешно изменён. Вернитесь на главную страницу и войдите в аккаунт
                         </Description>
                         <Button
                             style={{marginTop: 30}}
@@ -48,26 +58,37 @@ export const ForgotPassword = () => {
                     :
                     <>
                         <Title>
-                            Восстановление пароля
+                            Изменение пароля
                         </Title>
                         <Description>
-                            Укажите почту привязанную к аккаунту
+                            Введите новый пароль
                         </Description>
                         <EmailContainer>
-                            <TextInput
-                                value={email}
-                                onChange={(value) => setEmail(value)}
+                            <PasswordInput
+                                value={userData?.user_password}
+                                onChange={(value) => setUserData({...userData, user_password: value})}
                                 validation={{
-                                    validate: emailValidate,
+                                    validate: validation.user_password,
                                     validationError: isNotValid,
-                                    validationMessage: 'Некорректный e-mail'
+                                    validationMessage: 'Некорректный пароль. Пароль должен содержать не менее 1-ой буквы и цифры и быть от 5 до 25 символов'
                                 }}
-                                label={'e-mail'}
+                                label={'Пароль'}
+                                w={'100%'}
+                            />
+                            <PasswordInput
+                                value={repeatPassword}
+                                onChange={(value) => setRepeatPassword(value)}
+                                validation={{
+                                    validate: (pass) => validation.repeat_password(pass, userData.user_password || ''),
+                                    validationError: isNotValid,
+                                    validationMessage: 'Пароль не совпадает'
+                                }}
+                                label={'Повторите пароль'}
                                 w={'100%'}
                             />
                             <Toolbar>
                                 <Button
-                                    onClick={sendResetPassword}
+                                    onClick={resetPassword}
                                 >
                                     Отправить
                                 </Button>

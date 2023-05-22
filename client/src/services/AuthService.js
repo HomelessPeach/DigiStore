@@ -71,5 +71,35 @@ export const authAPI = createApi({
                 }
             }
         }),
+        sendResetPassword: build.mutation({
+            query: (data) => ({
+                url: '/reset-password',
+                method: 'POST',
+                body: data
+            }),
+            onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+                try {
+                    const { data } = await queryFulfilled;
+                    setUserOnQueryFulfilled(data, dispatch);
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        }),
+        resetPassword: build.mutation({
+            query: ({data, token}) => ({
+                url: `/reset-password/${token}`,
+                method: 'PUT',
+                body: data
+            }),
+            onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+                try {
+                    const { data } = await queryFulfilled;
+                    setUserOnQueryFulfilled(data, dispatch);
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        }),
     })
 })

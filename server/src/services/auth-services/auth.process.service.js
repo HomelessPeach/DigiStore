@@ -106,9 +106,10 @@ class AuthProcessService {
     static async resetPasswordPassword(password, resetToken, transaction) {
         const token = await AuthDatabaseService.getResetPassword(resetToken, transaction)
         if (!token || new Date() > new Date(token.expired_at))
-            throw ApiError.BadRequest('')
+            throw ApiError.BadRequest('Ссылка недействительна')
         await UserDatabaseService.updateUser({user_password: password}, token.fk_user, transaction)
         await AuthDatabaseService.deleteResetPassword(token.fk_user, transaction)
+        await AuthDatabaseService.deleteTokenById(token.fk_user, transaction)
     }
 
 }

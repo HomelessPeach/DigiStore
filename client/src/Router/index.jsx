@@ -40,6 +40,7 @@ import {Feedback} from "../pages/Feedback";
 import {Registration} from "../pages/Registration";
 import {ForgotPassword} from "../pages/ForgotPassword";
 import {useSelector} from "react-redux";
+import {ResetPassword} from "../pages/ResetPassword";
 
 export const RouteNames = {
     HOME: '/',
@@ -52,6 +53,7 @@ export const RouteNames = {
     FEEDBACK: '/feedback',
     REGISTRATION: '/registration',
     FORGOT_PASSWORD: '/forgot_password',
+    RESET_PASSWORD: '/reset_password/:token',
     NOT_FOUND: '/*'
 }
 
@@ -114,6 +116,7 @@ export const Router = () => {
                 <Route path={`/${RouteNames.FEEDBACK}`} element={<Feedback/>}/>
                 <Route path={`/${RouteNames.REGISTRATION}`} element={<Registration/>}/>
                 <Route path={`/${RouteNames.FORGOT_PASSWORD}`} element={<ForgotPassword/>}/>
+                <Route path={`/${RouteNames.RESET_PASSWORD}`} element={<ResetPassword/>}/>
                 <Route path={RouteNames.NOT_FOUND} element={<NotFound/>}/>
             </Route>
         </Routes>

@@ -17,7 +17,7 @@ export const Registration = () => {
     const [repeatPassword, setRepeatPassword] = useState('')
     const [isNotValid, setIsNotValid] = useState(false)
     const [isEmailUsed, setIsEmailUsed] = useState(false)
-    const [registration, {data}] = authAPI.useRegistrationMutation()
+    const [registration] = authAPI.useRegistrationMutation()
 
     const validation = {
         user_name: (name) => name && userNameValidate(name),
