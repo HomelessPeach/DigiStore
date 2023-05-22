@@ -5,6 +5,7 @@ const {promises: fs} = require("fs");
 const transport = mailer.createTransport({
     host: config.mailOptions.host,
     port: config.mailOptions.port,
+    secure: true,
     auth: {
         user: config.mailOptions.login,
         pass: config.mailOptions.password

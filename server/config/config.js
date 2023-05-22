@@ -19,10 +19,10 @@ module.exports = {
         storage: path.join('../', 'DigiStore.sqlite'),
     },
     mailOptions: {
-        host: 'smtp.ethereal.email',
-        port: '587',
-        login: 'angelina.bauch@ethereal.email',
-        password: '1XSj36RwkBCZNfSE7w'
+        host: 'smtp.mail.ru',
+        port: 465,
+        login: 'digi.store@mail.ru',
+        password: 'Password_test_23'
     },
     paths: {
         readPath: path.join('/', 'files'),
