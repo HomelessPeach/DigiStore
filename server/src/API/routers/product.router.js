@@ -13,6 +13,7 @@ routerProduct
     .put('/admin/:id', AuthMiddleware, middlewareMulter.fields([{name: 'sourceImage'}, {name: 'previewSourceImage'}]), ProductController.updateProduct)
     .delete('/admin/:id', AuthMiddleware, ProductController.deleteProduct)
     .get('/carousel', ProductController.getProductsForCarousel)
+    .get('/products-by-id', ProductController.getProductsById)
     .get('/', ProductController.getProducts)
     .post('/:id/review', AuthMiddleware, ProductController.createReview)
     .put('/:id/review/:review', AuthMiddleware, ProductController.updateReview)

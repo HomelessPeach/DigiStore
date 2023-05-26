@@ -173,6 +173,11 @@ class ProductBusinessService {
         return await ProductDatabaseService.deleteProduct(productId, transaction)
     }
 
+    static async getProductsById(query) {
+        const productInBasket = await ProductDatabaseService.getProductsById(query.productIds)
+        return ProductProcessService.getBasketProduct(productInBasket)
+    }
+
 }
 
 module.exports = {ProductBusinessService}

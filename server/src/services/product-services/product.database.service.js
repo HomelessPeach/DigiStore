@@ -347,6 +347,38 @@ class ProductDatabaseService {
         })
     }
 
+    static async getProductsById(productIds, transaction = null) {
+        return await products.findAll({
+            where: {
+                product_id: productIds
+            },
+            attributes: [
+                'product_id',
+                'product_name',
+                'product_price',
+                'in_stock',
+            ],
+            include: [{
+                model: product_images,
+                as: 'product_images',
+                where: {
+                    product_image_position: 'preview'
+                },
+                attributes: [
+                    'product_image_id',
+                ],
+                include: [{
+                    model: images,
+                    as: 'image',
+                    attributes: [
+                        'image_path'
+                    ]
+                }]
+            }],
+            transaction: transaction
+        })
+    }
+
 }
 
 module.exports = {ProductDatabaseService}

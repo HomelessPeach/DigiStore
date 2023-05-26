@@ -78,6 +78,20 @@ class ProductProcessService {
         await ProductDatabaseService.updateProduct({product_rating: (rating)? rating: 0}, productId, transaction)
     }
 
+    static getBasketProduct(productsData) {
+        const products = []
+        for (let product of productsData) {
+            product.push({
+                id: product.product_id,
+                image: product?.product_images?.image?.image_path,
+                name: product.product_name,
+                price: product.product_price,
+                count: product.in_stock
+            })
+        }
+        return products
+    }
+
 }
 
 module.exports = {ProductProcessService}

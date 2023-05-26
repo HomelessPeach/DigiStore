@@ -157,6 +157,16 @@ class ProductController {
         }
     }
 
+    static async getProductsById(req, res, next) {
+        try {
+            const {query} = req;
+            const products = await ProductBusinessService.getProductsById(query)
+            res.json(products)
+        } catch (err) {
+            next(err)
+        }
+    }
+
 }
 
 module.exports = {ProductController}
