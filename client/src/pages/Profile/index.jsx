@@ -276,25 +276,27 @@ export const Profile = () => {
                                                                 </PriceBlock>
                                                             </PriceContainer>
                                                             <ActionsBlock>
-                                                                <AddToBasket
-                                                                    onClick={(event) => {
-                                                                        const product = {
-                                                                            id: item.id,
-                                                                            count: 1
-                                                                        }
-                                                                        if (!basket.filter((product) => product.id === item.id).length) {
-                                                                            dispatch(addToBasket(product))
-                                                                            handleSetBasket(item.id, true)
-                                                                        } else {
-                                                                            dispatch(removeFromBasket(product))
-                                                                            handleSetBasket(item.id,false)
-                                                                        }
-                                                                        event.preventDefault();
-                                                                    }}
-                                                                    inBasket={basket.filter((product) => product.id === item.id).length}
-                                                                >
-                                                                    <Basket/>
-                                                                </AddToBasket>
+                                                                {(item.in_stock !== 0) &&
+                                                                    <AddToBasket
+                                                                        onClick={(event) => {
+                                                                            const product = {
+                                                                                id: item.id,
+                                                                                count: 1
+                                                                            }
+                                                                            if (!basket.filter((product) => product.id === item.id).length) {
+                                                                                dispatch(addToBasket(product))
+                                                                                handleSetBasket(item.id, true)
+                                                                            } else {
+                                                                                dispatch(removeFromBasket(product))
+                                                                                handleSetBasket(item.id,false)
+                                                                            }
+                                                                            event.preventDefault();
+                                                                        }}
+                                                                        inBasket={basket.filter((product) => product.id === item.id).length}
+                                                                    >
+                                                                        <Basket/>
+                                                                    </AddToBasket>
+                                                                }
                                                                 <AddToFavorite
                                                                     onClick={(event) => {
                                                                         const product = {

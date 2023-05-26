@@ -6,7 +6,7 @@ class OrderBusinessService {
     static async addOrder(body, transaction) {
         const {orderData} = OrderProcessService.orderDataWrite(body)
         const order = await OrderDatabaseService.createOrder(orderData, transaction)
-        await OrderProcessService.orderProductDataWrite(body, order.order_id, transaction)
+        await OrderProcessService.orderProductDataWrite(body, order.order_id, order.fk_user, transaction)
         return order
     }
 

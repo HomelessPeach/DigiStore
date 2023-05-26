@@ -8,6 +8,8 @@ import {PhoneNumberInput} from "../PhoneNumberInput";
 import {emailValidate, userNameValidate} from "../../utils";
 import {useNavigate} from "react-router-dom";
 import {RouteNames} from "../../Router";
+import {UserSlice} from "../../store/reducers/UserSlice";
+import {userAPI} from "../../services/UserService";
 
 export const CreateOrder = (props) => {
 
@@ -17,10 +19,13 @@ export const CreateOrder = (props) => {
     } = props
 
     const navigate = useNavigate();
+
     const [createOrder] = orderAPI.useAddOrderMutation()
     const [orderData, setOrderData] = useState({})
     const [isNotValid, setIsNotValid] = useState(false)
-    const {data: user} = useSelector(state => state.user)
+    const {data: user, basket, wishList} = useSelector(state => state.user)
+    const [getUserProduct] = userAPI.useGetUserProductsMutation()
+    const {clearUserProductData} = UserSlice.actions
 
     const validation = {
         client_email: (email) => email && emailValidate(email),
@@ -42,6 +47,9 @@ export const CreateOrder = (props) => {
                     console.log(err)
                 })
             if (res) {
+                if (orderData.user_id) {
+                    await getUserProduct(user.id)
+                }
                 navigate(RouteNames.PROFILE)
             }
         } else {
@@ -50,7 +58,7 @@ export const CreateOrder = (props) => {
     }
 
     useEffect(() => {
-        setOrderData({products: basketContent, sum: sum, user_id: user?.id, client_name: user?.name, client_email: user?.email, client_phone_number: user?.phoneNumber})
+        setOrderData({products: basketContent.filter((item) => item.in_stock !== 0), sum: sum, user_id: user?.id, client_name: user?.name, client_email: user?.email, client_phone_number: user?.phoneNumber})
     }, [basketContent, sum])
 
     return(

@@ -42,13 +42,12 @@ export const Basket = () => {
     }, [basket])
 
     useEffect(() => {
-        console.log(1, basketData?.length)
         if (basketData?.length) {
             const newBasketData = basket.map((product) => {
                 const basketProduct = basketData.filter((item) => item.id === product.id)
                 return {
                     ...basketProduct[0],
-                    count: product.count
+                    count: (basketProduct[0].in_stock < product.count)? basketProduct[0].in_stock : (product.count === 0)? 1 : product.count
                 }
             })
             setBasketProduct(newBasketData)
@@ -80,50 +79,75 @@ export const Basket = () => {
                                         <ProductPrice>
                                             Цена: {priceFormat(item.price)}р
                                         </ProductPrice>
-                                        <CountBlock>
-                                            <DecreaseButton
-                                                onClick={(event) => {
-                                                    const count = item.count - 1
+                                        {(item.in_stock === 0)?
+                                            <CountBlock>
+                                                <CountValue>
+                                                    Нет в наличии
+                                                </CountValue>
+                                                <DeleteButton
+                                                    onClick={(event) => {
+                                                        dispatch(removeFromBasket({
+                                                            id: item.id,
+                                                            count: item.count
+                                                        }))
+                                                        handleSetBasket(item.id, 0)
+                                                        event.preventDefault();
+                                                    }}
+                                                >
+                                                    <Delete/>
+                                                </DeleteButton>
+                                            </CountBlock>
+                                            :
+                                            <CountBlock>
+                                                <DecreaseButton
+                                                    onClick={(event) => {
+                                                        const count = item.count - 1
+                                                            dispatch(setCountInBasket({
+                                                            id: item.id,
+                                                            count: count
+                                                        }))
+                                                        handleSetBasket(item.id, count)
+                                                        event.preventDefault();
+                                                    }}
+                                                >
+                                                    -
+                                                </DecreaseButton>
+                                                <CountValue>
+                                                    {item.count}
+                                                </CountValue>
+                                                <AddButton
+                                                    onClick={(event) => {
+                                                        const count = (item.count + 1 > item.in_stock)? item.count : item.count + 1
                                                         dispatch(setCountInBasket({
-                                                        id: item.id,
-                                                        count: count
-                                                    }))
-                                                    handleSetBasket(item.id, count)
-                                                    event.preventDefault();
-                                                }}
-                                            >
-                                                -
-                                            </DecreaseButton>
-                                            <CountValue>
-                                                {item.count}
-                                            </CountValue>
-                                            <AddButton
-                                                onClick={(event) => {
-                                                    const count = (item.count + 1 > item.in_stock)? item.count : item.count + 1
-                                                    dispatch(setCountInBasket({
-                                                        id: item.id,
-                                                        count: count
-                                                    }))
-                                                    handleSetBasket(item.id, count)
-                                                    event.preventDefault();
-                                                }}
-                                            >
-                                                +
-                                            </AddButton>
-                                            <DeleteButton
-                                                onClick={(event) => {
-                                                    dispatch(removeFromBasket({
-                                                        id: item.id,
-                                                        count: item.count
-                                                    }))
-                                                    handleSetBasket(item.id, 0)
-                                                    event.preventDefault();
-                                                }}
-                                            >
-                                                <Delete/>
-                                            </DeleteButton>
-                                        </CountBlock>
-                                        <SumProductBlock>
+                                                            id: item.id,
+                                                            count: count
+                                                        }))
+                                                        handleSetBasket(item.id, count)
+                                                        event.preventDefault();
+                                                    }}
+                                                >
+                                                    +
+                                                </AddButton>
+                                                <DeleteButton
+                                                    onClick={(event) => {
+                                                        dispatch(removeFromBasket({
+                                                            id: item.id,
+                                                            count: item.count
+                                                        }))
+                                                        handleSetBasket(item.id, 0)
+                                                        event.preventDefault();
+                                                    }}
+                                                >
+                                                    <Delete/>
+                                                </DeleteButton>
+                                            </CountBlock>
+                                        }
+
+                                        <SumProductBlock
+                                            style={{
+                                                visibility: (!item.in_stock)? 'hidden' : null
+                                            }}
+                                        >
                                             Итог: {priceFormat(item.price * item.count)}р
                                         </SumProductBlock>
                                     </ValueBlock>
@@ -146,8 +170,8 @@ export const Basket = () => {
                     </EmptyBasketBlock>
                 }
             </BasketContent>
-            {(basketProduct?.length)?
-                <CreateOrder basketContent={basket} sum={getAllSum()}/>
+            {(basketProduct?.length && getAllSum() > 0)?
+                <CreateOrder basketContent={basketProduct} sum={getAllSum()}/>
                 :null
             }
         </BasketContainer>

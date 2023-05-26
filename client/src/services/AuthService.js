@@ -34,11 +34,7 @@ export const authAPI = createApi({
                                 await dispatch(userAPI.endpoints.setUserFavoriteProduct.initiate({fk_product: product.id, fk_user: user.id, is_basket: true, basket_count: product.count}))
                             }
                         }
-                        setUserProductDataClearOnQueryFulfilled(dispatch)
-                        const product = await dispatch(userAPI.endpoints.getUserProducts.initiate(user.id))
-                        if (product?.data) {
-                            setUserProductDataOnQueryFulfilled(product.data, dispatch)
-                        }
+                        await dispatch(userAPI.endpoints.getUserProducts.initiate(user.id))
                     }
                 } catch (error) {
                     console.log(error)

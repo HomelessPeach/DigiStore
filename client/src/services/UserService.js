@@ -1,5 +1,5 @@
 import {createApi} from '@reduxjs/toolkit/query/react';
-import {apiUrl, fetchBaseQueryWithRefresh} from "./index";
+import {apiUrl, fetchBaseQueryWithRefresh, setUserProductDataOnQueryFulfilled} from "./index";
 import {base64StringToFile} from "../utils";
 
 export const userAPI = createApi({
@@ -181,9 +181,12 @@ export const userAPI = createApi({
                 url: `/user-product/${id}`,
                 method: 'GET',
             }),
-            onQueryStarted: async (args, { queryFulfilled }) => {
+            onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
                 try {
-                    await queryFulfilled;
+                    const data = await queryFulfilled;
+                    if (data) {
+                        setUserProductDataOnQueryFulfilled(data.data, dispatch)
+                    }
                 } catch (error) {
                     console.log(error)
                 }

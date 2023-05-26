@@ -2,6 +2,7 @@ const {v4} = require('uuid')
 const {OrderDatabaseService} = require("./order.database.service");
 const {ApiError} = require("../../errors/api.error");
 const {ProductDatabaseService} = require("../product-services/product.database.service");
+const {UserDatabaseService} = require("../user-services/user.database.service");
 
 class OrderProcessService {
 
@@ -22,7 +23,7 @@ class OrderProcessService {
         return {orderData}
     }
 
-    static async orderProductDataWrite(query, orderId, transaction) {
+    static async orderProductDataWrite(query, orderId, userId, transaction) {
         const {products} = query
         for (let product of products) {
             const productData = {
@@ -30,6 +31,7 @@ class OrderProcessService {
                 fk_product: product.id,
                 order_product_count: product.count,
             }
+
             const checkProductData = await ProductDatabaseService.showProduct(product.id, transaction)
 
             if (product.price !== checkProductData.product_price && checkProductData.in_stock < product.count)
@@ -40,6 +42,10 @@ class OrderProcessService {
             productData.order_product_price = checkProductData.product_price
             productData.order_product_name = checkProductData.product_name
             await OrderDatabaseService.createProductOrder(productData, transaction)
+
+            if (userId) {
+                await UserDatabaseService.deleteUserFavoriteProduct(userId, product.id, transaction)
+            }
         }
     }
 

@@ -31,11 +31,8 @@ export const setUserOnQueryFulfilled = (data, dispatch) => {
 
 };
 
-export const setUserProductDataClearOnQueryFulfilled = (dispatch) => {
-    dispatch(UserSlice.actions.clearUserProductData())
-};
-
 export const setUserProductDataOnQueryFulfilled = (data, dispatch) => {
+    dispatch(UserSlice.actions.clearUserProductData())
     data.basket.map((item) => dispatch(UserSlice.actions.addToBasket(item)))
     data.wishList.map((item) => dispatch(UserSlice.actions.addToFavorite(item)))
 };
