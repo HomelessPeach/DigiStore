@@ -25,7 +25,7 @@ export const Product = () => {
 
     async function handleSetBasket(productId, isBasket) {
         if (user) {
-            await setFavoriteProduct({fk_product: productId, fk_user: user.id, is_basket: isBasket})
+            await setFavoriteProduct({fk_product: productId, fk_user: user.id, is_basket: isBasket, basket_count: 1})
         }
     }
 
@@ -91,10 +91,6 @@ export const Product = () => {
                                                     onClick={(event) => {
                                                         const product = {
                                                             id: item.product_id,
-                                                            image: item.product_images[0]?.image.image_path,
-                                                            name: item.product_name,
-                                                            price: item.product_price,
-                                                            in_stock: item.in_stock || 0,
                                                             count: 1
                                                         }
                                                         if (!basket.filter((product) => product.id === item.product_id).length) {
@@ -120,9 +116,6 @@ export const Product = () => {
                                                     onClick={(event) => {
                                                         const product = {
                                                             id: item.product_id,
-                                                            image: item.product_images[0]?.image.image_path,
-                                                            name: item.product_name,
-                                                            price: item.product_price,
                                                         }
                                                         if (!wishList.filter((product) => product.id === item.product_id).length) {
                                                             dispatch(addToFavorite(product))

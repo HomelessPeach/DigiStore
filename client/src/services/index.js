@@ -28,4 +28,14 @@ export const fetchBaseQueryWithRefresh = (fetchBaseQueryArgs) => {
 
 export const setUserOnQueryFulfilled = (data, dispatch) => {
     dispatch(UserSlice.actions.login(data.accessToken));
+
+};
+
+export const setUserProductDataClearOnQueryFulfilled = (dispatch) => {
+    dispatch(UserSlice.actions.clearUserProductData())
+};
+
+export const setUserProductDataOnQueryFulfilled = (data, dispatch) => {
+    data.basket.map((item) => dispatch(UserSlice.actions.addToBasket(item)))
+    data.wishList.map((item) => dispatch(UserSlice.actions.addToFavorite(item)))
 };

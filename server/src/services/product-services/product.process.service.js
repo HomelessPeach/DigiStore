@@ -86,6 +86,7 @@ class ProductProcessService {
                 image: product?.product_images[0]?.image?.image_path,
                 name: product.product_name,
                 price: product.product_price,
+                in_stock: product.in_stock,
                 count: product.in_stock
             })
         }

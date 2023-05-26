@@ -32,7 +32,7 @@ export const ProductCard = () => {
 
     async function handleSetBasket(isBasket) {
         if (user) {
-            await setFavoriteProduct({fk_product: id, fk_user: user.id, is_basket: isBasket})
+            await setFavoriteProduct({fk_product: id, fk_user: user.id, is_basket: isBasket, basket_count: 1})
         }
     }
 
@@ -108,9 +108,6 @@ export const ProductCard = () => {
                                     onClick={() => {
                                         const product = {
                                             id: data.product_id,
-                                            image: data.product_images[0]?.image_path,
-                                            name: data.product_name,
-                                            price: data.product_price,
                                         }
                                         if (!wishList.filter((product) => product.id === data.product_id).length) {
                                             dispatch(addToFavorite(product))
@@ -139,10 +136,6 @@ export const ProductCard = () => {
                                         onClick={() => {
                                             const product = {
                                                 id: data.product_id,
-                                                image: data.product_images[0]?.image_path,
-                                                name: data.product_name,
-                                                price: data.product_price,
-                                                in_stock: data.in_stock || 0,
                                                 count: 1
                                             }
                                             if (!basket.filter((product) => product.id === data.product_id).length) {
@@ -201,7 +194,9 @@ export const ProductCard = () => {
                         <ProductInfoTitle>
                             Отзывы
                         </ProductInfoTitle>
-                        <ProductReview productId={data.product_id}/>
+                        {(user?.id) &&
+                            <ProductReview productId={data.product_id}/>
+                        }
                         <ProductReviewContainer>
                             {reviewData.map((item, index) =>
                                 <ProductReviewBlock key={index} my={item.fk_user === user?.id}>

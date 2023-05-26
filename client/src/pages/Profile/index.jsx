@@ -22,13 +22,13 @@ import {userAPI} from "../../services/UserService";
 import {authAPI} from "../../services/AuthService";
 import {orderAPI} from "../../services/OrderService";
 import {OrderDetails} from "../../components/OrderDetails";
+import {productAPI} from "../../services/ProductService";
 
 export const Profile = () => {
 
     const {data: user, basket, wishList} = useSelector(state => state.user)
-    const {addToBasket, addToFavorite} = UserSlice.actions
+    const {addToBasket, addToFavorite, removeFromBasket, removeFromFavorite} = UserSlice.actions
     const dispatch = useDispatch()
-    const [favorite, setFavorite] = useState([...wishList])
     const [profile, setProfile] = useState(true)
     const [message, setMessage] = useState('')
     const [isEdit, setIsEdit] = useState(false)
@@ -43,6 +43,8 @@ export const Profile = () => {
     const [createChat] = chatAPI.useCreateChatMutation()
     const {data: userOrderData} = orderAPI.useGetUserOrderQuery(user.id)
     const [cancelOrder] = orderAPI.useOrderCancelMutation()
+    const [getFavorite, {data: favoriteData}] = productAPI.useGetProductsByIdMutation()
+    const [setFavoriteProduct] = userAPI.useSetUserFavoriteProductMutation()
     const [orderData, setOrderData] = useState({})
     const [isOrderOpen, setIsOrderOpen] = useState(false)
 
@@ -72,8 +74,19 @@ export const Profile = () => {
         }
     }
 
+    async function handleSetBasket(productId, isBasket) {
+        if (user) {
+            await setFavoriteProduct({fk_product: productId, fk_user: user.id, is_basket: isBasket, basket_count: 1})
+        }
+    }
+
+    async function handleSetFavorite(productId, isFavorite) {
+        if (user) {
+            await setFavoriteProduct({fk_product: productId, fk_user: user.id, is_favorite: isFavorite})
+        }
+    }
+
     async function handleCancelOrder(orderId) {
-        console.log(orderId)
         await cancelOrder(orderId)
     }
 
@@ -108,8 +121,10 @@ export const Profile = () => {
     }
 
     useEffect(() => {
-        setFavorite([...wishList])
-    }, [])
+        if (wishList.length) {
+            getFavorite(wishList.map((item) => item.id))
+        }
+    }, [wishList])
 
     return (
         <PageContainer>
@@ -225,20 +240,20 @@ export const Profile = () => {
                     </ProfileContainer>
                     <ItemsContainer>
                         <Title>Избранное</Title>
-                        {(favorite.length)?
+                        {(favoriteData?.length)?
                             <CarouselWrapper>
                                 <Carousel
                                     carouselWidth={window.innerWidth - 600}
                                     aspect={3/4}
                                     button={false}
-                                    roundButton={favorite.length > 3}
-                                    infinity={favorite.length > 3}
+                                    roundButton={favoriteData.length > 3}
+                                    infinity={favoriteData.length > 3}
                                     dots={false}
-                                    scroll={favorite.length > 3}
+                                    scroll={favoriteData.length > 3}
                                     itemsToShow={4}
                                 >
                                     {
-                                        favorite.map((item, index) =>
+                                        favoriteData.map((item, index) =>
                                             <CardWrapper key={index}>
                                                 <FavoriteCard
                                                     key={index}
@@ -263,13 +278,17 @@ export const Profile = () => {
                                                             <ActionsBlock>
                                                                 <AddToBasket
                                                                     onClick={(event) => {
-                                                                        dispatch(addToBasket({
+                                                                        const product = {
                                                                             id: item.id,
-                                                                            image: item.image,
-                                                                            name: item.name,
-                                                                            price: item.price,
                                                                             count: 1
-                                                                        }))
+                                                                        }
+                                                                        if (!basket.filter((product) => product.id === item.id).length) {
+                                                                            dispatch(addToBasket(product))
+                                                                            handleSetBasket(item.id, true)
+                                                                        } else {
+                                                                            dispatch(removeFromBasket(product))
+                                                                            handleSetBasket(item.id,false)
+                                                                        }
                                                                         event.preventDefault();
                                                                     }}
                                                                     inBasket={basket.filter((product) => product.id === item.id).length}
@@ -278,12 +297,16 @@ export const Profile = () => {
                                                                 </AddToBasket>
                                                                 <AddToFavorite
                                                                     onClick={(event) => {
-                                                                        dispatch(addToFavorite({
+                                                                        const product = {
                                                                             id: item.id,
-                                                                            image: item.image,
-                                                                            name: item.name,
-                                                                            price: item.price,
-                                                                        }))
+                                                                        }
+                                                                        if (!wishList.filter((product) => product.id === item.id).length) {
+                                                                            dispatch(addToFavorite(product))
+                                                                            handleSetFavorite(item.id, true)
+                                                                        } else {
+                                                                            dispatch(removeFromFavorite(product))
+                                                                            handleSetFavorite(item.id,false)
+                                                                        }
                                                                         event.preventDefault();
                                                                     }}
                                                                     inWishList={wishList.filter((product) => product.id === item.id).length}
@@ -304,16 +327,16 @@ export const Profile = () => {
                     </ItemsContainer>
                     <ItemsContainer>
                         <Title>Заказы</Title>
-                        {(userOrderData)?
+                        {(userOrderData?.length)?
                             <CarouselWrapper>
                                 <Carousel
                                     carouselWidth={window.innerWidth - 600}
                                     aspect={5/3}
                                     button={false}
-                                    roundButton={favorite.length > 3}
-                                    infinity={favorite.length > 3}
+                                    roundButton={userOrderData.length > 3}
+                                    infinity={userOrderData.length > 3}
                                     dots={false}
-                                    scroll={favorite.length > 3}
+                                    scroll={userOrderData.length > 3}
                                     itemsToShow={4}
                                 >
                                     {

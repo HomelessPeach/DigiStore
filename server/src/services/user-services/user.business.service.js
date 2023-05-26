@@ -78,8 +78,8 @@ class UserBusinessService {
     }
 
     static async getUserProducts(userId) {
-        const basket = await UserDatabaseService.getUserProductFavorite(userId)
-        const wishList = await UserDatabaseService.getUserProductInBasket(userId)
+        const wishList = await UserDatabaseService.getUserProductFavorite(userId)
+        const basket = await UserDatabaseService.getUserProductInBasket(userId)
         return {basket, wishList}
     }
 

@@ -36,8 +36,12 @@ export const UserSlice = createSlice({
             }
         },
         logout(state) {
-            localStorage.removeItem('accessToken');
             state.data = null;
+            state.wishList = []
+            state.basket = []
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('basket')
+            localStorage.removeItem('wishList')
         },
         addToBasket(state, action) {
             state.basket.push(action.payload)
@@ -68,7 +72,13 @@ export const UserSlice = createSlice({
         removeFromFavorite(state, action) {
             const favorite = state.wishList.filter((item)=> item.id !== action.payload.id)
             state.wishList = [...favorite]
-            localStorage.setItem('basket', JSON.stringify(state.wishList))
+            localStorage.setItem('wishList', JSON.stringify(state.wishList))
         },
+        clearUserProductData(state) {
+            state.wishList = []
+            state.basket = []
+            localStorage.setItem('basket', JSON.stringify(state.basket))
+            localStorage.setItem('wishList', JSON.stringify(state.wishList))
+        }
     }
 })

@@ -9,27 +9,51 @@ import {CreateOrder} from "../../components/CreateOrder";
 import {UserSlice} from "../../store/reducers/UserSlice"
 import {priceFormat} from "../../utils";
 import {userAPI} from "../../services/UserService";
+import {productAPI} from "../../services/ProductService";
+import {useEffect, useState} from "react";
 
 export const Basket = () => {
 
     const {data: user, basket} = useSelector(state => state.user)
     const {setCountInBasket, removeFromBasket} = UserSlice.actions
+    const [getBasket, {data: basketData}] = productAPI.useGetProductsByIdMutation()
     const [setFavoriteProduct] = userAPI.useSetUserFavoriteProductMutation()
+    const [basketProduct, setBasketProduct] = useState([])
     const dispatch = useDispatch()
 
-    async function handleSetBasket(count) {
+    async function handleSetBasket(productId, count) {
         if (user) {
             if (count > 0) {
-                await setFavoriteProduct({basket_count: count})
+                await setFavoriteProduct({fk_product: productId, fk_user: user.id, basket_count: count})
             } else {
-                await setFavoriteProduct({is_basket: false})
+                await setFavoriteProduct({fk_product: productId, fk_user: user.id, is_basket: false})
             }
         }
     }
 
     function getAllSum() {
-        return basket.reduce((result, item) => result + (item.price * item.count), 0)
+        return basketProduct.reduce((result, item) => result + (item.price * item.count), 0)
     }
+
+    useEffect(() => {
+        if (basket.length) {
+            getBasket(basket.map((item) => item.id))
+        }
+    }, [basket])
+
+    useEffect(() => {
+        console.log(1, basketData?.length)
+        if (basketData?.length) {
+            const newBasketData = basket.map((product) => {
+                const basketProduct = basketData.filter((item) => item.id === product.id)
+                return {
+                    ...basketProduct[0],
+                    count: product.count
+                }
+            })
+            setBasketProduct(newBasketData)
+        }
+    }, [user?.id, basketData, basket])
 
     return (
         <BasketContainer>
@@ -37,10 +61,10 @@ export const Basket = () => {
                 Корзина
             </HeaderTitle>
             <BasketContent>
-                {(basket?.length)?
+                {(basketProduct?.length)?
                     <>
                     {
-                        basket.map((item, index) =>
+                        basketProduct.map((item, index) =>
                             <BasketItem
                                 key={index}
                                 to={`${RouteNames.PRODUCT}/show/${item.id}`}
@@ -64,7 +88,7 @@ export const Basket = () => {
                                                         id: item.id,
                                                         count: count
                                                     }))
-                                                    handleSetBasket(count)
+                                                    handleSetBasket(item.id, count)
                                                     event.preventDefault();
                                                 }}
                                             >
@@ -80,7 +104,7 @@ export const Basket = () => {
                                                         id: item.id,
                                                         count: count
                                                     }))
-                                                    handleSetBasket(count)
+                                                    handleSetBasket(item.id, count)
                                                     event.preventDefault();
                                                 }}
                                             >
@@ -90,12 +114,9 @@ export const Basket = () => {
                                                 onClick={(event) => {
                                                     dispatch(removeFromBasket({
                                                         id: item.id,
-                                                        image: item.image,
-                                                        name: item.name,
-                                                        price: item.price,
                                                         count: item.count
                                                     }))
-                                                    handleSetBasket(0, false)
+                                                    handleSetBasket(item.id, 0)
                                                     event.preventDefault();
                                                 }}
                                             >
@@ -125,7 +146,7 @@ export const Basket = () => {
                     </EmptyBasketBlock>
                 }
             </BasketContent>
-            {(basket.length)?
+            {(basketProduct?.length)?
                 <CreateOrder basketContent={basket} sum={getAllSum()}/>
                 :null
             }

@@ -1,6 +1,12 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {apiUrl, setUserOnQueryFulfilled} from "./index";
+import {
+    apiUrl,
+    setUserOnQueryFulfilled,
+    setUserProductDataClearOnQueryFulfilled,
+    setUserProductDataOnQueryFulfilled
+} from "./index";
 import {UserSlice} from "../store/reducers/UserSlice";
+import {userAPI} from "./UserService";
 
 export const authAPI = createApi({
     reducerPath: 'authAPI',
@@ -17,14 +23,25 @@ export const authAPI = createApi({
                     password: user.password
                 }
             }),
-            onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+            onQueryStarted: async (args, { dispatch, queryFulfilled, getState }) => {
                 try {
                     const { data } = await queryFulfilled;
                     setUserOnQueryFulfilled(data, dispatch);
-                } catch (error) {
-                    if (error.error.status === 401) {
-                        args?.unauthorizedHandler()
+                    const {data: user, basket} = getState().user
+                    if (user?.id) {
+                        if (basket?.length) {
+                            for (let product of basket) {
+                                await dispatch(userAPI.endpoints.setUserFavoriteProduct.initiate({fk_product: product.id, fk_user: user.id, is_basket: true, basket_count: product.count}))
+                            }
+                        }
+                        setUserProductDataClearOnQueryFulfilled(dispatch)
+                        const product = await dispatch(userAPI.endpoints.getUserProducts.initiate(user.id))
+                        if (product?.data) {
+                            setUserProductDataOnQueryFulfilled(product.data, dispatch)
+                        }
                     }
+                } catch (error) {
+                    console.log(error)
                 }
             }
         }),
