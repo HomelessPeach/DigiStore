@@ -1,12 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit";
-import jwtDecode from "jwt-decode";
+import {decodeToken} from "react-jwt";
 
 export const UserSlice = createSlice({
     name: 'user',
     initialState: {
         data: localStorage.getItem('accessToken')?
             (() => {
-                const user = jwtDecode(localStorage.getItem('accessToken'))
+                const user = decodeToken(localStorage.getItem('accessToken'))
                 return {
                     id: user.user_id,
                     email: user.user_email,
@@ -22,7 +22,7 @@ export const UserSlice = createSlice({
     },
     reducers: {
         login(state, action) {
-            const user = jwtDecode(action.payload)
+            const user = decodeToken(action.payload)
             state.data = {
                 id: user.user_id,
                 email: user.user_email,
