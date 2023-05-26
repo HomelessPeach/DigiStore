@@ -174,7 +174,7 @@ class ProductBusinessService {
     }
 
     static async getProductsById(query) {
-        const productInBasket = await ProductDatabaseService.getProductsById(query.productIds)
+        const productInBasket = await ProductDatabaseService.getProductsById(query.productIds.split(','))
         return ProductProcessService.getBasketProduct(productInBasket)
     }
 

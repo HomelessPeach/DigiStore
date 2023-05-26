@@ -81,9 +81,9 @@ class ProductProcessService {
     static getBasketProduct(productsData) {
         const products = []
         for (let product of productsData) {
-            product.push({
+            products.push({
                 id: product.product_id,
-                image: product?.product_images?.image?.image_path,
+                image: product?.product_images[0]?.image?.image_path,
                 name: product.product_name,
                 price: product.product_price,
                 count: product.in_stock
