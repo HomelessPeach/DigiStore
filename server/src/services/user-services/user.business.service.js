@@ -61,10 +61,6 @@ class UserBusinessService {
         return deleteUser
     }
 
-    static async getUserFavoriteProducts(userId) {
-        return await UserDatabaseService.getUserFavoriteProducts(userId)
-    }
-
     static async setUserFavoriteProduct(query, transaction) {
         const {favoriteProductData, favoriteProductParams} = UserProcessService.favoriteProductDataWrite(query)
         const findFavoriteProduct = await UserDatabaseService.getFavoriteProduct(favoriteProductData.fk_user, favoriteProductData.fk_product, transaction)
@@ -79,6 +75,12 @@ class UserBusinessService {
             return;
         }
         await UserDatabaseService.updateUserFavoriteProduct(favoriteProductParams, favoriteProductData.fk_user, favoriteProductData.fk_product, transaction)
+    }
+
+    static async getUserProducts(userId) {
+        const basket = await UserDatabaseService.getUserProductFavorite(userId)
+        const wishList = await UserDatabaseService.getUserProductInBasket(userId)
+        return {basket, wishList}
     }
 
 }

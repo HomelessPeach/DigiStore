@@ -176,5 +176,18 @@ export const userAPI = createApi({
                 }
             },
         }),
+        getUserProducts: build.mutation({
+            query: (id) => ({
+                url: `/user-product/${id}`,
+                method: 'GET',
+            }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+        })
     })
 })

@@ -151,15 +151,6 @@ class UserDatabaseService {
             })
     }
 
-    static async getUserFavoriteProducts(userId, transaction = null) {
-        return await favorite_products.findAll({
-            where: {
-                fk_user: userId,
-            },
-            transaction: transaction
-        })
-    }
-
     static async addUserFavoriteProduct(favoriteProductData, transaction) {
         return favorite_products.create(
             favoriteProductData, {
@@ -198,6 +189,31 @@ class UserDatabaseService {
                 },
                 transaction: transaction
             })
+    }
+
+    static async getUserProductFavorite(userId) {
+        return await favorite_products.findAll({
+            where: {
+                fk_user: userId,
+                is_favorite: true,
+            },
+            attributes: [
+                ['fk_product', 'id'],
+            ]
+        })
+    }
+
+    static async getUserProductInBasket(userId) {
+        return await favorite_products.findAll({
+            where: {
+                fk_user: userId,
+                is_basket: true,
+            },
+            attributes: [
+                ['fk_product', 'id'],
+                ['basket_count', 'count']
+            ]
+        })
     }
 }
 

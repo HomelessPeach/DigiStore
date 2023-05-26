@@ -290,16 +290,21 @@ export const productAPI = createApi({
             },
             providesTags: ['Product']
         }),
-        // getProductData: build.mutation({
-        //     query: () => ({
-        //         url: `/admin`,
-        //         method: 'GET',
-        //         params: {
-        //             _sort: 'product_name',
-        //             _order: 'ASC'
-        //         }
-        //     }),
-        //     providesTags: ['Product']
-        // }),
+        getProductsById: build.mutation({
+            query: (productIds) => ({
+                url: `/products-by-id`,
+                method: 'GET',
+                params: {
+                    productIds
+                }
+            }),
+            onQueryStarted: async (args, { queryFulfilled }) => {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+        })
     })
 })
