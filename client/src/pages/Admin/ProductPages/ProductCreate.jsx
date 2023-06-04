@@ -25,7 +25,6 @@ export const ProductCreate = () => {
         product_price: (price) => Number(price),
         fk_product_category: (productCategoryId) => productCategoryId,
         product_feature_values: (productFeatureValues) => {
-            // console.log()
             if (productFeatureValues.length === 1 && !productFeatureValues[0]?.fk_product_feature && !productFeatureValues[0]?.product_features_values_value)
                 return false
             for (let item of productFeatureValues) {

@@ -183,6 +183,7 @@ const ImgBlock = styled.div`
   width: ${({w}) => w}px;
   border-radius: ${({br}) => br}px;
   border: 1px solid ${({theme}) => theme.colors.tertiary};
+  position: relative;
   user-select: none;
   overflow:hidden
 `
