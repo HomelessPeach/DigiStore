@@ -3,7 +3,7 @@ const path = require("path")
 
 module.exports = {
     application: {
-        domain: 'http://localhost:3000',
+        domain: 'http://www.digital-store.pro',
         port: 8081,
         accessTokenKey: 'access_token',
         refreshTokenKey: 'refresh_token',
@@ -11,6 +11,7 @@ module.exports = {
             whiteList: [
                 'http://localhost:3000',
                 'http://localhost:8081',
+                'http://www.digital-store.pro'
             ],
         }
     },
