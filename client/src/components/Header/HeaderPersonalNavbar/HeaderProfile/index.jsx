@@ -26,6 +26,9 @@ const HeaderProfileBlock = styled.div`
   display: flex;
   padding: 5px 0;
   cursor: pointer;
+  @media (${({theme}) => theme.media.medium}) {
+    width: 35px;
+  }
 `
 
 const ProfileImage = styled.svg`

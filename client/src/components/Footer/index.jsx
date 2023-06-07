@@ -100,6 +100,9 @@ const SocialContainer = styled.div`
 const Title = styled.div`
   font-size: 25px;
   padding: 0 0 10px;
+  @media (${({theme}) => theme.media.small}) {
+    font-size: 20px;
+  }
 `
 
 const SocialBlockContainer = styled.div`
@@ -128,6 +131,10 @@ const Icon = styled.div`
   width: 40px;
   height: 40px;
   padding: 5px;
+  @media (${({theme}) => theme.media.small}) {
+    width: 35px;
+    height: 35px;
+  }
 `
 
 const Text = styled.div`
@@ -136,6 +143,9 @@ const Text = styled.div`
   height: 40px;
   display: flex;
   align-items: center;
+  @media (${({theme}) => theme.media.small}) {
+    font-size: 15px;
+  }
 `
 
 const FeedbackButton = styled(NavLink)`
@@ -150,6 +160,10 @@ const FeedbackButton = styled(NavLink)`
     background-color: rgba(255, 255, 255, 100);
     box-shadow: 0 0 10px 0 #3a3a3a;
   }
+  @media (${({theme}) => theme.media.small}) {
+    font-size: 15px;
+    padding: 3px 7px;
+  }
 `
 
 const BottomLine = styled.div`
@@ -159,4 +173,8 @@ const BottomLine = styled.div`
   padding: 10px 0 15px;
   font-size: 20px;
   font-weight: bold;
+  @media (${({theme}) => theme.media.small}) {
+    font-size: 18px;
+    padding: 7px 0 12px;
+  }
 `

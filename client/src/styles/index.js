@@ -18,12 +18,11 @@ export const Theme = {
             height: 250
         },
     },
-    // media: {
-    //     extraLarge: '(max-width: 1140px)',
-    //     large: '(max-width: 960px)',
-    //     medium: '(max-width: 720px)',
-    //     small: '(max-width: 540px)',
-    // },
+    media: {
+        large: '(max-width: 985px)',
+        medium: '(max-width: 720px)',
+        small: '(max-width: 480px)',
+    },
 }
 
 export const Styles = createGlobalStyle`

@@ -129,7 +129,7 @@ const ShowBlock = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding: 40px 60px;
+  padding: 20px 50px 40px;
   border: 1px solid #9f9e9e;
   border-radius: 10px;
 `

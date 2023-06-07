@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components"
 import {useState} from "react";
-import {NavLink, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {productAPI} from "../../services/ProductService";
 import {newsAPI} from "../../services/NewsService";
 import {attributeFilesUrl, baseUrl} from "../../services";
@@ -152,8 +152,18 @@ const HeaderLargeContainer = styled.div`
   background-color: ${({theme}) => theme.colors.primary};
   transition: 0s;
   display: flex;
+  padding: 10px;
   flex-direction: column;
   align-items: center;
+  @media (${({theme}) => theme.media.large}) {
+    height: ${({theme}) => theme.size.header.maxHeight * 0.8}px;
+  }
+  @media (${({theme}) => theme.media.medium}) {
+    height: ${({theme}) => theme.size.header.maxHeight * 0.5}px;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    height: ${({theme}) => theme.size.header.maxHeight * 0.4}px;
+  }
 `
 
 const ImageHeaderBlock = styled.div`
@@ -161,8 +171,8 @@ const ImageHeaderBlock = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: ${({theme}) => theme.size.header.maxHeight}px;
-  width: 1000px;
+  height: 100%;
+  width: 100%;
   color: #ffffff;
 `
 

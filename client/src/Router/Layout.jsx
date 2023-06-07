@@ -58,17 +58,20 @@ export const Layout = () => {
 }
 
 const LayoutContainer = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
 `
 
 const HeaderContainer = styled.div`
+  width: 100%;
   visibility: ${({vis}) => (vis)? 'visible' : 'hidden'};
   max-height: ${({vis}) => (vis)? '100%' : '0px'};
 `
 
 const ContentContainer = styled.div`
+  width: 100%;
+  height: 100%;
   overflow: overlay;
 `

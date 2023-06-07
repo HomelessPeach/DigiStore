@@ -11,7 +11,7 @@ import {ImagesInput} from "../../../components/Admin/components/ImagesInput";
 import {ReferenceInputField} from "../../../components/Admin/components/ReferenceInputField";
 import {BoolInput} from "../../../components/Admin/components/BoolInput";
 import {TableInput} from "../../../components/Admin/components/TableInput";
-import {ToolbarBlock, LinkButton, DeleteButton, ListContainer, EditToolbarBlock, Button} from "../../../components/Admin/TablesStyledBlocks";
+import {ToolbarBlock, LinkButton, DeleteButton, EditContainer, EditToolbarBlock, Button} from "../../../components/Admin/TablesStyledBlocks";
 import {DataError} from "../../../components/Admin/DataError";
 import {RatingField} from "../../../components/Admin/components/RatingField";
 import {TextField} from "../../../components/Admin/components/TextField";
@@ -88,7 +88,7 @@ export const ProductEdit = () => {
         return <DataError/>
 
     return (
-        <ListContainer>
+        <EditContainer>
             <ToolbarBlock>
                 <LinkButton
                     to={AdminRouteNames.ADMIN_PRODUCT}
@@ -103,7 +103,6 @@ export const ProductEdit = () => {
                 <EditContent>
                     <ImagesInput
                         value={productData.product_images}
-                        size={{h: 540, w: 960, br: 20}}
                         onChange={(value) => setProductData({...productData, product_images: [...(productData.product_images)? productData.product_images: [], ...value]})}
                         label={'Изображения'}
                     />
@@ -191,7 +190,7 @@ export const ProductEdit = () => {
                     </Button>
                 </EditToolbarBlock>
             </EditBlock>
-        </ListContainer>
+        </EditContainer>
     )
 
 }

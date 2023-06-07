@@ -40,5 +40,6 @@ const SidebarContainer = styled.div`
   max-height: calc(100vh - ${({theme}) => theme.size.header.height}px);
   min-height: calc(100vh - ${({theme}) => theme.size.header.height + theme.size.footer.height}px);
   user-select: none;
-  overflow: overlay;
+  overflow-x: hidden;
+  overflow-y: overlay;
 `

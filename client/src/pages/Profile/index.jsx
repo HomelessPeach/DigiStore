@@ -457,7 +457,7 @@ const PageContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 25px;
-  padding: 30px 300px 60px;
+  padding: 30px 20% 60px;
 `
 
 const ProfileMenu = styled.div`

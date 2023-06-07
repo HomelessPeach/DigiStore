@@ -22,4 +22,10 @@ const HeaderPersonalNavbarBlock = styled.div`
   width: 20%;
   height: ${({theme}) => theme.size.header.height}px;
   padding: 15px 10px;
+  @media (${({theme}) => theme.media.medium}) {
+    min-width: 110px;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    min-width: 100px;
+  }
 `

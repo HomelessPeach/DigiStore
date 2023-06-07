@@ -97,7 +97,7 @@ const NewsShortDescription = styled.div`
 const NewsDescriptionBlock = styled.div`
   display: flex;
   align-items: center;
-  padding: 35px 350px;
+  padding: 35px 20%;
   width: 100%;
   background-color: #ffffff;
 `

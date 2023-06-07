@@ -89,7 +89,7 @@ export const NewsEdit = () => {
                     />
                     <ImageInput
                         value={newsData.image?.new_image || newsData.image?.image_path || ''}
-                        size={{h: "440px", w: "960px", br: '10px'}}
+                        size={{h: "390px", w: "848px", br: '10px'}}
                         onChange={(value) => (value)?
                             setNewsData({...newsData, image: {...newsData.image, new_image: value}})
                             :null}

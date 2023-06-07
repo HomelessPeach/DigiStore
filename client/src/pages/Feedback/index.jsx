@@ -59,7 +59,7 @@ const FeedbackPage = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 400px;
+  padding: 0 25%;
 `
 
 const CreateFeedbackContainer = styled.div`

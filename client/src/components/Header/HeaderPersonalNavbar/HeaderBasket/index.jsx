@@ -35,6 +35,9 @@ const NavLinkBlock = styled(NavLink)`
   &.active {
     pointer-events: none;
   }
+  @media (${({theme}) => theme.media.medium}) {
+    width: 30px;
+  }
 `
 
 const BasketImage = styled.svg`

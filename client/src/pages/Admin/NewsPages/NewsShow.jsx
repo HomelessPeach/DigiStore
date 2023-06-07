@@ -58,7 +58,7 @@ export const NewsShow = () => {
                 />
                 <ImageField
                     value={data?.image?.image_path}
-                    size={{h: "440px", w: "960px", br: '10px'}}
+                    size={{h: "390px", w: "848px", br: '10px'}}
                     label={'Изображение'}
                 />
                 <DoubleFieldBlock>

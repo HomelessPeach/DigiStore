@@ -10,7 +10,7 @@ export const ImagesField = (props) => {
     const {
         value = [],
         label,
-        size: {h = 540, w = 960, br = 20} = {h: 540, w: 960, br: 20},
+        size: {h = 477, w = 848, br = 20} = {h: 477, w: 848, br: 20},
     } = props
 
     const [activeImage, setActiveImage] = useState(null)

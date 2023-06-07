@@ -41,6 +41,8 @@ import {Registration} from "../pages/Registration";
 import {ForgotPassword} from "../pages/ForgotPassword";
 import {useSelector} from "react-redux";
 import {ResetPassword} from "../pages/ResetPassword";
+import {useResponsive} from "../hook/responsive";
+import {AdminNotSupported} from "../pages/Admin/AdminNotSupported";
 
 export const RouteNames = {
     HOME: '/',
@@ -70,42 +72,49 @@ export const AdminRouteNames = {
 }
 
 export const Router = () => {
+    const { desktop, laptop } = useResponsive()
     const {data: user} = useSelector(state => state.user)
     return (
         <Routes>
             <Route path={RouteNames.HOME} element={<Layout/>}>
                 <Route index element={<Home/>}/>
                 {(user?.isAdmin) &&
-                    <Route path={RouteNames.ADMIN} element={<AdminLayout/>}>
-                        <Route index element={<AdminHome/>}/>
-                        <Route path={AdminRouteNames.ADMIN_USERS} element={<UserList/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_USERS}/:id`} element={<UserShow/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_USERS}/:id/edit`} element={<UserEdit/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_USERS}/new`} element={<UserCreate/>}/>
-                        <Route path={AdminRouteNames.ADMIN_PRODUCT} element={<ProductsList/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_PRODUCT}/:id`} element={<ProductShow/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_PRODUCT}/:id/edit`} element={<ProductEdit/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_PRODUCT}/new`} element={<ProductCreate/>}/>
-                        <Route path={AdminRouteNames.ADMIN_PRODUCT_CATEGORY} element={<ProductCategoryList/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/:id`} element={<ProductCategoryShow/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/:id/edit`} element={<ProductCategoryEdit/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/new`} element={<ProductCategoryCreate/>}/>
-                        <Route path={AdminRouteNames.ADMIN_PRODUCT_FEATURE} element={<ProductFeatureList/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/:id`} element={<ProductFeatureShow/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/:id/edit`} element={<ProductFeatureEdit/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/new`} element={<ProductFeatureCreate/>}/>
-                        <Route path={AdminRouteNames.ADMIN_NEWS} element={<NewsList/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_NEWS}/:id`} element={<NewsShow/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_NEWS}/:id/edit`} element={<NewsEdit/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_NEWS}/new`} element={<NewsCreate/>}/>
-                        <Route path={AdminRouteNames.ADMIN_ORDER} element={<OrderList/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_ORDER}/:id`} element={<OrderShow/>}/>
-                        <Route path={AdminRouteNames.ADMIN_CHAT} element={<ChatList/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_CHAT}/:id`} element={<ChatShow/>}/>
-                        <Route path={AdminRouteNames.ADMIN_FEEDBACK} element={<FeedbackList/>}/>
-                        <Route path={`${AdminRouteNames.ADMIN_FEEDBACK}/:id`} element={<FeedbackShow/>}/>
-                        <Route path={AdminRouteNames.ADMIN_NOT_FOUND} element={<AdminNotFound/>}/>
-                    </Route>
+                    <>
+                        {(desktop || laptop) ?
+                            <Route path={RouteNames.ADMIN} element={<AdminLayout/>}>
+                                <Route index element={<AdminHome/>}/>
+                                <Route path={AdminRouteNames.ADMIN_USERS} element={<UserList/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_USERS}/:id`} element={<UserShow/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_USERS}/:id/edit`} element={<UserEdit/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_USERS}/new`} element={<UserCreate/>}/>
+                                <Route path={AdminRouteNames.ADMIN_PRODUCT} element={<ProductsList/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_PRODUCT}/:id`} element={<ProductShow/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_PRODUCT}/:id/edit`} element={<ProductEdit/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_PRODUCT}/new`} element={<ProductCreate/>}/>
+                                <Route path={AdminRouteNames.ADMIN_PRODUCT_CATEGORY} element={<ProductCategoryList/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/:id`} element={<ProductCategoryShow/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/:id/edit`} element={<ProductCategoryEdit/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_PRODUCT_CATEGORY}/new`} element={<ProductCategoryCreate/>}/>
+                                <Route path={AdminRouteNames.ADMIN_PRODUCT_FEATURE} element={<ProductFeatureList/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/:id`} element={<ProductFeatureShow/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/:id/edit`} element={<ProductFeatureEdit/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_PRODUCT_FEATURE}/new`} element={<ProductFeatureCreate/>}/>
+                                <Route path={AdminRouteNames.ADMIN_NEWS} element={<NewsList/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_NEWS}/:id`} element={<NewsShow/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_NEWS}/:id/edit`} element={<NewsEdit/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_NEWS}/new`} element={<NewsCreate/>}/>
+                                <Route path={AdminRouteNames.ADMIN_ORDER} element={<OrderList/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_ORDER}/:id`} element={<OrderShow/>}/>
+                                <Route path={AdminRouteNames.ADMIN_CHAT} element={<ChatList/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_CHAT}/:id`} element={<ChatShow/>}/>
+                                <Route path={AdminRouteNames.ADMIN_FEEDBACK} element={<FeedbackList/>}/>
+                                <Route path={`${AdminRouteNames.ADMIN_FEEDBACK}/:id`} element={<FeedbackShow/>}/>
+                                <Route path={AdminRouteNames.ADMIN_NOT_FOUND} element={<AdminNotFound/>}/>
+                            </Route>
+                            :
+                            <Route path={RouteNames.ADMIN} element={<AdminNotSupported/>}/>
+                        }
+                    </>
                 }
                 {(user) && <Route path={RouteNames.PROFILE} element={<Profile/>}/>}
                 <Route path={RouteNames.BASKET} element={<Basket/>}/>

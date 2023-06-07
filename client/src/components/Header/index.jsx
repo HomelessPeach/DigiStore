@@ -33,7 +33,6 @@ const HeaderBlock = styled.header`
 
 const HeaderContainer = styled.div`
   height: ${({height}) => height}px;
-  min-height: ${({theme}) => theme.size.height}px;
   background-color: ${({theme}) => theme.colors.primary};
   transition: 0s;
   display: flex;
@@ -42,4 +41,8 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   color: white;
   padding: 0 7vw;
+  overflow: hidden;
+  @media (${({theme}) => theme.media.small}) {
+    padding: 0 1vw;
+  }
 `

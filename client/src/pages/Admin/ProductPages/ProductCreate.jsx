@@ -72,7 +72,6 @@ export const ProductCreate = () => {
                 <EditContent>
                     <ImagesInput
                         value={productData.product_images}
-                        size={{h: 540, w: 960, br: 20}}
                         onChange={(value) => setProductData({...productData, product_images: [...(productData.product_images)? productData.product_images: [], ...value]})}
                         label={'Изображения'}
                     />

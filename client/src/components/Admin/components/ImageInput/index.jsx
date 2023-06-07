@@ -77,6 +77,7 @@ const TextBlock = styled.div`
 const ImgBlock = styled.div`
   display: flex;
   justify-content: center;
+  position: relative;
   align-items: center;
   height: ${({h}) => h};
   width: ${({w}) => w};

@@ -34,6 +34,10 @@ const HeaderGeneralNavbarBlock = styled.div`
   width: 50%;
   height: ${({theme}) => theme.size.header.height}px;
   padding: 15px 10px;
+  @media (${({theme}) => theme.media.small}) {
+    padding: 15px 5px;
+    min-width: 100px;
+  }
 `
 
 const NavLinkBlock = styled(NavLink)`
@@ -50,5 +54,8 @@ const NavLinkBlock = styled(NavLink)`
   }
   &.active {
     pointer-events: none;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    font-size: 16px;
   }
 }`
