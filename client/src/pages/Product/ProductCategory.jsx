@@ -43,11 +43,20 @@ export const ProductCategory = () => {
 }
 
 const ProductCategoryContainer = styled.div`
-  padding: 0 200px;
+  padding: 0 10%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  @media (${({theme}) => theme.media.extraLarge}) {
+    padding: 0 150px;
+  }
+  @media (${({theme}) => theme.media.large}) {
+    padding: 0 80px;
+  }
+  @media (${({theme}) => theme.media.medium}) {
+    padding: 0 30px;
+  }
 `
 
 const HeaderTitle = styled.div`
@@ -56,6 +65,9 @@ const HeaderTitle = styled.div`
   color: #888888;
   font-weight: bolder;
   padding: 50px 8% 25px;
+  @media (${({theme}) => theme.media.medium}) {
+    font-size: 30px;
+  }
 `
 
 const ProductCategoriesWrapper = styled.div`
@@ -68,6 +80,12 @@ const ProductCategoriesWrapper = styled.div`
   padding: 25px 0 100px;
   background-color: #ffffff;
   width: 100%;
+  @media (${({theme}) => theme.media.medium}) {
+    gap: 70px;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    gap: 50px;
+  }
 `
 
 const ProductCategoryCard = styled(NavLink)`
@@ -82,6 +100,18 @@ const ProductCategoryCard = styled(NavLink)`
   padding: 30px;
   background-color: #ffffff;
   text-decoration: none;
+  @media (${({theme}) => theme.media.extraLarge}) {
+    height: 320px;
+    width: 240px;
+  }
+  @media (${({theme}) => theme.media.medium}) {
+    height: 280px;
+    width: 210px;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    height: 200px;
+    width: 150px;
+  }
 `
 
 const ImageBlock = styled.div`
@@ -107,4 +137,12 @@ const TextBlock = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   text-align: center;
+  @media (${({theme}) => theme.media.medium}) {
+    padding: 10px 20px;
+    font-size: 20px;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
 `

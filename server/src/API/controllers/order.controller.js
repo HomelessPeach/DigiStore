@@ -1,6 +1,5 @@
 const {SequelizeConnect} = require("../../services/database-connect");
 const {OrderBusinessService} = require("../../services/order-services/order.business.service")
-const {or} = require("sequelize");
 
 class OrderController {
 

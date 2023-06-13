@@ -71,7 +71,7 @@ export const ProductCard = () => {
                     <NameImageContainer>
                         <CarouselBlock>
                             <Carousel
-                                carouselWidth={750}
+                                carouselWidth={(window.innerWidth > 900)? 750 : (window.innerWidth > 500)? 400 : 250}
                                 aspect={16/9}
                                 button={true}
                                 infinity={true}
@@ -122,9 +122,11 @@ export const ProductCard = () => {
                                     <ButtonIcon>
                                         <Heart/>
                                     </ButtonIcon>
-                                    <ButtonText>
-                                        В избранное
-                                    </ButtonText>
+                                    {(window.innerWidth > 1200 || window.innerWidth <= 900) &&
+                                        <ButtonText>
+                                            В избранное
+                                        </ButtonText>
+                                    }
                                 </AddToFavorite>
                                 :null
                             }
@@ -151,9 +153,11 @@ export const ProductCard = () => {
                                         <ButtonIcon>
                                             <Basket/>
                                         </ButtonIcon>
-                                        <ButtonText>
-                                            Добавить в корзину
-                                        </ButtonText>
+                                        {(window.innerWidth > 1200 || window.innerWidth <= 900) &&
+                                            <ButtonText>
+                                                Добавить в корзину
+                                            </ButtonText>
+                                        }
                                     </AddToBasket>
                                     <InStockBlock>В наличии: {data.in_stock}</InStockBlock>
                                 </>
@@ -265,6 +269,16 @@ const ProductCardBlock = styled.div`
   background-color: #ffffff;
   text-decoration: none;
   box-shadow: 0 0 10px 0 #888888;
+  @media (max-width: 1200px) {
+    width: 900px;
+  }
+  @media (max-width: 900px) {
+    width: 500px;
+  }
+  @media (max-width: 500px) {
+    padding: 20px;
+    width: 300px;
+  }
 `
 
 const MainBlock = styled.div`
@@ -273,6 +287,10 @@ const MainBlock = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: stretch;
+  @media (max-width: 1200px) {
+    flex-direction: column;
+    gap: 30px;
+  }
 `
 
 const NameImageContainer = styled.div`
@@ -289,12 +307,21 @@ const NameBlock = styled.div`
   line-height: 1.5;
   font-size: 40px;
   color: #888888;
+  @media (max-width: 900px) {
+    font-size: 30px;
+  }
 `
 
 const CarouselBlock = styled.div`
   width: 750px;
   box-shadow: 0 0 10px 0 #888888;
   border-radius: 10px;
+  @media (max-width: 900px) {
+    width: 400px;
+  }
+  @media (max-width: 500px) {
+    width: 250px;
+  }
 `
 
 const ImageBlock = styled.div`
@@ -319,12 +346,27 @@ const MainInfo = styled.div`
   background-color: #dcdcdc;
   padding: 35px 30px;
   margin-bottom: 90px;
+  @media (max-width: 1200px) {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
 `
 
 const MainInfoBlock = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  @media (max-width: 1200px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
 `
 
 const RatingProduct = styled.div`
@@ -342,6 +384,14 @@ const RatingIcon = styled.div`
   width: 50px;
   height: 50px;
   fill: #fac917;
+  @media (max-width: 900px) {
+    width: 40px;
+    height: 40px;
+  }
+  @media (max-width: 500px) {
+    width: 20px;
+    height: 20px;
+  }
 `
 
 const ProductRating = styled.div`
@@ -351,13 +401,21 @@ const ProductRating = styled.div`
   line-height: 1.5;
   font-size: 30px;
   color: #000000;
+  @media (max-width: 1200px) {
+    align-items: center;
+  }
+  @media (max-width: 900px) {
+    font-size: 25px;
+  }
+  @media (max-width: 500px) {
+    font-size: 20px;
+  }
 `
 
 const AddToFavorite = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 100%;
   background-color: ${({inWishList}) => (inWishList)? '#888888' : '#ff0000'};
   fill: ${({inWishList}) => (inWishList)? '#ff0000' : '#000000'};
   color:  ${({inWishList}) => (inWishList)? '#b70000' : '#000000'};;
@@ -375,7 +433,6 @@ const AddToBasket = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 100%;
   background-color: ${({theme, inBasket}) => (inBasket)? '#888888' : theme.colors.tertiary};
   fill: ${({theme, inBasket}) => (inBasket)? theme.colors.tertiary: '#000000'};
   color: ${({inBasket}) => (inBasket)? '#840088': '#000000'};
@@ -392,12 +449,25 @@ const AddToBasket = styled.div`
 const ButtonIcon = styled.div`
   width: 25px;
   height: 25px;
+  @media (max-width: 900px) {
+    width: 20px;
+    height: 20px;
+  }
+  @media (max-width: 500px) {
+    width: 16px;
+    height: 16px;
 `
 
 const ButtonText = styled.div`
   text-align: center;
   padding: 5px 5px 5px 15px;
   font-size: 16px;
+  @media (max-width: 900px) {
+    font-size: 14px;
+  }
+  @media (max-width: 500px) {
+    font-size: 12px;
+  }
 `
 
 const ProductPrice = styled.div`
@@ -405,6 +475,14 @@ const ProductPrice = styled.div`
   background-color: #f3f3f3;
   font-size: 30px;
   padding: 10px;
+  display: flex;
+  align-items: center;
+  @media (max-width: 900px) {
+    font-size: 25px;
+  }
+  @media (max-width: 500px) {
+    font-size: 20px;
+  }
 `
 
 const DescriptionBlock = styled.div`
@@ -415,15 +493,22 @@ const DescriptionBlock = styled.div`
   font-size: 20px;
   line-height: 1.5;
   background-color: #dcdcdc;
+  @media (max-width: 900px) {
+    font-size: 16px;
+  }
 `
 
 const FeaturesBlock = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: stretch;
   padding: 20px;
   border: 1px solid #888888;
   border-radius: 10px;
+  @media (max-width: 500px) {
+    overflow: scroll;
+  }
 `
 
 const FeaturesRow = styled.div`
@@ -437,6 +522,9 @@ const FeaturesRow = styled.div`
   height: 40px;
   padding: 10px 0;
   flex-shrink: 2;
+  @media (max-width: 900px) {
+    font-size: 16px;
+  }
 `
 
 const FeatureName = styled.div`
@@ -454,6 +542,9 @@ const Diver = styled.div`
   width: 100%;
   min-width: 100px;
   border-bottom: 3px dotted #000000;
+  @media (max-width: 900px) {
+    min-width: 50px;
+  }
 `
 
 const ProductInfoBlock = styled.div`
@@ -503,6 +594,10 @@ const HeaderLineReview = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 50px;
+  @media (${({theme}) => theme.media.medium}) {
+    align-items: flex-start;
+    flex-direction: column-reverse;
+  }
 `
 
 const UserInfo = styled.div`
@@ -585,4 +680,12 @@ const DeleteButton = styled.div`
 const InStockBlock = styled.div`
   font-size: 20px;
   padding: 0 10px;
+  display: flex;
+  align-items: center;
+  @media (max-width: 900px) {
+    font-size: 17px;
+  }
+  @media (max-width: 500px) {
+    font-size: 15px;
+  }
 `

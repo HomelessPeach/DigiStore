@@ -7,9 +7,11 @@ import {useNavigate, useParams} from "react-router-dom";
 import {RouteNames} from "../../Router";
 import {PasswordInput} from "../../components/PasswordInput";
 import {authAPI} from "../../services/AuthService";
+import {useResponsive} from "../../hook/responsive";
 
 export const ResetPassword = () => {
 
+    const {smallMobile, tablet, mobile} = useResponsive()
     const navigate = useNavigate()
     const {token} = useParams()
     const [userData, setUserData] = useState({user_password: ''})
@@ -73,7 +75,7 @@ export const ResetPassword = () => {
                                     validationMessage: 'Некорректный пароль. Пароль должен содержать не менее 1-ой буквы и цифры и быть от 5 до 25 символов'
                                 }}
                                 label={'Пароль'}
-                                w={'100%'}
+                                w={(smallMobile)? '80%': (tablet)? '60%' : (mobile)? '50%' : '40%'}
                             />
                             <PasswordInput
                                 value={repeatPassword}
@@ -84,7 +86,7 @@ export const ResetPassword = () => {
                                     validationMessage: 'Пароль не совпадает'
                                 }}
                                 label={'Повторите пароль'}
-                                w={'100%'}
+                                w={(smallMobile)? '80%': (tablet)? '60%' : (mobile)? '50%' : '40%'}
                             />
                             <Toolbar>
                                 <Button
@@ -106,14 +108,18 @@ const ForgotPasswordPage = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 400px;
+  padding: 0 20%;
+  @media (${({theme}) => theme.media.large}) {
+    padding: 0;
+  }
 `
 
 const EmailContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 300px;
+  align-items: center;
 `
 
 const ForgotPasswordContainer = styled.div`
@@ -125,11 +131,17 @@ const ForgotPasswordContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 30px 50px;
+  @media (${({theme}) => theme.media.large}) {
+    padding: 0;
+  }
 `
 
 const Title = styled.div`
   font-size: 35px;
   padding: 0 10px 20px;
+  @media (${({theme}) => theme.media.small}) {
+    font-size: 27px;
+  }
 `
 
 const Toolbar = styled.div`

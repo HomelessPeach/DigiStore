@@ -18,10 +18,14 @@ export const NotFound = () => {
 }
 
 const NotFoundContainer = styled.div`
-  padding: 60px 300px;
+  --padding-top: 50px;
+  padding: var(--padding-top) 100px;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (${({theme}) => theme.media.large}) {
+    padding: var(--padding-top) 0 0;
+  }
 `
 
 const Container = styled.div`
@@ -33,7 +37,9 @@ const Container = styled.div`
   box-shadow: 0 0 10px 0 #808080;
   border-radius: 30px;
   width: 100%;
-  height: 55vh;
+  @media (${({theme}) => theme.media.large}) {
+    box-shadow: none;
+  }
 `
 
 const ImgContainer = styled.div`
@@ -44,10 +50,12 @@ const ImgContainer = styled.div`
 `
 
 const Img = styled.img`
-  max-width: 100%;
-  min-height: 100%;
-  max-height: 100%;
-  min-width: 100%;
+  width: 300px;
+  height: 300px;
+  @media (${({theme}) => theme.media.small}) {
+    width: 200px;
+    height: 200px;
+  }
 `
 
 const TextContainer = styled.div`
@@ -59,4 +67,7 @@ const TextContainer = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+  @media (${({theme}) => theme.media.large}) {
+    font-size: 25px;
+  }
 `

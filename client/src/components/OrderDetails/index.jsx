@@ -62,6 +62,12 @@ const OrderDetailsBlock = styled.div`
   border-radius: 20px;
   background-color: white;
   overflow: scroll;
+  @media (${({theme}) => theme.media.large}) {
+    padding: 30px;
+  }
+  @media (${({theme}) => theme.media.medium}) {
+    padding: 20px;
+  }
 `
 
 const CloseButton = styled.div`

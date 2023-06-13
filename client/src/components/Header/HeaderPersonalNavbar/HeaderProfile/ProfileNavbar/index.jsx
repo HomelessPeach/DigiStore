@@ -79,6 +79,14 @@ const ProfileNavbarBlock = styled.div`
   background-color: ${({theme}) => theme.colors.tertiary};
   transition: 0.5s;
   z-index: -1;
+  @media (${({theme}) => theme.media.medium}) {
+    width: 250px;
+    right: 5px;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    width: 200px;
+    right: 2px;
+  }
 `
 
 const ProfileNavbarContainer = styled.div`
@@ -96,6 +104,9 @@ const ProfileNavbarButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (${({theme}) => theme.media.medium}) {
+    font-size: 14px;
+  }
 `
 
 const NavLinkBlock = styled(NavLink)`
@@ -104,4 +115,7 @@ const NavLinkBlock = styled(NavLink)`
   text-decoration: none;
   color: ${({theme}) => theme.colors.primary};
   border-bottom: 1px solid ${({theme}) => theme.colors.primary};
+  @media (${({theme}) => theme.media.medium}) {
+    font-size: 14px;
+  }
 `

@@ -31,7 +31,17 @@ export const Breadcrumb = (props) => {
 const BreadcrumbContainer = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   font-size: 24px;
+  @media (${({theme}) => theme.media.extraLarge}) {
+    font-size: 20px;
+  }
+  @media (${({theme}) => theme.media.large}) {
+    font-size: 18px;
+  }
+  @media (${({theme}) => theme.media.medium}) {
+    font-size: 16px;
+  }
 `
 
 const LinkBlock = styled.div`

@@ -23,11 +23,13 @@ import {authAPI} from "../../services/AuthService";
 import {orderAPI} from "../../services/OrderService";
 import {OrderDetails} from "../../components/OrderDetails";
 import {productAPI} from "../../services/ProductService";
+import {useResponsive} from "../../hook/responsive";
 
 export const Profile = () => {
 
     const {data: user, basket, wishList} = useSelector(state => state.user)
     const {addToBasket, addToFavorite, removeFromBasket, removeFromFavorite} = UserSlice.actions
+    const {desktop, laptop, tablet, mobile, smallMobile} = useResponsive()
     const dispatch = useDispatch()
     const [profile, setProfile] = useState(true)
     const [message, setMessage] = useState('')
@@ -150,15 +152,15 @@ export const Profile = () => {
                         <ProfileCard>
                             {(isEdit)?
                                 <ProfileInfo>
-                                    <ImageBlock style={{width: '40%'}}>
+                                    <ImageBlock style={(mobile || smallMobile)? {width: '100%'} : {width: '40%'}}>
                                         <ImageInput
                                             value={userData.image?.new_image || userData.image?.image_path || ''}
                                             onChange={(value) => (value) ?
                                                 setUserData({...userData, image: {...userData.image, new_image: value}})
                                                 : null}
-                                            size={{h: "300px", w: "300px", br: '150px'}}/>
+                                            size={(mobile)? {h: "300px", w: "300px", br: '150px'} : {h: "200px", w: "200px", br: '150px'}}/>
                                     </ImageBlock>
-                                    <Block style={{width: '60%'}}>
+                                    <Block style={(mobile || smallMobile)? {width: '100%'} : {width: '60%'}}>
                                         <RowBlock>
                                             <TextInput
                                                 value={userData.user_email}
@@ -189,6 +191,7 @@ export const Profile = () => {
                                                 validationError: isNotValid,
                                                 validationMessage: 'Заполните номер телефона'
                                             }}
+                                            w={'100%'}
                                             label={'Номер телефона'}
                                         />
                                         <ChangePasswordButtonBlock>
@@ -208,10 +211,10 @@ export const Profile = () => {
                                 </ProfileInfo>
                                 :
                                 <ProfileInfo>
-                                    <ImageBlock>
-                                        <ImageField value={user?.avatar} size={{h: "300px", w: "300px", br: '150px'}}/>
+                                    <ImageBlock style={(mobile || smallMobile)? {width: '100%'} : undefined}>
+                                        <ImageField value={user?.avatar} size={(mobile)? {h: "250px", w: "250px", br: '150px'} : (smallMobile)? {h: "200px", w: "200px", br: '150px'} : {h: "300px", w: "300px", br: '150px'}}/>
                                     </ImageBlock>
-                                    <Block>
+                                    <Block style={(mobile || smallMobile)? {width: '100%'} : undefined}>
                                         <EmailField value={user.email} label={'e-mail'}/>
                                         <TextField value={user.name} label={'Имя'}/>
                                         <PhoneNumberField value={user.phoneNumber} label={'Номер телефона'}/>
@@ -243,14 +246,14 @@ export const Profile = () => {
                         {(favoriteData?.length)?
                             <CarouselWrapper>
                                 <Carousel
-                                    carouselWidth={window.innerWidth - 600}
+                                    carouselWidth={(desktop || laptop)? window.innerWidth * 0.6 : (tablet || laptop)? window.innerWidth * 0.7: window.innerWidth * 0.86}
                                     aspect={3/4}
                                     button={false}
-                                    roundButton={favoriteData.length > 3}
-                                    infinity={favoriteData.length > 3}
+                                    roundButton={(desktop || laptop)? favoriteData.length > 3 : (tablet || laptop)? favoriteData.length > 2: (window.innerWidth > 400)? favoriteData.length > 1: true}
+                                    infinity={(desktop || laptop)? favoriteData.length > 3 : (tablet || laptop)? favoriteData.length > 2: (window.innerWidth > 400)? favoriteData.length > 1: true}
                                     dots={false}
-                                    scroll={favoriteData.length > 3}
-                                    itemsToShow={4}
+                                    scroll={(desktop || laptop)? favoriteData.length > 3 : (tablet || laptop)? favoriteData.length > 2: (window.innerWidth > 400)? favoriteData.length > 1: true}
+                                    itemsToShow={(desktop || laptop)? 4 : (tablet || laptop)? 3: (window.innerWidth > 400)? 2: 1}
                                 >
                                     {
                                         favoriteData.map((item, index) =>
@@ -332,14 +335,14 @@ export const Profile = () => {
                         {(userOrderData?.length)?
                             <CarouselWrapper>
                                 <Carousel
-                                    carouselWidth={window.innerWidth - 600}
+                                    carouselWidth={(desktop || laptop)? window.innerWidth * 0.6 : (tablet || laptop)? window.innerWidth * 0.7: window.innerWidth * 0.86}
                                     aspect={5/3}
                                     button={false}
-                                    roundButton={userOrderData.length > 3}
-                                    infinity={userOrderData.length > 3}
+                                    roundButton={(desktop || laptop)? userOrderData.length > 3 : (tablet || laptop)? userOrderData.length > 2: (window.innerWidth > 400)? userOrderData.length > 1 : true}
+                                    infinity={(desktop || laptop)? userOrderData.length > 3 : (tablet || laptop)? userOrderData.length > 2: (window.innerWidth > 400)? userOrderData.length > 1 : true}
                                     dots={false}
-                                    scroll={userOrderData.length > 3}
-                                    itemsToShow={4}
+                                    scroll={(desktop || laptop)? userOrderData.length > 3 : (tablet || laptop)? userOrderData.length > 2: (window.innerWidth > 400)? userOrderData.length > 1 : true}
+                                    itemsToShow={(desktop || laptop)? 4 : (tablet || laptop)? 3: (window.innerWidth > 400)? 2 : 1}
                                 >
                                     {
                                         userOrderData.map((item, index) =>
@@ -446,7 +449,6 @@ export const Profile = () => {
                     }
                 </ChatPage>
             }
-
         </PageContainer>
     )
 }
@@ -458,6 +460,12 @@ const PageContainer = styled.div`
   align-items: center;
   gap: 25px;
   padding: 30px 20% 60px;
+  @media (${({theme}) => theme.media.extraLarge}) {
+    padding: 30px 15% 60px;
+  }
+  @media (${({theme}) => theme.media.large}) {
+    padding: 30px 7% 60px;
+  }
 `
 
 const ProfileMenu = styled.div`
@@ -516,6 +524,9 @@ const ProfileCard = styled.div`
   box-shadow: 0 0 10px 0 #808080;
   border-radius: 30px;
   width: 100%;
+  @media (${({theme}) => theme.media.large}) {
+    padding: 30px;
+  }
 `
 
 const ProfileInfo = styled.div`
@@ -524,6 +535,10 @@ const ProfileInfo = styled.div`
   align-items: stretch;
   position: relative;
   width: 100%;
+  @media (${({theme}) => theme.media.medium}) {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 
 const ImageBlock = styled.div`
@@ -531,6 +546,9 @@ const ImageBlock = styled.div`
   align-items: center;
   justify-content: center;
   width: 50%;
+  @media (${({theme}) => theme.media.large}) {
+    padding-top: 50px;
+  }
 `
 
 const Block = styled.div`
@@ -538,6 +556,10 @@ const Block = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 50%;
+  @media (${({theme}) => theme.media.medium}) {
+    width: 100%;
+    padding-bottom: 60px;
+  }
 `
 
 const ItemsContainer = styled.div`
@@ -665,6 +687,7 @@ const EmptyBlock = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   padding: 50px;
   font-size: 25px;
   box-shadow: 0 0 10px 0 #808080;
@@ -682,6 +705,9 @@ const OrderCard = styled.div`
   width: 100%;
   height: 100%;
   background-color: ${({isComplete, isCancel}) => (isComplete)? 'rgba(0, 255, 34, 0.4)' : (isCancel)? 'rgba(255, 0, 0, 0.4)' : null};
+  @media (${({theme}) => theme.media.small}) {
+    padding: 10px;
+  }
 `
 
 const ChatPage = styled.div`
@@ -748,10 +774,19 @@ const MessageInputContainer = styled.div`
   gap: 15px;
   width: 100%;
   padding: 15px 0;
+  @media (${({theme}) => theme.media.medium}) {
+    flex-direction: column;
+  }
 `
 
 const MessageInputBlock = styled.div`
   width: 90%;
+  @media (${({theme}) => theme.media.extraLarge}) {
+    width: 85%;
+  }
+  @media (${({theme}) => theme.media.medium}) {
+    width: 100%;
+  }
 `
 
 const MessageInput = styled.textarea`
@@ -806,6 +841,10 @@ const Button = styled.div`
     box-shadow: none;
     pointer-events: none;
   }
+  @media (${({theme}) => theme.media.small}) {
+    padding: 5px;
+    font-size: 13px;
+  }
 `
 
 const EditButton = styled.div`
@@ -845,6 +884,9 @@ const ChangePasswordButtonBlock = styled.div`
   justify-content: center;
   width: 50%;
   padding: 20px 0 0;
+  @media (${({theme}) => theme.media.large}) {
+    width: 100%;
+  }
 `
 
 const OrderTitleBlock = styled.div`
@@ -853,6 +895,9 @@ const OrderTitleBlock = styled.div`
   display: flex;
   align-items: center;
   font-size: 20px;
+  @media (${({theme}) => theme.media.small}) {
+    font-size: 15px;
+  }
 `
 
 const OrderBlock = styled.div`
@@ -868,7 +913,10 @@ const CompleteBlock = styled.div`
   background-color: #00FF22;
   padding: 7px 10px;
   border-radius: 10px;
-  
+  @media (${({theme}) => theme.media.small}) {
+    padding: 3px 5px;
+    font-size: 13px;
+  }
 `
 
 const CancelBlock = styled.div`
@@ -876,4 +924,8 @@ const CancelBlock = styled.div`
   padding: 7px 10px;
   border-radius: 10px;
   background-color: #FF0000;
+  @media (${({theme}) => theme.media.small}) {
+    padding: 3px 5px;
+    font-size: 13px;
+  }
 `

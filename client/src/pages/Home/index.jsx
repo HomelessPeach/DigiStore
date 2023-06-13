@@ -8,10 +8,12 @@ import {attributeFilesUrl, baseUrl} from "../../services";
 import {Carousel} from "../../components/Carousel";
 import {RouteNames} from "../../Router";
 import {New} from "../../components/Icons";
+import {useResponsive} from "../../hook/responsive";
 
 
 export const Home = () => {
 
+    const {desktop, laptop, tablet, mobile} = useResponsive()
     const navigate = useNavigate()
     const {
         data: productData,
@@ -44,7 +46,7 @@ export const Home = () => {
                     <CarouselWrapper>
                         <CarouselBlock>
                             <Carousel
-                                carouselWidth={1000}
+                                carouselWidth={(desktop || laptop)? 1000: window.innerWidth - 20}
                                 aspect={16 / 9}
                                 button={true}
                                 infinity={true}
@@ -92,7 +94,7 @@ export const Home = () => {
                                 dots={false}
                                 scroll={true}
                                 scrollSpeed={15}
-                                itemsToShow={5}
+                                itemsToShow={(desktop || laptop)? 5 : (tablet)? 4: (mobile)? 3 : 2}
                             >
                                 {
                                     newsData.map((item, index) =>
@@ -128,6 +130,7 @@ export const Home = () => {
                 }
                 <VideoBlock>
                     <Video
+                        w={(desktop || laptop)? 1000: window.innerWidth - 20}
                         autoPlay={true}
                         muted={muteVideo}
                         onEnded={(event) => {
@@ -195,6 +198,9 @@ const CarouselWrapper = styled.div`
   padding: 75px 0;
   width: 100%;
   background-color: #ffffff;
+  @media (${({theme}) => theme.media.large}) {
+    padding: 50px 0;
+  }
 `
 
 const CarouselBlock = styled.div`
@@ -210,6 +216,14 @@ const IconBlock = styled.div`
   transform: rotate(-30deg);
   align-items: center;
   fill: #f5bee8;
+  @media (${({theme}) => theme.media.medium}) {
+    width: 180px;
+    padding: 20px;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    width: 80px;
+    padding: 10px;
+  }
 `
 
 const BlockForIcon = styled.div`
@@ -236,6 +250,16 @@ const NameProduct = styled.div`
   color: #e0e0e0;
   font-size: 40px;
   background: linear-gradient(to right, ${({theme}) => theme.colors.tertiary} 0%, rgba(255, 255, 255, 0) 80%);
+  @media (${({theme}) => theme.media.medium}) {
+    height: 100px;
+    font-size: 30px;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    height: 60px;
+    font-size: 20px;
+    padding: 30px 20px;
+    bottom: 15px;
+  }
 `
 
 const NewsContainer = styled.div`
@@ -244,6 +268,9 @@ const NewsContainer = styled.div`
   width: 100%;
   padding: 50px 0;
   background-color: #d3d3d3;
+  @media (${({theme}) => theme.media.large}) {
+    padding: 30px 0;
+  }
 `
 
 const NewsTitle = styled.div`
@@ -252,6 +279,14 @@ const NewsTitle = styled.div`
   color: #888888;
   font-weight: bolder;
   padding: 0 150px 30px;
+  @media (${({theme}) => theme.media.large}) {
+    padding: 0 100px 20px;
+    font-size: 30px;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    padding: 0 35px 10px;
+    font-size: 30px;
+  }
 `
 
 const NewsBlock = styled.div`
@@ -311,6 +346,12 @@ const NewsNameBlock = styled.div`
   height: 100px;
   padding: 0 20px 15px;
   background: linear-gradient(to top, ${({theme}) => theme.colors.tertiary} 0%, rgba(255, 255, 255, 0) 100%);
+  @media (${({theme}) => theme.media.medium}) {
+    padding: 0 20px 15px;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    padding: 0 10px 7px;
+  }
 `
 
 const NewsName = styled.div`
@@ -321,6 +362,12 @@ const NewsName = styled.div`
   text-overflow: ellipsis;
   color: #efefef;
   font-size: 25px;
+  @media (${({theme}) => theme.media.medium}) {
+    font-size: 20px;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    font-size: 15px;
+  }
 `
 
 const NewsShortDescription = styled.div`
@@ -334,16 +381,23 @@ const NewsShortDescription = styled.div`
 `
 
 const TextBlock = styled.div`
-  height: 100%;
   width: 100%;
   font-size: 18px;
-  line-height: 1.5;
+  line-height: 1.35em;
   overflow: hidden;
   color: #000000;
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
+  @media (${({theme}) => theme.media.medium}) {
+    font-size: 17px;
+    -webkit-line-clamp: 3;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    font-size: 13px;
+    -webkit-line-clamp: 2;
+  }
 `
 
 const VideoBlock = styled.div`
@@ -353,10 +407,13 @@ const VideoBlock = styled.div`
   padding: 75px 0;
   background-color: #fde4f3;
   width: 100%;
+  @media (${({theme}) => theme.media.large}) {
+    padding: 50px 0;
+  }
 `
 
 const Video = styled.video`
-  width: 1000px;
+  width: ${({w}) => w}px;
   border-radius: 10px;
   box-shadow: 0 0 10px 0 #888888;
 `

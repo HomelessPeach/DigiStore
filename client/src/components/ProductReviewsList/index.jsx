@@ -102,12 +102,17 @@ const ProductReviewsListBlock = styled.div`
   flex-direction: column;
   gap: 25px;
   width: 900px;
-  height: 600px;
-  margin: 0 0 150px;
+  height: 500px;
   padding: 50px;
   border-radius: 20px;
   background-color: white;
   overflow: scroll;
+  @media (${({theme}) => theme.media.extraLarge}) {
+    width: 600px;
+    height: 400px;
+    margin: 0 0 40px;
+    padding: 35px;
+  }
 `
 
 const ProductReviewBlock = styled.div`
@@ -127,6 +132,10 @@ const HeaderLineReview = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 50px;
+  @media (${({theme}) => theme.media.medium}) {
+    align-items: flex-start;
+    flex-direction: column-reverse;
+  }
 `
 
 const UserInfo = styled.div`

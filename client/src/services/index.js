@@ -1,8 +1,8 @@
 import {fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {UserSlice} from "../store/reducers/UserSlice";
 
-export const baseUrl = 'http://localhost:8081';
-// export const baseUrl = 'http://www.digital-store.pro';
+// export const baseUrl = 'http://localhost:8081';
+export const baseUrl = 'http://www.digital-store.pro';
 export const attributeFilesUrl = `${baseUrl}/attribute-files`
 export const apiUrl = `${baseUrl}/api`;
 

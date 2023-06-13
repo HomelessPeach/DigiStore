@@ -112,7 +112,7 @@ export const Router = () => {
                                 <Route path={AdminRouteNames.ADMIN_NOT_FOUND} element={<AdminNotFound/>}/>
                             </Route>
                             :
-                            <Route path={RouteNames.ADMIN} element={<AdminNotSupported/>}/>
+                            <Route path={`${RouteNames.ADMIN}/*`} element={<AdminNotSupported/>}/>
                         }
                     </>
                 }

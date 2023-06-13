@@ -19,7 +19,7 @@ export const AdminHome = () => {
 }
 
 const AdminHomeContainer = styled.div`
-  padding: 100px 100px 0;
+  padding: 100px 100px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,7 +34,6 @@ const Container = styled.div`
   box-shadow: 0 0 10px 0 #808080;
   border-radius: 30px;
   width: 100%;
-  height: 60vh;
 `
 
 const ImgContainer = styled.div`
@@ -45,10 +44,8 @@ const ImgContainer = styled.div`
 `
 
 const Img = styled.img`
-  max-width: 100%;
-  min-height: 100%;
-  max-height: 100%;
-  min-width: 100%;
+  width: 300px;
+  height: 300px;
 `
 
 const TextContainer = styled.div`

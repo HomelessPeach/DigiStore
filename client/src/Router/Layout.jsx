@@ -13,6 +13,8 @@ export const Layout = () => {
     const [scroll, setScroll] = useState(0)
     const [isHeader, setIsHeader] = useState(pathname !== '/')
 
+    const headerHeight = Theme.size.header.maxHeight * ((window.innerWidth > 985)? 1 : (window.innerWidth > 720)? 0.8 : (window.innerWidth > 480)? 0.5 : 0.4)
+
     function scrollHandler() {
         setScroll(document.getElementById("Content").scrollTop || 0)
     }
@@ -29,7 +31,7 @@ export const Layout = () => {
     }, [pathname])
 
     useEffect(() => {
-        if (pathname === '/' && (scroll < (Theme.size.header.maxHeight - Theme.size.header.height) || (scroll < Theme.size.header.maxHeight && isHeader))) {
+        if (pathname === '/' && (scroll < (headerHeight - Theme.size.header.height) || (scroll < headerHeight && isHeader))) {
             setIsHeader(false)
             return
         }

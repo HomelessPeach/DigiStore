@@ -23,6 +23,9 @@ const AdminNotSupportedContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (${({theme}) => theme.media.large}) {
+   padding: var(--padding-top) 0 0;
+  }
 `
 
 const Container = styled.div`
@@ -35,6 +38,9 @@ const Container = styled.div`
   border-radius: 30px;
   width: 100%;
   height: 50%;
+  @media (${({theme}) => theme.media.large}) {
+    box-shadow: none;
+  }
 `
 
 const ImgContainer = styled.div`
@@ -60,4 +66,7 @@ const TextContainer = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+  @media (${({theme}) => theme.media.large}) {
+    font-size: 25px;
+  }
 `

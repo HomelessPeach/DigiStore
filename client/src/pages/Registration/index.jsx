@@ -9,9 +9,11 @@ import {PasswordInput} from "../../components/PasswordInput";
 import {authAPI} from "../../services/AuthService";
 import {RouteNames} from "../../Router";
 import {useNavigate} from "react-router-dom";
+import {useResponsive} from "../../hook/responsive";
 
 export const Registration = () => {
 
+    const {smallMobile, tablet, mobile} = useResponsive()
     const navigate = useNavigate()
     const [userData, setUserData] = useState({})
     const [repeatPassword, setRepeatPassword] = useState('')
@@ -63,7 +65,7 @@ export const Registration = () => {
                         validationMessage: 'Введите имя (от 2-х символов)'
                     }}
                     label={'Имя'}
-                    w={'50%'}
+                    w={(smallMobile)? '80%': (tablet || mobile)? '65%' : '50%'}
                 />
                 <TextInput
                     value={userData?.user_email}
@@ -75,7 +77,7 @@ export const Registration = () => {
                         validationMessage: 'Некорректный e-mail'
                     }}
                     label={'e-mail'}
-                    w={'50%'}
+                    w={(smallMobile)? '80%': (tablet || mobile)? '65%' : '50%'}
                 />
                 {(isEmailUsed) &&
                     <ValidationMessage>
@@ -91,7 +93,7 @@ export const Registration = () => {
                         validationMessage: 'Некорректный пароль. Пароль должен содержать не менее 1-ой буквы и цифры и быть от 5 до 25 символов'
                     }}
                     label={'Пароль'}
-                    w={'50%'}
+                    w={(smallMobile)? '80%': (tablet || mobile)? '65%' : '50%'}
                 />
                 <PasswordInput
                     value={repeatPassword}
@@ -102,7 +104,7 @@ export const Registration = () => {
                         validationMessage: 'Пароль не совпадает'
                     }}
                     label={'Повторите пароль'}
-                    w={'50%'}
+                    w={(smallMobile)? '80%': (tablet || mobile)? '65%' : '50%'}
                 />
                 <PhoneNumberInput
                     value={userData?.user_phone_number}
@@ -113,7 +115,7 @@ export const Registration = () => {
                         validationMessage: 'Заполните номер телефона'
                     }}
                     label={'Номер телефона'}
-                    w={'50%'}
+                    w={(smallMobile)? '80%': (tablet || mobile)? '65%' : '50%'}
                 />
                 <Toolbar>
                     <Button
@@ -134,7 +136,10 @@ const RegistrationPage = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 400px;
+  padding: 0 20%;
+  @media (${({theme}) => theme.media.large}) {
+    padding: 0;
+  }
 `
 
 const CreateUserContainer = styled.div`
@@ -145,12 +150,18 @@ const CreateUserContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 30px 50px;
+  padding: 30px 5%;
+  @media (${({theme}) => theme.media.large}) {
+    padding: 0;
+  }
 `
 
 const Title = styled.div`
   font-size: 35px;
   padding: 0 10px 20px;
+  @media (${({theme}) => theme.media.small}) {
+    font-size: 27px;
+  }
 `
 
 const Toolbar = styled.div`

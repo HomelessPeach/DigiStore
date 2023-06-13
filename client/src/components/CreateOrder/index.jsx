@@ -85,16 +85,19 @@ export const CreateOrder = (props) => {
                         }}
                         label={'e-mail'}
                     />
-                    <PhoneNumberInput
-                        value={user?.phoneNumber}
-                        onChange={(value) => setOrderData({...orderData, client_phone_number: value})}
-                        validation={{
-                            validate: validation.client_phone_number,
-                            validationError: isNotValid,
-                            validationMessage: 'Заполните номер телефона'
-                        }}
-                        label={'Номер телефона'}
-                    />
+                    <div style={{width: 350}}>
+                        <PhoneNumberInput
+                            value={user?.phoneNumber}
+                            onChange={(value) => setOrderData({...orderData, client_phone_number: value})}
+                            validation={{
+                                validate: validation.client_phone_number,
+                                validationError: isNotValid,
+                                validationMessage: 'Заполните номер телефона'
+                            }}
+                            w={'100%'}
+                            label={'Номер телефона'}
+                        />
+                    </div>
                 </InputBlock>
                 <ButtonBlock>
                     <Button onClick={createOrderHandler}>
@@ -124,7 +127,8 @@ const InputBlock = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
 `
 
 const ButtonBlock = styled.div`

@@ -85,7 +85,10 @@ const ForgotPasswordPage = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 400px;
+  padding: 0 20%;
+  @media (${({theme}) => theme.media.large}) {
+    padding: 0;
+  }
 `
 
 const EmailContainer = styled.div`
@@ -93,6 +96,9 @@ const EmailContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 300px;
+  @media (${({theme}) => theme.media.small}) {
+    padding: 0 20px;
+  }
 `
 
 const ForgotPasswordContainer = styled.div`
@@ -109,6 +115,9 @@ const ForgotPasswordContainer = styled.div`
 const Title = styled.div`
   font-size: 35px;
   padding: 0 10px 20px;
+  @media (${({theme}) => theme.media.small}) {
+    font-size: 27px;
+  }
 `
 
 const Toolbar = styled.div`

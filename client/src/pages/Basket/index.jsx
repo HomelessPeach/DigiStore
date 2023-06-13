@@ -184,6 +184,9 @@ const BasketContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  @media (${({theme}) => theme.media.large}) {
+    padding: 0 10px;
+  }
 `
 
 const HeaderTitle = styled.div`
@@ -192,6 +195,9 @@ const HeaderTitle = styled.div`
   color: #888888;
   font-weight: bolder;
   padding: 50px 0 25px;
+  @media (${({theme}) => theme.media.medium}) {
+    font-size: 30px;
+  }
 `
 
 const BasketContent = styled.div`
@@ -201,6 +207,15 @@ const BasketContent = styled.div`
   border-radius: 30px;
   padding: 25px 50px;
   background-color: #e8e8e8;
+  @media (${({theme}) => theme.media.large}) {
+    padding: 25px 30px;
+  }
+  @media (${({theme}) => theme.media.medium}) {
+    padding: 15px 20px;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    padding: 10px 15px;
+  }
 `
 
 const BasketItem = styled(NavLink)`
@@ -212,6 +227,9 @@ const BasketItem = styled(NavLink)`
   height: 150px;
   padding: 25px;
   border-bottom: 1px solid #888888;
+  @media (${({theme}) => theme.media.small}) {
+    height: 250px;
+  }
 `
 
 const ImageBlock = styled.div`
@@ -220,6 +238,9 @@ const ImageBlock = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (${({theme}) => theme.media.small}) {
+    width: 50%;
+  }
 `
 
 const Img = styled.img`
@@ -228,11 +249,14 @@ const Img = styled.img`
 `
 
 const DataBlock = styled.div`
-  width: 100%;
+  width: 70%;
   height: 100%;
   display: flex;
   flex-direction: column;
   padding: 5px 15px;
+  @media (${({theme}) => theme.media.small}) {
+    width: 50%;
+  }
 `
 
 const ProductTitle = styled.div`
@@ -246,14 +270,22 @@ const ProductTitle = styled.div`
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
+  @media (${({theme}) => theme.media.small}) {
+    max-height: 40px;
+  }
 `
 
 const ValueBlock = styled.div`
   height: 60%;
   display: flex;
   flex-direction: row;
+  gap: 10px;
   justify-content: space-between;
   align-items: flex-end;
+  @media (${({theme}) => theme.media.small}) {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 `
 
 const ProductPrice = styled.div`
@@ -341,6 +373,12 @@ const AllSumBlock = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding: 25px;
+  @media (${({theme}) => theme.media.medium}) {
+    font-size: 25px;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    font-size: 20px;
+  }
 `
 
 const AllSumText = styled.div`
@@ -348,6 +386,12 @@ const AllSumText = styled.div`
   font-weight: bolder;
   color: #888888;
   cursor: default;
+  @media (${({theme}) => theme.media.medium}) {
+    font-size: 25px;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    font-size: 20px;
+  }
 `
 
 const EmptyBasketBlock = styled.div`

@@ -19,6 +19,7 @@ export const Theme = {
         },
     },
     media: {
+        extraLarge: '(max-width: 1390px)',
         large: '(max-width: 985px)',
         medium: '(max-width: 720px)',
         small: '(max-width: 480px)',

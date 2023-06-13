@@ -151,6 +151,15 @@ const ProductContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  @media (${({theme}) => theme.media.extraLarge}) {
+    padding: 0 150px;
+  }
+  @media (${({theme}) => theme.media.large}) {
+    padding: 0 80px;
+  }
+  @media (${({theme}) => theme.media.medium}) {
+    padding: 0 30px;
+  }
 `
 
 const BreadcrumbWrapper = styled.div`
@@ -163,6 +172,9 @@ const CategoryName = styled.div`
   color: #888888;
   font-weight: bolder;
   padding: 25px 0 15px;
+  @media (${({theme}) => theme.media.medium}) {
+    font-size: 30px;
+  }
 `
 
 const ProductWrapper = styled.div`
@@ -181,23 +193,30 @@ const ProductCard = styled(NavLink)`
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  width: 100%;
-  height: 15vw;
   min-width: 600px;
   min-height: 150px;
-  padding: 1.5vw;
+  padding: 20px;
   background-color: #ffffff;
   text-decoration: none;
   box-shadow: 0 0 10px 0 #888888;
   border-radius: 20px;
+  @media (${({theme}) => theme.media.medium}) {
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    padding: 10px;
+  }
 `
 
 const ImageBlock = styled.div`
   width: 30%;
-  height: 100%;
+  height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (${({theme}) => theme.media.medium}) {
+    width: 100%;
+  }
 `
 
 const Img = styled.img`
@@ -210,6 +229,9 @@ const InfoBlock = styled.div`
   width: 70%;
   flex-direction: column;
   padding: 0 0 0 2vw;
+  @media (${({theme}) => theme.media.medium}) {
+    width: 100%;
+  }
 `
 
 const ProductTitle = styled.div`
@@ -248,6 +270,10 @@ const ProductPriceAndActionsBlock = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
+  @media (${({theme}) => theme.media.small}) {
+    flex-direction: column-reverse;
+  }
 `
 
 const ProductPrice = styled.div`
@@ -256,11 +282,17 @@ const ProductPrice = styled.div`
   line-height: 1.5;
   font-size: 25px;
   color: #000000;
+  display: flex;
+  align-items: end;
 `
 
 const ProductActions = styled.div`
   height: 100%;
   max-width: 50%;
+  @media (${({theme}) => theme.media.small}) {
+    width: 100%;
+    max-width: 100%;
+  }
 `
 
 const RatingBlock = styled.div`
@@ -288,7 +320,7 @@ const ActionsBlock = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: end;
-  gap: 10px
+  gap: 10px;
 `
 
 const AddToBasket = styled.div`

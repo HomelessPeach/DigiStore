@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import {ContainerBlock, LabelBlock} from "../ComponentsStyledBlocks";
 import {priceFormat} from "../../utils";
+import {useResponsive} from "../../hook/responsive";
 
 export const OrderProductComponent = (props) => {
 
@@ -9,6 +10,8 @@ export const OrderProductComponent = (props) => {
         products,
         label
     } = props
+
+    const {smallMobile} = useResponsive()
 
     function getSum() {
         return products.reduce((result, item) => result + (item.order_product_price * item.order_product_count), 0)
@@ -29,10 +32,10 @@ export const OrderProductComponent = (props) => {
                         Цена
                     </HeaderTitle>
                     <HeaderTitle>
-                        Количество
+                        {(smallMobile)? 'Кол-во': 'Количество'}
                     </HeaderTitle>
                     <HeaderTitle>
-                        Стоимость
+                        {(smallMobile)? ' Ст-ть': ' Стоимость'}
                     </HeaderTitle>
                 </Line>
                 {
@@ -42,7 +45,7 @@ export const OrderProductComponent = (props) => {
                                 {item.order_product_name || 'Нет данных'}
                             </ValueBlock>
                             <ValueBlock>
-                                {(item.order_product_price)? `${priceFormat(item.order_product_price)}руб.`
+                                {(item.order_product_price)? `${priceFormat(item.order_product_price)} руб.`
                                     : 'Нет данных'
                                 }
                             </ValueBlock>
@@ -54,7 +57,7 @@ export const OrderProductComponent = (props) => {
                             </ValueBlock>
                             <ValueBlock>
                                 {(item.order_product_price && item.order_product_count)?
-                                    `${priceFormat(item.order_product_price * item.order_product_count)}руб.`
+                                    `${priceFormat(item.order_product_price * item.order_product_count)} руб.`
                                     : 'Нет данных'
                                 }
                             </ValueBlock>
@@ -83,6 +86,12 @@ const OrderProductContainer = styled.div`
   padding: 25px 50px;
   font-size: 18px;
   background-color: #e8e8e8;
+  @media (${({theme}) => theme.media.medium}) {
+    padding: 25px 30px;
+  }
+  @media (${({theme}) => theme.media.small}) {
+    padding: 7px 10px;
+  }
 `
 
 const Line = styled.div`
@@ -103,6 +112,9 @@ const HeaderTitle = styled.div`
     width: 40%;
     border-left: none;
   }
+  @media (${({theme}) => theme.media.medium}) {
+    font-size: 14px;
+  }
 `
 
 const ValueBlock = styled.div`
@@ -116,6 +128,9 @@ const ValueBlock = styled.div`
     width: 40%;
     border-left: none;
     justify-content: left;
+  }
+  @media (${({theme}) => theme.media.medium}) {
+    font-size: 13px;
   }
 `
 

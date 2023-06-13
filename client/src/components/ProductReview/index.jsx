@@ -202,9 +202,12 @@ const AddReview = styled.div`
 const ProductMark = styled.div`
   display: flex;
   flex-direction: row;
-  
   gap: 20px;
   padding: 10px 0;
+  @media (max-width: 500px) {
+    flex-direction: column;
+    gap: 10px;
+  }
 `
 
 const ReviewText = styled.div`
@@ -252,6 +255,10 @@ const Button = styled.div`
     box-shadow: none;
     pointer-events: none;
   }
+  @media (${({theme}) => theme.media.medium}) {
+    width: 100px;
+    font-size: 13px;
+  }
 `
 
 const AddCommentButton = styled.div`
@@ -275,6 +282,10 @@ const AddCommentButton = styled.div`
   &:disabled {
     box-shadow: none;
     pointer-events: none;
+  }
+  @media (${({theme}) => theme.media.medium}) {
+    width: 100px;
+    font-size: 13px;
   }
 `
 
@@ -314,6 +325,10 @@ const DeleteButton = styled.div`
   &:active {
     box-shadow: none;
   }
+  @media (${({theme}) => theme.media.medium}) {
+    width: 100px;
+    font-size: 13px;
+  }
 `
 
 const EditButton = styled.div`
@@ -337,5 +352,9 @@ const EditButton = styled.div`
   &:disabled {
     box-shadow: none;
     pointer-events: none;
+  }
+  @media (${({theme}) => theme.media.medium}) {
+    width: 100px;
+    font-size: 13px;
   }
 `

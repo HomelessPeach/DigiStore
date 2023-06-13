@@ -216,6 +216,7 @@ export const PhoneNumberInput = (props) => {
 const PhoneNumberBlock = styled.div`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   min-height: 40.5px;
   padding: 20px 10px 0;
 `

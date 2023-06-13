@@ -151,6 +151,7 @@ const InputBlock = styled.div`
 
 const ActionsBlock = styled.div`
   display: flex;
+  gap:10px;
   justify-content: space-between;
   width: 100%;
   padding: 10px;
