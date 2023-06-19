@@ -330,7 +330,7 @@ class ProductDatabaseService {
             productImageData, {
                 where: {
                     fk_product: productId,
-                    fk_image: imageId
+                    product_image_id: imageId
                 },
                 returning: true,
                 transaction: transaction
@@ -341,7 +341,7 @@ class ProductDatabaseService {
         return await product_images.destroy({
             where: {
                 fk_product: productId,
-                fk_image: imageId
+                product_image_id: imageId
             },
             transaction: transaction
         })
