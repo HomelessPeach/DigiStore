@@ -95,7 +95,7 @@ class ProductBusinessService {
 
     static async showProduct(productId) {
         const productData = await ProductDatabaseService.showProduct(productId)
-        const product = productData.get({plain: true})
+        const product = productData?.get({plain: true})
         for (let i = 0; i < product.product_images.length; i++) {
             product.product_images[i].image_path = product.product_images[i].image.image_path
             delete product.product_images[i].image
