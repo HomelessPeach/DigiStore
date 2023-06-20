@@ -58,13 +58,14 @@ class ProductProcessService {
     }
 
     static productReviewDataWrite(query) {
+        const date= new Date();
 
         const reviewData = {
             fk_user: query.fk_user,
             fk_product: query.fk_product,
             review_rating: query.review_rating,
             review_description: query.review_description || null,
-            create_at: query.create_at || null
+            create_at: query.create_at || date.toJSON().slice(0, 19).replace('T', ' ')
         }
 
         const reviewId = query.review_id;
