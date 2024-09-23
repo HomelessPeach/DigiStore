@@ -1,3 +1,3 @@
 {
-  "storage": "/Users/xxlvt/WebstormProjects/DigiStore/DigiStore.sqlite"
+  "storage": "./DigiStore.sqlite"
 }
